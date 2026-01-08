@@ -1,57 +1,338 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ערך ונשמה</title>
+
   <style>
-    body {
+    :root{
+      --bg:#0b0b0c;
+      --card: rgba(255,255,255,0.92);
+      --text:#111;
+      --muted:#555;
+      --ring: rgba(255,255,255,0.14);
+      --shadow: 0 24px 70px rgba(0,0,0,.35);
+      --btn:#111;
+      --btnText:#fff;
+    }
+
+    body{
+      margin:0;
       font-family: Arial, sans-serif;
-      margin: 0;
-      background: #fff;
-      color: #111;
+      background: radial-gradient(1200px 800px at 50% 20%, #1b1b1e 0%, #0b0b0c 55%, #070708 100%);
+      color:#fff;
+      overflow-x:hidden;
     }
-    .wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 56px 20px;
-      text-align: center;
+
+    .stage{
+      min-height: 100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 28px 16px;
+      position:relative;
     }
-    h1 {
-      font-size: 48px;
-      margin-bottom: 18px;
+
+    /* הילה עדינה (לא צעקנית) */
+    .stage::before{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(circle at 25% 70%, rgba(255,255,255,.06) 0%, rgba(255,255,255,0) 50%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.06) 0%, rgba(255,255,255,0) 50%);
+      filter: blur(18px);
+      opacity: .85;
+      pointer-events:none;
+      animation: breathe 12s ease-in-out infinite alternate;
     }
-    p {
-      font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 28px;
+
+    @keyframes breathe{
+      from{ transform: scale(1.00); opacity:.75; }
+      to{ transform: scale(1.03); opacity:.9; }
     }
-    .btn {
-      display: inline-block;
-      background: #111;
-      color: #fff;
-      text-decoration: none;
-      padding: 14px 22px;
-      border-radius: 10px;
-      font-size: 18px;
+
+    .wrap{
+      width: min(1100px, 100%);
+      position:relative;
     }
-    .sub {
-      margin-top: 22px;
-      color: #666;
+
+    /* כותרת קטנה למעלה (רק כדי להכווין) */
+    .topline{
+      text-align:center;
+      margin-bottom: 16px;
+      color: rgba(255,255,255,.88);
+    }
+    .brand{
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin: 0 0 10px;
+    }
+    .tag{
+      margin:0;
+      font-size:16px;
+      color: rgba(255,255,255,.78);
+      line-height:1.7;
+    }
+
+    /* העיגול */
+    .orbit{
+      position:relative;
+      width: min(920px, 100%);
+      aspect-ratio: 1 / 1;
+      margin: 18px auto 0;
+      border-radius: 999px;
+      border: 1px solid var(--ring);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
+      overflow:hidden;
+    }
+
+    /* נקודות אור עדינות ברקע */
+    .orbit::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.10), rgba(255,255,255,0) 45%),
+        radial-gradient(circle at 75% 30%, rgba(255,255,255,.08), rgba(255,255,255,0) 46%),
+        radial-gradient(circle at 55% 78%, rgba(255,255,255,.09), rgba(255,255,255,0) 48%);
+      pointer-events:none;
+    }
+
+    /* מרכז */
+    .center{
+      position:absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%,-50%);
+      width: min(380px, 82%);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 22px;
+      padding: 22px 22px 18px;
+      text-align:center;
+      box-shadow: 0 18px 55px rgba(0,0,0,.28);
+    }
+
+    .center h2{
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.3px;
+    }
+
+    .center p{
+      margin: 0 0 14px;
+      color: var(--muted);
       font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .btn{
+      display:inline-block;
+      background: var(--btn);
+      color: var(--btnText);
+      text-decoration:none;
+      padding: 13px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .mini{
+      margin-top:10px;
+      font-size: 12px;
+      color:#666;
+    }
+
+    /* 8 כרטיסים מסביב */
+    .tile{
+      position:absolute;
+      width: 220px;
+      height: 140px;
+      border-radius: 18px;
+      overflow:hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.10);
+      background: #111;
+      transform: translate(-50%, -50%);
+    }
+
+    /* רקע תמונה (placeholder) + שכבת כהות + טקסט */
+    .tile::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.78)),
+        var(--img, linear-gradient(135deg, #3a3a3f, #16161a));
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(20%);
+      transform: scale(1.05);
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift{
+      from{ transform: scale(1.05) translateY(0); }
+      to{ transform: scale(1.12) translateY(-10px); }
+    }
+
+    .tile .t{
+      position:relative;
+      padding: 14px 14px 12px;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      gap:6px;
+    }
+
+    .tile .h{
+      font-weight: 900;
+      font-size: 16px;
+      color:#fff;
+      letter-spacing: -0.2px;
+    }
+
+    .tile .s{
+      font-size: 12.5px;
+      color: rgba(255,255,255,.82);
+      line-height: 1.45;
+    }
+
+    /* מיקום על העיגול (8 נקודות) */
+    .p1{ left: 50%; top: 10%;  }
+    .p2{ left: 78%; top: 22%; }
+    .p3{ left: 90%; top: 50%; }
+    .p4{ left: 78%; top: 78%; }
+    .p5{ left: 50%; top: 90%; }
+    .p6{ left: 22%; top: 78%; }
+    .p7{ left: 10%; top: 50%; }
+    .p8{ left: 22%; top: 22%; }
+
+    /* רספונסיביות: במסכים קטנים עוברים לגריד נקי */
+    @media (max-width: 860px){
+      .orbit{
+        aspect-ratio: auto;
+        padding: 16px;
+      }
+      .tile{
+        position:relative;
+        transform:none;
+        left:auto; top:auto;
+        width: 100%;
+        height: 120px;
+        margin: 10px 0;
+      }
+      .center{
+        position:relative;
+        transform:none;
+        inset:auto;
+        margin: 14px 0 18px;
+        width: 100%;
+      }
+      .p1,.p2,.p3,.p4,.p5,.p6,.p7,.p8{ left:auto; top:auto; }
+      .orbit{
+        display:block;
+        border-radius: 18px;
+      }
+    }
+
+    .footer{
+      text-align:center;
+      margin-top: 14px;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
     }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>ערך ונשמה</h1>
-    <p>סרטים קצרים ומדויקים למשפחות.<br>שירותי זיכרון ערכיים לדורות.</p>
-<a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=dialog" target="_blank">לתיאום שיחה / מענה קצר</a>
-    <div class="sub">© hotam.vip</div>
-  </div>
+  <main class="stage">
+    <div class="wrap">
+
+      <header class="topline">
+        <h1 class="brand">ערך ונשמה</h1>
+        <p class="tag">סרטים קצרים ומדויקים למשפחות • מזכרת אחת שנשארת לדורות</p>
+      </header>
+
+      <section class="orbit" aria-label="מסרים סביב מרכז">
+
+        <!-- 8 מסרים מסביב (כרגע עם רקעים דיפולטיים) -->
+        <div class="tile p1" style="--img: linear-gradient(135deg,#4b4a46,#1a1918);">
+          <div class="t">
+            <div class="h">מי היינו באמת</div>
+            <div class="s">לא רק תאריכים. הנשמה שמאחורי הסיפור.</div>
+          </div>
+        </div>
+
+        <div class="tile p2" style="--img: linear-gradient(135deg,#3f4a5a,#14171c);">
+          <div class="t">
+            <div class="h">אמונה יומיומית</div>
+            <div class="s">תפילין, נרות, ברכה — הרגל קטן שבנה בית.</div>
+          </div>
+        </div>
+
+        <div class="tile p3" style="--img: linear-gradient(135deg,#5a4b3f,#181411);">
+          <div class="t">
+            <div class="h">שבת של בית</div>
+            <div class="s">השולחן. הזמירות. החום שנשאר גם אחרי.</div>
+          </div>
+        </div>
+
+        <div class="tile p4" style="--img: linear-gradient(135deg,#4a5a4f,#141a16);">
+          <div class="t">
+            <div class="h">חסד בלי רעש</div>
+            <div class="s">מעשה טוב אחד — שהפך לדרך חיים.</div>
+          </div>
+        </div>
+
+        <div class="tile p5" style="--img: linear-gradient(135deg,#5a3f4c,#1a1317);">
+          <div class="t">
+            <div class="h">כבוד הורים</div>
+            <div class="s">איך דיברו. איך התייחסו. איך חינכו בלי נאומים.</div>
+          </div>
+        </div>
+
+        <div class="tile p6" style="--img: linear-gradient(135deg,#3f5a57,#121a19);">
+          <div class="t">
+            <div class="h">תורה של פשוטים</div>
+            <div class="s">מילים קצרות. עומק גדול. אמת שעוברת.</div>
+          </div>
+        </div>
+
+        <div class="tile p7" style="--img: linear-gradient(135deg,#5a5450,#151311);">
+          <div class="t">
+            <div class="h">שם אחד, עולם שלם</div>
+            <div class="s">מי הייתה סבתא גנענדל? מה היה האור שלה?</div>
+          </div>
+        </div>
+
+        <div class="tile p8" style="--img: linear-gradient(135deg,#4b4f5a,#13151a);">
+          <div class="t">
+            <div class="h">מסר לדור הבא</div>
+            <div class="s">מה היית רוצה שהילדים והנכדים ייקחו איתם הלאה?</div>
+          </div>
+        </div>
+
+        <!-- המרכז -->
+        <div class="center">
+          <h2>מזכרת אחת. מסר אחד. לדורות.</h2>
+          <p>ממלאים שאלון קצר (2–3 דקות) — כדי להגיע לשיחה כשכבר ברור מה חשוב.</p>
+          <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=dialog" target="_blank">
+            להתחיל בשאלון קצר
+          </a>
+          <div class="mini">hotam.vip ©</div>
+        </div>
+
+      </section>
+
+      <div class="footer">שקט • כבוד • דיוק</div>
+    </div>
+  </main>
 </body>
 </html>
-
-
-
-
