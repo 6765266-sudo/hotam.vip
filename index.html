@@ -12,121 +12,109 @@
 
   <style>
     :root{
-      --bg0:#070708;
-      --bg1:#0f0f12;
-      --ink:#ffffff;
-      --muted:rgba(255,255,255,.75);
-      --card:#f4f4f2;
-      --cardInk:#101014;
-      --shadow: 0 28px 90px rgba(0,0,0,.55);
-      --softShadow: 0 16px 50px rgba(0,0,0,.35);
+      --paper1:#f6f1e8;
+      --paper2:#efe5d7;
+
+      --ink:#111;
+      --muted:#444;
+
+      --disc1:#1a1b1f;
+      --disc2:#0a0a0c;
+
       --ring: rgba(255,255,255,.10);
+      --shadow: 0 26px 80px rgba(0,0,0,.35);
+      --softShadow: 0 14px 40px rgba(0,0,0,.35);
+
+      --hubBg: rgba(255,255,255,.90);
       --btn:#111;
       --btnText:#fff;
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family:"Heebo", system-ui, Arial, sans-serif;
-      background:
-        radial-gradient(1200px 900px at 50% 20%, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 55%),
-        radial-gradient(900px 700px at 15% 80%, rgba(255,255,255,.06) 0%, rgba(255,255,255,0) 60%),
-        radial-gradient(900px 700px at 85% 80%, rgba(255,255,255,.06) 0%, rgba(255,255,255,0) 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg0));
       color:var(--ink);
+      background:
+        radial-gradient(1100px 700px at 50% 10%, rgba(255,255,255,.75), rgba(255,255,255,0) 55%),
+        linear-gradient(180deg, var(--paper1), var(--paper2));
       overflow-x:hidden;
     }
 
     .stage{
-      min-height:100vh;
+      min-height: 100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 28px 16px 36px;
-      position:relative;
-    }
-
-    /* רקע עדין – אפשר לשים תמונה אחת גדולה בהמשך */
-    .stage::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(circle at 50% 40%, rgba(255,255,255,.08), rgba(255,255,255,0) 55%),
-        radial-gradient(circle at 25% 75%, rgba(255,255,255,.05), rgba(255,255,255,0) 55%),
-        radial-gradient(circle at 80% 75%, rgba(255,255,255,.05), rgba(255,255,255,0) 55%);
-      filter: blur(14px);
-      opacity:.9;
-      pointer-events:none;
-      animation: breathe 12s ease-in-out infinite alternate;
-    }
-    @keyframes breathe{
-      from{ transform: scale(1.00); opacity:.75; }
-      to{ transform: scale(1.03); opacity:.95; }
+      padding: 26px 16px 34px;
     }
 
     .wrap{
       width:min(1150px, 100%);
-      position:relative;
-      z-index:1;
+      text-align:center;
     }
 
     header{
-      text-align:center;
       margin-bottom: 14px;
     }
+
     .brand{
       font-family:"David Libre", serif;
       font-weight:700;
       font-size: 46px;
-      letter-spacing:-0.8px;
       margin:0 0 10px;
+      letter-spacing:-0.8px;
+      color:#111;
     }
+
     .tag{
       margin:0;
       font-size:16px;
       line-height:1.7;
-      color: var(--muted);
+      color:#333;
     }
 
-    /* הדיסק */
+    /* דיסק */
     .disc{
       position:relative;
       width:min(940px, 100%);
       aspect-ratio: 1 / 1;
-      margin: 18px auto 0;
+      margin: 16px auto 0;
       border-radius: 999px;
       box-shadow: var(--shadow);
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(0,0,0,.10);
       background:
         radial-gradient(circle at 50% 50%, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 22%),
         radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0%, rgba(255,255,255,0) 55%),
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,.25) 0%, rgba(0,0,0,.75) 70%),
-        linear-gradient(135deg, #232327, #0c0c0e);
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,.10) 0%, rgba(0,0,0,.78) 72%),
+        linear-gradient(135deg, var(--disc1), var(--disc2));
     }
 
-    /* חריצים של CD (גרובס) */
+    /* חריצים */
     .disc::before{
       content:"";
       position:absolute;
       inset:-10%;
       background:
         repeating-radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.07) 0px,
-          rgba(255,255,255,.07) 1px,
+          rgba(255,255,255,.09) 0px,
+          rgba(255,255,255,.09) 1px,
           rgba(255,255,255,0) 6px,
           rgba(255,255,255,0) 10px
         );
-      opacity:.22;
+      opacity:.18;
       mix-blend-mode: overlay;
       pointer-events:none;
-      animation: slowSpin 38s linear infinite;
+      animation: slowSpin 42s linear infinite;
       transform-origin:center;
     }
+    @keyframes slowSpin{
+      from{ transform: rotate(0deg); }
+      to{ transform: rotate(360deg); }
+    }
 
-    /* הברקה אלכסונית */
+    /* הברקה עדינה */
     .disc::after{
       content:"";
       position:absolute;
@@ -136,20 +124,15 @@
           rgba(255,255,255,0) 0%,
           rgba(255,255,255,.10) 35%,
           rgba(255,255,255,0) 60%);
-      opacity:.55;
+      opacity:.45;
       mix-blend-mode: screen;
       pointer-events:none;
       animation: sheen 10s ease-in-out infinite alternate;
       transform: rotate(-8deg);
     }
-
-    @keyframes slowSpin{
-      from{ transform: rotate(0deg); }
-      to{ transform: rotate(360deg); }
-    }
     @keyframes sheen{
-      from{ transform: rotate(-8deg) translateX(-30px); opacity:.40; }
-      to{ transform: rotate(-8deg) translateX(30px); opacity:.60; }
+      from{ transform: rotate(-8deg) translateX(-28px); opacity:.35; }
+      to{ transform: rotate(-8deg) translateX(28px); opacity:.55; }
     }
 
     /* טבעת טקסט */
@@ -158,57 +141,137 @@
       inset:0;
       pointer-events:none;
       opacity:.85;
-      filter: drop-shadow(0 10px 25px rgba(0,0,0,.55));
+      filter: drop-shadow(0 10px 22px rgba(0,0,0,.55));
     }
     .ringText text{
       font-family:"Heebo", sans-serif;
       font-size: 16px;
       letter-spacing: 2px;
-      fill: rgba(255,255,255,.82);
+      fill: rgba(255,255,255,.85);
     }
 
-    /* חור דיסק + מרכז (CTA) */
+    /* כרטיסים מסביב */
+    .tile{
+      position:absolute;
+      width: 230px;
+      height: 145px;
+      border-radius: 18px;
+      overflow:hidden;
+      box-shadow: var(--softShadow);
+      border: 1px solid rgba(255,255,255,.12);
+      transform: translate(-50%, -50%);
+      background:#111;
+    }
+
+    /* תמונה או וידאו כרקע */
+    .tile .media{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      filter: grayscale(18%);
+      transform: scale(1.06);
+      animation: drift 16s ease-in-out infinite alternate;
+    }
+    @keyframes drift{
+      from{ transform: scale(1.06) translateY(0); }
+      to{ transform: scale(1.14) translateY(-10px); }
+    }
+
+    /* שכבת כהות לטקסט */
+    .tile .shade{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.78));
+    }
+
+    .tile .t{
+      position:relative;
+      height:100%;
+      padding: 14px 14px 12px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      gap:6px;
+      color:#fff;
+      text-align:right;
+    }
+    .tile .h{
+      font-weight:900;
+      font-size: 15.5px;
+      letter-spacing:-0.2px;
+    }
+    .tile .s{
+      font-size:12.5px;
+      color: rgba(255,255,255,.86);
+      line-height:1.45;
+    }
+
+    /* מיקומים */
+    .p1{ left: 50%; top: 12%; }
+    .p2{ left: 78%; top: 22%; }
+    .p3{ left: 90%; top: 50%; }
+    .p4{ left: 78%; top: 78%; }
+    .p5{ left: 50%; top: 88%; }
+    .p6{ left: 22%; top: 78%; }
+    .p7{ left: 10%; top: 50%; }
+    .p8{ left: 22%; top: 22%; }
+
+    /* מרכז הדיסק: HUB עגול */
     .hub{
       position:absolute;
       left:50%;
       top:50%;
       transform: translate(-50%,-50%);
-      width:min(430px, 84%);
-      border-radius: 26px;
-      background: var(--card);
-      color: var(--cardInk);
-      text-align:center;
-      padding: 26px 26px 20px;
-      box-shadow: 0 24px 70px rgba(0,0,0,.45);
+      width: min(420px, 82%);
+      aspect-ratio: 1 / 1;
+      border-radius: 999px;
+      background: var(--hubBg);
+      box-shadow: 0 22px 60px rgba(0,0,0,.45);
+      border: 1px solid rgba(0,0,0,.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 22px;
     }
 
-    .hub::before{
-      /* "חור" מרכזי של דיסק מאחורי הכרטיס */
-      content:"";
+    /* "חור" דיסק */
+    .hubHole{
       position:absolute;
       left:50%;
       top:50%;
       transform: translate(-50%,-50%);
-      width: 240px;
-      height: 240px;
+      width: 98px;
+      height: 98px;
       border-radius: 999px;
       background:
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 60%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 60%);
-      opacity:.35;
-      z-index:-1;
-      filter: blur(1px);
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 65%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.45) 0%, rgba(255,255,255,0) 70%);
+      opacity:.55;
+      pointer-events:none;
+      filter: blur(0.2px);
     }
 
-    .hub h2{
+    .hubInner{
+      width:100%;
+      max-width: 330px;
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .hubInner h2{
       font-family:"David Libre", serif;
       margin:0 0 10px;
       font-size: 26px;
       letter-spacing:-0.3px;
+      color:#111;
     }
-    .hub p{
+
+    .hubInner p{
       margin:0 0 16px;
-      color:#3a3a3a;
+      color: var(--muted);
       font-size: 14px;
       line-height: 1.7;
     }
@@ -223,78 +286,19 @@
       font-weight:800;
       font-size:16px;
     }
+
     .mini{
       margin-top:10px;
       font-size:12px;
       color:#666;
     }
 
-    /* 8 חלונות מסביב */
-    .tile{
-      position:absolute;
-      width: 230px;
-      height: 145px;
-      border-radius: 18px;
-      overflow:hidden;
-      box-shadow: var(--softShadow);
-      border: 1px solid rgba(255,255,255,.10);
-      transform: translate(-50%, -50%);
-      background:#111;
-    }
-    .tile::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.76)),
-        var(--img, linear-gradient(135deg,#3a3a3f,#16161a));
-      background-size: cover;
-      background-position: center;
-      filter: grayscale(18%);
-      transform: scale(1.06);
-      animation: drift 16s ease-in-out infinite alternate;
-    }
-    @keyframes drift{
-      from{ transform: scale(1.06) translateY(0); }
-      to{ transform: scale(1.14) translateY(-10px); }
-    }
-
-    .tile .t{
-      position:relative;
-      height:100%;
-      padding: 14px 14px 12px;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      gap:6px;
-    }
-    .tile .h{
-      font-weight:900;
-      font-size: 15.5px;
-      color:#fff;
-      letter-spacing:-0.2px;
-    }
-    .tile .s{
-      font-size:12.5px;
-      color: rgba(255,255,255,.84);
-      line-height:1.45;
-    }
-
-    /* מיקומים על טבעת הדיסק */
-    .p1{ left: 50%; top: 12%; }
-    .p2{ left: 78%; top: 22%; }
-    .p3{ left: 90%; top: 50%; }
-    .p4{ left: 78%; top: 78%; }
-    .p5{ left: 50%; top: 88%; }
-    .p6{ left: 22%; top: 78%; }
-    .p7{ left: 10%; top: 50%; }
-    .p8{ left: 22%; top: 22%; }
-
-    /* מובייל: הופך לגריד נקי */
+    /* מובייל */
     @media (max-width: 860px){
       .disc{ aspect-ratio:auto; border-radius: 18px; padding: 14px; }
       .tile{ position:relative; transform:none; left:auto; top:auto; width:100%; height:120px; margin: 10px 0; }
-      .hub{ position:relative; transform:none; left:auto; top:auto; width:100%; margin: 14px 0 18px; }
+      .hub{ position:relative; transform:none; left:auto; top:auto; width:100%; aspect-ratio:auto; border-radius: 18px; margin: 14px 0 18px; }
+      .hubHole{ display:none; }
       .ringText{ display:none; }
       .p1,.p2,.p3,.p4,.p5,.p6,.p7,.p8{ left:auto; top:auto; }
     }
@@ -302,7 +306,7 @@
     .footer{
       text-align:center;
       margin-top: 14px;
-      color: rgba(255,255,255,.65);
+      color: rgba(0,0,0,.55);
       font-size: 12px;
     }
   </style>
@@ -318,7 +322,6 @@
 
       <section class="disc" aria-label="חותם — דיסק זיכרון">
 
-        <!-- טבעת טקסט מסביב לדיסק -->
         <svg class="ringText" viewBox="0 0 1000 1000" aria-hidden="true">
           <defs>
             <path id="circlePath" d="M 500,500 m -370,0 a 370,370 0 1,1 740,0 a 370,370 0 1,1 -740,0" />
@@ -330,71 +333,90 @@
           </text>
         </svg>
 
-        <!-- 8 כרטיסים מסביב -->
-        <div class="tile p1" style="--img:url('assets/who-we-were.jpg')">
+        <!-- כרטיסים: תמונה (img) או וידאו (video) -->
+        <div class="tile p1">
+          <img class="media" src="assets/who-we-were.jpg" alt="">
+          <div class="shade"></div>
           <div class="t">
             <div class="h">מי היינו באמת</div>
             <div class="s">לא רק תאריכים — הנשמה שמאחורי הסיפור.</div>
           </div>
         </div>
 
-        <div class="tile p2" style="--img:url('assets/daily-faith.jpg')">
+        <div class="tile p2">
+          <img class="media" src="assets/daily-faith.jpg" alt="">
+          <div class="shade"></div>
           <div class="t">
             <div class="h">אמונה יומיומית</div>
             <div class="s">תפילין, ברכה, שבת — הרגל קטן שבנה בית.</div>
           </div>
         </div>
 
-        <div class="tile p3" style="--img:url('assets/grandma-story.jpg')">
+        <div class="tile p3">
+          <img class="media" src="assets/grandma-story.jpg" alt="">
+          <div class="shade"></div>
           <div class="t">
             <div class="h">שם אחד, עולם שלם</div>
             <div class="s">סבתא אחת. עולם שלם של אור ושקט.</div>
           </div>
         </div>
 
-        <div class="tile p4" style="--img:url('assets/values.jpg')">
+        <div class="tile p4">
+          <img class="media" src="assets/values.jpg" alt="">
+          <div class="shade"></div>
           <div class="t">
             <div class="h">מה החזיק אותנו</div>
             <div class="s">ערכים פשוטים שעברו בשקט מדור לדור.</div>
           </div>
         </div>
 
-        <div class="tile p5" style="--img:url('assets/kitchen-kindness.jpg')">
+        <div class="tile p5">
+          <img class="media" src="assets/kitchen-kindness.jpg" alt="">
+          <div class="shade"></div>
           <div class="t">
             <div class="h">חסד בלי רעש</div>
             <div class="s">בית, מטבח, נתינה יומיומית.</div>
           </div>
         </div>
 
-        <div class="tile p6" style="--img:url('assets/learning.jpg')">
+        <div class="tile p6">
+          <img class="media" src="assets/learning.jpg" alt="">
+          <div class="shade"></div>
           <div class="t">
             <div class="h">תורה של פשוטים</div>
             <div class="s">עומק גדול, בלי הצגה.</div>
           </div>
         </div>
 
-        <div class="tile p7" style="--img:url('assets/letter.jpg')">
+        <div class="tile p7">
+          <img class="media" src="assets/letter.jpg" alt="">
+          <div class="shade"></div>
           <div class="t">
             <div class="h">מכתב שנשאר</div>
             <div class="s">מילים קצרות שמחזיקות לב.</div>
           </div>
         </div>
 
-        <div class="tile p8" style="--img:url('assets/next-generation.jpg')">
+        <div class="tile p8">
+          <img class="media" src="assets/next-generation.jpg" alt="">
+          <div class="shade"></div>
           <div class="t">
             <div class="h">מסר לדור הבא</div>
             <div class="s">מה היית רוצה שהם יישאו איתם?</div>
           </div>
         </div>
 
-        <!-- מרכז CTA -->
+        <!-- מרכז HUB עגול -->
         <div class="hub">
-          <h2>חותם שנשאר לדורות</h2>
-          <p>ממלאים שאלון קצר (2–3 דקות) — כדי להגיע לשיחה כשהלב כבר ברור.</p>
-          <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform" target="_blank">
-            להתחיל בשאלון קצר
-          </a>
-          <div class="mini">hotam.vip ©</div>
+          <div class="hubHole"></div>
+          <div class="hubInner">
+            <h2>חותם שנשאר לדורות</h2>
+            <p>ממלאים שאלון קצר (2–3 דקות) — כדי להגיע לשיחה כשהלב כבר ברור.</p>
+            <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform" target="_blank">
+              להתחיל בשאלון קצר
+            </a>
+            <div class="mini">hotam.vip ©</div>
+          </div>
         </div>
 
       </section>
