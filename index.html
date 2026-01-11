@@ -7,22 +7,23 @@
 
   <style>
     :root{
-      /* ======= כיוונון מהיר (דסקטופ) ======= */
-      --shift-x: 18px;        /* <- זה ה"להזיז קצת ימינה" */
-      --shift-y: 0px;
-      --ring-radius: 42vmin;  /* <- קטן יותר = נכנס פנימה */
-      --disc-size: 92vmin;
-      --center-size: 40vmin;  /* העיגול הלבן בדסקטופ */
+      /* ========= כיוונון עדין (תזיז רק את זה אם צריך) ========= */
+      --shift-x: 12px;   /* הזזה של כל הדיסק ימינה/שמאלה */
+      --shift-y: 0px;    /* הזזה למעלה/למטה */
+      --ring-radius: clamp(240px, 34vmin, 380px); /* כמה הכרטיסים רחוקים מהמרכז */
+      --disc-size: clamp(560px, 86vmin, 940px);   /* גודל הדיסק */
+
+      /* מרכז */
+      --center-pct: 44%; /* העיגול הלבן מתוך הדיסק (דסקטופ) */
 
       /* כרטיסים */
-      --slot-w: 220px;
-      --slot-h: 130px;
+      --slot-w: clamp(190px, 22vmin, 260px);
+      --slot-h: clamp(112px, 13vmin, 150px);
       --slot-radius: 18px;
 
       /* צבעים */
       --bg: #efe7db;
-      --disc: #060606;
-      --text: #0b0b0b;
+      --disc: #070707;
       --muted: rgba(0,0,0,0.65);
 
       --shadow: 0 18px 45px rgba(0,0,0,0.35);
@@ -32,24 +33,16 @@
       --font: system-ui, -apple-system, "Segoe UI", Arial, "Heebo", "Rubik", sans-serif;
     }
 
-    /* ======= כיוונון לטלפון ======= */
+    /* ========= מובייל ========= */
     @media (max-width: 720px){
       :root{
-        --shift-x: 0px;        /* בטלפון בד"כ לא מזיזים הצידה */
+        --shift-x: 0px;
         --shift-y: 0px;
-        --slot-w: 168px;
-        --slot-h: 102px;
-        --ring-radius: 35vmin;
-        --disc-size: 96vmin;
-        --center-size: 30vmin; /* <- העיגול הלבן קטן יותר בטלפון */
-      }
-    }
-    @media (max-width: 420px){
-      :root{
-        --slot-w: 150px;
-        --slot-h: 94px;
-        --ring-radius: 33vmin;
-        --center-size: 28vmin;
+        --disc-size: 94vmin;                 /* דיסק כמעט מסך */
+        --ring-radius: clamp(160px, 33vmin, 270px);
+        --slot-w: clamp(150px, 44vw, 190px);
+        --slot-h: clamp(92px, 26vw, 120px);
+        --center-pct: 34%;                   /* <- כאן הקטנתי את הלבן במובייל */
       }
     }
 
@@ -58,7 +51,6 @@
       margin:0;
       font-family: var(--font);
       background: radial-gradient(1200px 700px at 50% 35%, #fff6ea 0%, var(--bg) 55%, #e8ddcf 100%);
-      color: var(--text);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -66,12 +58,12 @@
     }
 
     .stage{
-      width:min(980px, 100vw);
-      height:min(980px, 100vh);
+      width:100vw;
+      height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 24px;
+      padding: 18px;
       box-sizing:border-box;
     }
 
@@ -96,8 +88,8 @@
       position:absolute;
       left:50%;
       top:50%;
-      width: var(--center-size);
-      height: var(--center-size);
+      width: var(--center-pct);
+      height: var(--center-pct);
       transform: translate(-50%,-50%);
       border-radius:50%;
       background: radial-gradient(circle at 35% 30%, #ffffff 0%, #f2f2f2 55%, #e9e9e9 100%);
@@ -112,7 +104,7 @@
 
     .center-inner{
       width: 100%;
-      max-width: 340px;
+      max-width: 360px;
       display:flex;
       flex-direction:column;
       gap: 10px;
@@ -121,14 +113,15 @@
     }
 
     .title{
-      font-size: clamp(18px, 2.5vmin, 34px);
+      font-size: clamp(18px, 2.4vmin, 34px);
       font-weight: 800;
       line-height: 1.15;
       margin:0;
+      color:#0b0b0b;
     }
     .subtitle{
       margin:0;
-      font-size: clamp(12px, 1.6vmin, 16px);
+      font-size: clamp(12px, 1.5vmin, 16px);
       color: var(--muted);
       line-height: 1.35;
     }
@@ -149,15 +142,13 @@
       margin-top: 2px;
     }
 
-    /* Slots */
+    /* ========= Slots ========= */
     .slot{
       position:absolute;
       left:50%;
       top:50%;
       width: var(--slot-w);
       height: var(--slot-h);
-
-      /* הסידור סביב הדיסק */
       transform:
         translate(-50%,-50%)
         rotate(var(--a))
@@ -169,7 +160,6 @@
       background: rgba(255,255,255,0.06);
       box-shadow: var(--soft);
       outline: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(2px);
     }
 
     .media{
@@ -233,14 +223,13 @@
   <div class="stage">
     <div class="disc-wrap">
       <div class="disc"></div>
-
       <div id="slotsRoot"></div>
 
       <div class="center">
         <div class="center-inner">
           <h1 class="title">חותם שנשאר לדורות</h1>
           <p class="subtitle">זכרונות ערכיים, אמונה, משפחה וזיכרון.</p>
-          <button class="cta" onclick="alert('כאן יגיע השאלון/המשך.');">להתחיל בשאלון קצר</button>
+          <button class="cta" onclick="alert('כאן יגיע השאלון/המשך');">להתחיל בשאלון קצר</button>
           <div class="brand">© hotam.vip</div>
         </div>
       </div>
@@ -248,23 +237,23 @@
   </div>
 
   <script>
-    // ====== חשוב: תעדכן שמות בדיוק כפי שהם ב-GitHub בתוך /assets/ ======
     const ASSET_BASE = "./assets/";
 
+    // לפי הצילום שלך (מדויק!)
     const items = [
       { type: "video", src: "faith1.mp4", title: "אמונה", sub: "רגע קטן מאיר" },
       { type: "video", src: "faith2.mp4", title: "בית של פעם", sub: "שבת, אור ושקט" },
       { type: "video", src: "faith3.mp4", title: "לימוד", sub: "דף ועוד דף" },
       { type: "video", src: "faith4.mp4", title: "שבת", sub: "אור בבית" },
 
-      // אם הקבצים שלך נקראים still1_real.jpg וכו' — תשנה כאן!
-      { type: "image", src: "still1.jpg", title: "משפחה", sub: "מכתב שנשמר" },
-      { type: "image", src: "still2.jpg", title: "חותם", sub: "שנשאר לדורות" },
-      { type: "image", src: "still3.jpg", title: "לב", sub: "רגע שמחבר" },
-      { type: "image", src: "still4.jpg", title: "זיכרון חי", sub: "שלא הולך לאיבוד" },
+      { type: "image", src: "still1_real.jpg", title: "זיכרון חי", sub: "שלא הולך לאיבוד" },
+      { type: "image", src: "still2_real.jpg", title: "משפחה", sub: "מכתב שנשמר" },
+      { type: "image", src: "still3_real.jpg", title: "לב", sub: "רגע שמחבר" },
+      { type: "image", src: "still4_real.jpg", title: "חותם", sub: "שנשאר לדורות" },
     ];
 
-    // 8 מיקומים סביב הדיסק
+    // 8 נקודות סביב הדיסק (לשמור יציב)
+    // סדר: למעלה, ימין-למעלה, ימין, ימין-למטה, למטה, שמאל-למטה, שמאל, שמאל-למעלה
     const angles = [270, 315, 0, 45, 90, 135, 180, 225];
 
     const slotsRoot = document.getElementById("slotsRoot");
@@ -292,6 +281,7 @@
         v.playsInline = true;
         v.autoplay = true;
         v.preload = "metadata";
+
         v.addEventListener("canplay", () => {
           const p = v.play();
           if (p && typeof p.catch === "function") p.catch(() => {});
