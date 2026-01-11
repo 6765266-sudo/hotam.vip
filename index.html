@@ -1,305 +1,139 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>חותם — מזכרות שנשארות לדורות</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חותם – מזכרות שנשארות לדורות</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=David+Libre:wght@500;700&family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at center, #f5f0e6 0%, #e8e0d2 100%);
+  font-family: "Assistant", system-ui, sans-serif;
+  height: 100%;
+  overflow: hidden;
+}
 
-  <style>
-    :root{
-      --paper1:#f6f1e8;
-      --paper2:#efe5d7;
-      --ink:#111;
-      --muted:#444;
-      --disc1:#1a1b1f;
-      --disc2:#070708;
-      --shadow: 0 26px 80px rgba(0,0,0,.35);
-      --softShadow: 0 14px 40px rgba(0,0,0,.35);
-      --hubSize: clamp(240px, 26vw, 300px);
-      --hubHoleSize: clamp(56px, 6vw, 72px);
-      --hubBg: rgba(255,255,255,.9);
-      --btn:#111;
-      --btnText:#fff;
-    }
+.scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:"Heebo", sans-serif;
-      background:
-        radial-gradient(1100px 700px at 50% 10%, rgba(255,255,255,.75), rgba(255,255,255,0) 55%),
-        linear-gradient(180deg, var(--paper1), var(--paper2));
-      color:var(--ink);
-    }
+.disc {
+  position: relative;
+  width: min(90vw, 90vh);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(
+      circle,
+      #0b0b0b 0px,
+      #111 2px,
+      #0b0b0b 4px
+    );
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+}
 
-    .stage{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px 14px 32px;
-    }
+.hole {
+  position: absolute;
+  inset: 32%;
+  background: radial-gradient(circle, #fafafa 0%, #eaeaea 70%);
+  border-radius: 50%;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
-    .wrap{
-      width:min(1150px,100%);
-      text-align:center;
-    }
+.center-content {
+  max-width: 80%;
+}
 
-    header{margin-bottom:14px}
-    .brand{
-      font-family:"David Libre", serif;
-      font-size:44px;
-      font-weight:700;
-      margin:0 0 8px;
-    }
-    .tag{
-      margin:0;
-      font-size:16px;
-      color:#333;
-    }
+.center-content h1 {
+  margin: 0 0 10px;
+  font-size: clamp(20px, 3vw, 32px);
+}
 
-    .disc{
-      position:relative;
-      width:min(940px,100%);
-      aspect-ratio:1/1;
-      margin:16px auto 0;
-      border-radius:999px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      background:
-        radial-gradient(circle at 50% 50%,
-          rgba(0,0,0,0) 0%,
-          rgba(0,0,0,0) 76%,
-          rgba(0,0,0,.9) 76%,
-          rgba(0,0,0,.95) 100%
-        ),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 58%),
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,.12) 0%, rgba(0,0,0,.82) 72%),
-        linear-gradient(135deg,var(--disc1),var(--disc2));
-    }
+.center-content p {
+  margin: 0 0 16px;
+  font-size: clamp(14px, 2vw, 18px);
+}
 
-    .disc::before{
-      content:"";
-      position:absolute;
-      inset:-10%;
-      background:repeating-radial-gradient(circle at 50% 50%,
-        rgba(255,255,255,.1) 0px,
-        rgba(255,255,255,.1) 1px,
-        rgba(255,255,255,0) 6px,
-        rgba(255,255,255,0) 10px
-      );
-      opacity:.15;
-      animation:spin 46s linear infinite;
-      pointer-events:none;
-    }
+.center-content button {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 999px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    @keyframes spin{
-      from{transform:rotate(0)}
-      to{transform:rotate(360deg)}
-    }
+.item {
+  position: absolute;
+  width: 22%;
+  aspect-ratio: 16/9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
 
-    .tile{
-      position:absolute;
-      width:230px;
-      height:145px;
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:var(--softShadow);
-      transform:translate(-50%,-50%);
-      background:#000;
-    }
+.item video,
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    .media{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      filter:grayscale(15%);
-      transform:scale(1.06);
-    }
+/* מיקומים סביב הדיסק */
+.i1 { top: 4%; left: 39%; }
+.i2 { top: 14%; right: 6%; }
+.i3 { top: 44%; right: 2%; }
+.i4 { bottom: 14%; right: 6%; }
+.i5 { bottom: 4%; left: 39%; }
+.i6 { bottom: 14%; left: 6%; }
+.i7 { top: 44%; left: 2%; }
+.i8 { top: 14%; left: 6%; }
 
-    .shade{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.8));
-    }
-
-    .t{
-      position:relative;
-      height:100%;
-      padding:14px;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      color:#fff;
-      text-align:right;
-      gap:6px;
-    }
-
-    .h{font-weight:800;font-size:15px}
-    .s{font-size:12.5px;color:rgba(255,255,255,.85)}
-
-    /* positions */
-    .p1{left:50%;top:12%}
-    .p2{left:78%;top:22%}
-    .p3{left:90%;top:50%}
-    .p4{left:78%;top:78%}
-    .p5{left:50%;top:88%}
-    .p6{left:22%;top:78%}
-    .p7{left:10%;top:50%}
-    .p8{left:22%;top:22%}
-
-    .hub{
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform:translate(-50%,-50%);
-      width:var(--hubSize);
-      height:var(--hubSize);
-      border-radius:999px;
-      background:var(--hubBg);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow:0 18px 50px rgba(0,0,0,.4);
-    }
-
-    .hubHole{
-      position:absolute;
-      width:var(--hubHoleSize);
-      height:var(--hubHoleSize);
-      border-radius:999px;
-      background:
-        radial-gradient(circle, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 70%);
-      opacity:.6;
-    }
-
-    .hubInner{
-      max-width:260px;
-      text-align:center;
-      z-index:1;
-    }
-
-    .hubInner h2{
-      font-family:"David Libre", serif;
-      font-size:22px;
-      margin:0 0 8px;
-    }
-
-    .hubInner p{
-      font-size:13px;
-      color:#444;
-      margin:0 0 12px;
-      line-height:1.6;
-    }
-
-    .btn{
-      display:inline-block;
-      background:var(--btn);
-      color:var(--btnText);
-      text-decoration:none;
-      padding:12px 16px;
-      border-radius:999px;
-      font-weight:800;
-      font-size:15px;
-    }
-
-    @media (max-width:860px){
-      .disc{aspect-ratio:auto;border-radius:18px;padding:14px}
-      .tile{position:relative;transform:none;width:100%;max-width:420px;margin:10px auto}
-      .hub{position:relative;transform:none;margin:12px auto}
-      .hubHole{display:none}
-      .p1,.p2,.p3,.p4,.p5,.p6,.p7,.p8{left:auto;top:auto}
-    }
-  </style>
+@media (max-width: 768px) {
+  .item {
+    width: 32%;
+  }
+}
+</style>
 </head>
 
 <body>
-<main class="stage">
-<div class="wrap">
+<div class="scene">
+  <div class="disc">
 
-<header>
-  <h1 class="brand">חותם</h1>
-  <p class="tag">מזכרות שנשארות לדורות</p>
-</header>
+    <!-- וידאו -->
+    <div class="item i1"><video src="assets/faith1.mp4" autoplay muted loop playsinline></video></div>
+    <div class="item i3"><video src="assets/faith2.mp4" autoplay muted loop playsinline></video></div>
+    <div class="item i5"><video src="assets/faith3.mp4" autoplay muted loop playsinline></video></div>
+    <div class="item i7"><video src="assets/faith4.mp4" autoplay muted loop playsinline></video></div>
 
-<section class="disc">
+    <!-- תמונות -->
+    <div class="item i2"><img src="assets/still1.jpg" alt=""></div>
+    <div class="item i4"><img src="assets/still2.jpg" alt=""></div>
+    <div class="item i6"><img src="assets/still3.jpg" alt=""></div>
+    <div class="item i8"><img src="assets/still4.jpg" alt=""></div>
 
-  <!-- p1 VIDEO -->
-  <div class="tile p1">
-    <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline></video>
-    <div class="shade"></div>
-    <div class="t"><div class="h">אמונה יומיומית</div><div class="s">בלי רעש</div></div>
-  </div>
-
-  <!-- p2 IMAGE -->
-  <div class="tile p2">
-    <img class="media" src="assets/still1.jpg">
-    <div class="shade"></div>
-    <div class="t"><div class="h">בית של פעם</div><div class="s">שורשים</div></div>
-  </div>
-
-  <!-- p3 VIDEO -->
-  <div class="tile p3">
-    <video class="media" src="assets/faith2.mp4" autoplay muted loop playsinline></video>
-    <div class="shade"></div>
-    <div class="t"><div class="h">מסירות נפש</div><div class="s">יום־יום</div></div>
-  </div>
-
-  <!-- p4 IMAGE -->
-  <div class="tile p4">
-    <img class="media" src="assets/still2.jpg">
-    <div class="shade"></div>
-    <div class="t"><div class="h">זיכרון חי</div><div class="s">פנים של אמת</div></div>
-  </div>
-
-  <!-- p5 VIDEO -->
-  <div class="tile p5">
-    <video class="media" src="assets/faith3.mp4" autoplay muted loop playsinline></video>
-    <div class="shade"></div>
-    <div class="t"><div class="h">תפילה שקטה</div><div class="s">אמון</div></div>
-  </div>
-
-  <!-- p6 IMAGE -->
-  <div class="tile p6">
-    <img class="media" src="assets/still3.jpg">
-    <div class="shade"></div>
-    <div class="t"><div class="h">דור לדור</div><div class="s">בלי מילים</div></div>
-  </div>
-
-  <!-- p7 IMAGE -->
-  <div class="tile p7">
-    <img class="media" src="assets/still4.jpg">
-    <div class="shade"></div>
-    <div class="t"><div class="h">מה שנשאר</div><div class="s">בלב</div></div>
-  </div>
-
-  <!-- p8 VIDEO -->
-  <div class="tile p8">
-    <video class="media" src="assets/faith4.mp4" autoplay muted loop playsinline></video>
-    <div class="shade"></div>
-    <div class="t"><div class="h">חותם</div><div class="s">לדורות</div></div>
-  </div>
-
-  <div class="hub">
-    <div class="hubHole"></div>
-    <div class="hubInner">
-      <h2>חותם שנשאר לדורות</h2>
-      <p>שאלון קצר • שיחה מדויקת • מזכרת אמיתית</p>
-      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform" target="_blank">
-        להתחיל
-      </a>
+    <!-- מרכז -->
+    <div class="hole">
+      <div class="center-content">
+        <h1>חותם שנשאר לדורות</h1>
+        <p>מזכרות ערכיות, אמונה, משפחה וזיכרון.</p>
+        <button>להתחיל בשאלון קצר</button>
+      </div>
     </div>
+
   </div>
-
-</section>
-
 </div>
-</main>
 </body>
 </html>
