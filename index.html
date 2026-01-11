@@ -1,110 +1,111 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>חותם – מזכרות שנשארות לדורות</title>
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  background: radial-gradient(circle at center, #f5f0e6 0%, #e8e0d2 100%);
-  font-family: "Assistant", system-ui, sans-serif;
-  height: 100%;
-  overflow: hidden;
-}
-
-.scene {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.disc {
-  position: relative;
-  width: min(90vw, 90vh);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    repeating-radial-gradient(
-      circle,
-      #0b0b0b 0px,
-      #111 2px,
-      #0b0b0b 4px
-    );
-  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-}
-
-.hole {
-  position: absolute;
-  inset: 32%;
-  background: radial-gradient(circle, #fafafa 0%, #eaeaea 70%);
-  border-radius: 50%;
-  box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.center-content {
-  max-width: 80%;
-}
-
-.center-content h1 {
-  margin: 0 0 10px;
-  font-size: clamp(20px, 3vw, 32px);
-}
-
-.center-content p {
-  margin: 0 0 16px;
-  font-size: clamp(14px, 2vw, 18px);
-}
-
-.center-content button {
-  background: #111;
-  color: #fff;
-  border: none;
-  padding: 12px 26px;
-  border-radius: 999px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.item {
-  position: absolute;
-  width: 22%;
-  aspect-ratio: 16/9;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #000;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.item video,
-.item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* מיקומים סביב הדיסק */
-.i1 { top: 4%; left: 39%; }
-.i2 { top: 14%; right: 6%; }
-.i3 { top: 44%; right: 2%; }
-.i4 { bottom: 14%; right: 6%; }
-.i5 { bottom: 4%; left: 39%; }
-.i6 { bottom: 14%; left: 6%; }
-.i7 { top: 44%; left: 2%; }
-.i8 { top: 14%; left: 6%; }
-
-@media (max-width: 768px) {
-  .item {
-    width: 32%;
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, #f5f0e6 0%, #e8e0d2 100%);
+    font-family: system-ui, "Assistant", Arial, sans-serif;
+    height: 100%;
+    overflow: hidden;
   }
-}
+
+  .scene {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .disc {
+    position: relative;
+    width: min(90vw, 90vh);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      repeating-radial-gradient(circle, #0b0b0b 0px, #111 2px, #0b0b0b 4px);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  }
+
+  .hole {
+    position: absolute;
+    inset: 32%;
+    background: radial-gradient(circle, #fafafa 0%, #eaeaea 70%);
+    border-radius: 50%;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .center-content {
+    max-width: 80%;
+  }
+
+  .center-content h1 {
+    margin: 0 0 10px;
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 800;
+  }
+
+  .center-content p {
+    margin: 0 0 16px;
+    font-size: clamp(14px, 2vw, 18px);
+    color: #333;
+  }
+
+  .center-content a {
+    display: inline-block;
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 26px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .item {
+    position: absolute;
+    width: 22%;
+    aspect-ratio: 16/9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .item video,
+  .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* מיקומים סביב הדיסק */
+  .i1 { top: 4%; left: 39%; }
+  .i2 { top: 14%; right: 6%; }
+  .i3 { top: 44%; right: 2%; }
+  .i4 { bottom: 14%; right: 6%; }
+  .i5 { bottom: 4%; left: 39%; }
+  .i6 { bottom: 14%; left: 6%; }
+  .i7 { top: 44%; left: 2%; }
+  .i8 { top: 14%; left: 6%; }
+
+  @media (max-width: 768px) {
+    body { overflow: auto; }
+    .scene { height: auto; padding: 18px 0 40px; }
+    .disc { width: min(96vw, 520px); }
+    .item { width: 32%; }
+    .hole { inset: 34%; }
+  }
 </style>
 </head>
 
@@ -112,24 +113,43 @@ html, body {
 <div class="scene">
   <div class="disc">
 
-    <!-- וידאו -->
-    <div class="item i1"><video src="assets/faith1.mp4" autoplay muted loop playsinline></video></div>
-    <div class="item i3"><video src="assets/faith2.mp4" autoplay muted loop playsinline></video></div>
-    <div class="item i5"><video src="assets/faith3.mp4" autoplay muted loop playsinline></video></div>
-    <div class="item i7"><video src="assets/faith4.mp4" autoplay muted loop playsinline></video></div>
+    <!-- וידאו (עם poster) -->
+    <div class="item i1">
+      <video src="/assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"
+             poster="/assets/still1.jpg"></video>
+    </div>
+
+    <div class="item i3">
+      <video src="/assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"
+             poster="/assets/still2.jpg"></video>
+    </div>
+
+    <div class="item i5">
+      <video src="/assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"
+             poster="/assets/still3.jpg"></video>
+    </div>
+
+    <div class="item i7">
+      <video src="/assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"
+             poster="/assets/still4.jpg"></video>
+    </div>
 
     <!-- תמונות -->
-    <div class="item i2"><img src="assets/still1.jpg" alt=""></div>
-    <div class="item i4"><img src="assets/still2.jpg" alt=""></div>
-    <div class="item i6"><img src="assets/still3.jpg" alt=""></div>
-    <div class="item i8"><img src="assets/still4.jpg" alt=""></div>
+    <div class="item i2"><img src="/assets/still1.jpg" alt=""></div>
+    <div class="item i4"><img src="/assets/still2.jpg" alt=""></div>
+    <div class="item i6"><img src="/assets/still3.jpg" alt=""></div>
+    <div class="item i8"><img src="/assets/still4.jpg" alt=""></div>
 
     <!-- מרכז -->
     <div class="hole">
       <div class="center-content">
         <h1>חותם שנשאר לדורות</h1>
         <p>מזכרות ערכיות, אמונה, משפחה וזיכרון.</p>
-        <button>להתחיל בשאלון קצר</button>
+
+        <!-- כאן תדביק את הלינק של הגוגל פורם -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=dialog" target="_blank">
+          להתחיל בשאלון קצר
+        </a>
       </div>
     </div>
 
