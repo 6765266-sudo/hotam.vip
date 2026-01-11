@@ -7,43 +7,46 @@
 
   <style>
     :root{
-      /* ====== כוונון מהיר ====== */
-      --shift-x: 10px;
-      --shift-y: 0px;
+      --bg: #efe7db;
 
+      /* דיסק */
       --disc-size: clamp(560px, 86vmin, 940px);
+      --disc: #070707;
+      --shadow: 0 18px 45px rgba(0,0,0,0.35);
 
-      /* רדיוס המיקום של הכרטיסים */
-      --ring-radius: clamp(230px, 33vmin, 360px);
+      /* טבעת הכרטיסים */
+      --ring-radius: clamp(240px, 33vmin, 360px); /* בסיס */
+      --depth-radius: 26px;     /* כמה “קדימה/אחורה” ברדיוס */
+      --depth-scale: 0.28;      /* כמה שינוי גודל בין אחורה לקדימה */
+      --depth-lift: 14px;       /* הרמה/הורדה עדינה לתלת־ממד */
 
-      /* גודל כרטיס */
+      /* כרטיס */
       --slot-w: clamp(190px, 22vmin, 260px);
       --slot-h: clamp(112px, 13vmin, 150px);
       --slot-radius: 18px;
 
-      /* מרכז DVD */
-      --hub-size: clamp(92px, 12vmin, 140px); /* עיגול "לחץ" */
-      --hub-ring: clamp(165px, 22vmin, 240px); /* רדיוס הטקסט המעגלי */
+      /* מרכז תלת־ממד */
+      --center-main-w: clamp(240px, 34vmin, 360px);
+      --center-main-h: clamp(160px, 22vmin, 240px);
+      --center-mini-w: clamp(160px, 22vmin, 240px);
+      --center-mini-h: clamp(46px, 6vmin, 64px);
 
-      --bg: #efe7db;
-      --disc: #070707;
-
-      --shadow: 0 18px 45px rgba(0,0,0,0.35);
-      --soft: 0 10px 25px rgba(0,0,0,0.25);
       --font: system-ui, -apple-system, "Segoe UI", Arial, "Heebo", "Rubik", sans-serif;
     }
 
-    /* מובייל */
     @media (max-width: 720px){
       :root{
-        --shift-x: 0px;
-        --shift-y: 0px;
         --disc-size: 94vmin;
-        --ring-radius: clamp(165px, 31vmin, 260px);
+        --ring-radius: clamp(175px, 31vmin, 265px);
         --slot-w: clamp(150px, 44vw, 190px);
         --slot-h: clamp(92px, 26vw, 120px);
-        --hub-size: clamp(84px, 16vmin, 120px);
-        --hub-ring: clamp(145px, 26vmin, 210px);
+
+        --depth-radius: 18px;
+        --depth-scale: 0.22;
+        --depth-lift: 10px;
+
+        --center-main-w: clamp(220px, 70vw, 320px);
+        --center-main-h: clamp(150px, 42vw, 210px);
       }
     }
 
@@ -72,10 +75,8 @@
       position:relative;
       width: var(--disc-size);
       height: var(--disc-size);
-      transform: translate(var(--shift-x), var(--shift-y));
     }
 
-    /* הדיסק עצמו */
     .disc{
       position:absolute;
       inset:0;
@@ -86,34 +87,37 @@
       box-shadow: var(--shadow);
     }
 
-    /* ====== הקסם: קליפ עגול שמכניס הכל "לתוך הדיסק" ====== */
-    .disc-clip{
+    /* הכל נשאר בתוך הדיסק */
+    .clip{
       position:absolute;
       inset:0;
       border-radius:50%;
-      overflow:hidden;              /* <- זה גורם לכך ששום דבר לא יוצא החוצה */
-      pointer-events:none;          /* שלא יתפוס קליקים */
+      overflow:hidden;
+      pointer-events:none;
     }
-    /* אבל כדי שעדיין נוכל ללחוץ על כרטיסים/כפתור מרכז – נחזיר קליקים פנימה */
-    .disc-clip > *{ pointer-events:auto; }
+    .clip > *{ pointer-events:auto; }
 
-    /* Slots */
+    /* כרטיס */
     .slot{
       position:absolute;
       left:50%;
       top:50%;
       width: var(--slot-w);
       height: var(--slot-h);
-      transform:
-        translate(-50%,-50%)
-        rotate(var(--a))
-        translateX(var(--ring-radius))
-        rotate(calc(var(--a) * -1));
       border-radius: var(--slot-radius);
       overflow:hidden;
       background: rgba(255,255,255,0.06);
-      box-shadow: var(--soft);
       outline: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.28);
+      transform:
+        translate(-50%,-50%)
+        rotate(var(--a))
+        translateX(calc(var(--ring-radius) + var(--dr)))
+        rotate(calc(var(--a) * -1))
+        translateY(var(--dy))
+        scale(var(--s));
+      z-index: var(--z);
+      will-change: transform;
     }
 
     .media{
@@ -130,7 +134,7 @@
       content:"";
       position:absolute;
       inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.02) 45%, rgba(0,0,0,0.62) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.16) 0%, rgba(0,0,0,0.03) 45%, rgba(0,0,0,0.62) 100%);
       pointer-events:none;
       z-index: 2;
     }
@@ -144,7 +148,7 @@
       color:#fff;
       text-shadow: 0 2px 10px rgba(0,0,0,0.55);
     }
-    .label .h{ font-weight: 800; font-size: 14px; margin:0; line-height: 1.1; }
+    .label .h{ font-weight: 900; font-size: 14px; margin:0; line-height: 1.1; }
     .label .p{ margin: 4px 0 0; font-size: 12px; opacity: 0.9; line-height: 1.2; }
 
     .fallback{
@@ -161,55 +165,72 @@
       text-align:center;
     }
 
-    /* ====== מרכז כמו DVD + טקסט מסביב ====== */
-    .hub{
+    /* מרכז תלת־ממד */
+    .center{
       position:absolute;
       left:50%;
       top:50%;
-      width: var(--hub-size);
-      height: var(--hub-size);
       transform: translate(-50%,-50%);
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.16) 40%, rgba(255,255,255,0.08) 100%);
-      outline: 1px solid rgba(255,255,255,0.22);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+      display:grid;
+      place-items:center;
+      gap: 12px;
+      z-index: 999;
+      pointer-events:auto;
+    }
+
+    .center-main{
+      width: var(--center-main-w);
+      height: var(--center-main-h);
+      border-radius: 26px;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.22), rgba(255,255,255,0.08));
+      outline: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 22px 48px rgba(0,0,0,0.35);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      box-sizing:border-box;
+      backdrop-filter: blur(6px);
+    }
+
+    .center-main h1{
+      margin:0;
+      color:#fff;
+      font-size: clamp(20px, 2.8vmin, 30px);
+      font-weight: 1000;
+      letter-spacing: .3px;
+      text-shadow: 0 8px 24px rgba(0,0,0,0.65);
+      text-align:center;
+      line-height:1.15;
+    }
+
+    .center-main p{
+      margin: 10px 0 0;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+      font-size: clamp(12px, 1.6vmin, 14px);
+      text-align:center;
+    }
+
+    .center-mini{
+      width: var(--center-mini-w);
+      height: var(--center-mini-h);
+      border-radius: 999px;
+      background: rgba(160,160,160,0.22);
+      outline: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.30);
       display:flex;
       align-items:center;
       justify-content:center;
       cursor:pointer;
       user-select:none;
     }
-    .hub span{
-      color: rgba(255,255,255,0.92);
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      font-size: clamp(14px, 1.8vmin, 18px);
-      text-shadow: 0 2px 10px rgba(0,0,0,0.55);
-    }
-
-    .ring-text{
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform: translate(-50%,-50%);
-      width: calc(var(--hub-ring) * 2);
-      height: calc(var(--hub-ring) * 2);
-      pointer-events:none;
-      opacity: 0.95;
-    }
-
-    .ring-text text{
-      fill: rgba(255,255,255,0.92);
-      font-weight: 800;
-      font-size: 14px;
+    .center-mini span{
+      color:#fff;
+      font-weight: 1000;
+      font-size: clamp(14px, 1.9vmin, 18px);
       text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-    }
-
-    .ring-sub text{
-      fill: rgba(255,255,255,0.75);
-      font-weight: 700;
-      font-size: 12px;
     }
   </style>
 </head>
@@ -219,35 +240,19 @@
     <div class="disc-wrap">
       <div class="disc"></div>
 
-      <!-- הכל בפנים: הכרטיסים + מרכז -->
-      <div class="disc-clip">
+      <div class="clip">
         <div id="slotsRoot"></div>
 
-        <!-- טקסט מעגלי סביב המרכז -->
-        <svg class="ring-text" viewBox="0 0 400 400" aria-hidden="true">
-          <defs>
-            <path id="circlePath1" d="M200,200 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0" />
-            <path id="circlePath2" d="M200,200 m-115,0 a115,115 0 1,1 230,0 a115,115 0 1,1 -230,0" />
-          </defs>
+        <div class="center">
+          <div class="center-main">
+            <!-- “חצי מעל חצי מתחת” = שתי שורות, זה נותן תחושת תלת-ממד -->
+            <h1>חותם שנשאר<br>לדורות</h1>
+            <p>זכרונות ערכיים • אמונה • משפחה • זיכרון</p>
+          </div>
 
-          <text>
-            <textPath href="#circlePath1" startOffset="50%" text-anchor="middle">
-              חותם שנשאר לדורות
-            </textPath>
-          </text>
-
-          <g class="ring-sub">
-            <text>
-              <textPath href="#circlePath2" startOffset="50%" text-anchor="middle">
-                זכרונות ערכיים • אמונה • משפחה • זיכרון
-              </textPath>
-            </text>
-          </g>
-        </svg>
-
-        <!-- מרכז DVD -->
-        <div class="hub" onclick="alert('כאן יגיע השאלון/המשך');" title="לחץ להתחלה">
-          <span>לחץ</span>
+          <div class="center-mini" onclick="alert('כאן יתחיל שאלון/תהליך');" title="לחץ">
+            <span>לחץ</span>
+          </div>
         </div>
       </div>
     </div>
@@ -256,7 +261,7 @@
   <script>
     const ASSET_BASE = "./assets/";
 
-    // שמות הקבצים לפי הריפו שלך
+    // ======= סדר הכרטיסים =======
     const items = [
       { type: "video", src: "faith1.mp4", title: "אמונה", sub: "רגע קטן מאיר" },
       { type: "video", src: "faith2.mp4", title: "בית של פעם", sub: "שבת, אור ושקט" },
@@ -269,15 +274,48 @@
       { type: "image", src: "still4_real.jpg", title: "חותם", sub: "שנשאר לדורות" },
     ];
 
-    // 8 נקודות סביב הדיסק (יציב)
-    const angles = [270, 315, 0, 45, 90, 135, 180, 225];
+    // ======= "שעון" שווה שווה =======
+    // 8 מקומות -> כל 45 מעלות. START_ANGLE קובע איפה יושב “פריט 1”.
+    // אצלנו: 270 = למעלה. 0 = ימין. 90 = למטה. 180 = שמאל.
+    const COUNT = 8;
+    const STEP = 360 / COUNT;
+    const START_ANGLE = 270; // שנה ל-315/0/45 אם אתה רוצה סיבוב
+
+    // ======= תלת-ממד אוטומטי =======
+    // עומק לפי סינוס: למטה גדול יותר (קדימה), למעלה קטן יותר (אחורה)
+    // אפשר גם "בוסט" ידני לפריטים מסוימים (למשל 0 ו-1)
+    const manualBoost = {
+      0: 0.08,  // הפריט הראשון יותר גדול
+      1: 0.05   // השני גם יותר גדול
+    };
 
     const slotsRoot = document.getElementById("slotsRoot");
 
-    function makeSlot(item, angleDeg){
+    function makeSlot(item, angleDeg, index){
       const slot = document.createElement("div");
       slot.className = "slot";
       slot.style.setProperty("--a", angleDeg + "deg");
+
+      // depth: bottom(90deg)=+1, top(270deg)=-1
+      const rad = angleDeg * Math.PI / 180;
+      const depth = Math.sin(rad);
+
+      const depthRadius = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--depth-radius")) || 26;
+      const depthScale  = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--depth-scale"))  || 0.28;
+      const depthLift   = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--depth-lift"))   || 14;
+
+      const t = (depth + 1) / 2; // 0..1
+      let scale = 0.86 + depthScale * t; // top קטן, bottom גדול
+      scale += (manualBoost[index] || 0);
+
+      const dr = (depthRadius * depth);      // bottom יוצא טיפה החוצה, top נכנס טיפה פנימה
+      const dy = (depthLift * depth) + "px"; // bottom ירד טיפה, top עלה טיפה
+      const z  = Math.round(100 + 120 * t);  // bottom מעל כולם
+
+      slot.style.setProperty("--s", scale.toFixed(3));
+      slot.style.setProperty("--dr", dr.toFixed(1) + "px");
+      slot.style.setProperty("--dy", dy);
+      slot.style.setProperty("--z", z);
 
       const label = document.createElement("div");
       label.className = "label";
@@ -333,9 +371,11 @@
       }[s]));
     }
 
-    items.slice(0, 8).forEach((item, i) => {
-      slotsRoot.appendChild(makeSlot(item, angles[i] ?? i*45));
-    });
+    // בנייה
+    for(let i=0; i<COUNT; i++){
+      const angle = (START_ANGLE + i*STEP) % 360;
+      slotsRoot.appendChild(makeSlot(items[i], angle, i));
+    }
   </script>
 </body>
 </html>
