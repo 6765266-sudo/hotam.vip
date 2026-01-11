@@ -4,49 +4,51 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>hotam.vip</title>
+
   <style>
     :root{
-      --bg: #efe7db;
-      --disc: #0a0a0a;
-      --disc-groove: rgba(255,255,255,0.05);
+      /* ======= כיוונון מהיר (דסקטופ) ======= */
+      --shift-x: 18px;        /* <- זה ה"להזיז קצת ימינה" */
+      --shift-y: 0px;
+      --ring-radius: 42vmin;  /* <- קטן יותר = נכנס פנימה */
+      --disc-size: 92vmin;
+      --center-size: 40vmin;  /* העיגול הלבן בדסקטופ */
 
+      /* כרטיסים */
       --slot-w: 220px;
       --slot-h: 130px;
       --slot-radius: 18px;
 
-      --ring-radius: 44vmin;          /* מרחק המשבצות מהמרכז */
-      --disc-size: 92vmin;
-
-      --center-size: 40vmin;          /* גודל העיגול הלבן בדסקטופ */
-      --center-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      /* צבעים */
+      --bg: #efe7db;
+      --disc: #060606;
+      --text: #0b0b0b;
+      --muted: rgba(0,0,0,0.65);
 
       --shadow: 0 18px 45px rgba(0,0,0,0.35);
       --soft: 0 10px 25px rgba(0,0,0,0.25);
-
-      --text: #0b0b0b;
-      --muted: rgba(0,0,0,0.65);
-      --card: rgba(0,0,0,0.35);
-      --card-border: rgba(255,255,255,0.14);
+      --center-shadow: 0 16px 40px rgba(0,0,0,0.25);
 
       --font: system-ui, -apple-system, "Segoe UI", Arial, "Heebo", "Rubik", sans-serif;
     }
 
-    /* בטלפון: העיגול הלבן קטן יותר + קצת מקרבים משבצות */
+    /* ======= כיוונון לטלפון ======= */
     @media (max-width: 720px){
       :root{
+        --shift-x: 0px;        /* בטלפון בד"כ לא מזיזים הצידה */
+        --shift-y: 0px;
         --slot-w: 168px;
         --slot-h: 102px;
-        --ring-radius: 36vmin;
+        --ring-radius: 35vmin;
         --disc-size: 96vmin;
-        --center-size: 30vmin; /* קטן יותר בטלפון */
+        --center-size: 30vmin; /* <- העיגול הלבן קטן יותר בטלפון */
       }
     }
-
     @media (max-width: 420px){
       :root{
         --slot-w: 150px;
         --slot-h: 94px;
-        --ring-radius: 34vmin;
+        --ring-radius: 33vmin;
         --center-size: 28vmin;
       }
     }
@@ -55,8 +57,7 @@
     body{
       margin:0;
       font-family: var(--font);
-      background:
-        radial-gradient(1200px 700px at 50% 35%, #fff6ea 0%, var(--bg) 55%, #e8ddcf 100%);
+      background: radial-gradient(1200px 700px at 50% 35%, #fff6ea 0%, var(--bg) 55%, #e8ddcf 100%);
       color: var(--text);
       display:flex;
       align-items:center;
@@ -78,38 +79,17 @@
       position:relative;
       width: var(--disc-size);
       height: var(--disc-size);
-      max-width: 980px;
-      max-height: 980px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      transform: translate(var(--shift-x), var(--shift-y));
     }
 
     .disc{
       position:absolute;
       inset:0;
-      border-radius: 50%;
+      border-radius:50%;
       background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06) 0 4%, rgba(0,0,0,0) 5% 100%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0 1.2%, rgba(0,0,0,0) 1.3% 100%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0 18%, rgba(0,0,0,0) 19% 100%),
         repeating-radial-gradient(circle at 50% 50%, var(--disc) 0 6px, rgba(255,255,255,0.02) 6px 7px),
         radial-gradient(circle at 50% 50%, #111 0%, #050505 60%, #000 100%);
       box-shadow: var(--shadow);
-    }
-
-    /* חור דיסק עדין במרכז (מתחת לעיגול הלבן) */
-    .disc::after{
-      content:"";
-      position:absolute;
-      left:50%; top:50%;
-      width: 9vmin; height: 9vmin;
-      transform: translate(-50%,-50%);
-      border-radius:50%;
-      background: radial-gradient(circle, rgba(0,0,0,0.55) 0 35%, rgba(0,0,0,0) 70%);
-      filter: blur(0.4px);
-      pointer-events:none;
-      opacity: 0.65;
     }
 
     .center{
@@ -120,8 +100,7 @@
       height: var(--center-size);
       transform: translate(-50%,-50%);
       border-radius:50%;
-      background:
-        radial-gradient(circle at 35% 30%, #ffffff 0%, #f2f2f2 55%, #e9e9e9 100%);
+      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #f2f2f2 55%, #e9e9e9 100%);
       box-shadow: var(--center-shadow);
       display:flex;
       align-items:center;
@@ -142,24 +121,18 @@
     }
 
     .title{
-      font-size: clamp(20px, 2.6vmin, 34px);
+      font-size: clamp(18px, 2.5vmin, 34px);
       font-weight: 800;
-      letter-spacing: 0.2px;
       line-height: 1.15;
       margin:0;
     }
-
     .subtitle{
       margin:0;
       font-size: clamp(12px, 1.6vmin, 16px);
       color: var(--muted);
       line-height: 1.35;
     }
-
     .cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
       border:0;
       background: #111;
       color:#fff;
@@ -170,8 +143,6 @@
       box-shadow: var(--soft);
       font-size: 14px;
     }
-    .cta:active{transform: translateY(1px);}
-
     .brand{
       font-size: 12px;
       color: rgba(0,0,0,0.45);
@@ -185,11 +156,14 @@
       top:50%;
       width: var(--slot-w);
       height: var(--slot-h);
+
+      /* הסידור סביב הדיסק */
       transform:
         translate(-50%,-50%)
         rotate(var(--a))
         translateX(var(--ring-radius))
         rotate(calc(var(--a) * -1));
+
       border-radius: var(--slot-radius);
       overflow:hidden;
       background: rgba(255,255,255,0.06);
@@ -205,7 +179,6 @@
       height:100%;
       object-fit: cover;
       display:block;
-      filter: contrast(1.02) saturate(0.95);
       transform: scale(1.01);
     }
 
@@ -213,8 +186,7 @@
       content:"";
       position:absolute;
       inset:0;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.02) 40%, rgba(0,0,0,0.62) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.02) 45%, rgba(0,0,0,0.62) 100%);
       pointer-events:none;
       z-index: 2;
     }
@@ -228,7 +200,6 @@
       color:#fff;
       text-shadow: 0 2px 10px rgba(0,0,0,0.55);
     }
-
     .label .h{
       font-weight: 800;
       font-size: 14px;
@@ -249,23 +220,20 @@
       align-items:center;
       justify-content:center;
       background: rgba(0,0,0,0.55);
-      color: rgba(255,255,255,0.85);
+      color: rgba(255,255,255,0.9);
       font-size: 12px;
       z-index: 5;
-    }
-
-    /* נגישות: אם משתמש מבקש פחות תנועה */
-    @media (prefers-reduced-motion: reduce){
-      video{animation:none;}
+      padding: 10px;
+      text-align:center;
     }
   </style>
 </head>
+
 <body>
   <div class="stage">
-    <div class="disc-wrap" id="discWrap">
+    <div class="disc-wrap">
       <div class="disc"></div>
 
-      <!-- 8 משבצות יוזרמו ע"י JS -->
       <div id="slotsRoot"></div>
 
       <div class="center">
@@ -280,38 +248,31 @@
   </div>
 
   <script>
-    /**
-     * =========================
-     * CONFIG — תעדכן פה שמות קבצים אם צריך
-     * כל הקבצים צריכים לשבת ב: /assets/
-     * =========================
-     */
+    // ====== חשוב: תעדכן שמות בדיוק כפי שהם ב-GitHub בתוך /assets/ ======
     const ASSET_BASE = "./assets/";
 
     const items = [
-      // 4 וידאו
       { type: "video", src: "faith1.mp4", title: "אמונה", sub: "רגע קטן מאיר" },
       { type: "video", src: "faith2.mp4", title: "בית של פעם", sub: "שבת, אור ושקט" },
       { type: "video", src: "faith3.mp4", title: "לימוד", sub: "דף ועוד דף" },
       { type: "video", src: "faith4.mp4", title: "שבת", sub: "אור בבית" },
 
-      // 4 תמונות (אם שינית שמות: למשל still1_real.jpg — תחליף כאן)
+      // אם הקבצים שלך נקראים still1_real.jpg וכו' — תשנה כאן!
       { type: "image", src: "still1.jpg", title: "משפחה", sub: "מכתב שנשמר" },
       { type: "image", src: "still2.jpg", title: "חותם", sub: "שנשאר לדורות" },
       { type: "image", src: "still3.jpg", title: "לב", sub: "רגע שמחבר" },
       { type: "image", src: "still4.jpg", title: "זיכרון חי", sub: "שלא הולך לאיבוד" },
     ];
 
-    // 8 מיקומים סביב הדיסק (מעלות)
+    // 8 מיקומים סביב הדיסק
     const angles = [270, 315, 0, 45, 90, 135, 180, 225];
 
     const slotsRoot = document.getElementById("slotsRoot");
 
-    function makeSlot(item, angleDeg, index){
+    function makeSlot(item, angleDeg){
       const slot = document.createElement("div");
       slot.className = "slot";
       slot.style.setProperty("--a", angleDeg + "deg");
-      slot.setAttribute("data-i", index);
 
       const label = document.createElement("div");
       label.className = "label";
@@ -331,15 +292,11 @@
         v.playsInline = true;
         v.autoplay = true;
         v.preload = "metadata";
-
-        // נסה להפעיל אוטומטית (אם הדפדפן חוסם, זה עדיין יוצג כפריים ראשון)
         v.addEventListener("canplay", () => {
           const p = v.play();
           if (p && typeof p.catch === "function") p.catch(() => {});
         });
-
         v.addEventListener("error", () => showFallback(slot, "וידאו לא נטען (בדוק שם/סיומת)"));
-
         slot.appendChild(v);
       } else {
         const img = document.createElement("img");
@@ -357,7 +314,6 @@
     }
 
     function showFallback(slot, text){
-      // אם כבר יש fallback — אל תכפיל
       if (slot.querySelector(".fallback")) return;
       const fb = document.createElement("div");
       fb.className = "fallback";
@@ -371,16 +327,10 @@
       }[s]));
     }
 
-    // Render
     items.slice(0, 8).forEach((item, i) => {
       const angle = angles[i] ?? (i * 45);
-      slotsRoot.appendChild(makeSlot(item, angle, i));
+      slotsRoot.appendChild(makeSlot(item, angle));
     });
-
-    /**
-     * טיפ: אם לפעמים גיטהאב פייג'ס "נתקע" על קאש —
-     * תוסיף ?v=2 לשמות בתוך CONFIG, לדוגמה: "still1.jpg?v=2"
-     */
   </script>
 </body>
 </html>
