@@ -5,229 +5,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>חותם שנשאר לדורות</title>
 
-  <!-- Fonts (Hebrew-friendly) -->
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg1:#f4efe6;
-      --bg2:#e8dfd1;
-      --ink:#111;
-      --card:#0a0a0a;
-      --card2:#121212;
-      --muted:rgba(255,255,255,.75);
-      --muted2:rgba(0,0,0,.55);
-      --shadow: 0 22px 60px rgba(0,0,0,.28);
-      --slotShadow: 0 16px 40px rgba(0,0,0,.38);
+      --bg: #efe8dd;
+      --disc: #070707;
+      --disc2:#0f0f10;
+      --shadow: 0 28px 70px rgba(0,0,0,.35);
+      --cardShadow: 0 18px 45px rgba(0,0,0,.45);
+      --radius: 0.40; /* יחסי לגודל הדיסק (מיקום הכרטיסים) */
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family: "Assistant","Heebo",system-ui,Arial;
+      font-family:"Heebo", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
       background:
-        radial-gradient(1200px 800px at 50% 20%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
-        radial-gradient(900px 700px at 50% 80%, rgba(0,0,0,.06), rgba(0,0,0,0) 60%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
-      color:var(--ink);
+        radial-gradient(1200px 700px at 50% 30%, #faf6ef 0%, var(--bg) 55%, #e7ddcf 100%);
+      color:#111;
       overflow-x:hidden;
     }
 
     .wrap{
-      min-height:100%;
+      min-height:100svh;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:24px;
+      padding: clamp(14px, 3vw, 34px);
     }
 
-    .stage{
-      width:min(980px, 92vw);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
-      padding:30px 0;
-    }
-
-    /* --- CD / Disc --- */
+    /* דיסק */
     .disc{
-      position:relative;
-      width:min(860px, 92vw);
-      aspect-ratio:1/1;
-      border-radius:50%;
+      width: clamp(320px, 92vw, 920px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      position: relative;
       box-shadow: var(--shadow);
       background:
-        radial-gradient(circle at 50% 50%,
-          rgba(0,0,0,.0) 0%,
-          rgba(0,0,0,.0) 28%,
-          rgba(0,0,0,.22) 46%,
-          rgba(0,0,0,.35) 66%,
-          rgba(0,0,0,.55) 86%,
-          rgba(0,0,0,.78) 100%),
-        radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.07) 0%,
-          rgba(255,255,255,0) 55%),
-        #0b0b0b;
-      overflow:hidden;
+        /* חריצים */
+        repeating-radial-gradient(circle at 50% 50%,
+          rgba(255,255,255,.09) 0px,
+          rgba(255,255,255,.09) 1px,
+          rgba(0,0,0,0) 6px,
+          rgba(0,0,0,0) 10px
+        ),
+        radial-gradient(circle at 45% 35%, rgba(255,255,255,.12), rgba(255,255,255,0) 42%),
+        radial-gradient(circle at 60% 65%, rgba(255,255,255,.08), rgba(255,255,255,0) 46%),
+        radial-gradient(circle at 50% 50%, var(--disc2) 0%, var(--disc) 68%, #050505 100%);
+      overflow: visible;
     }
 
-    /* grooves / rings */
-    .disc::before{
+    /* "שוליים" קצת כמו CD אמיתי */
+    .disc:after{
       content:"";
       position:absolute;
-      inset:0;
+      inset:-1.6%;
       border-radius:50%;
-      background:
-        repeating-radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.10) 0px,
-          rgba(255,255,255,.10) 1px,
-          rgba(0,0,0,0) 6px,
-          rgba(0,0,0,0) 10px);
-      opacity:.30;
-      mix-blend-mode: screen;
+      background: radial-gradient(circle at 50% 50%,
+        rgba(0,0,0,0) 64%,
+        rgba(255,255,255,.06) 74%,
+        rgba(0,0,0,0) 78%,
+        rgba(0,0,0,.35) 100%
+      );
       pointer-events:none;
       filter: blur(.2px);
-      transform: scale(1.02);
-    }
-
-    /* subtle outer lip like CD edge */
-    .disc::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          rgba(0,0,0,0) 86%,
-          rgba(255,255,255,.10) 89%,
-          rgba(0,0,0,.65) 100%);
-      pointer-events:none;
-      opacity:.9;
-    }
-
-    /* --- Center label --- */
-    .center{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      pointer-events:none;
-    }
-
-    .label{
-      width: min(360px, 44vw);
-      aspect-ratio:1/1;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.98) 0%,
-          rgba(245,245,245,.98) 58%,
-          rgba(230,230,230,.98) 100%);
-      box-shadow:
-        inset 0 18px 40px rgba(0,0,0,.12),
-        0 16px 40px rgba(0,0,0,.22);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      position:relative;
-      pointer-events:auto;
-    }
-
-    /* inner hole */
-    .label::before{
-      content:"";
-      position:absolute;
-      width: clamp(34px, 4.2vw, 52px);
-      aspect-ratio:1/1;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          rgba(0,0,0,.65) 0%,
-          rgba(0,0,0,.75) 35%,
-          rgba(0,0,0,.92) 100%);
-      box-shadow:
-        inset 0 6px 12px rgba(255,255,255,.10),
-        0 8px 18px rgba(0,0,0,.25);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       opacity:.85;
     }
 
-    .labelContent{
-      text-align:center;
-      max-width: 90%;
-      z-index:2;
-    }
-
-    .label h1{
-      margin:0 0 10px;
-      font-size: clamp(22px, 3.2vw, 36px);
-      line-height:1.05;
-      letter-spacing:.2px;
-      font-weight:800;
-    }
-    .label p{
-      margin:0 0 16px;
-      font-size: clamp(13px, 1.55vw, 16px);
-      color: rgba(0,0,0,.62);
-      line-height:1.45;
-      font-weight:600;
-    }
-
-    .ctaRow{
+    /* מרכז לבן */
+    .label{
+      position:absolute;
+      inset:0;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
-      pointer-events:auto;
+      pointer-events:none;
     }
 
-    .btn{
-      border:0;
-      cursor:pointer;
-      border-radius:999px;
-      padding: 12px 18px;
-      background: #101010;
-      color:#fff;
+    .labelInner{
+      width: clamp(170px, 30vw, 340px); /* קטן יותר במובייל */
+      aspect-ratio: 1/1;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 45%, #ffffff 0%, #f4f4f4 62%, #e9e9e9 100%);
+      box-shadow:
+        inset 0 2px 16px rgba(0,0,0,.12),
+        0 18px 45px rgba(0,0,0,.22);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: clamp(14px, 2.6vw, 26px);
+      position:relative;
+    }
+
+    /* חור עדין באמצע כמו דיסק */
+    .labelInner:before{
+      content:"";
+      position:absolute;
+      width: clamp(22px, 4.2vw, 42px);
+      aspect-ratio:1/1;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 50%, #bdbdbd 0%, #f7f7f7 45%, #d8d8d8 100%);
+      box-shadow: inset 0 2px 10px rgba(0,0,0,.18);
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      opacity:.65;
+    }
+
+    .labelContent{
+      width:100%;
+      text-align:center;
+      pointer-events:auto; /* כדי שהכפתור יהיה קליק */
+      z-index:2;
+    }
+
+    h1{
+      margin:0 0 10px 0;
       font-weight:800;
-      font-size: 14px;
-      box-shadow: 0 14px 26px rgba(0,0,0,.20);
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      letter-spacing:-.2px;
+      font-size: clamp(22px, 3.2vw, 42px);
+      line-height:1.05;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 18px 34px rgba(0,0,0,.24);
-      background:#000;
+    .sub{
+      margin:0 0 14px 0;
+      font-weight:400;
+      color:#333;
+      font-size: clamp(12.5px, 1.55vw, 16px);
+      line-height:1.5;
     }
-
-    .smallNote{
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border:0;
+      background:#111;
+      color:#fff;
+      padding: 12px 18px;
+      border-radius:999px;
+      font-weight:700;
+      font-size: clamp(13px, 1.55vw, 15px);
+      cursor:pointer;
+      box-shadow: 0 12px 30px rgba(0,0,0,.24);
+    }
+    .cta:active{ transform: translateY(1px); }
+    .mini{
       margin-top:10px;
       font-size:12px;
-      color: rgba(0,0,0,.50);
-      font-weight:700;
+      color:#666;
     }
 
-    /* --- Slots around disc --- */
-    .slots{
-      position:absolute;
-      inset:0;
-    }
-
+    /* משבצות */
     .slot{
       position:absolute;
-      width: clamp(132px, 18vw, 220px);
+      width: clamp(92px, 20vw, 190px);
       aspect-ratio: 16/10;
-      border-radius:16px;
+      border-radius: 14px;
       overflow:hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)) , #0b0b0b;
-      box-shadow: var(--slotShadow);
+      background: rgba(0,0,0,.55);
+      box-shadow: var(--cardShadow);
       border: 1px solid rgba(255,255,255,.10);
       transform: translate(-50%, -50%);
     }
@@ -236,83 +179,80 @@
       content:"";
       position:absolute;
       inset:0;
-      background:
-        radial-gradient(120% 120% at 30% 10%, rgba(255,255,255,.10), rgba(255,255,255,0) 60%),
-        radial-gradient(120% 120% at 70% 90%, rgba(0,0,0,.45), rgba(0,0,0,0) 55%);
+      background: linear-gradient(to top, rgba(0,0,0,.46), rgba(0,0,0,0) 55%);
       pointer-events:none;
     }
 
-    .media{
+    .slot .media{
+      position:absolute;
+      inset:0;
       width:100%;
       height:100%;
-      object-fit:cover;
+      object-fit: cover;
       display:block;
-      filter: contrast(1.05) saturate(0.9);
-      transform: scale(1.02);
+      filter: contrast(1.05) saturate(.95);
     }
 
-    .slotTitle{
+    .slot .tag{
       position:absolute;
       right:10px;
-      bottom:10px;
+      bottom:8px;
       left:10px;
-      color: rgba(255,255,255,.92);
-      font-weight:800;
-      font-size: 13px;
-      text-shadow: 0 3px 12px rgba(0,0,0,.85);
+      display:flex;
+      flex-direction:column;
+      gap:2px;
       z-index:2;
-      line-height:1.15;
-      pointer-events:none;
+      color:#fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,.55);
     }
-    .slotSub{
-      display:block;
-      margin-top:4px;
-      font-weight:700;
+    .slot .tag b{
+      font-size: 14px;
+      font-weight:800;
+      line-height:1.05;
+    }
+    .slot .tag span{
       font-size: 12px;
-      color: rgba(255,255,255,.70);
+      opacity:.92;
+      line-height:1.2;
     }
 
-    /* Placeholders (when no media loaded) */
-    .slot.placeholder{
-      background:
-        linear-gradient(140deg, rgba(255,255,255,.05), rgba(255,255,255,0)),
-        #090909;
-    }
-    .slot.placeholder .slotTitle{opacity:.65}
-
-    /* Responsive tweaks */
-    @media (max-width: 720px){
-      .wrap{padding:14px}
-      .label{width:min(320px, 72vw)}
-      .slot{width: clamp(110px, 30vw, 190px); border-radius:14px}
-    }
-
+    /* מובייל – עוד טיפה תיקונים כדי שהמרכז לא יגדל מדי */
     @media (max-width: 520px){
-      .stage{padding:10px 0}
-      .disc{width: 96vw}
-      .label{width:min(290px, 78vw); padding:18px}
-      .btn{padding:11px 16px}
-      .slot{width: clamp(104px, 34vw, 170px)}
+      :root{ --radius: 0.37; } /* מקרב את הכרטיסים, שלא ייחתכו */
+      .slot{ border-radius: 12px; }
+      .slot .tag b{ font-size: 13px; }
+      .slot .tag span{ font-size: 11px; }
+      .cta{ padding: 11px 16px; }
+    }
+
+    /* נגישות: מי שמעדיף פחות תנועה */
+    @media (prefers-reduced-motion: reduce){
+      video{ animation:none !important; }
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="stage">
-      <div class="disc" id="disc">
-        <div class="slots" id="slots"></div>
+    <div class="disc" id="disc">
+      <!-- 8 slots -->
+      <div class="slot" data-angle="0"   data-type="video" data-src="assets/faith1.mp4" data-title="אמונה" data-sub="רגע קטן מאיר"></div>
+      <div class="slot" data-angle="45"  data-type="image" data-src="assets/still1.jpg" data-title="משפחה" data-sub="מכתב שנשמר"></div>
+      <div class="slot" data-angle="90"  data-type="video" data-src="assets/faith2.mp4" data-title="בית של פעם" data-sub="שבת, אור ושקט"></div>
+      <div class="slot" data-angle="135" data-type="image" data-src="assets/still2.jpg" data-title="חותם" data-sub="שנשאר לדורות"></div>
+      <div class="slot" data-angle="180" data-type="video" data-src="assets/faith3.mp4" data-title="לימוד" data-sub="דף ועוד דף"></div>
+      <div class="slot" data-angle="225" data-type="image" data-src="assets/still3.jpg" data-title="לב" data-sub="רגע שמחבר"></div>
+      <div class="slot" data-angle="270" data-type="video" data-src="assets/faith4.mp4" data-title="שבת" data-sub="אור בבית"></div>
+      <div class="slot" data-angle="315" data-type="image" data-src="assets/still4.jpg" data-title="זיכרון חי" data-sub="שלא הולך לאיבוד"></div>
 
-        <div class="center">
-          <div class="label">
-            <div class="labelContent">
-              <h1>חותם שנשאר לדורות</h1>
-              <p>זכרונות ערכיים, אמונה, משפחה וזיכרון.</p>
-              <div class="ctaRow">
-                <button class="btn" onclick="alert('כאן תשים צור קשר / שאלון')">להתחיל בשאלון קצר</button>
-              </div>
-              <div class="smallNote">hotam.vip ©</div>
-            </div>
+      <!-- center label -->
+      <div class="label">
+        <div class="labelInner">
+          <div class="labelContent">
+            <h1>חותם שנשאר<br/>לדורות</h1>
+            <p class="sub">זיכרונות ערכיים, אמונה, משפחה וזיכרון.</p>
+            <button class="cta" onclick="alert('צור קשר – נוסיף כאן בהמשך טופס/וואטסאפ')">להתחיל בשאלון קצר</button>
+            <div class="mini">© hotam.vip</div>
           </div>
         </div>
       </div>
@@ -320,112 +260,86 @@
   </div>
 
   <script>
-    /**
-     * שים את הקבצים כאן לפי השמות שיש לך ב-assets/
-     * תמונות חדשות:
-     * still1_real.jpg, still2_real.jpg, still3_real.jpg, still4_real.jpg
-     * וידאו:
-     * faith1.mp4, faith2.mp4, faith3.mp4, faith4.mp4
-     */
-    const items = [
-      // 8 "חלונות" סביב הדיסק
-      { type: "video", src: "assets/faith1.mp4", title: "אמונה", sub: "רגע קטן שמאיר" },
-      { type: "image", src: "assets/still1_real.jpg", title: "משפחה", sub: "מבט שנשמר" },
+    // בונה את הווידאו/תמונה בכל משבצת + מציב סביב הדיסק רספונסיבי
+    const disc = document.getElementById('disc');
+    const slots = Array.from(disc.querySelectorAll('.slot'));
 
-      { type: "video", src: "assets/faith2.mp4", title: "בית של פעם", sub: "שקט של שבת" },
-      { type: "image", src: "assets/still2_real.jpg", title: "דורות", sub: "סבא ונכד" },
+    function buildMedia(slot){
+      const type = slot.dataset.type;
+      const src  = slot.dataset.src;
 
-      { type: "video", src: "assets/faith3.mp4", title: "לימוד", sub: "דף ועוד דף" },
-      { type: "image", src: "assets/still3_real.jpg", title: "לב", sub: "רגע שמחבר" },
+      slot.innerHTML = ""; // נקי
 
-      { type: "video", src: "assets/faith4.mp4", title: "שבת", sub: "אור בבית" },
-      { type: "image", src: "assets/still4_real.jpg", title: "חותם", sub: "נשאר לדורות" },
-    ];
-
-    // זוויות (8 פריטים) מסביב לדיסק
-    // 0 = למעלה, 90 = ימין, 180 = למטה, 270 = שמאל (בגלל RTL עדיין זה ויזואלי כרגיל)
-    const angles = [0, 45, 90, 135, 180, 225, 270, 315];
-
-    const slotsEl = document.getElementById("slots");
-
-    function makeSlot(item){
-      const slot = document.createElement("div");
-      slot.className = "slot";
-
-      if(item.type === "video"){
-        const v = document.createElement("video");
-        v.className = "media";
-        v.src = item.src;
-        v.muted = true;
-        v.loop = true;
-        v.autoplay = true;
-        v.playsInline = true;
-        v.preload = "metadata";
-        slot.appendChild(v);
-
-        // נסיון "להרים" autoplay גם בדפדפנים עקשנים
-        v.addEventListener("canplay", () => {
-          const p = v.play();
-          if(p && typeof p.catch === "function") p.catch(()=>{});
-        });
-      } else if(item.type === "image"){
-        const img = document.createElement("img");
-        img.className = "media";
-        img.src = item.src;
-        img.alt = item.title || "";
-        img.loading = "lazy";
-        img.decoding = "async";
-        slot.appendChild(img);
-
-        // אם התמונה לא נטענת, תראה placeholder ברור
-        img.onerror = () => {
-          slot.classList.add("placeholder");
-          slot.innerHTML = "";
-          const t = document.createElement("div");
-          t.className = "slotTitle";
-          t.innerHTML = (item.title || "תמונה") + "<span class='slotSub'>קובץ לא נטען</span>";
-          slot.appendChild(t);
-        };
+      let el;
+      if(type === "video"){
+        el = document.createElement("video");
+        el.className = "media";
+        el.src = src;
+        el.autoplay = true;
+        el.loop = true;
+        el.muted = true;
+        el.playsInline = true;
+        el.preload = "metadata";
       } else {
-        slot.classList.add("placeholder");
+        el = document.createElement("img");
+        el.className = "media";
+        el.src = src;
+        el.alt = slot.dataset.title || "";
+        el.loading = "lazy";
       }
+      slot.appendChild(el);
 
-      const title = document.createElement("div");
-      title.className = "slotTitle";
-      title.innerHTML = (item.title || "") + (item.sub ? `<span class="slotSub">${item.sub}</span>` : "");
-      slot.appendChild(title);
-
-      return slot;
+      const tag = document.createElement("div");
+      tag.className = "tag";
+      const b = document.createElement("b");
+      b.textContent = slot.dataset.title || "";
+      const s = document.createElement("span");
+      s.textContent = slot.dataset.sub || "";
+      tag.appendChild(b);
+      tag.appendChild(s);
+      slot.appendChild(tag);
     }
 
-    function layoutSlots(){
-      slotsEl.innerHTML = "";
-
-      // רדיוס יחסי למיקום הסלוטים
-      const disc = document.getElementById("disc");
+    function placeSlots(){
       const rect = disc.getBoundingClientRect();
       const size = Math.min(rect.width, rect.height);
+      const centerX = size / 2;
+      const centerY = size / 2;
 
-      // המרחק מהמרכז – לכוון לפי טעם
-      const radius = size * 0.40;
+      // רדיוס יחסי + תיקון קטן לפי גודל הכרטיס
+      const radiusFactor = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--radius')) || 0.4;
 
-      items.forEach((item, i) => {
-        const ang = (angles[i % angles.length] - 90) * (Math.PI / 180); // -90 כדי ש-0 יהיה למעלה
-        const x = 50 + (Math.cos(ang) * radius / size) * 100;
-        const y = 50 + (Math.sin(ang) * radius / size) * 100;
+      slots.forEach(slot => {
+        const angleDeg = parseFloat(slot.dataset.angle || "0");
+        const angle = (angleDeg - 90) * Math.PI / 180; // כדי ש-0 יהיה למעלה
+        const slotRect = slot.getBoundingClientRect();
+        const slotW = slotRect.width || 140;
 
-        const slot = makeSlot(item);
-        slot.style.left = x + "%";
-        slot.style.top = y + "%";
-        slotsEl.appendChild(slot);
+        const r = (size * radiusFactor) + (slotW * 0.18);
+
+        const x = centerX + (Math.cos(angle) * r);
+        const y = centerY + (Math.sin(angle) * r);
+
+        // בתוך הדיסק: position absolute יחסית לדיסק
+        slot.style.left = x + "px";
+        slot.style.top  = y + "px";
       });
     }
 
-    // רנדר ראשוני + רספונסיביות
-    layoutSlots();
+    // init
+    slots.forEach(buildMedia);
+
+    // צריך אחרי שהמדיה נטענה כדי שהמידות יהיו מדויקות יותר
+    window.addEventListener("load", () => {
+      placeSlots();
+      // ניסיון נוסף אחרי רגע (במיוחד במובייל)
+      setTimeout(placeSlots, 250);
+      setTimeout(placeSlots, 900);
+    });
+
     window.addEventListener("resize", () => {
-      clearTimeout(window.__rsz);
-      window.__rsz = setTimeout(layoutSlots, 120);
+      placeSlots();
+      setTimeout(placeSlots, 200);
     });
   </script>
 </body>
