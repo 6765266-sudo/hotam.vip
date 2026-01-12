@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>חותם שנשאר לדורות</title>
+
   <style>
     :root{
       --bg:#e9e0d6;
@@ -117,19 +118,20 @@
       opacity:.96;
     }
 
+    /* טקסט בעיגול סביב הכפתור */
     .ringText{
       position:absolute;
       left:50%; top:50%;
-      width: calc(var(--hub) * 1.65);
-      height: calc(var(--hub) * 1.65);
+      width: calc(var(--hub) * 1.85);
+      height: calc(var(--hub) * 1.85);
       transform: translate(-50%,-50%);
       z-index:6;
       pointer-events:none;
       opacity:.86;
     }
     .ringText text{
-      fill: rgba(255,255,255,.68);
-      font-weight:700;
+      fill: rgba(255,255,255,.70);
+      font-weight:800;
       font-size: 13px;
       letter-spacing: 2px;
     }
@@ -145,16 +147,10 @@
         translate(calc(cos(var(--a)) * var(--ringR)), calc(sin(var(--a)) * var(--ringR)));
       border-radius:16px;
       overflow:hidden;
-      background: rgba(0,0,0,.35);
+      background: rgba(0,0,0,.20);
       box-shadow: 0 10px 26px rgba(0,0,0,.35);
       border: 1px solid rgba(255,255,255,.06);
       z-index:3;
-    }
-    .card:after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.18));
-      pointer-events:none;
     }
 
     .card img,
@@ -166,39 +162,40 @@
       filter: contrast(1.02) saturate(.95);
     }
 
-    /* ✅ כיתוב: ימין-למטה, לא על כל הרוחב, יותר שקוף */
+    /* ✅ כיתוב: תמיד ימין-למטה, בלי רקע בכלל, מקסימום 2 שורות */
     .label{
       position:absolute;
       right:10px;
       bottom:10px;
       left:auto;
-      max-width: 72%;
+      top:auto;
+      max-width: 80%;
+      z-index:2;
+      pointer-events:none;
+      text-align:right;
+    }
+
+    .title, .sub{
+      margin:0;
       color:#fff;
       text-shadow: 0 2px 10px rgba(0,0,0,.75);
-      z-index:2;
-      display:block;
-      pointer-events:none;
+      display:-webkit-box;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2; /* מקסימום 2 שורות */
+      line-height: 1.15;
     }
-    .labelBox{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:12px;
-      background: rgba(0,0,0,.14);     /* יותר שקוף */
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,.10);
-    }
+
     .title{
       font-weight:900;
       font-size: clamp(12px, 1.4vw, 16px);
-      margin:0 0 2px 0;
-      line-height:1.05;
     }
     .sub{
-      font-weight:700;
-      opacity:.92;
+      font-weight:800;
+      opacity:.95;
       font-size: clamp(10px, 1.1vw, 13px);
-      margin:0;
-      line-height:1.1;
+      margin-top:2px;
     }
 
     /* 8 זוויות (שעון) */
@@ -220,91 +217,101 @@
         --hub: clamp(95px, calc(var(--diskSize) * 0.20), 140px);
         --hubInner: clamp(56px, calc(var(--diskSize) * 0.11), 74px);
       }
-      .ringText text{ font-size: 12px; letter-spacing: 1.5px; }
+      .ringText text{ font-size: 12px; letter-spacing: 1.6px; }
       .hubInner .icon{ font-size:18px; }
       .hubInner .txt{ font-size:11px; }
-      .label{ max-width: 78%; right:8px; bottom:8px; }
-      .labelBox{ padding:6px 9px; background: rgba(0,0,0,.12); }
+      .label{ max-width: 85%; right:8px; bottom:8px; }
+      .title{ -webkit-line-clamp: 2; }
+      .sub{ -webkit-line-clamp: 2; }
     }
   </style>
 </head>
+
 <body>
   <div class="stage">
     <div class="disk"></div>
 
-    <!-- 12 בשעון: זיכרון אבות -->
+    <!-- 12: זיכרון אבות -->
     <div class="card a0">
       <video src="assets/faith1.mp4" muted autoplay loop playsinline></video>
-      <div class="label"><div class="labelBox">
-        <p class="title">זיכרון אבות</p><p class="sub">שלא יֵאבד</p>
-      </div></div>
+      <div class="label">
+        <p class="title">זיכרון אבות</p>
+        <p class="sub">שלא יֵאבד</p>
+      </div>
     </div>
 
-    <!-- 1 בשעון: חותם שנשאר לדורות -->
+    <!-- 1-2: חותם שנשאר לדורות -->
     <div class="card a1">
       <img src="assets/still1_real.jpg" alt="still1" />
-      <div class="label"><div class="labelBox">
-        <p class="title">חותם שנשאר לדורות</p><p class="sub">שהנכדים ידעו</p>
-      </div></div>
+      <div class="label">
+        <p class="title">חותם שנשאר לדורות</p>
+        <p class="sub">שהנכדים ידעו</p>
+      </div>
     </div>
 
-    <!-- 3 בשעון: להעביר מורשת -->
+    <!-- 3: להעביר מורשת -->
     <div class="card a2">
       <video src="assets/faith2.mp4" muted autoplay loop playsinline></video>
-      <div class="label"><div class="labelBox">
-        <p class="title">להעביר מורשת</p><p class="sub">מדור לדור</p>
-      </div></div>
+      <div class="label">
+        <p class="title">להעביר מורשת</p>
+        <p class="sub">מדור לדור</p>
+      </div>
     </div>
 
-    <!-- 4-5 בשעון: סבא ונכד (ספרדי/מזרח) - טקסט חדש -->
+    <!-- 4-5: שרשרת הדורות -->
     <div class="card a3">
       <img src="assets/still2_real.jpg" alt="still2" />
-      <div class="label"><div class="labelBox">
-        <p class="title">שרשרת הדורות</p><p class="sub">סבא ונכד</p>
-      </div></div>
+      <div class="label">
+        <p class="title">שרשרת הדורות</p>
+        <p class="sub">סבא ונכד</p>
+      </div>
     </div>
 
-    <!-- 6 בשעון: יד שלומדת - מסירות נפש -->
+    <!-- 6: מסירות נפש -->
     <div class="card a4">
       <video src="assets/faith3.mp4" muted autoplay loop playsinline></video>
-      <div class="label"><div class="labelBox">
-        <p class="title">מסירות נפש</p><p class="sub">רגע שמתחבר</p>
-      </div></div>
+      <div class="label">
+        <p class="title">מסירות נפש</p>
+        <p class="sub">רגע שמתחבר</p>
+      </div>
     </div>
 
-    <!-- 7-8 בשעון: הסבא לומד - כי הם חיינו -->
+    <!-- 7-8: כי הם חיינו -->
     <div class="card a5">
       <img src="assets/still3_real.jpg" alt="still3" />
-      <div class="label"><div class="labelBox">
-        <p class="title">כי הם חיינו</p><p class="sub">להמחיש את מתיקות התורה</p>
-      </div></div>
+      <div class="label">
+        <p class="title">כי הם חיינו</p>
+        <p class="sub">להמחיש את מתיקות התורה</p>
+      </div>
     </div>
 
-    <!-- 9 בשעון: שבת -->
+    <!-- 9: שבת -->
     <div class="card a6">
       <video src="assets/faith4.mp4" muted autoplay loop playsinline></video>
-      <div class="label"><div class="labelBox">
-        <p class="title">שבת</p><p class="sub">עונג, רוגע, שלווה</p>
-      </div></div>
+      <div class="label">
+        <p class="title">שבת</p>
+        <p class="sub">עונג, רוגע, שלווה</p>
+      </div>
     </div>
 
-    <!-- 10-11 בשעון: תפילין -->
+    <!-- 10-11: תפילין -->
     <div class="card a7">
       <img src="assets/still4_real.jpg" alt="still4" />
-      <div class="label"><div class="labelBox">
-        <p class="title">תפילין</p><p class="sub">האות שמחבר</p>
-      </div></div>
+      <div class="label">
+        <p class="title">תפילין</p>
+        <p class="sub">האות שמחבר</p>
+      </div>
     </div>
 
     <!-- מרכז -->
     <div class="hub">
       <svg class="ringText" viewBox="0 0 200 200" aria-hidden="true">
         <defs>
-          <path id="circlePath" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/>
+          <path id="circlePath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/>
         </defs>
         <text>
           <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-            אמונה • משפחה • חותם שנשאר לדורות • זיכרון אבות • להעביר מורשת • שבת • תפילין •
+            זיכרון אבות • משפחה • חותם שנשאר לדורות • להעביר מורשת • מסירות נפש • מתיקות התורה • שבת • תפילין •
           </textPath>
         </text>
       </svg>
@@ -319,7 +326,7 @@
   </div>
 
   <script>
-    // אם הדפדפן חוסם autoplay – הפעלה בלחיצה
+    // אם autoplay נחסם – הפעלה בלחיצה
     document.getElementById('pressBtn').addEventListener('click', () => {
       document.querySelectorAll('video').forEach(v => {
         v.muted = true;
