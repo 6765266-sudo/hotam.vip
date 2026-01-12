@@ -10,19 +10,14 @@
       --disk:#0b0b0b;
       --disk2:#101010;
 
-      /* קוטר הדיסק רספונסיבי */
       --diskSize: min(92vw, 820px);
-
-      /* רדיוס למסלול הכרטיסים (קטן מספיק כדי להישאר בתוך הדיסק) */
       --ringR: calc(var(--diskSize) * 0.36);
 
-      /* גודל כרטיס */
       --cardW: clamp(170px, calc(var(--diskSize) * 0.23), 240px);
       --cardH: clamp(100px, calc(var(--diskSize) * 0.14), 150px);
 
-      /* מרכז */
       --hub: clamp(120px, calc(var(--diskSize) * 0.22), 190px);
-      --hubInner: clamp(58px, calc(var(--diskSize) * 0.10), 85px);
+      --hubInner: clamp(62px, calc(var(--diskSize) * 0.11), 90px);
     }
 
     *{box-sizing:border-box}
@@ -37,7 +32,7 @@
       color:#111;
     }
 
-    /* רקע “ישן/עדין” כמו נייר (אפשר לבטל אם לא רוצים) */
+    /* טקסטורה עדינה "נוסטלגית" (אפשר להחליש/להוריד) */
     body:before{
       content:"";
       position:fixed; inset:0;
@@ -46,7 +41,7 @@
         radial-gradient(900px 600px at 70% 80%, rgba(0,0,0,.06), transparent 60%),
         repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 2px, rgba(0,0,0,.02) 2px 4px);
       mix-blend-mode: multiply;
-      opacity:.35;
+      opacity:.30;
       pointer-events:none;
     }
 
@@ -70,7 +65,7 @@
       overflow:hidden;
     }
 
-    /* “חור דיסק” — מרכז */
+    /* מרכז / חור דיסק */
     .hub{
       position:absolute;
       left:50%; top:50%;
@@ -85,11 +80,12 @@
       z-index:5;
     }
 
+    /* כפתור מודרני במרכז */
     .hubInner{
       width: var(--hubInner);
       height: var(--hubInner);
       border-radius:50%;
-      background: rgba(30,30,30,.28);
+      background: rgba(30,30,30,.30);
       border: 1px solid rgba(255,255,255,.18);
       box-shadow: inset 0 0 0 1px rgba(0,0,0,.22);
       display:grid;
@@ -97,34 +93,51 @@
       cursor:pointer;
       transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
       color:#fff;
-      font-weight:700;
-      letter-spacing:.5px;
+      user-select:none;
     }
     .hubInner:hover{
       background: rgba(255,255,255,.22);
-      box-shadow: 0 0 0 6px rgba(255,255,255,.08), inset 0 0 0 1px rgba(255,255,255,.25);
-      transform: scale(1.05);
+      box-shadow: 0 0 0 7px rgba(255,255,255,.08), inset 0 0 0 1px rgba(255,255,255,.25);
+      transform: scale(1.06);
+    }
+
+    .hubInner .btnWrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
+      line-height:1;
+    }
+    .hubInner .icon{
+      font-size:20px;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+    }
+    .hubInner .txt{
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.4px;
+      opacity:.95;
     }
 
     /* טקסט מעגלי סביב הכפתור */
     .ringText{
       position:absolute;
       left:50%; top:50%;
-      width: calc(var(--hub) * 1.55);
-      height: calc(var(--hub) * 1.55);
+      width: calc(var(--hub) * 1.65);
+      height: calc(var(--hub) * 1.65);
       transform: translate(-50%,-50%);
       z-index:6;
       pointer-events:none;
-      opacity:.9;
+      opacity:.88;
     }
     .ringText text{
-      fill: rgba(255,255,255,.75);
-      font-weight:600;
-      font-size: 14px;
+      fill: rgba(255,255,255,.70);
+      font-weight:700;
+      font-size: 13px;
       letter-spacing: 2px;
     }
 
-    /* כרטיסים סביב הדיסק */
+    /* כרטיסים */
     .card{
       position:absolute;
       left:50%; top:50%;
@@ -140,15 +153,12 @@
       border: 1px solid rgba(255,255,255,.06);
       z-index:3;
     }
-
-    /* כדי “להעמיק” למראה תלת־ממדי */
     .card:after{
       content:"";
       position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.20));
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.18));
       pointer-events:none;
     }
-
     .card img,
     .card video{
       width:100%;
@@ -158,56 +168,50 @@
       filter: contrast(1.02) saturate(.95);
     }
 
+    /* כיתוב: פחות כהה, יותר עדין (כדי לא להסתיר זקן/פנים) */
     .label{
       position:absolute;
       right:10px;
       bottom:10px;
       left:10px;
       color:#fff;
-      text-shadow: 0 2px 10px rgba(0,0,0,.8);
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,.75);
       z-index:2;
+      display:flex;
+      justify-content:flex-end;
     }
-
-    .label .title{
-      font-weight:800;
+    .labelBox{
+      padding:7px 10px;
+      border-radius:12px;
+      background: rgba(0,0,0,.22);     /* <- פה החלשנו משמעותית */
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.10);
+      max-width: 100%;
+    }
+    .title{
+      font-weight:900;
       font-size: clamp(12px, 1.4vw, 16px);
+      margin:0 0 2px 0;
       line-height:1.05;
-      margin:0;
     }
-    .label .sub{
-      font-weight:600;
-      opacity:.9;
+    .sub{
+      font-weight:700;
+      opacity:.92;
       font-size: clamp(10px, 1.1vw, 13px);
       margin:0;
       line-height:1.1;
     }
 
-    /* רקע עדין לכיתוב כדי שלא ייחתך/ייעלם */
-    .labelBox{
-      padding:8px 10px;
-      border-radius:12px;
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,.08);
-      max-width: 100%;
-    }
+    /* 8 זוויות סימטריות */
+    .a0{ --a: -90deg; }
+    .a1{ --a: -45deg; }
+    .a2{ --a: 0deg; }
+    .a3{ --a: 45deg; }
+    .a4{ --a: 90deg; }
+    .a5{ --a: 135deg; }
+    .a6{ --a: 180deg; }
+    .a7{ --a: 225deg; }
 
-    /* “סימטריה מושלמת”: 8 זוויות בדיוק כמו שעון */
-    /* 12:00 = -90deg, ואז כל 45deg */
-    .a0{ --a: -90deg; } /* 12 */
-    .a1{ --a: -45deg; } /* 1:30 */
-    .a2{ --a: 0deg; }   /* 3 */
-    .a3{ --a: 45deg; }  /* 4:30 */
-    .a4{ --a: 90deg; }  /* 6 */
-    .a5{ --a: 135deg; } /* 7:30 */
-    .a6{ --a: 180deg; } /* 9 */
-    .a7{ --a: 225deg; } /* 10:30 */
-
-    /* מובייל: מקטינים מרכז, רדיוס, וכרטיסים כדי שלא “יתפוצץ” הלבן */
     @media (max-width: 520px){
       :root{
         --diskSize: 96vw;
@@ -215,46 +219,44 @@
         --cardW: clamp(140px, calc(var(--diskSize) * 0.28), 200px);
         --cardH: clamp(86px, calc(var(--diskSize) * 0.16), 120px);
         --hub: clamp(95px, calc(var(--diskSize) * 0.20), 140px);
-        --hubInner: clamp(52px, calc(var(--diskSize) * 0.11), 70px);
+        --hubInner: clamp(56px, calc(var(--diskSize) * 0.11), 74px);
       }
       .ringText text{ font-size: 12px; letter-spacing: 1.5px; }
+      .hubInner .icon{ font-size:18px; }
+      .hubInner .txt{ font-size:11px; }
     }
-
-    /* תמיכה ל-cos/sin ב-Chrome/Edge מודרני.
-       אם אצלך זה לא נתמך, אגיד לך חלופה עם JS (אבל לרוב זה עובד). */
   </style>
 </head>
 <body>
   <div class="stage">
     <div class="disk"></div>
 
-    <!-- 8 כרטיסים מסביב לדיסק (תמונות + וידאו) -->
-    <!-- שים לב: השתמשתי בשמות שיש לך עכשיו בתיקיית assets -->
+    <!-- שים לב: אם "תפילין" אצלך זה תמונה אחרת, פשוט החלף בין stillX_real.jpg -->
     <div class="card a0">
       <video src="assets/faith1.mp4" muted autoplay loop playsinline></video>
       <div class="label"><div class="labelBox">
-        <p class="title">אמונה</p><p class="sub">רגע קטן מאיר</p>
+        <p class="title">אמונה</p><p class="sub">לחיי עולם הבא</p>
       </div></div>
     </div>
 
     <div class="card a1">
       <img src="assets/still1_real.jpg" alt="still1" />
       <div class="label"><div class="labelBox">
-        <p class="title">משפחה</p><p class="sub">מכתב שנשמר</p>
+        <p class="title">חותם שנשאר לדורות</p><p class="sub">שהנכדים ידעו</p>
       </div></div>
     </div>
 
     <div class="card a2">
       <video src="assets/faith2.mp4" muted autoplay loop playsinline></video>
       <div class="label"><div class="labelBox">
-        <p class="title">בית של פעם</p><p class="sub">שבת, אור ושקט</p>
+        <p class="title">להעביר מורשת</p><p class="sub">מדור לדור</p>
       </div></div>
     </div>
 
     <div class="card a3">
       <img src="assets/still2_real.jpg" alt="still2" />
       <div class="label"><div class="labelBox">
-        <p class="title">זיכרון חי</p><p class="sub">שלא הולך לאיבוד</p>
+        <p class="title">תפילין</p><p class="sub">האות שמחבר</p>
       </div></div>
     </div>
 
@@ -268,44 +270,48 @@
     <div class="card a5">
       <img src="assets/still3_real.jpg" alt="still3" />
       <div class="label"><div class="labelBox">
-        <p class="title">לב</p><p class="sub">רגע שמחבר</p>
+        <p class="title">מסירות נפש</p><p class="sub">רגע שמחבר</p>
       </div></div>
     </div>
 
     <div class="card a6">
       <video src="assets/faith4.mp4" muted autoplay loop playsinline></video>
       <div class="label"><div class="labelBox">
-        <p class="title">שבת</p><p class="sub">אור בבית</p>
+        <p class="title">שבת</p><p class="sub">עונג, רוגע, שלווה</p>
       </div></div>
     </div>
 
     <div class="card a7">
       <img src="assets/still4_real.jpg" alt="still4" />
       <div class="label"><div class="labelBox">
-        <p class="title">חותם</p><p class="sub">שנשאר לדורות</p>
+        <p class="title">זיכרון אבות</p><p class="sub">שלא יֵאבד</p>
       </div></div>
     </div>
 
     <!-- מרכז -->
-    <div class="hub" aria-label="מרכז">
-      <!-- טקסט מעגלי סביב הכפתור -->
+    <div class="hub">
       <svg class="ringText" viewBox="0 0 200 200" aria-hidden="true">
         <defs>
-          <path id="circlePath" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/>
+          <path id="circlePath" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/>
         </defs>
         <text>
           <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-            חותם שנשאר לדורות • זיכרונות • ערכים • אמונה • משפחה •
+            אמונה • משפחה • חותם שנשאר לדורות • זיכרון אבות • להעביר מורשת • שבת • תפילין •
           </textPath>
         </text>
       </svg>
 
-      <div class="hubInner" id="pressBtn">לחץ</div>
+      <div class="hubInner" id="pressBtn" title="התחל">
+        <div class="btnWrap">
+          <div class="icon">👆</div>
+          <div class="txt">התחל</div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // אם הדפדפן חוסם autoplay לוידאו – ננסה להפעיל שוב בלחיצה.
+    // אם הדפדפן חוסם autoplay – הפעלה בלחיצה
     document.getElementById('pressBtn').addEventListener('click', () => {
       document.querySelectorAll('video').forEach(v => {
         v.muted = true;
