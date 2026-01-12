@@ -2,503 +2,317 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>hotam.vip</title>
-
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>חותם שנשאר לדורות</title>
   <style>
     :root{
-      --bg: #efe7db;
+      --bg:#e9e0d6;
+      --disk:#0b0b0b;
+      --disk2:#101010;
 
-      /* דיסק */
-      --disc-size: clamp(560px, 86vmin, 940px);
-      --shadow: 0 18px 45px rgba(0,0,0,0.35);
+      /* קוטר הדיסק רספונסיבי */
+      --diskSize: min(92vw, 820px);
 
-      /* טבעת הכרטיסים (הכי חשוב כדי שלא יחתך) */
-      --ring-radius: clamp(215px, 31vmin, 330px);
+      /* רדיוס למסלול הכרטיסים (קטן מספיק כדי להישאר בתוך הדיסק) */
+      --ringR: calc(var(--diskSize) * 0.36);
 
-      /* כרטיס */
-      --slot-w: clamp(200px, 22vmin, 270px);
-      --slot-h: clamp(128px, 14vmin, 168px);
-      --slot-radius: 18px;
+      /* גודל כרטיס */
+      --cardW: clamp(170px, calc(var(--diskSize) * 0.23), 240px);
+      --cardH: clamp(100px, calc(var(--diskSize) * 0.14), 150px);
 
-      /* עומק עדין */
-      --depth-radius: 18px;  /* כמה יוצא החוצה/פנימה */
-      --depth-scale: 0.16;   /* כמה גדל/קטן */
-      --depth-lift: 10px;    /* תזוזה למעלה/למטה */
-
-      /* מרכז דיסק */
-      --center-ring: clamp(220px, 30vmin, 340px); /* קוטר טבעת הכיתוב */
-      --hub-size: clamp(84px, 12vmin, 112px);     /* “טבור” דיסק */
-      --press-size: clamp(56px, 8vmin, 70px);
-
-      --font: system-ui, -apple-system, "Segoe UI", Arial, "Heebo", "Rubik", sans-serif;
+      /* מרכז */
+      --hub: clamp(120px, calc(var(--diskSize) * 0.22), 190px);
+      --hubInner: clamp(58px, calc(var(--diskSize) * 0.10), 85px);
     }
 
-    @media (max-width: 720px){
-      :root{
-        --disc-size: 94vmin;
-
-        /* במובייל: מקרבים פנימה כדי שלא יהיה “לבן ענק” */
-        --ring-radius: clamp(170px, 28vmin, 250px);
-
-        --slot-w: clamp(155px, 44vw, 200px);
-        --slot-h: clamp(108px, 28vw, 136px);
-
-        --depth-radius: 14px;
-        --depth-scale: 0.14;
-        --depth-lift: 8px;
-
-        --center-ring: clamp(200px, 62vw, 310px);
-        --hub-size: clamp(78px, 22vw, 106px);
-        --press-size: clamp(56px, 18vw, 70px);
-      }
-    }
-
-    html,body{height:100%;}
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: var(--font);
-      background: radial-gradient(1200px 700px at 50% 35%, #fff6ea 0%, var(--bg) 55%, #e8ddcf 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial;
+      background: radial-gradient(1200px 800px at 50% 35%, #f3ece4 0%, var(--bg) 55%, #e3d7cb 100%);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      overflow-x:hidden;
+      color:#111;
+    }
+
+    /* רקע “ישן/עדין” כמו נייר (אפשר לבטל אם לא רוצים) */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        radial-gradient(900px 600px at 30% 20%, rgba(0,0,0,.05), transparent 60%),
+        radial-gradient(900px 600px at 70% 80%, rgba(0,0,0,.06), transparent 60%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 2px, rgba(0,0,0,.02) 2px 4px);
+      mix-blend-mode: multiply;
+      opacity:.35;
+      pointer-events:none;
     }
 
     .stage{
-      width:100vw;
-      height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-      box-sizing:border-box;
-    }
-
-    .disc-wrap{
+      width: var(--diskSize);
+      height: var(--diskSize);
       position:relative;
-      width: var(--disc-size);
-      height: var(--disc-size);
+      filter: drop-shadow(0 22px 45px rgba(0,0,0,.25));
     }
 
-    /* דיסק “עתיק”: חריצים + שריטות + שכבות */
-    .disc{
-      position:absolute;
-      inset:0;
-      border-radius:50%;
-      background:
-        /* חריצים */
-        repeating-radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,0.018) 0 6px,
-          rgba(0,0,0,0.00) 6px 7px
-        ),
-        /* שריטות עדינות */
-        repeating-linear-gradient(
-          12deg,
-          rgba(255,255,255,0.028) 0 2px,
-          rgba(0,0,0,0.00) 2px 12px
-        ),
-        /* “זמן/אבק” */
-        radial-gradient(circle at 35% 25%, rgba(255,240,220,0.06) 0%, rgba(0,0,0,0) 42%),
-        radial-gradient(circle at 70% 75%, rgba(255,220,170,0.05) 0%, rgba(0,0,0,0) 46%),
-        radial-gradient(circle at 50% 50%, #0b0b0b 0%, #050505 62%, #000 100%);
-      box-shadow: var(--shadow);
-      filter: saturate(0.95) contrast(1.05);
-    }
-
-    /* הכל חייב להיות בתוך העיגול */
-    .clip{
-      position:absolute;
-      inset:0;
-      border-radius:50%;
-      overflow:hidden;
-    }
-
-    /* ===== כרטיסים ===== */
-    #slotsRoot{ position:absolute; inset:0; }
-
-    .slot{
-      position:absolute;
-      left:50%;
-      top:50%;
-      width: var(--slot-w);
-      height: var(--slot-h);
-      border-radius: var(--slot-radius);
-      overflow:hidden;
-      background: rgba(255,255,255,0.06);
-      outline: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 14px 28px rgba(0,0,0,0.28);
-
-      transform:
-        translate(-50%,-50%)
-        rotate(var(--a))
-        translateX(calc(var(--ring-radius) + var(--dr)))
-        rotate(calc(var(--a) * -1))
-        translateY(var(--dy))
-        scale(var(--s));
-
-      z-index: var(--z);
-      will-change: transform;
-      cursor: pointer;
-    }
-
-    /* “תמונה 1” כ-featured (גדולה יותר, אבל עדיין בפנים) */
-    .slot.featured{
-      outline: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.36);
-      transform:
-        translate(-50%,-50%)
-        rotate(var(--a))
-        translateX(calc(var(--ring-radius) + var(--dr)))
-        rotate(calc(var(--a) * -1))
-        translateY(calc(var(--dy) - 4px))
-        scale(calc(var(--s) * 1.10));
-    }
-
-    .media{
-      position:absolute;
-      inset:0;
+    .disk{
       width:100%;
       height:100%;
-      object-fit: cover;
-      display:block;
-      transform: scale(1.01);
-      filter: contrast(1.05) saturate(0.92);
+      border-radius:50%;
+      position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.08) 0 8%, transparent 9% 100%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.03) 0 35%, rgba(0,0,0,.15) 60%, rgba(0,0,0,.35) 100%),
+        repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.05) 0 2px, rgba(255,255,255,.00) 2px 7px),
+        linear-gradient(145deg, var(--disk2), var(--disk));
+      overflow:hidden;
     }
 
-    /* גרדיאנט יותר “נמוך” כדי שהטקסט לא ייחתך */
-    .slot::before{
-      content:"";
+    /* “חור דיסק” — מרכז */
+    .hub{
       position:absolute;
-      inset:0;
-      background:
-        linear-gradient(180deg,
-          rgba(0,0,0,0.10) 0%,
-          rgba(0,0,0,0.00) 52%,
-          rgba(0,0,0,0.68) 100%
-        );
+      left:50%; top:50%;
+      width: var(--hub);
+      height: var(--hub);
+      transform: translate(-50%,-50%);
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(255,255,255,.92) 0%, rgba(255,255,255,.88) 35%, rgba(235,235,235,.95) 100%);
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      display:grid;
+      place-items:center;
+      z-index:5;
+    }
+
+    .hubInner{
+      width: var(--hubInner);
+      height: var(--hubInner);
+      border-radius:50%;
+      background: rgba(30,30,30,.28);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.22);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+      color:#fff;
+      font-weight:700;
+      letter-spacing:.5px;
+    }
+    .hubInner:hover{
+      background: rgba(255,255,255,.22);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.08), inset 0 0 0 1px rgba(255,255,255,.25);
+      transform: scale(1.05);
+    }
+
+    /* טקסט מעגלי סביב הכפתור */
+    .ringText{
+      position:absolute;
+      left:50%; top:50%;
+      width: calc(var(--hub) * 1.55);
+      height: calc(var(--hub) * 1.55);
+      transform: translate(-50%,-50%);
+      z-index:6;
       pointer-events:none;
-      z-index: 2;
+      opacity:.9;
+    }
+    .ringText text{
+      fill: rgba(255,255,255,.75);
+      font-weight:600;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    /* כרטיסים סביב הדיסק */
+    .card{
+      position:absolute;
+      left:50%; top:50%;
+      width: var(--cardW);
+      height: var(--cardH);
+      transform:
+        translate(-50%,-50%)
+        translate(calc(cos(var(--a)) * var(--ringR)), calc(sin(var(--a)) * var(--ringR)));
+      border-radius:16px;
+      overflow:hidden;
+      background: rgba(0,0,0,.35);
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.06);
+      z-index:3;
+    }
+
+    /* כדי “להעמיק” למראה תלת־ממדי */
+    .card:after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.20));
+      pointer-events:none;
+    }
+
+    .card img,
+    .card video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: contrast(1.02) saturate(.95);
     }
 
     .label{
       position:absolute;
-      right: 12px;
-      left: 12px;
-      bottom: 10px;
-      z-index: 3;
+      right:10px;
+      bottom:10px;
+      left:10px;
       color:#fff;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.55);
-
-      /* חשוב: שלא יחתך */
+      text-shadow: 0 2px 10px rgba(0,0,0,.8);
       display:flex;
-      flex-direction:column;
-      gap: 4px;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:10px;
+      z-index:2;
     }
 
-    .label .h{
-      font-weight: 1000;
-      font-size: clamp(13px, 1.8vmin, 15px);
-      line-height: 1.12;
+    .label .title{
+      font-weight:800;
+      font-size: clamp(12px, 1.4vw, 16px);
+      line-height:1.05;
       margin:0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
-    .label .p{
+    .label .sub{
+      font-weight:600;
+      opacity:.9;
+      font-size: clamp(10px, 1.1vw, 13px);
       margin:0;
-      font-size: clamp(11px, 1.5vmin, 13px);
-      opacity: 0.92;
-      line-height: 1.15;
-
-      /* שני שורות גג, לא “נחתך” באמצע */
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      line-height:1.1;
     }
 
-    .fallback{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: rgba(0,0,0,0.55);
-      color: rgba(255,255,255,0.9);
-      font-size: 12px;
-      z-index: 5;
-      padding: 10px;
-      text-align:center;
+    /* רקע עדין לכיתוב כדי שלא ייחתך/ייעלם */
+    .labelBox{
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.08);
+      max-width: 100%;
     }
 
-    /* ===== מרכז דיסק DVD ===== */
-    .center{
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform: translate(-50%,-50%);
-      width: var(--center-ring);
-      height: var(--center-ring);
-      z-index: 999;
-      pointer-events:auto;
+    /* “סימטריה מושלמת”: 8 זוויות בדיוק כמו שעון */
+    /* 12:00 = -90deg, ואז כל 45deg */
+    .a0{ --a: -90deg; } /* 12 */
+    .a1{ --a: -45deg; } /* 1:30 */
+    .a2{ --a: 0deg; }   /* 3 */
+    .a3{ --a: 45deg; }  /* 4:30 */
+    .a4{ --a: 90deg; }  /* 6 */
+    .a5{ --a: 135deg; } /* 7:30 */
+    .a6{ --a: 180deg; } /* 9 */
+    .a7{ --a: 225deg; } /* 10:30 */
+
+    /* מובייל: מקטינים מרכז, רדיוס, וכרטיסים כדי שלא “יתפוצץ” הלבן */
+    @media (max-width: 520px){
+      :root{
+        --diskSize: 96vw;
+        --ringR: calc(var(--diskSize) * 0.34);
+        --cardW: clamp(140px, calc(var(--diskSize) * 0.28), 200px);
+        --cardH: clamp(86px, calc(var(--diskSize) * 0.16), 120px);
+        --hub: clamp(95px, calc(var(--diskSize) * 0.20), 140px);
+        --hubInner: clamp(52px, calc(var(--diskSize) * 0.11), 70px);
+      }
+      .ringText text{ font-size: 12px; letter-spacing: 1.5px; }
     }
 
-    /* טבעת “תווית” עדינה (כמו דיסק אמיתי) */
-    .center .label-ring{
-      position:absolute;
-      inset: 10%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,0.08) 0%,
-          rgba(255,255,255,0.04) 45%,
-          rgba(255,255,255,0.00) 70%
-        );
-      outline: 1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 18px 44px rgba(0,0,0,0.18);
-      pointer-events:none;
-    }
-
-    /* טבור דיסק (שקוף/אפור) */
-    .hub{
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform: translate(-50%,-50%);
-      width: var(--hub-size);
-      height: var(--hub-size);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 40% 35%,
-          rgba(255,255,255,0.20) 0%,
-          rgba(255,255,255,0.10) 35%,
-          rgba(0,0,0,0.10) 100%
-        );
-      outline: 1px solid rgba(255,255,255,0.14);
-      box-shadow: 0 16px 36px rgba(0,0,0,0.25);
-      display:grid;
-      place-items:center;
-    }
-
-    .press{
-      width: var(--press-size);
-      height: var(--press-size);
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(170,170,170,0.16);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      user-select:none;
-      transition: filter .18s ease, box-shadow .18s ease, background .18s ease;
-    }
-    .press span{
-      color:#fff;
-      font-weight: 1000;
-      font-size: clamp(14px, 1.8vmin, 18px);
-      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-    }
-    .press:hover{
-      background: rgba(255,255,255,0.24);
-      box-shadow: 0 0 26px rgba(255,255,255,0.10), 0 14px 30px rgba(0,0,0,0.28);
-      filter: brightness(1.18);
-    }
-
-    /* SVG טבעת טקסט מלאה סביב הכפתור */
-    .ring-svg{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      pointer-events:none;
-      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.35));
-    }
-    .ring-text{
-      fill: rgba(255,255,255,0.68);
-      font-weight: 900;
-      letter-spacing: .5px;
-    }
-    .center:hover .ring-text{
-      fill: rgba(255,255,255,0.90);
-    }
-
+    /* תמיכה ל-cos/sin ב-Chrome/Edge מודרני.
+       אם אצלך זה לא נתמך, אגיד לך חלופה עם JS (אבל לרוב זה עובד). */
   </style>
 </head>
-
 <body>
   <div class="stage">
-    <div class="disc-wrap">
-      <div class="disc"></div>
+    <div class="disk"></div>
 
-      <div class="clip">
-        <div id="slotsRoot"></div>
+    <!-- 8 כרטיסים מסביב לדיסק (תמונות + וידאו) -->
+    <!-- שים לב: השתמשתי בשמות שיש לך עכשיו בתיקיית assets -->
+    <div class="card a0">
+      <video src="assets/faith1.mp4" muted autoplay loop playsinline></video>
+      <div class="label"><div class="labelBox">
+        <p class="title">אמונה</p><p class="sub">רגע קטן מאיר</p>
+      </div></div>
+    </div>
 
-        <!-- מרכז דיסק -->
-        <div class="center">
-          <div class="label-ring"></div>
+    <div class="card a1">
+      <img src="assets/still1_real.jpg" alt="still1" />
+      <div class="label"><div class="labelBox">
+        <p class="title">משפחה</p><p class="sub">מכתב שנשמר</p>
+      </div></div>
+    </div>
 
-          <!-- טקסט במעגל: “רצף משפטים” -->
-          <svg class="ring-svg" viewBox="0 0 300 300" aria-hidden="true">
-            <defs>
-              <path id="circleAll" d="M150,150 m-110,0 a110,110 0 1,1 220,0 a110,110 0 1,1 -220,0" />
-            </defs>
+    <div class="card a2">
+      <video src="assets/faith2.mp4" muted autoplay loop playsinline></video>
+      <div class="label"><div class="labelBox">
+        <p class="title">בית של פעם</p><p class="sub">שבת, אור ושקט</p>
+      </div></div>
+    </div>
 
-            <text class="ring-text" font-size="14">
-              <textPath href="#circleAll" startOffset="50%" text-anchor="middle">
-                חותם שנשאר לדורות • זוכרים • שומרים • מעבירים • אמונה • משפחה • זיכרון • ואם רוצים לראות עוד — לחץ כאן •
-              </textPath>
-            </text>
-          </svg>
+    <div class="card a3">
+      <img src="assets/still2_real.jpg" alt="still2" />
+      <div class="label"><div class="labelBox">
+        <p class="title">זיכרון חי</p><p class="sub">שלא הולך לאיבוד</p>
+      </div></div>
+    </div>
 
-          <!-- טבור + כפתור -->
-          <div class="hub">
-            <div class="press" id="pressBtn" title="לחץ">
-              <span>לחץ</span>
-            </div>
-          </div>
-        </div>
+    <div class="card a4">
+      <video src="assets/faith3.mp4" muted autoplay loop playsinline></video>
+      <div class="label"><div class="labelBox">
+        <p class="title">לימוד</p><p class="sub">דף ועוד דף</p>
+      </div></div>
+    </div>
 
-      </div>
+    <div class="card a5">
+      <img src="assets/still3_real.jpg" alt="still3" />
+      <div class="label"><div class="labelBox">
+        <p class="title">לב</p><p class="sub">רגע שמחבר</p>
+      </div></div>
+    </div>
+
+    <div class="card a6">
+      <video src="assets/faith4.mp4" muted autoplay loop playsinline></video>
+      <div class="label"><div class="labelBox">
+        <p class="title">שבת</p><p class="sub">אור בבית</p>
+      </div></div>
+    </div>
+
+    <div class="card a7">
+      <img src="assets/still4_real.jpg" alt="still4" />
+      <div class="label"><div class="labelBox">
+        <p class="title">חותם</p><p class="sub">שנשאר לדורות</p>
+      </div></div>
+    </div>
+
+    <!-- מרכז -->
+    <div class="hub" aria-label="מרכז">
+      <!-- טקסט מעגלי סביב הכפתור -->
+      <svg class="ringText" viewBox="0 0 200 200" aria-hidden="true">
+        <defs>
+          <path id="circlePath" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/>
+        </defs>
+        <text>
+          <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
+            חותם שנשאר לדורות • זיכרונות • ערכים • אמונה • משפחה •
+          </textPath>
+        </text>
+      </svg>
+
+      <div class="hubInner" id="pressBtn">לחץ</div>
     </div>
   </div>
 
   <script>
-    const ASSET_BASE = "./assets/";
-
-    // 8 פריטים (4 וידאו + 4 תמונות)
-    const items = [
-      { type: "video", src: "faith1.mp4", title: "אמונה", sub: "רגע קטן מאיר" },
-      { type: "video", src: "faith2.mp4", title: "בית של פעם", sub: "שבת, אור ושקט" },
-      { type: "video", src: "faith3.mp4", title: "לימוד", sub: "דף ועוד דף" },
-      { type: "video", src: "faith4.mp4", title: "שבת", sub: "אור בבית" },
-
-      { type: "image", src: "still1_real.jpg", title: "זיכרון חי", sub: "שנשאר לדורות" },
-      { type: "image", src: "still2_real.jpg", title: "משפחה", sub: "מכתב שנשמר" },
-      { type: "image", src: "still3_real.jpg", title: "לב", sub: "רגע שמחבר" },
-      { type: "image", src: "still4_real.jpg", title: "חותם", sub: "שלא הולך לאיבוד" },
-    ];
-
-    const COUNT = 8;
-    const STEP = 360 / COUNT;
-
-    // סימטריה כמו שעון: 12 למעלה, ואז ימינה עם השעון
-    const START_ANGLE = 270;
-
-    // ברירת מחדל: “תמונה 1” כ-featured
-    // אם אצלך “תמונה 1” זה קובץ אחר — פשוט תשנה את האינדקס פה.
-    let featuredIndex = 0;
-
-    const slotsRoot = document.getElementById("slotsRoot");
-    const pressBtn = document.getElementById("pressBtn");
-
-    pressBtn.addEventListener("click", () => {
-      alert("כאן אתה פותח את השאלון/המשך התהליך");
-    });
-
-    function render(){
-      slotsRoot.innerHTML = "";
-      for(let i=0; i<COUNT; i++){
-        const angle = (START_ANGLE + i*STEP) % 360;
-        const slot = makeSlot(items[i], angle, i);
-        if(i === featuredIndex) slot.classList.add("featured");
-        slotsRoot.appendChild(slot);
-      }
-    }
-
-    function makeSlot(item, angleDeg, index){
-      const slot = document.createElement("div");
-      slot.className = "slot";
-      slot.style.setProperty("--a", angleDeg + "deg");
-
-      // עומק עדין לפי סינוס, אבל נשאר סימטרי ושווה
-      const rad = angleDeg * Math.PI / 180;
-      const depth = Math.sin(rad); // -1..+1
-      const t = (depth + 1) / 2;   // 0..1
-
-      const rootStyle = getComputedStyle(document.documentElement);
-      const depthRadius = parseFloat(rootStyle.getPropertyValue("--depth-radius")) || 18;
-      const depthScale  = parseFloat(rootStyle.getPropertyValue("--depth-scale"))  || 0.16;
-      const depthLift   = parseFloat(rootStyle.getPropertyValue("--depth-lift"))   || 10;
-
-      // בסיס אחיד לכולם, עם שינוי קטן מאוד
-      let scale = 0.94 + depthScale * t;
-
-      // “תמונה 1” מקבלת עוד טיפת בוסט (אבל לא שוברת סימטריה)
-      if(index === featuredIndex) scale *= 1.02;
-
-      const dr = (depthRadius * depth);
-      const dy = (depthLift * depth) + "px";
-      const z  = Math.round(100 + 120 * t);
-
-      slot.style.setProperty("--s", scale.toFixed(3));
-      slot.style.setProperty("--dr", dr.toFixed(1) + "px");
-      slot.style.setProperty("--dy", dy);
-      slot.style.setProperty("--z", z);
-
-      const label = document.createElement("div");
-      label.className = "label";
-      label.innerHTML = `
-        <p class="h">${escapeHtml(item.title || "")}</p>
-        <p class="p">${escapeHtml(item.sub || "")}</p>
-      `;
-
-      const fullSrc = ASSET_BASE + item.src;
-
-      if(item.type === "video"){
-        const v = document.createElement("video");
-        v.className = "media";
-        v.src = fullSrc;
+    // אם הדפדפן חוסם autoplay לוידאו – ננסה להפעיל שוב בלחיצה.
+    document.getElementById('pressBtn').addEventListener('click', () => {
+      document.querySelectorAll('video').forEach(v => {
         v.muted = true;
-        v.loop = true;
-        v.playsInline = true;
-        v.autoplay = true;
-        v.preload = "metadata";
-
-        v.addEventListener("canplay", () => {
-          const p = v.play();
-          if (p && typeof p.catch === "function") p.catch(() => {});
-        });
-        v.addEventListener("error", () => showFallback(slot, "וידאו לא נטען (בדוק שם/סיומת)"));
-        slot.appendChild(v);
-      } else {
-        const img = document.createElement("img");
-        img.className = "media";
-        img.src = fullSrc;
-        img.alt = item.title || "תמונה";
-        img.loading = "lazy";
-        img.decoding = "async";
-        img.addEventListener("error", () => showFallback(slot, "תמונה לא נטענה (בדוק שם/סיומת)"));
-        slot.appendChild(img);
-      }
-
-      slot.appendChild(label);
-
-      // קליק על כרטיס = הופך אותו ל-featured (אם אתה רוצה “רק תמונה 1”, פשוט לא לוחצים)
-      slot.addEventListener("click", () => {
-        featuredIndex = index;
-        render();
+        const p = v.play();
+        if (p && p.catch) p.catch(()=>{});
       });
-
-      return slot;
-    }
-
-    function showFallback(slot, text){
-      if (slot.querySelector(".fallback")) return;
-      const fb = document.createElement("div");
-      fb.className = "fallback";
-      fb.textContent = text;
-      slot.appendChild(fb);
-    }
-
-    function escapeHtml(str){
-      return String(str).replace(/[&<>"']/g, s => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-      }[s]));
-    }
-
-    render();
+    });
   </script>
 </body>
 </html>
