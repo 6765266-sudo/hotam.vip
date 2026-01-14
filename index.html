@@ -4,17 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>hotam.vip</title>
+
   <style>
     :root{
       --bg: #efe7dc;
       --disc: #0f0f10;
       --disc2: #101012;
+
       --ringText: rgba(255,255,255,.72);
       --ringTextGlow: rgba(255,255,255,.18);
-      --centerOuter: rgba(255,255,255,.88);
-      --centerInner: rgba(120,120,120,.35);
-      --btn: rgba(255,255,255,.10);
-      --btnHover: rgba(255,255,255,.18);
+
+      --hubOuter: rgba(255,255,255,.92);
+      --hubInner: rgba(140,140,140,.35);
+      --hubShadow: 0 10px 30px rgba(0,0,0,.28);
+
+      --startBase: rgba(0,0,0,.18);
+      --startHover: rgba(0,0,0,.05);
+      --startBorder: rgba(0,0,0,.18);
+      --startText: rgba(255,255,255,.92);
+      --startTextHover: rgba(30,30,30,.92);
+
       --shadow: 0 22px 55px rgba(0,0,0,.35);
     }
 
@@ -26,7 +35,6 @@
       place-items:center;
       background: radial-gradient(1200px 800px at 50% 30%, #fff6ea 0%, var(--bg) 55%, #e6ddcf 100%);
       font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      color:#111;
     }
 
     .stage{
@@ -37,7 +45,6 @@
       place-items:center;
     }
 
-    /* הדיסק */
     .disc{
       width:100%;
       height:100%;
@@ -59,35 +66,23 @@
       place-items:center;
       pointer-events:none;
     }
-
     .ring svg{
       width:52%;
       height:52%;
       overflow:visible;
       filter: drop-shadow(0 1px 0 var(--ringTextGlow));
     }
-
-    /* כאן האנימציה */
     .ring-spin{
       transform-origin: 50% 50%;
-      animation: spin 12s linear infinite;
+      animation: spin 24s linear infinite; /* <-- פי 2 יותר לאט */
     }
-    /* אם תרצה הפוך כיוון – החלף ל: spinReverse */
-    .ring-spin.reverse{
-      animation: spinReverse 12s linear infinite;
-    }
-
     @keyframes spin{
       from{ transform: rotate(0deg); }
       to{ transform: rotate(360deg); }
     }
-    @keyframes spinReverse{
-      from{ transform: rotate(360deg); }
-      to{ transform: rotate(0deg); }
-    }
 
     /* מרכז הדיסק */
-    .center{
+    .hub{
       position:absolute;
       left:50%;
       top:50%;
@@ -95,55 +90,71 @@
       width:34%;
       aspect-ratio:1/1;
       border-radius:50%;
-      background: radial-gradient(circle at 50% 45%, #ffffff 0 45%, rgba(255,255,255,.78) 45% 70%, rgba(255,255,255,.0) 70% 100%);
+      background:
+        radial-gradient(circle at 50% 45%, #ffffff 0 46%, rgba(255,255,255,.82) 46% 74%, rgba(255,255,255,0) 74% 100%);
       display:grid;
       place-items:center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+      box-shadow: var(--hubShadow);
     }
 
-    .center .inner{
-      width:42%;
+    .hub .hub-inner{
+      width:46%;
       aspect-ratio:1/1;
       border-radius:50%;
-      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.28), var(--centerInner));
+      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.22), var(--hubInner));
       display:grid;
       place-items:center;
       position:relative;
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.08);
     }
 
-    /* כפתור התחלה */
-    .start{
-      border:none;
+    /* כפתור "התחל" – עיצוב עגול כמו שהיה */
+    .start-circle{
+      width:72%;
+      aspect-ratio:1/1;
+      border-radius:50%;
+      border: 2px solid var(--startBorder);
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,.14), rgba(255,255,255,.02)),
+        linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.14));
+      color: var(--startText);
       cursor:pointer;
-      background: var(--btn);
-      color: rgba(255,255,255,.92);
-      padding:10px 16px;
-      border-radius:999px;
-      font-weight:700;
-      letter-spacing:.2px;
       display:flex;
+      flex-direction:column;
       align-items:center;
-      gap:8px;
-      box-shadow: 0 10px 22px rgba(0,0,0,.35);
-      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+      justify-content:center;
+      gap:6px;
+      box-shadow:
+        0 10px 22px rgba(0,0,0,.28),
+        inset 0 0 0 1px rgba(255,255,255,.10);
+      transition: transform .15s ease, background .15s ease, color .15s ease, box-shadow .15s ease;
       user-select:none;
+      padding:10px;
     }
-    .start:hover{
-      background: var(--btnHover);
+    .start-circle:hover{
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,.45), rgba(255,255,255,.16)),
+        linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
+      color: var(--startTextHover);
       transform: translateY(-1px);
-      box-shadow: 0 14px 28px rgba(0,0,0,.38);
+      box-shadow:
+        0 14px 28px rgba(0,0,0,.30),
+        inset 0 0 0 1px rgba(255,255,255,.18);
     }
-    .start:active{
+    .start-circle:active{
       transform: translateY(0px) scale(.98);
     }
-
-    .hand{
-      font-size:18px;
+    .start-circle .hand{
+      font-size:22px;
       line-height:1;
-      filter: drop-shadow(0 1px 0 rgba(0,0,0,.25));
+    }
+    .start-circle .label{
+      font-weight:800;
+      font-size:14px;
+      letter-spacing:.2px;
     }
 
-    /* תמונות מסביב (דמו/placeholder — תשאיר כפי שיש לך בקוד שלך) */
+    /* (דמו) תמונות מסביב – תשאיר/תחליף לשלך */
     .slot{
       position:absolute;
       width: 22%;
@@ -161,7 +172,7 @@
       display:block;
     }
 
-    /* מיקומים כמו שעון (דמו) */
+    /* מיקומים כמו שעון */
     .p12{ left:50%; top:6.5%; transform:translateX(-50%); }
     .p2 { right:8%; top:18%; }
     .p3 { right:2%; top:41%; }
@@ -171,40 +182,40 @@
     .p9 { left:2%; top:41%; }
     .p10{ left:8%; top:18%; }
 
-    /* רספונסיביות לטלפון — כדי שהמרכז לא יגדל מדי */
+    /* רספונסיביות */
     @media (max-width: 640px){
       .stage{ width: 96vw; }
-      .center{ width:40%; }
+      .hub{ width:40%; }
       .ring svg{ width:60%; height:60%; }
       .slot{ width: 28%; border-radius: 12px; }
+      .start-circle .label{ font-size:13px; }
     }
   </style>
 </head>
+
 <body>
   <div class="stage">
     <div class="disc">
 
-      <!-- דמו תמונות/וידאו (תוכל להחליף לנתיבים שלך) -->
-      <div class="slot p12"><img src="assets/faith1.mp4" alt="" onerror="this.src='assets/still1_real.jpg'"></div>
+      <!-- דמו תמונות (תוכל להחליף לקבצים שלך) -->
+      <div class="slot p12"><img src="assets/still1_real.jpg" alt=""></div>
       <div class="slot p2"><img src="assets/still2_real.jpg" alt=""></div>
-      <div class="slot p3"><img src="assets/faith2.mp4" alt="" onerror="this.src='assets/still3_real.jpg'"></div>
+      <div class="slot p3"><img src="assets/still3_real.jpg" alt=""></div>
       <div class="slot p5"><img src="assets/still4_real.jpg" alt=""></div>
-      <div class="slot p6"><img src="assets/faith3.mp4" alt="" onerror="this.src='assets/still1_real.jpg'"></div>
+      <div class="slot p6"><img src="assets/still1_real.jpg" alt=""></div>
       <div class="slot p7"><img src="assets/still2_real.jpg" alt=""></div>
-      <div class="slot p9"><img src="assets/faith4.mp4" alt="" onerror="this.src='assets/still3_real.jpg'"></div>
+      <div class="slot p9"><img src="assets/still3_real.jpg" alt=""></div>
       <div class="slot p10"><img src="assets/still4_real.jpg" alt=""></div>
 
-      <!-- טבעת טקסט מסתובבת -->
+      <!-- טבעת טקסט מסתובבת (רק זה מסתובב) -->
       <div class="ring" aria-hidden="true">
         <svg viewBox="0 0 300 300">
           <defs>
-            <!-- רדיוס הטבעת -->
             <path id="circlePath" d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0" />
           </defs>
 
-          <!-- הקבוצה מסתובבת, הטקסט עצמו נשאר על המסלול -->
-          <g class="ring-spin" id="ringSpin">
-            <text fill="var(--ringText)" font-size="16" font-weight="700" letter-spacing="1.2">
+          <g class="ring-spin">
+            <text fill="var(--ringText)" font-size="16" font-weight="800" letter-spacing="1.2">
               <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
                 חותם שנשאר לדורות • מי היו סבא וסבתא? • סיפורי משפחה ומורשת • המחשת סיפורי גבורה ומסירות נפש •
               </textPath>
@@ -214,11 +225,11 @@
       </div>
 
       <!-- מרכז + כפתור -->
-      <div class="center">
-        <div class="inner">
-          <button class="start" id="startBtn" type="button" title="להתחיל">
-            <span class="hand">👆</span>
-            <span>התחל</span>
+      <div class="hub">
+        <div class="hub-inner">
+          <button class="start-circle" id="startBtn" type="button" title="התחל">
+            <div class="hand">👆</div>
+            <div class="label">התחל</div>
           </button>
         </div>
       </div>
@@ -227,17 +238,10 @@
   </div>
 
   <script>
-    // יעד הכפתור – שנה לפורום שלך:
-    const FORM_URL = "form.html"; // או "https://hotam.vip/form" וכו'
+    // יעד הכפתור – תעדכן לפורום שלך:
+    const FORM_URL = "form.html";
     document.getElementById("startBtn").addEventListener("click", () => {
       window.location.href = FORM_URL;
-    });
-
-    // אם תרצה לשלוט במהירות/כיוון בלחיצה (אופציונלי)
-    // לדוגמה: Shift+קליק מחליף כיוון
-    const ring = document.getElementById("ringSpin");
-    document.getElementById("startBtn").addEventListener("click", (e) => {
-      if (e.shiftKey) ring.classList.toggle("reverse");
     });
   </script>
 </body>
