@@ -8,21 +8,22 @@
   <style>
     :root{
       --bg: #efe7dc;
-      --disc: #0f0f10;
-      --disc2: #101012;
+
+      --discA:#0f0f10;
+      --discB:#101012;
 
       --ringText: rgba(255,255,255,.72);
-      --ringTextGlow: rgba(255,255,255,.18);
+      --ringGlow: rgba(255,255,255,.18);
 
       --hubOuter: rgba(255,255,255,.92);
-      --hubInner: rgba(140,140,140,.35);
+      --hubMid: rgba(255,255,255,.80);
+      --hubInner: rgba(120,120,120,.35);
       --hubShadow: 0 10px 30px rgba(0,0,0,.28);
 
-      --startBase: rgba(0,0,0,.18);
-      --startHover: rgba(0,0,0,.05);
-      --startBorder: rgba(0,0,0,.18);
-      --startText: rgba(255,255,255,.92);
-      --startTextHover: rgba(30,30,30,.92);
+      --btnBorder: rgba(0,0,0,.18);
+
+      --capText: rgba(255,255,255,.95);
+      --capShadow: 0 2px 10px rgba(0,0,0,.55);
 
       --shadow: 0 22px 55px rgba(0,0,0,.35);
     }
@@ -52,29 +53,30 @@
       background:
         radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 18%, transparent 18% 100%),
         repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 2px, rgba(255,255,255,.00) 2px 8px),
-        radial-gradient(circle at 50% 50%, var(--disc) 0%, var(--disc2) 70%, #070708 100%);
+        radial-gradient(circle at 50% 50%, var(--discA) 0%, var(--discB) 70%, #070708 100%);
       box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
     }
 
-    /* טבעת הטקסט המסתובבת */
+    /* טבעת טקסט מסתובבת — רק זה מסתובב */
     .ring{
       position:absolute;
       inset:0;
       display:grid;
       place-items:center;
       pointer-events:none;
+      z-index: 3;
     }
     .ring svg{
       width:52%;
       height:52%;
       overflow:visible;
-      filter: drop-shadow(0 1px 0 var(--ringTextGlow));
+      filter: drop-shadow(0 1px 0 var(--ringGlow));
     }
     .ring-spin{
       transform-origin: 50% 50%;
-      animation: spin 24s linear infinite; /* <-- פי 2 יותר לאט */
+      animation: spin 24s linear infinite; /* <-- מהירות: איטי יותר */
     }
     @keyframes spin{
       from{ transform: rotate(0deg); }
@@ -91,33 +93,32 @@
       aspect-ratio:1/1;
       border-radius:50%;
       background:
-        radial-gradient(circle at 50% 45%, #ffffff 0 46%, rgba(255,255,255,.82) 46% 74%, rgba(255,255,255,0) 74% 100%);
+        radial-gradient(circle at 50% 45%, var(--hubOuter) 0 46%, var(--hubMid) 46% 74%, rgba(255,255,255,0) 74% 100%);
       display:grid;
       place-items:center;
       box-shadow: var(--hubShadow);
+      z-index: 4;
     }
-
-    .hub .hub-inner{
+    .hub-inner{
       width:46%;
       aspect-ratio:1/1;
       border-radius:50%;
       background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.22), var(--hubInner));
       display:grid;
       place-items:center;
-      position:relative;
       box-shadow: inset 0 0 0 2px rgba(0,0,0,.08);
     }
 
-    /* כפתור "התחל" – עיצוב עגול כמו שהיה */
+    /* כפתור “התחל” עגול (כמו שהיה) */
     .start-circle{
       width:72%;
       aspect-ratio:1/1;
       border-radius:50%;
-      border: 2px solid var(--startBorder);
+      border: 2px solid var(--btnBorder);
       background:
         radial-gradient(circle at 50% 35%, rgba(255,255,255,.14), rgba(255,255,255,.02)),
         linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.14));
-      color: var(--startText);
+      color: rgba(255,255,255,.92);
       cursor:pointer;
       display:flex;
       flex-direction:column;
@@ -135,26 +136,17 @@
       background:
         radial-gradient(circle at 50% 35%, rgba(255,255,255,.45), rgba(255,255,255,.16)),
         linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
-      color: var(--startTextHover);
+      color: rgba(30,30,30,.92);
       transform: translateY(-1px);
       box-shadow:
         0 14px 28px rgba(0,0,0,.30),
         inset 0 0 0 1px rgba(255,255,255,.18);
     }
-    .start-circle:active{
-      transform: translateY(0px) scale(.98);
-    }
-    .start-circle .hand{
-      font-size:22px;
-      line-height:1;
-    }
-    .start-circle .label{
-      font-weight:800;
-      font-size:14px;
-      letter-spacing:.2px;
-    }
+    .start-circle:active{ transform: translateY(0) scale(.98); }
+    .hand{ font-size:22px; line-height:1; }
+    .label{ font-weight:800; font-size:14px; }
 
-    /* (דמו) תמונות מסביב – תשאיר/תחליף לשלך */
+    /* קוביות מסביב */
     .slot{
       position:absolute;
       width: 22%;
@@ -163,13 +155,50 @@
       overflow:hidden;
       box-shadow: 0 18px 30px rgba(0,0,0,.35);
       background: rgba(255,255,255,.06);
-      backdrop-filter: blur(2px);
+      z-index: 2;
     }
     .slot img, .slot video{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
+    }
+
+    /* מלל על המדיה — ימין/למטה, בלי רקע שמסתיר (רק צל עדין) */
+    .caption{
+      position:absolute;
+      right:10px;
+      bottom:10px;
+      left:10px; /* נותן מקום לשבירה מסודרת */
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      align-items:flex-end;
+      text-align:right;
+      pointer-events:none;
+      color: var(--capText);
+      text-shadow: var(--capShadow);
+    }
+    .cap-title{
+      font-weight:900;
+      font-size:14px;
+      line-height:1.1;
+      max-width:100%;
+      display:-webkit-box;
+      -webkit-line-clamp: 1; /* שורה אחת לכותרת */
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+    }
+    .cap-sub{
+      font-weight:700;
+      font-size:12px;
+      line-height:1.15;
+      opacity:.95;
+      max-width:100%;
+      display:-webkit-box;
+      -webkit-line-clamp: 1; /* שורה אחת לתת-כותרת */
+      -webkit-box-orient: vertical;
+      overflow:hidden;
     }
 
     /* מיקומים כמו שעון */
@@ -184,11 +213,13 @@
 
     /* רספונסיביות */
     @media (max-width: 640px){
-      .stage{ width: 96vw; }
+      .stage{ width:96vw; }
       .hub{ width:40%; }
       .ring svg{ width:60%; height:60%; }
       .slot{ width: 28%; border-radius: 12px; }
-      .start-circle .label{ font-size:13px; }
+      .cap-title{ font-size:13px; }
+      .cap-sub{ font-size:11px; }
+      .label{ font-size:13px; }
     }
   </style>
 </head>
@@ -197,25 +228,88 @@
   <div class="stage">
     <div class="disc">
 
-      <!-- דמו תמונות (תוכל להחליף לקבצים שלך) -->
-      <div class="slot p12"><img src="assets/still1_real.jpg" alt=""></div>
-      <div class="slot p2"><img src="assets/still2_real.jpg" alt=""></div>
-      <div class="slot p3"><img src="assets/still3_real.jpg" alt=""></div>
-      <div class="slot p5"><img src="assets/still4_real.jpg" alt=""></div>
-      <div class="slot p6"><img src="assets/still1_real.jpg" alt=""></div>
-      <div class="slot p7"><img src="assets/still2_real.jpg" alt=""></div>
-      <div class="slot p9"><img src="assets/still3_real.jpg" alt=""></div>
-      <div class="slot p10"><img src="assets/still4_real.jpg" alt=""></div>
+      <!-- 8 קוביות — שילוב וידאו/תמונות (כמו שהיה) -->
 
-      <!-- טבעת טקסט מסתובבת (רק זה מסתובב) -->
+      <!-- 12:00 (וידאו) -->
+      <div class="slot p12">
+        <video src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="caption">
+          <div class="cap-title">זיכרון אבות</div>
+          <div class="cap-sub">שלא יאבד</div>
+        </div>
+      </div>
+
+      <!-- 10:00 (תמונה) -->
+      <div class="slot p10">
+        <img src="assets/still1_real.jpg" alt="">
+        <div class="caption">
+          <div class="cap-title">תפילין</div>
+          <div class="cap-sub">האות שמחבר</div>
+        </div>
+      </div>
+
+      <!-- 2:00 (תמונה) -->
+      <div class="slot p2">
+        <img src="assets/still2_real.jpg" alt="">
+        <div class="caption">
+          <div class="cap-title">חותם שנשאר לדורות</div>
+          <div class="cap-sub">שהנכדים ידעו</div>
+        </div>
+      </div>
+
+      <!-- 3:00 (וידאו) -->
+      <div class="slot p3">
+        <video src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="caption">
+          <div class="cap-title">להעביר מורשת</div>
+          <div class="cap-sub">מדור לדור</div>
+        </div>
+      </div>
+
+      <!-- 5:00 (תמונה) -->
+      <div class="slot p5">
+        <img src="assets/still3_real.jpg" alt="">
+        <div class="caption">
+          <div class="cap-title">שיירשת לדורות</div>
+          <div class="cap-sub">סבא ונכד</div>
+        </div>
+      </div>
+
+      <!-- 6:00 (וידאו) -->
+      <div class="slot p6">
+        <video src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="caption">
+          <div class="cap-title">מסירות נפש</div>
+          <div class="cap-sub">רגע שמתחבר</div>
+        </div>
+      </div>
+
+      <!-- 7:00 (תמונה) -->
+      <div class="slot p7">
+        <img src="assets/still4_real.jpg" alt="">
+        <div class="caption">
+          <div class="cap-title">כי הם חיינו</div>
+          <div class="cap-sub">להמחיש את החיבור</div>
+        </div>
+      </div>
+
+      <!-- 9:00 (וידאו - שבת) -->
+      <div class="slot p9">
+        <video src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="caption">
+          <div class="cap-title">שבת</div>
+          <div class="cap-sub">עונג, רגע, שלווה</div>
+        </div>
+      </div>
+
+      <!-- טבעת טקסט מסתובבת (רק היא מסתובבת) -->
       <div class="ring" aria-hidden="true">
         <svg viewBox="0 0 300 300">
           <defs>
             <path id="circlePath" d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0" />
           </defs>
-
           <g class="ring-spin">
-            <text fill="var(--ringText)" font-size="16" font-weight="800" letter-spacing="1.2">
+            <text fill="var(--ringText)" font-size="16" font-weight="900" letter-spacing="1.2">
               <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
                 חותם שנשאר לדורות • מי היו סבא וסבתא? • סיפורי משפחה ומורשת • המחשת סיפורי גבורה ומסירות נפש •
               </textPath>
@@ -238,8 +332,9 @@
   </div>
 
   <script>
-    // יעד הכפתור – תעדכן לפורום שלך:
+    // יעד הכפתור – תעדכן אם הפורום אצלך בשם אחר
     const FORM_URL = "form.html";
+
     document.getElementById("startBtn").addEventListener("click", () => {
       window.location.href = FORM_URL;
     });
