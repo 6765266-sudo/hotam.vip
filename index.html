@@ -1,194 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>חותם שנשאר לדורות</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>hotam.vip</title>
+  <style>
+    :root{
+      --bg: #efe7dc;
+      --disc: #0f0f10;
+      --disc2: #101012;
+      --ringText: rgba(255,255,255,.72);
+      --ringTextGlow: rgba(255,255,255,.18);
+      --centerOuter: rgba(255,255,255,.88);
+      --centerInner: rgba(120,120,120,.35);
+      --btn: rgba(255,255,255,.10);
+      --btnHover: rgba(255,255,255,.18);
+      --shadow: 0 22px 55px rgba(0,0,0,.35);
+    }
 
-<style>
-body{
-  margin:0;
-  background:#f3ecdf;
-  font-family: Heebo, Arial, sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(1200px 800px at 50% 30%, #fff6ea 0%, var(--bg) 55%, #e6ddcf 100%);
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      color:#111;
+    }
 
-.disk{
-  position:relative;
-  width:720px;
-  height:720px;
-  border-radius:50%;
-  background:radial-gradient(circle,#111,#000);
-  box-shadow:0 25px 60px rgba(0,0,0,.35);
-}
+    .stage{
+      width:min(980px, 92vw);
+      aspect-ratio: 1 / 1;
+      position:relative;
+      display:grid;
+      place-items:center;
+    }
 
-/* ===== מרכז ===== */
-.center{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  z-index:5;
-}
+    /* הדיסק */
+    .disc{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 18%, transparent 18% 100%),
+        repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 2px, rgba(255,255,255,.00) 2px 8px),
+        radial-gradient(circle at 50% 50%, var(--disc) 0%, var(--disc2) 70%, #070708 100%);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
 
-.center-btn{
-  width:72px;
-  height:72px;
-  border-radius:50%;
-  background:rgba(255,255,255,.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:26px;
-  cursor:pointer;
-  transition:.2s;
-}
+    /* טבעת הטקסט המסתובבת */
+    .ring{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      pointer-events:none;
+    }
 
-.center-btn:hover{
-  transform:scale(1.06);
-  background:#fff;
-}
+    .ring svg{
+      width:52%;
+      height:52%;
+      overflow:visible;
+      filter: drop-shadow(0 1px 0 var(--ringTextGlow));
+    }
 
-.center-text{
-  margin-top:6px;
-  font-size:13px;
-  color:#eee;
-}
+    /* כאן האנימציה */
+    .ring-spin{
+      transform-origin: 50% 50%;
+      animation: spin 12s linear infinite;
+    }
+    /* אם תרצה הפוך כיוון – החלף ל: spinReverse */
+    .ring-spin.reverse{
+      animation: spinReverse 12s linear infinite;
+    }
 
-/* ===== טקסט מעגלי ===== */
-.circle-text{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:rgba(255,255,255,.75);
-  font-size:14px;
-  letter-spacing:1.2px;
-  text-align:center;
-  pointer-events:none;
-  transform:rotate(-90deg);
-}
+    @keyframes spin{
+      from{ transform: rotate(0deg); }
+      to{ transform: rotate(360deg); }
+    }
+    @keyframes spinReverse{
+      from{ transform: rotate(360deg); }
+      to{ transform: rotate(0deg); }
+    }
 
-/* ===== פריטים ===== */
-.item{
-  position:absolute;
-  width:150px;
-}
+    /* מרכז הדיסק */
+    .center{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:34%;
+      aspect-ratio:1/1;
+      border-radius:50%;
+      background: radial-gradient(circle at 50% 45%, #ffffff 0 45%, rgba(255,255,255,.78) 45% 70%, rgba(255,255,255,.0) 70% 100%);
+      display:grid;
+      place-items:center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+    }
 
-.item img,
-.item video{
-  width:100%;
-  border-radius:14px;
-  display:block;
-}
+    .center .inner{
+      width:42%;
+      aspect-ratio:1/1;
+      border-radius:50%;
+      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.28), var(--centerInner));
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
 
-/* כיתוב – ימין למטה, בלי רקע */
-.item span{
-  position:absolute;
-  right:6px;
-  bottom:6px;
-  color:#fff;
-  font-size:13px;
-  line-height:1.15;
-  text-align:right;
-  text-shadow:0 2px 10px rgba(0,0,0,.8);
-  max-width:90%;
-}
+    /* כפתור התחלה */
+    .start{
+      border:none;
+      cursor:pointer;
+      background: var(--btn);
+      color: rgba(255,255,255,.92);
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:700;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.35);
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+      user-select:none;
+    }
+    .start:hover{
+      background: var(--btnHover);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0,0,0,.38);
+    }
+    .start:active{
+      transform: translateY(0px) scale(.98);
+    }
 
-.item span small{
-  display:block;
-  font-size:11px;
-  opacity:.9;
-}
+    .hand{
+      font-size:18px;
+      line-height:1;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.25));
+    }
 
-/* ===== מיקומים (שעון) ===== */
-.i1{top:10px;left:50%;transform:translateX(-50%);}
-.i2{top:80px;right:40px;}
-.i3{top:260px;right:10px;}
-.i4{bottom:80px;right:40px;}
-.i5{bottom:10px;left:50%;transform:translateX(-50%);}
-.i6{bottom:80px;left:40px;}
-.i7{top:260px;left:10px;}
-.i8{top:80px;left:40px;}
+    /* תמונות מסביב (דמו/placeholder — תשאיר כפי שיש לך בקוד שלך) */
+    .slot{
+      position:absolute;
+      width: 22%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow:hidden;
+      box-shadow: 0 18px 30px rgba(0,0,0,.35);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(2px);
+    }
+    .slot img, .slot video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
 
-/* ===== מובייל ===== */
-@media(max-width:820px){
-  .disk{width:95vw;height:95vw;}
-  .item{width:120px;}
-}
-</style>
+    /* מיקומים כמו שעון (דמו) */
+    .p12{ left:50%; top:6.5%; transform:translateX(-50%); }
+    .p2 { right:8%; top:18%; }
+    .p3 { right:2%; top:41%; }
+    .p5 { right:12%; bottom:14%; }
+    .p6 { left:50%; bottom:6.5%; transform:translateX(-50%); }
+    .p7 { left:12%; bottom:14%; }
+    .p9 { left:2%; top:41%; }
+    .p10{ left:8%; top:18%; }
+
+    /* רספונסיביות לטלפון — כדי שהמרכז לא יגדל מדי */
+    @media (max-width: 640px){
+      .stage{ width: 96vw; }
+      .center{ width:40%; }
+      .ring svg{ width:60%; height:60%; }
+      .slot{ width: 28%; border-radius: 12px; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="stage">
+    <div class="disc">
 
-<div class="disk">
+      <!-- דמו תמונות/וידאו (תוכל להחליף לנתיבים שלך) -->
+      <div class="slot p12"><img src="assets/faith1.mp4" alt="" onerror="this.src='assets/still1_real.jpg'"></div>
+      <div class="slot p2"><img src="assets/still2_real.jpg" alt=""></div>
+      <div class="slot p3"><img src="assets/faith2.mp4" alt="" onerror="this.src='assets/still3_real.jpg'"></div>
+      <div class="slot p5"><img src="assets/still4_real.jpg" alt=""></div>
+      <div class="slot p6"><img src="assets/faith3.mp4" alt="" onerror="this.src='assets/still1_real.jpg'"></div>
+      <div class="slot p7"><img src="assets/still2_real.jpg" alt=""></div>
+      <div class="slot p9"><img src="assets/faith4.mp4" alt="" onerror="this.src='assets/still3_real.jpg'"></div>
+      <div class="slot p10"><img src="assets/still4_real.jpg" alt=""></div>
 
-  <!-- טקסט מעגלי -->
-  <div class="circle-text">
-    חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש
+      <!-- טבעת טקסט מסתובבת -->
+      <div class="ring" aria-hidden="true">
+        <svg viewBox="0 0 300 300">
+          <defs>
+            <!-- רדיוס הטבעת -->
+            <path id="circlePath" d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0" />
+          </defs>
+
+          <!-- הקבוצה מסתובבת, הטקסט עצמו נשאר על המסלול -->
+          <g class="ring-spin" id="ringSpin">
+            <text fill="var(--ringText)" font-size="16" font-weight="700" letter-spacing="1.2">
+              <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
+                חותם שנשאר לדורות • מי היו סבא וסבתא? • סיפורי משפחה ומורשת • המחשת סיפורי גבורה ומסירות נפש •
+              </textPath>
+            </text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- מרכז + כפתור -->
+      <div class="center">
+        <div class="inner">
+          <button class="start" id="startBtn" type="button" title="להתחיל">
+            <span class="hand">👆</span>
+            <span>התחל</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
   </div>
 
-  <!-- מרכז -->
-  <div class="center">
-    <div class="center-btn" onclick="location.href='YOUR_FORM_LINK_HERE'">👆</div>
-    <div class="center-text">התחלה</div>
-  </div>
+  <script>
+    // יעד הכפתור – שנה לפורום שלך:
+    const FORM_URL = "form.html"; // או "https://hotam.vip/form" וכו'
+    document.getElementById("startBtn").addEventListener("click", () => {
+      window.location.href = FORM_URL;
+    });
 
-  <!-- 12 -->
-  <div class="item i1">
-    <video src="assets/faith1.mp4" muted autoplay loop playsinline></video>
-    <span>זיכרון אבות<small>שלא יאבד</small></span>
-  </div>
-
-  <!-- 1 -->
-  <div class="item i2">
-    <img src="assets/still1_real.jpg">
-    <span>חותם שנשאר לדורות<small>שהנכדים ידעו</small></span>
-  </div>
-
-  <!-- 3 -->
-  <div class="item i3">
-    <video src="assets/faith2.mp4" muted autoplay loop playsinline></video>
-    <span>להעביר מורשת<small>מדור לדור</small></span>
-  </div>
-
-  <!-- 4–5 -->
-  <div class="item i4">
-    <img src="assets/still2_real.jpg">
-    <span>שרשרת הדורות<small>סבא ונכד</small></span>
-  </div>
-
-  <!-- 6 -->
-  <div class="item i5">
-    <video src="assets/faith3.mp4" muted autoplay loop playsinline></video>
-    <span>מסירות נפש<small>רגע שמתחבר</small></span>
-  </div>
-
-  <!-- 7 -->
-  <div class="item i6">
-    <img src="assets/still3_real.jpg">
-    <span>כי הם חיינו<small>להמחיש חוויה</small></span>
-  </div>
-
-  <!-- 9 -->
-  <div class="item i7">
-    <video src="assets/faith4.mp4" muted autoplay loop playsinline></video>
-    <span>שבת<small>עונג, רוגע, שלווה</small></span>
-  </div>
-
-  <!-- 10–11 -->
-  <div class="item i8">
-    <img src="assets/still4_real.jpg">
-    <span>תפילין<small>האות שמחבר</small></span>
-  </div>
-
-</div>
-
+    // אם תרצה לשלוט במהירות/כיוון בלחיצה (אופציונלי)
+    // לדוגמה: Shift+קליק מחליף כיוון
+    const ring = document.getElementById("ringSpin");
+    document.getElementById("startBtn").addEventListener("click", (e) => {
+      if (e.shiftKey) ring.classList.toggle("reverse");
+    });
+  </script>
 </body>
 </html>
