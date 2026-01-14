@@ -12,20 +12,20 @@
       --discA:#0f0f10;
       --discB:#101012;
 
-      /* כרטיסים */
-      --cardW: 22%;
+      /* ✅ כרטיסים (הקטנתי קצת כדי שייכנס סימטרי) */
+      --cardW: 20.5%;
       --cardRadius: 14px;
 
-      /* ✅ מרחק הכרטיסים מהמרכז: גדול יותר = פחות "נמשך למרכז" */
-      --orbit: 66%;
+      /* ✅ רדיוס הסיבוב של הכרטיסים (מעט גדול יותר לסימטריה) */
+      --orbit: 67%;
 
       /* טבעת טקסט */
       --ringText: rgba(255,255,255,.72);
       --ringGlow: rgba(255,255,255,.18);
-      --ringFont: 16px;
+      --ringFont: 15px;
 
       /* ✅ סיבוב איטי */
-      --spinSeconds: 60s;
+      --spinSeconds: 70s;
 
       /* מרכז דיסק */
       --hubSize: 24%;
@@ -43,7 +43,7 @@
       font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
     }
 
-    /* ✅ ריבוע "בטוח" בלי להסתמך על aspect-ratio */
+    /* ✅ ריבוע בטוח */
     .stage{
       width:min(980px, 92vw);
       position:relative;
@@ -51,7 +51,7 @@
     .stage::before{
       content:"";
       display:block;
-      padding-top:100%; /* ריבוע אמיתי */
+      padding-top:100%;
     }
 
     .disc{
@@ -75,8 +75,8 @@
       z-index: 3;
     }
     .ring svg{
-      width:46%;
-      height:46%;
+      width:48%;
+      height:48%;
       overflow:visible;
       filter: drop-shadow(0 1px 0 var(--ringGlow));
     }
@@ -108,7 +108,7 @@
       display:block;
     }
 
-    /* כתוביות – שמאל למטה, בלי רקע */
+    /* כתוביות – שמאל למטה, בלי רקע, עד 2 שורות (אחת לכותרת ואחת לתת-כותרת) */
     .caption{
       position:absolute;
       left:10px;
@@ -127,10 +127,9 @@
       font-weight:900;
       font-size:14px;
       line-height:1.1;
-      display:-webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
+      white-space:nowrap;
       overflow:hidden;
+      text-overflow:ellipsis;
       max-width:100%;
     }
     .cap-sub{
@@ -138,14 +137,13 @@
       font-size:12px;
       line-height:1.15;
       opacity:.95;
-      display:-webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
+      white-space:nowrap;
       overflow:hidden;
+      text-overflow:ellipsis;
       max-width:100%;
     }
 
-    /* --- מרכז דיסק (אפור->לבן סימטרי) --- */
+    /* --- מרכז דיסק --- */
     .hub{
       position:absolute;
       left:50%;
@@ -215,16 +213,16 @@
     .start-label{ font-weight:900; font-size:14px; }
     .start-sub{ font-weight:800; font-size:11px; opacity:.9; }
 
-    /* ✅ מובייל: הכל קטן יותר כדי שלא ייחתך */
+    /* ✅ מובייל: קטנים יותר + רדיוס קצת גדול + פונט קטן כדי שלא ייחתך */
     @media (max-width: 640px){
       :root{
-        --cardW: 28%;
-        --orbit: 68%;
-        --spinSeconds: 72s;
-        --ringFont: 13px;
+        --cardW: 25.5%;
+        --orbit: 70%;
+        --spinSeconds: 78s;
+        --ringFont: 12.5px;
         --hubSize: 36%;
       }
-      .ring svg{ width:58%; height:58%; }
+      .ring svg{ width:60%; height:60%; }
       .cap-title{ font-size:13px; }
       .cap-sub{ font-size:11px; }
     }
@@ -241,10 +239,11 @@
           <defs>
             <path id="circlePath" d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0" />
           </defs>
+
           <g class="ring-spin">
-            <text fill="var(--ringText)" font-size="var(--ringFont)" font-weight="900" letter-spacing="1.1">
+            <text fill="var(--ringText)" font-size="var(--ringFont)" font-weight="900" letter-spacing="1.05">
               <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                חותם שנשאר לדורות • מי היו סבא וסבתא? • סיפורי משפחה ומורשת • המחשת סיפורי גבורה ומסירות נפש •
+                חותם שנשאר לדורות • חותם שנשאר לתמיד • מי היו סבא וסבתא? • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
               </textPath>
             </text>
           </g>
@@ -268,35 +267,24 @@
   </div>
 
   <script>
-    // סדר: 12, 2, 3, 5, 6, 7, 9, 10
+    /*
+      ✅ סימטריה מלאה: 8 פריטים סביב הדיסק כל 45°
+      סדר לפי כיוון השעון:
+      12, 1:30, 3, 4:30, 6, 7:30, 9, 10:30
+    */
     const items = [
-      // 12:00 וידאו
-      { type:"video", src:"assets/faith1.mp4",  title:"זיכרון אבות",           sub:"שלא יאבד" },
-
-      // 2:00 תמונה (סבא+נכד)
-      { type:"img",   src:"assets/still2_real.jpg", title:"חותם שנשאר לדורות", sub:"שהנכדים ידעו" },
-
-      // 3:00 וידאו (סבא לומד)
-      { type:"video", src:"assets/faith2.mp4",  title:"מתיקות התורה",          sub:"של סבא" },
-
-      // 5:00 תמונה
-      { type:"img",   src:"assets/still3_real.jpg", title:"שיירשת לדורות",     sub:"סבא ונכד" },
-
-      // 6:00 וידאו (מסירות נפש)
-      { type:"video", src:"assets/faith3.mp4",  title:"מסירות נפש",            sub:"רגע שמתחבר" },
-
-      // 7:00 תמונה (תפילין)
-      { type:"img",   src:"assets/still1_real.jpg", title:"תפילין",            sub:"האות שמחבר" },
-
-      // 9:00 וידאו (נרות שבת)
-      { type:"video", src:"assets/faith4.mp4",  title:"שבת",                   sub:"בבית סבא" },
-
-      // 10:00 תמונה
-      { type:"img",   src:"assets/still4_real.jpg", title:"להעביר מורשת",      sub:"מדור לדור" },
+      { type:"video", src:"assets/faith1.mp4",      title:"זיכרון אבות",           sub:"שלא יאבד" },          // 12
+      { type:"img",   src:"assets/still2_real.jpg", title:"חותם שנשאר לדורות",     sub:"שהנכדים ידעו" },      // 1:30
+      { type:"video", src:"assets/faith2.mp4",      title:"מתיקות התורה",          sub:"של סבא" },             // 3
+      { type:"img",   src:"assets/still3_real.jpg", title:"להעביר מורשת",          sub:"מדור לדור" },          // 4:30
+      { type:"video", src:"assets/faith3.mp4",      title:"מסירות נפש",            sub:"רגע שמתחבר" },         // 6
+      { type:"img",   src:"assets/still1_real.jpg", title:"תפילין",                sub:"האות שמחבר" },         // 7:30
+      { type:"video", src:"assets/faith4.mp4",      title:"שבת",                   sub:"בבית סבא" },           // 9
+      { type:"img",   src:"assets/still4_real.jpg", title:"שיירשת לדורות",         sub:"סבא ונכד" },           // 10:30
     ];
 
-    // זוויות שעון: 12, 2, 3, 5, 6, 7, 9, 10
-    const anglesDeg = [-90, -30, 0, 60, 90, 120, 180, -150];
+    // ✅ זוויות שוות (45°): מתחיל ב-12:00 (-90°)
+    const anglesDeg = Array.from({length: 8}, (_, i) => -90 + i * 45);
 
     const disc = document.getElementById("disc");
 
@@ -313,7 +301,7 @@
         v.playsInline = true;
         v.preload = "metadata";
         slot.appendChild(v);
-      }else{
+      } else {
         const img = document.createElement("img");
         img.src = item.src;
         img.alt = "";
@@ -339,14 +327,13 @@
     }
 
     function layout(){
-      // ✅ משתמשים רק ברוחב (כי לפעמים גובה "נופל") – זה פותר את המשיכה למרכז
+      // ✅ רק לפי רוחב (יציב)
       const size = disc.clientWidth;
       const cx = size / 2;
       const cy = size / 2;
 
       const orbitStr = getComputedStyle(document.documentElement).getPropertyValue("--orbit").trim();
-      const orbitPercent = parseFloat(orbitStr) || 66;
-
+      const orbitPercent = parseFloat(orbitStr) || 67;
       const R = (size / 2) * (orbitPercent / 100);
 
       const slots = disc.querySelectorAll(".slot");
@@ -359,15 +346,13 @@
       });
     }
 
-    // בנייה
+    // build
     items.forEach(it => disc.appendChild(createSlot(it)));
 
-    // ✅ רינדור יציב: מייד + אחרי load + אחרי frame
     layout();
     window.addEventListener("resize", layout);
     window.addEventListener("load", () => requestAnimationFrame(layout));
 
-    // קישור כפתור
     document.getElementById("startBtn").addEventListener("click", () => {
       window.location.href = "form.html";
     });
