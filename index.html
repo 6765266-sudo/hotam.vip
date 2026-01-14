@@ -15,20 +15,23 @@
       --ringText: rgba(255,255,255,.72);
       --ringGlow: rgba(255,255,255,.18);
 
-      --hubOuter: rgba(255,255,255,.92);
-      --hubMid: rgba(255,255,255,.80);
-      --hubInner: rgba(120,120,120,.35);
-      --hubShadow: 0 10px 30px rgba(0,0,0,.28);
-
-      --btnBorder: rgba(0,0,0,.18);
+      --shadow: 0 22px 55px rgba(0,0,0,.35);
 
       --capText: rgba(255,255,255,.95);
-      --capShadow: 0 2px 10px rgba(0,0,0,.55);
+      --capShadow: 0 2px 10px rgba(0,0,0,.62);
 
-      --shadow: 0 22px 55px rgba(0,0,0,.35);
+      /* שליטה נוחה על מיקום וגודל הכרטיסים */
+      --cardW: 22%;
+      --cardRadius: 14px;
+
+      /* כמה פנימה לשים את הכרטיסים (יותר גדול = יותר פנימה) */
+      --orbit: 36%;
+
+      /* מהירות סיבוב הטקסט המעגלי (גדול יותר = יותר לאט) */
+      --spinSeconds: 38s;
     }
 
-    *{ box-sizing: border-box; }
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       min-height:100vh;
@@ -51,15 +54,73 @@
       height:100%;
       border-radius:50%;
       background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 18%, transparent 18% 100%),
-        repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 2px, rgba(255,255,255,.00) 2px 8px),
+        repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.055) 0 2px, rgba(255,255,255,.00) 2px 8px),
         radial-gradient(circle at 50% 50%, var(--discA) 0%, var(--discB) 70%, #070708 100%);
       box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
     }
 
-    /* טבעת טקסט מסתובבת — רק זה מסתובב */
+    /* --- 8 כרטיסים על מעגל (אוטומטי) --- */
+    .slot{
+      position:absolute;
+      width: var(--cardW);
+      aspect-ratio: 16 / 9;
+      border-radius: var(--cardRadius);
+      overflow:hidden;
+      box-shadow: 0 18px 30px rgba(0,0,0,.35);
+      background: rgba(255,255,255,.06);
+      z-index: 2;
+
+      /* חשוב: לא לייצר “טשטוש” ע״י סקייל לא אחיד */
+      transform: translate(-50%,-50%);
+      will-change: transform;
+    }
+    .slot img, .slot video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* כיתוב – בצד שמאל למטה, בלי רקע שמסתיר */
+    .caption{
+      position:absolute;
+      left:10px;
+      bottom:10px;
+      right:10px;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      align-items:flex-start;
+      text-align:left;
+      pointer-events:none;
+      color: var(--capText);
+      text-shadow: var(--capShadow);
+    }
+    .cap-title{
+      font-weight:900;
+      font-size:14px;
+      line-height:1.1;
+      display:-webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+      max-width:100%;
+    }
+    .cap-sub{
+      font-weight:700;
+      font-size:12px;
+      line-height:1.15;
+      opacity:.95;
+      display:-webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+      max-width:100%;
+    }
+
+    /* --- טבעת טקסט מסתובבת: רק זה זז --- */
     .ring{
       position:absolute;
       inset:0;
@@ -76,48 +137,71 @@
     }
     .ring-spin{
       transform-origin: 50% 50%;
-      animation: spin 24s linear infinite; /* <-- מהירות: איטי יותר */
+      animation: spin var(--spinSeconds) linear infinite;
     }
     @keyframes spin{
       from{ transform: rotate(0deg); }
       to{ transform: rotate(360deg); }
     }
 
-    /* מרכז הדיסק */
+    /* --- מרכז דיסק סימטרי (אפור -> לבן) --- */
     .hub{
       position:absolute;
       left:50%;
       top:50%;
       transform:translate(-50%,-50%);
-      width:34%;
+      width:36%;
       aspect-ratio:1/1;
       border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 45%, var(--hubOuter) 0 46%, var(--hubMid) 46% 74%, rgba(255,255,255,0) 74% 100%);
-      display:grid;
-      place-items:center;
-      box-shadow: var(--hubShadow);
       z-index: 4;
-    }
-    .hub-inner{
-      width:46%;
-      aspect-ratio:1/1;
-      border-radius:50%;
-      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.22), var(--hubInner));
       display:grid;
       place-items:center;
-      box-shadow: inset 0 0 0 2px rgba(0,0,0,.08);
+
+      /* שכבות כמו DVD */
+      background:
+        radial-gradient(circle at 50% 50%,
+          rgba(255,255,255,.00) 0 46%,
+          rgba(255,255,255,.25) 46% 48%,
+          rgba(255,255,255,.00) 48% 100%
+        );
     }
 
-    /* כפתור “התחל” עגול (כמו שהיה) */
-    .start-circle{
+    .hub-outer{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      background: radial-gradient(circle at 50% 45%,
+        rgba(255,255,255,.88) 0 44%,
+        rgba(255,255,255,.72) 44% 64%,
+        rgba(255,255,255,.00) 64% 100%
+      );
+      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+      display:grid;
+      place-items:center;
+    }
+
+    .hub-mid{
+      width:58%;
+      aspect-ratio:1/1;
+      border-radius:50%;
+      background: radial-gradient(circle at 50% 40%,
+        rgba(255,255,255,.18),
+        rgba(120,120,120,.40)
+      );
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,.08);
+      display:grid;
+      place-items:center;
+    }
+
+    /* כפתור “התחל” דיסקי */
+    .start{
       width:72%;
       aspect-ratio:1/1;
       border-radius:50%;
-      border: 2px solid var(--btnBorder);
+      border: 2px solid rgba(0,0,0,.16);
       background:
-        radial-gradient(circle at 50% 35%, rgba(255,255,255,.14), rgba(255,255,255,.02)),
-        linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.14));
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,.18), rgba(255,255,255,.03)),
+        linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.10));
       color: rgba(255,255,255,.92);
       cursor:pointer;
       display:flex;
@@ -125,191 +209,52 @@
       align-items:center;
       justify-content:center;
       gap:6px;
-      box-shadow:
-        0 10px 22px rgba(0,0,0,.28),
-        inset 0 0 0 1px rgba(255,255,255,.10);
-      transition: transform .15s ease, background .15s ease, color .15s ease, box-shadow .15s ease;
-      user-select:none;
       padding:10px;
-    }
-    .start-circle:hover{
-      background:
-        radial-gradient(circle at 50% 35%, rgba(255,255,255,.45), rgba(255,255,255,.16)),
-        linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
-      color: rgba(30,30,30,.92);
-      transform: translateY(-1px);
       box-shadow:
-        0 14px 28px rgba(0,0,0,.30),
-        inset 0 0 0 1px rgba(255,255,255,.18);
+        0 10px 22px rgba(0,0,0,.25),
+        inset 0 0 0 1px rgba(255,255,255,.10);
+      transition: transform .15s ease, filter .15s ease, background .15s ease;
+      user-select:none;
     }
-    .start-circle:active{ transform: translateY(0) scale(.98); }
+    .start:hover{
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+    }
+    .start:active{ transform: translateY(0) scale(.98); }
+
     .hand{ font-size:22px; line-height:1; }
-    .label{ font-weight:800; font-size:14px; }
-
-    /* קוביות מסביב */
-    .slot{
-      position:absolute;
-      width: 22%;
-      aspect-ratio: 16 / 9;
-      border-radius: 14px;
-      overflow:hidden;
-      box-shadow: 0 18px 30px rgba(0,0,0,.35);
-      background: rgba(255,255,255,.06);
-      z-index: 2;
-    }
-    .slot img, .slot video{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    /* מלל על המדיה — ימין/למטה, בלי רקע שמסתיר (רק צל עדין) */
-    .caption{
-      position:absolute;
-      right:10px;
-      bottom:10px;
-      left:10px; /* נותן מקום לשבירה מסודרת */
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      align-items:flex-end;
-      text-align:right;
-      pointer-events:none;
-      color: var(--capText);
-      text-shadow: var(--capShadow);
-    }
-    .cap-title{
-      font-weight:900;
-      font-size:14px;
-      line-height:1.1;
-      max-width:100%;
-      display:-webkit-box;
-      -webkit-line-clamp: 1; /* שורה אחת לכותרת */
-      -webkit-box-orient: vertical;
-      overflow:hidden;
-    }
-    .cap-sub{
-      font-weight:700;
-      font-size:12px;
-      line-height:1.15;
-      opacity:.95;
-      max-width:100%;
-      display:-webkit-box;
-      -webkit-line-clamp: 1; /* שורה אחת לתת-כותרת */
-      -webkit-box-orient: vertical;
-      overflow:hidden;
-    }
-
-    /* מיקומים כמו שעון */
-    .p12{ left:50%; top:6.5%; transform:translateX(-50%); }
-    .p2 { right:8%; top:18%; }
-    .p3 { right:2%; top:41%; }
-    .p5 { right:12%; bottom:14%; }
-    .p6 { left:50%; bottom:6.5%; transform:translateX(-50%); }
-    .p7 { left:12%; bottom:14%; }
-    .p9 { left:2%; top:41%; }
-    .p10{ left:8%; top:18%; }
+    .start-label{ font-weight:900; font-size:14px; }
+    .start-sub{ font-weight:800; font-size:11px; opacity:.9; }
 
     /* רספונסיביות */
     @media (max-width: 640px){
-      .stage{ width:96vw; }
-      .hub{ width:40%; }
+      :root{
+        --cardW: 28%;
+        --orbit: 38%;
+        --spinSeconds: 42s; /* בטלפון אפילו טיפה יותר לאט */
+      }
+      .hub{ width:42%; }
       .ring svg{ width:60%; height:60%; }
-      .slot{ width: 28%; border-radius: 12px; }
       .cap-title{ font-size:13px; }
       .cap-sub{ font-size:11px; }
-      .label{ font-size:13px; }
     }
   </style>
 </head>
 
 <body>
   <div class="stage">
-    <div class="disc">
+    <div class="disc" id="disc">
 
-      <!-- 8 קוביות — שילוב וידאו/תמונות (כמו שהיה) -->
+      <!-- כאן JS ייצור את 8 הכרטיסים וימקם אותם סימטרית -->
 
-      <!-- 12:00 (וידאו) -->
-      <div class="slot p12">
-        <video src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div class="caption">
-          <div class="cap-title">זיכרון אבות</div>
-          <div class="cap-sub">שלא יאבד</div>
-        </div>
-      </div>
-
-      <!-- 10:00 (תמונה) -->
-      <div class="slot p10">
-        <img src="assets/still1_real.jpg" alt="">
-        <div class="caption">
-          <div class="cap-title">תפילין</div>
-          <div class="cap-sub">האות שמחבר</div>
-        </div>
-      </div>
-
-      <!-- 2:00 (תמונה) -->
-      <div class="slot p2">
-        <img src="assets/still2_real.jpg" alt="">
-        <div class="caption">
-          <div class="cap-title">חותם שנשאר לדורות</div>
-          <div class="cap-sub">שהנכדים ידעו</div>
-        </div>
-      </div>
-
-      <!-- 3:00 (וידאו) -->
-      <div class="slot p3">
-        <video src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div class="caption">
-          <div class="cap-title">להעביר מורשת</div>
-          <div class="cap-sub">מדור לדור</div>
-        </div>
-      </div>
-
-      <!-- 5:00 (תמונה) -->
-      <div class="slot p5">
-        <img src="assets/still3_real.jpg" alt="">
-        <div class="caption">
-          <div class="cap-title">שיירשת לדורות</div>
-          <div class="cap-sub">סבא ונכד</div>
-        </div>
-      </div>
-
-      <!-- 6:00 (וידאו) -->
-      <div class="slot p6">
-        <video src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div class="caption">
-          <div class="cap-title">מסירות נפש</div>
-          <div class="cap-sub">רגע שמתחבר</div>
-        </div>
-      </div>
-
-      <!-- 7:00 (תמונה) -->
-      <div class="slot p7">
-        <img src="assets/still4_real.jpg" alt="">
-        <div class="caption">
-          <div class="cap-title">כי הם חיינו</div>
-          <div class="cap-sub">להמחיש את החיבור</div>
-        </div>
-      </div>
-
-      <!-- 9:00 (וידאו - שבת) -->
-      <div class="slot p9">
-        <video src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div class="caption">
-          <div class="cap-title">שבת</div>
-          <div class="cap-sub">עונג, רגע, שלווה</div>
-        </div>
-      </div>
-
-      <!-- טבעת טקסט מסתובבת (רק היא מסתובבת) -->
+      <!-- טבעת טקסט מסתובבת -->
       <div class="ring" aria-hidden="true">
         <svg viewBox="0 0 300 300">
           <defs>
             <path id="circlePath" d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0" />
           </defs>
           <g class="ring-spin">
-            <text fill="var(--ringText)" font-size="16" font-weight="900" letter-spacing="1.2">
+            <text fill="var(--ringText)" font-size="16" font-weight="900" letter-spacing="1.1">
               <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
                 חותם שנשאר לדורות • מי היו סבא וסבתא? • סיפורי משפחה ומורשת • המחשת סיפורי גבורה ומסירות נפש •
               </textPath>
@@ -318,13 +263,16 @@
         </svg>
       </div>
 
-      <!-- מרכז + כפתור -->
+      <!-- מרכז דיסק -->
       <div class="hub">
-        <div class="hub-inner">
-          <button class="start-circle" id="startBtn" type="button" title="התחל">
-            <div class="hand">👆</div>
-            <div class="label">התחל</div>
-          </button>
+        <div class="hub-outer">
+          <div class="hub-mid">
+            <button class="start" id="startBtn" type="button" title="התחל">
+              <div class="hand">👆</div>
+              <div class="start-label">התחל</div>
+              <div class="start-sub">חותם</div>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -332,9 +280,110 @@
   </div>
 
   <script>
-    // יעד הכפתור – תעדכן אם הפורום אצלך בשם אחר
-    const FORM_URL = "form.html";
+    // ====== 1) מיפוי נכון של קבצים למיקומי "שעון" ======
+    // סדר המיקומים כאן הוא עם כיוון השעון:
+    // 12, 2, 3, 5, 6, 7, 9, 10
+    //
+    // אם משהו עדיין לא במקום הנכון – משנים רק את הסדר של האובייקטים כאן.
+    const items = [
+      // 12:00
+      { type:"video", src:"assets/faith1.mp4",  title:"זיכרון אבות",           sub:"שלא יאבד" },
 
+      // 2:00 (סבא+נכד / חותם)
+      { type:"img",   src:"assets/still2_real.jpg", title:"חותם שנשאר לדורות", sub:"שהנכדים ידעו" },
+
+      // 3:00 (וידאו/רב לומד)
+      { type:"video", src:"assets/faith2.mp4",  title:"להעביר מורשת",          sub:"מדור לדור" },
+
+      // 5:00 (סבא+נכד נוסף / שיירשת לדורות)
+      { type:"img",   src:"assets/still3_real.jpg", title:"שיירשת לדורות",     sub:"סבא ונכד" },
+
+      // 6:00 (וידאו/ידיים)
+      { type:"video", src:"assets/faith3.mp4",  title:"מסירות נפש",            sub:"רגע שמתחבר" },
+
+      // 7:00 (תמונה/לימוד – אם זה לא נכון אצלך, נחליף ל-still4)
+      { type:"img",   src:"assets/still4_real.jpg", title:"כי הם חיינו",       sub:"להמחיש את החיבור" },
+
+      // 9:00 (שבת – וידאו)
+      { type:"video", src:"assets/faith4.mp4",  title:"שבת",                   sub:"עונג, רגע, שלווה" },
+
+      // 10:00 (תפילין)
+      { type:"img",   src:"assets/still1_real.jpg", title:"תפילין",            sub:"האות שמחבר" },
+    ];
+
+    // ====== 2) מיקום סימטרי בתוך הדיסק (אוטומטי) ======
+    // זוויות “שעון”: 12, 2, 3, 5, 6, 7, 9, 10
+    const anglesDeg = [-90, -30, 0, 60, 90, 120, 180, -150];
+
+    const disc = document.getElementById("disc");
+
+    function createSlot(item){
+      const slot = document.createElement("div");
+      slot.className = "slot";
+
+      if(item.type === "video"){
+        const v = document.createElement("video");
+        v.src = item.src;
+        v.autoplay = true;
+        v.muted = true;
+        v.loop = true;
+        v.playsInline = true;
+        v.preload = "metadata";
+        slot.appendChild(v);
+      }else{
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = "";
+        slot.appendChild(img);
+      }
+
+      const cap = document.createElement("div");
+      cap.className = "caption";
+      const t = document.createElement("div");
+      t.className = "cap-title";
+      t.textContent = item.title;
+      const s = document.createElement("div");
+      s.className = "cap-sub";
+      s.textContent = item.sub;
+      cap.appendChild(t);
+      cap.appendChild(s);
+      slot.appendChild(cap);
+
+      return slot;
+    }
+
+    // ממקם את הכרטיסים לפי רדיוס באחוזים (CSS var --orbit)
+    function layout(){
+      // רוחב/גובה בפיקסלים של הדיסק
+      const rect = disc.getBoundingClientRect();
+
+      // "רדיוס" מסלול: אחוז מהרדיוס של הדיסק
+      const orbitPercent = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--orbit")) || 36;
+      const R = (Math.min(rect.width, rect.height) / 2) * (orbitPercent / 100);
+
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+
+      // נקבע מיקום כל slot
+      const slots = disc.querySelectorAll(".slot");
+      slots.forEach((slot, i) => {
+        const a = anglesDeg[i] * Math.PI / 180;
+        const x = cx + R * Math.cos(a);
+        const y = cy + R * Math.sin(a);
+        slot.style.left = x + "px";
+        slot.style.top  = y + "px";
+      });
+    }
+
+    // בונים כרטיסים פעם אחת
+    items.forEach(it => disc.appendChild(createSlot(it)));
+
+    // מסדרים על הדיסק
+    layout();
+    window.addEventListener("resize", layout);
+
+    // ====== 3) קישור כפתור ======
+    const FORM_URL = "form.html";
     document.getElementById("startBtn").addEventListener("click", () => {
       window.location.href = FORM_URL;
     });
