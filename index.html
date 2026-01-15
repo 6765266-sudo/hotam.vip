@@ -20,7 +20,7 @@
       /* טקסט מעגלי */
       --ringText: rgba(255,255,255,.74);
       --ringFont: 15px;
-      --spinSeconds: 95s; /* איטי יותר */
+      --spinSeconds: 95s; /* איטי */
 
       /* מרכז דיסק – סימטרי */
       --hubSize: 24%;
@@ -74,7 +74,7 @@
     .ring svg{
       width:48%;
       height:48%;
-      aspect-ratio: 1 / 1;           /* עיגול אמיתי */
+      aspect-ratio: 1 / 1;
       display:block;
     }
     .ring-spin{
@@ -199,7 +199,7 @@
       :root{
         --cardW: 25.5%;
         --orbit: 70%;
-        --spinSeconds: 115s; /* במובייל עוד יותר לאט */
+        --spinSeconds: 115s; /* מובייל עוד יותר איטי */
         --ringFont: 12.5px;
         --hubSize: 36%;
       }
@@ -229,11 +229,11 @@
               letter-spacing=".6"
               direction="rtl"
               unicode-bidi="plaintext"
-              textLength="720"
+              textLength="740"
               lengthAdjust="spacingAndGlyphs"
             >
               <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                חותם שנשאר לדורות•מי היו סבא וסבתא•סיפורי משפחה ומורשת•המחשת גבורה ומסירות נפש•
+                חותם שנשאר לדורות•מי היו סבא וסבתא•סיפורי משפחה ומורשת•המחשת גבורה ומסירות נפש•שנשאר חותם לדורות•
               </textPath>
             </text>
           </g>
@@ -255,19 +255,22 @@
   <script>
     /*
       מיקומים על השעון:
-      0 = 12:00 (למעלה)
+      0 = 12:00
       1 = 1:30
       2 = 3:00
       3 = 4:30
-      4 = 6:00 (למטה)   ✅ כאן שמתי תפילין
+      4 = 6:00
       5 = 7:30
       6 = 9:00
       7 = 10:30
     */
     const anglesDeg = Array.from({length: 8}, (_, i) => -90 + i * 45);
 
-    /* ✅ סידור מחדש כדי שלא “יזוז” התפילין:
-       תפילין (still1_real) -> אינדקס 4 (6:00)
+    /*
+      ✅ תיקון ההחלפה:
+      לפי מה ששלחת — התווית "תפילין" ישבה על תמונה לא נכונה,
+      וה"תורשת/סבא ונכד" ישבה על תמונת התפילין.
+      לכן החלפתי רק את ה-SRC בין שני הסלוטים (4 ו-5).
     */
     const items = [
       { type:"video", src:"assets/faith1.mp4",      title:"זיכרון אבות",           sub:"שלא יאבד" },          // 12:00
@@ -275,11 +278,15 @@
       { type:"video", src:"assets/faith2.mp4",      title:"מתיקות התורה",          sub:"של סבא" },            // 3:00
       { type:"img",   src:"assets/still3_real.jpg", title:"להעביר מורשת",          sub:"מדור לדור" },         // 4:30
 
-      { type:"img",   src:"assets/still1_real.jpg", title:"תפילין",               sub:"האות שמחבר" },        // 6:00 ✅
+      // 6:00 (תפילין) — החלפתי SRC כדי שיתאים לתמונה הנכונה אצלך
+      { type:"img",   src:"assets/still4_real.jpg", title:"תפילין",               sub:"האות שמחבר" },        // 6:00 ✅
 
-      { type:"img",   src:"assets/still4_real.jpg", title:"מורשת",                sub:"סבא ונכד" },          // 7:30
+      // 7:30 (מורשת) — החלפתי SRC כדי שיתאים לסבא ונכד
+      { type:"img",   src:"assets/still1_real.jpg", title:"מורשת",                sub:"סבא ונכד" },          // 7:30 ✅
 
-      { type:"video", src:"assets/faith4.mp4",      title:"שבת בבית סבא",          sub:"" },                  // 9:00 ✅ רק זה
+      // שבת — הוספתי תת-כותרת כמו שביקשת
+      { type:"video", src:"assets/faith4.mp4",      title:"שבת בבית סבא",          sub:"עונג, שלווה" },       // 9:00 ✅
+
       { type:"video", src:"assets/faith3.mp4",      title:"מסירות נפש",            sub:"רגע שמתחבר" },        // 10:30
     ];
 
@@ -312,7 +319,6 @@
       const t = document.createElement("div");
       t.className = "cap-title";
       t.textContent = item.title;
-
       cap.appendChild(t);
 
       if(item.sub && item.sub.trim().length){
