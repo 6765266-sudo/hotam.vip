@@ -3,48 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>hotam.vip</title>
+  <title>חותם</title>
 
   <style>
     :root{
-      --bg: #efe7dc;
+      --bg:#efe7dc;
 
-      /* דיסק – צבע אחד (עם חריצים עדינים) */
+      /* דיסק */
       --discBase:#0e0f10;
 
       /* כרטיסים */
-      --cardW: 20.5%;
-      --cardRadius: 14px;
-      --orbit: 67%;
+      --cardW:20.5%;
+      --cardRadius:14px;
+      --orbit:67%;
 
       /* טקסט מעגלי */
-      --ringText: rgba(255,255,255,.74);
-      --ringFont: 15px;
-      --spinSeconds: 65s; /* איטי */
+      --ringText:rgba(255,255,255,.74);
+      --ringFont:15px;
 
-      /* מרכז דיסק – סימטרי */
-      --hubSize: 24%;
-      --hubOuter: #d7d7d7;
-      --hubInner: #bdbdbd;
+      /* ✅ מהירות סיבוב: קטן יותר = יותר מהר */
+      --spinSeconds:65s;
 
-      --shadow: 0 22px 55px rgba(0,0,0,.35);
+      /* מרכז דיסק */
+      --hubSize:24%;
+      --hubOuter:#d7d7d7;
+      --hubInner:#bdbdbd;
+
+      --shadow:0 22px 55px rgba(0,0,0,.35);
     }
 
-    *{ box-sizing:border-box; }
+    *{box-sizing:border-box}
     body{
       margin:0;
       min-height:100vh;
       display:grid;
       place-items:center;
-      background: radial-gradient(1200px 800px at 50% 30%, #fff6ea 0%, var(--bg) 55%, #e6ddcf 100%);
-      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background:radial-gradient(1200px 800px at 50% 30%,#fff6ea 0%,var(--bg) 55%,#e6ddcf 100%);
+      font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
     }
 
     .stage{
-      width:min(980px, 92vw);
+      width:min(980px,92vw);
       position:relative;
     }
-    .stage::before{ content:""; display:block; padding-top:100%; }
+    .stage::before{content:"";display:block;padding-top:100%}
 
     .disc{
       position:absolute;
@@ -53,59 +55,57 @@
       background:
         repeating-radial-gradient(circle at 50% 50%,
           rgba(255,255,255,.045) 0 2px,
-          rgba(255,255,255,0) 2px 8px
-        ),
-        radial-gradient(circle at 50% 50%, #121314 0%, var(--discBase) 72%, #070708 100%);
-      box-shadow: var(--shadow);
+          rgba(255,255,255,0) 2px 8px),
+        radial-gradient(circle at 50% 50%,#121314 0%,var(--discBase) 72%,#070708 100%);
+      box-shadow:var(--shadow);
       overflow:hidden;
-      transform: translateZ(0);
-      will-change: transform;
+      transform:translateZ(0);
     }
 
-    /* טבעת טקסט מסתובבת */
+    /* טבעת טקסט */
     .ring{
       position:absolute;
       inset:0;
       display:grid;
       place-items:center;
       pointer-events:none;
-      z-index: 3;
+      z-index:3;
     }
     .ring svg{
       width:48%;
       height:48%;
-      aspect-ratio: 1 / 1;
+      aspect-ratio:1/1;
       display:block;
     }
     .ring-spin{
-      transform-origin: 50% 50%;
-      animation: spin var(--spinSeconds) linear infinite;
+      transform-origin:50% 50%;
+      animation:spin var(--spinSeconds) linear infinite;
     }
     @keyframes spin{
-      from{ transform: rotate(0deg); }
-      to{ transform: rotate(360deg); }
+      from{transform:rotate(0)}
+      to{transform:rotate(360deg)}
     }
 
     /* כרטיסים */
     .slot{
       position:absolute;
-      width: var(--cardW);
-      aspect-ratio: 16 / 9;
-      border-radius: var(--cardRadius);
+      width:var(--cardW);
+      aspect-ratio:16/9;
+      border-radius:var(--cardRadius);
       overflow:hidden;
-      box-shadow: 0 18px 30px rgba(0,0,0,.35);
-      background: rgba(255,255,255,.06);
-      z-index: 2;
-      transform: translate(-50%,-50%);
+      box-shadow:0 18px 30px rgba(0,0,0,.35);
+      background:rgba(255,255,255,.06);
+      transform:translate(-50%,-50%);
+      z-index:2;
     }
-    .slot img, .slot video{
+    .slot img,.slot video{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
     }
 
-    /* כתוביות – שמאל למטה, בלי רקע */
+    /* כתוביות */
     .caption{
       position:absolute;
       left:10px;
@@ -114,98 +114,87 @@
       display:flex;
       flex-direction:column;
       gap:2px;
-      align-items:flex-start;
-      text-align:left;
+      color:rgba(255,255,255,.96);
+      text-shadow:0 2px 10px rgba(0,0,0,.68);
       pointer-events:none;
-      color: rgba(255,255,255,.96);
-      text-shadow: 0 2px 10px rgba(0,0,0,.68);
     }
     .cap-title{
       font-weight:900;
       font-size:14px;
-      line-height:1.1;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:100%;
     }
     .cap-sub{
       font-weight:800;
       font-size:12px;
-      line-height:1.15;
       opacity:.95;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:100%;
     }
 
-    /* מרכז דיסק – שני עיגולים סימטריים */
+    /* מרכז דיסק */
     .hub{
       position:absolute;
       left:50%;
       top:50%;
       transform:translate(-50%,-50%);
-      width: var(--hubSize);
+      width:var(--hubSize);
       aspect-ratio:1/1;
       border-radius:50%;
-      z-index: 4;
+      z-index:4;
       display:grid;
       place-items:center;
     }
-
     .hub-outer{
       width:100%;
       height:100%;
       border-radius:50%;
-      background: radial-gradient(circle at 50% 50%, #f1f1f1 0 40%, var(--hubOuter) 40% 100%);
-      box-shadow: 0 10px 28px rgba(0,0,0,.28);
+      background:radial-gradient(circle at 50% 50%,#f1f1f1 0 40%,var(--hubOuter) 40% 100%);
+      box-shadow:0 10px 28px rgba(0,0,0,.28);
       display:grid;
       place-items:center;
     }
-
     .hub-inner{
       width:72%;
       height:72%;
       border-radius:50%;
-      background: radial-gradient(circle at 50% 50%, #d7d7d7 0 35%, var(--hubInner) 35% 100%);
+      background:radial-gradient(circle at 50% 50%,#d7d7d7 0 35%,var(--hubInner) 35% 100%);
       box-shadow:
         inset 0 0 0 2px rgba(0,0,0,.10),
         inset 0 16px 22px rgba(0,0,0,.12);
       display:grid;
       place-items:center;
     }
-
     .startBtn{
       width:44%;
       height:44%;
       border-radius:50%;
       border:none;
       cursor:pointer;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.28), rgba(0,0,0,.08));
+      background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.28),rgba(0,0,0,.08));
       box-shadow:
         inset 0 0 0 2px rgba(0,0,0,.12),
         0 6px 14px rgba(0,0,0,.22);
-      color: rgba(0,0,0,.78);
+      color:rgba(0,0,0,.78);
       font-weight:900;
-      letter-spacing:.3px;
       font-size:13px;
-      transition: transform .15s ease, filter .15s ease;
+      letter-spacing:.3px;
+      transition:transform .15s ease, filter .15s ease;
     }
-    .startBtn:hover{ filter: brightness(1.05); transform: translateY(-1px); }
-    .startBtn:active{ transform: translateY(0) scale(.98); }
+    .startBtn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .startBtn:active{transform:translateY(0) scale(.98)}
 
-    @media (max-width: 640px){
+    @media(max-width:640px){
       :root{
-        --cardW: 25.5%;
-        --orbit: 70%;
-        --spinSeconds: 115s; /* מובייל עוד יותר איטי */
-        --ringFont: 12.5px;
-        --hubSize: 36%;
+        --cardW:25.5%;
+        --orbit:70%;
+        --spinSeconds:75s;   /* ✅ במובייל קצת יותר איטי כדי שלא יהיה “מעייף” */
+        --ringFont:12.5px;
+        --hubSize:36%;
       }
-      .ring svg{ width:60%; height:60%; }
-      .cap-title{ font-size:13px; }
-      .cap-sub{ font-size:11px; }
+      .ring svg{width:60%;height:60%}
     }
   </style>
 </head>
@@ -214,13 +203,13 @@
   <div class="stage">
     <div class="disc" id="disc">
 
-      <!-- טבעת טקסט מסתובבת (בלי רווחים סביב הנקודות בכלל) -->
+      <!-- טקסט מעגלי -->
       <div class="ring" aria-hidden="true">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <path id="circlePath" d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0" />
+            <path id="circlePath"
+              d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
           </defs>
-
           <g class="ring-spin">
             <text
               fill="var(--ringText)"
@@ -230,17 +219,16 @@
               direction="rtl"
               unicode-bidi="plaintext"
               textLength="740"
-              lengthAdjust="spacingAndGlyphs"
-            >
+              lengthAdjust="spacingAndGlyphs">
               <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
+                חותם שנשאר לדורות•מי היו סבא וסבתא•סיפורי משפחה ומורשת•המחשת גבורה ומסירות נפש•חותם שנשאר לדורות•
               </textPath>
             </text>
           </g>
         </svg>
       </div>
 
-      <!-- מרכז דיסק סימטרי -->
+      <!-- מרכז דיסק -->
       <div class="hub">
         <div class="hub-outer">
           <div class="hub-inner">
@@ -253,115 +241,77 @@
   </div>
 
   <script>
-    /*
-      מיקומים על השעון:
-      0 = 12:00
-      1 = 1:30
-      2 = 3:00
-      3 = 4:30
-      4 = 6:00
-      5 = 7:30
-      6 = 9:00
-      7 = 10:30
-    */
-    const anglesDeg = Array.from({length: 8}, (_, i) => -90 + i * 45);
+    const anglesDeg = Array.from({length:8}, (_,i)=>-90 + i*45);
 
-    /*
-      ✅ תיקון ההחלפה:
-      לפי מה ששלחת — התווית "תפילין" ישבה על תמונה לא נכונה,
-      וה"תורשת/סבא ונכד" ישבה על תמונת התפילין.
-      לכן החלפתי רק את ה-SRC בין שני הסלוטים (4 ו-5).
-    */
+    // שים לב: אם תרצה להחליף שוב מיקום של תמונה/וידאו – עושים את זה רק כאן.
     const items = [
-      { type:"video", src:"assets/faith1.mp4",      title:"זיכרון אבות",           sub:"שלא יאבד" },          // 12:00
-      { type:"img",   src:"assets/still2_real.jpg", title:"חותם שנשאר לדורות",     sub:"שהנכדים ידעו" },      // 1:30
-      { type:"video", src:"assets/faith2.mp4",      title:"מתיקות התורה",          sub:"של סבא" },            // 3:00
-      { type:"img",   src:"assets/still3_real.jpg", title:"להעביר מורשת",          sub:"מדור לדור" },         // 4:30
-
-      // 6:00 (תפילין) — החלפתי SRC כדי שיתאים לתמונה הנכונה אצלך
-      { type:"img",   src:"assets/still4_real.jpg", title:"תפילין",               sub:"האות שמחבר" },        // 6:00 ✅
-
-      // 7:30 (מורשת) — החלפתי SRC כדי שיתאים לסבא ונכד
-      { type:"img",   src:"assets/still1_real.jpg", title:"מורשת",                sub:"סבא ונכד" },          // 7:30 ✅
-
-      // שבת — הוספתי תת-כותרת כמו שביקשת
-      { type:"video", src:"assets/faith4.mp4",      title:"שבת בבית סבא",          sub:"עונג, שלווה" },       // 9:00 ✅
-
-      { type:"video", src:"assets/faith3.mp4",      title:"מסירות נפש",            sub:"רגע שמתחבר" },        // 10:30
+      {type:"video",src:"assets/faith1.mp4",title:"זיכרון אבות",sub:"שלא יאבד"},
+      {type:"img",  src:"assets/still2_real.jpg",title:"חותם שנשאר לדורות",sub:"שהנכדים ידעו"},
+      {type:"video",src:"assets/faith2.mp4",title:"מתיקות התורה",sub:"של סבא"},
+      {type:"img",  src:"assets/still3_real.jpg",title:"להעביר מורשת",sub:"מדור לדור"},
+      {type:"img",  src:"assets/still4_real.jpg",title:"תפילין",sub:"האות שמחבר"},
+      {type:"img",  src:"assets/still1_real.jpg",title:"מורשת",sub:"סבא ונכד"},
+      {type:"video",src:"assets/faith4.mp4",title:"שבת בבית סבא",sub:"עונג, שלווה"},
+      {type:"video",src:"assets/faith3.mp4",title:"מסירות נפש",sub:"רגע שמתחבר"},
     ];
 
     const disc = document.getElementById("disc");
 
-    function createSlot(item){
-      const slot = document.createElement("div");
-      slot.className = "slot";
+    function createSlot(it){
+      const s = document.createElement("div");
+      s.className = "slot";
 
-      if(item.type === "video"){
-        const v = document.createElement("video");
-        v.src = item.src;
-        v.autoplay = true;
-        v.muted = true;
-        v.loop = true;
-        v.playsInline = true;
-        v.setAttribute("playsinline", "");
-        v.preload = "metadata";
-        slot.appendChild(v);
+      if(it.type==="video"){
+        const v=document.createElement("video");
+        v.src=it.src; v.autoplay=true; v.muted=true; v.loop=true; v.playsInline=true;
+        v.setAttribute("playsinline","");
+        v.preload="metadata";
+        s.appendChild(v);
       } else {
-        const img = document.createElement("img");
-        img.src = item.src;
-        img.alt = "";
-        slot.appendChild(img);
+        const i=document.createElement("img");
+        i.src=it.src; i.alt="";
+        s.appendChild(i);
       }
 
-      const cap = document.createElement("div");
-      cap.className = "caption";
+      const c=document.createElement("div");
+      c.className="caption";
 
-      const t = document.createElement("div");
-      t.className = "cap-title";
-      t.textContent = item.title;
-      cap.appendChild(t);
+      const t=document.createElement("div");
+      t.className="cap-title";
+      t.textContent=it.title;
+      c.appendChild(t);
 
-      if(item.sub && item.sub.trim().length){
-        const s = document.createElement("div");
-        s.className = "cap-sub";
-        s.textContent = item.sub;
-        cap.appendChild(s);
+      if(it.sub && it.sub.trim()){
+        const sb=document.createElement("div");
+        sb.className="cap-sub";
+        sb.textContent=it.sub;
+        c.appendChild(sb);
       }
 
-      slot.appendChild(cap);
-      return slot;
+      s.appendChild(c);
+      return s;
     }
 
     function layout(){
       const size = disc.clientWidth;
-      const cx = size / 2;
-      const cy = size / 2;
+      const orbit = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--orbit"))/100;
+      const R = (size/2) * orbit;
+      const cx=size/2, cy=size/2;
 
-      const orbitStr = getComputedStyle(document.documentElement).getPropertyValue("--orbit").trim();
-      const orbitPercent = parseFloat(orbitStr) || 67;
-      const R = (size / 2) * (orbitPercent / 100);
-
-      const slots = disc.querySelectorAll(".slot");
-      slots.forEach((slot, i) => {
-        const a = anglesDeg[i] * Math.PI / 180;
-        const x = cx + R * Math.cos(a);
-        const y = cy + R * Math.sin(a);
-        slot.style.left = x + "px";
-        slot.style.top  = y + "px";
+      disc.querySelectorAll(".slot").forEach((s,i)=>{
+        const a = anglesDeg[i]*Math.PI/180;
+        s.style.left = (cx + R*Math.cos(a)) + "px";
+        s.style.top  = (cy + R*Math.sin(a)) + "px";
       });
     }
 
-    items.forEach(it => disc.appendChild(createSlot(it)));
-
+    items.forEach(it=>disc.appendChild(createSlot(it)));
     layout();
     window.addEventListener("resize", layout);
-    window.addEventListener("load", () => requestAnimationFrame(layout));
 
-    document.getElementById("startBtn").addEventListener("click", () => {
-      window.location.href = "form.html";
-    });
+    document.getElementById("startBtn").onclick = () => {
+      location.href = "form.html";
+    };
   </script>
 </body>
 </html>
-
-
