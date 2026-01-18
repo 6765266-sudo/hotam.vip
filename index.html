@@ -8,18 +8,14 @@
   <style>
     :root{
       --bg:#efe7dc;
-
       --discBase:#0e0f10;
 
       --cardW:20.5%;
       --cardRadius:14px;
       --orbit:67%;
 
-      --ringText:rgba(255,255,255,.74);
-      --ringFont:15px;
-
-      /* קטן יותר = יותר מהר */
-      --spinSeconds:65s;
+      /* סיבוב טקסט מעגלי – קטן יותר = יותר מהר */
+      --spinSeconds:60s;
 
       --hubSize:24%;
       --hubOuter:#d7d7d7;
@@ -58,6 +54,7 @@
       transform:translateZ(0);
     }
 
+    /* טקסט מעגלי */
     .ring{
       position:absolute;
       inset:0;
@@ -81,6 +78,39 @@
       to{transform:rotate(360deg)}
     }
 
+    /* טקסט מרכזי (הוחזר) */
+    .centerCopy{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:min(380px,40%);
+      text-align:center;
+      z-index:4;
+      pointer-events:none;
+      color:rgba(255,255,255,.92);
+      text-shadow:0 2px 18px rgba(0,0,0,.55);
+    }
+    .centerCopy .title{
+      font-weight:950;
+      letter-spacing:.2px;
+      font-size:clamp(16px,2.2vw,22px);
+      margin:0 0 6px;
+    }
+    .centerCopy .sub{
+      margin:0;
+      font-weight:800;
+      font-size:clamp(12px,1.5vw,14px);
+      opacity:.92;
+    }
+    .centerCopy .hint{
+      margin:10px 0 0;
+      font-weight:800;
+      font-size:clamp(11px,1.4vw,12px);
+      opacity:.85;
+    }
+
+    /* תמונות/וידאו על הדיסק */
     .slot{
       position:absolute;
       width:var(--cardW);
@@ -99,34 +129,46 @@
       display:block;
     }
 
+    /* כיתוב על התמונות – ימין למטה + רספונסיבי */
     .caption{
       position:absolute;
-      left:10px;
-      bottom:10px;
       right:10px;
+      bottom:10px;
+      left:10px;  /* מאפשר שורות להישבר בלי להיעלם */
       display:flex;
       flex-direction:column;
       gap:2px;
-      color:rgba(255,255,255,.96);
-      text-shadow:0 2px 10px rgba(0,0,0,.68);
+      align-items:flex-end;
+      text-align:right;
+      color:rgba(255,255,255,.97);
+      text-shadow:0 2px 12px rgba(0,0,0,.75);
       pointer-events:none;
     }
-    .cap-title{
-      font-weight:900;
-      font-size:14px;
-      white-space:nowrap;
+
+    /* במקום ... : מאפשר 2 שורות */
+    .cap-title,
+    .cap-sub{
+      max-width:100%;
+      display:-webkit-box;
+      -webkit-box-orient:vertical;
       overflow:hidden;
-      text-overflow:ellipsis;
+      white-space:normal;
+    }
+    .cap-title{
+      font-weight:950;
+      font-size:clamp(12px,1.25vw,14px);
+      line-height:1.15;
+      -webkit-line-clamp:2;
     }
     .cap-sub{
-      font-weight:800;
-      font-size:12px;
-      opacity:.95;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      font-weight:850;
+      font-size:clamp(10.5px,1.1vw,12px);
+      line-height:1.15;
+      opacity:.96;
+      -webkit-line-clamp:2;
     }
 
+    /* מרכז דיסק */
     .hub{
       position:absolute;
       left:50%;
@@ -135,7 +177,7 @@
       width:var(--hubSize);
       aspect-ratio:1/1;
       border-radius:50%;
-      z-index:4;
+      z-index:5;
       display:grid;
       place-items:center;
     }
@@ -170,7 +212,7 @@
         inset 0 0 0 2px rgba(0,0,0,.12),
         0 6px 14px rgba(0,0,0,.22);
       color:rgba(0,0,0,.78);
-      font-weight:900;
+      font-weight:950;
       font-size:13px;
       letter-spacing:.3px;
       transition:transform .15s ease, filter .15s ease;
@@ -178,15 +220,17 @@
     .startBtn:hover{filter:brightness(1.05);transform:translateY(-1px)}
     .startBtn:active{transform:translateY(0) scale(.98)}
 
+    /* מובייל */
     @media(max-width:640px){
       :root{
         --cardW:25.5%;
         --orbit:70%;
-        --spinSeconds:75s;
-        --ringFont:12.5px;
+        --spinSeconds:70s; /* טיפה יותר איטי במובייל */
         --hubSize:36%;
       }
-      .ring svg{width:60%;height:60%}
+      .ring svg{width:62%;height:62%}
+      .centerCopy{width:min(320px,62%)}
+      .caption{right:8px;bottom:8px;left:8px}
     }
   </style>
 </head>
@@ -195,7 +239,7 @@
   <div class="stage">
     <div class="disc" id="disc">
 
-      <!-- ✅ טקסט מעגלי עם רווחים סימטריים -->
+      <!-- ✅ טקסט מעגלי (בלי CSS vars בתוך SVG כדי שיעבוד באייפון) -->
       <div class="ring" aria-hidden="true">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
           <defs>
@@ -206,8 +250,8 @@
 
           <g class="ring-spin">
             <text
-              fill="var(--ringText)"
-              font-size="var(--ringFont)"
+              fill="rgba(255,255,255,.78)"
+              font-size="15"
               font-weight="900"
               letter-spacing=".2"
               lengthAdjust="spacing"
@@ -223,6 +267,13 @@
         </svg>
       </div>
 
+      <!-- ✅ הטקסט במרכז (הוחזר) -->
+      <div class="centerCopy" aria-hidden="true">
+        <p class="title">חותם שנשאר לדורות</p>
+        <p class="sub">סיפורי משפחה ומורשת • רגעים של רגש</p>
+        <p class="hint">לחצו על “התחל” כדי להמשיך</p>
+      </div>
+
       <div class="hub">
         <div class="hub-outer">
           <div class="hub-inner">
@@ -235,8 +286,10 @@
   </div>
 
   <script>
+    // 8 נקודות בשעון
     const anglesDeg = Array.from({length:8}, (_,i)=>-90 + i*45);
 
+    // שמות קבצים לפי מה שיש אצלך בגיטהאב
     const items = [
       {type:"video",src:"assets/faith1.mp4",title:"זיכרון אבות",sub:"שלא יאבד"},
       {type:"img",  src:"assets/still2_real.jpg",title:"חותם שנשאר לדורות",sub:"שהנכדים ידעו"},
@@ -256,13 +309,15 @@
 
       if(it.type==="video"){
         const v=document.createElement("video");
-        v.src=it.src; v.autoplay=true; v.muted=true; v.loop=true; v.playsInline=true;
+        v.src=it.src;
+        v.autoplay=true; v.muted=true; v.loop=true; v.playsInline=true;
         v.setAttribute("playsinline","");
         v.preload="metadata";
         s.appendChild(v);
       } else {
         const i=document.createElement("img");
-        i.src=it.src; i.alt="";
+        i.src=it.src;
+        i.alt="";
         s.appendChild(i);
       }
 
@@ -298,11 +353,15 @@
       });
     }
 
+    // נקה סלוטים קודמים אם רעננת/הדבקת שוב
+    disc.querySelectorAll(".slot").forEach(x=>x.remove());
     items.forEach(it=>disc.appendChild(createSlot(it)));
+
     layout();
     window.addEventListener("resize", layout);
 
     document.getElementById("startBtn").onclick = () => {
+      // שנה ל-form.html אם זה שם הקובץ שלך בפועל
       location.href = "form.html";
     };
   </script>
