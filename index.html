@@ -9,22 +9,18 @@
     :root{
       --bg:#efe7dc;
 
-      /* דיסק */
       --discBase:#0e0f10;
 
-      /* כרטיסים */
       --cardW:20.5%;
       --cardRadius:14px;
       --orbit:67%;
 
-      /* טקסט מעגלי */
       --ringText:rgba(255,255,255,.74);
       --ringFont:15px;
 
-      /* ✅ מהירות סיבוב: קטן יותר = יותר מהר */
+      /* מהירות סיבוב: קטן יותר = יותר מהר */
       --spinSeconds:65s;
 
-      /* מרכז דיסק */
       --hubSize:24%;
       --hubOuter:#d7d7d7;
       --hubInner:#bdbdbd;
@@ -62,7 +58,6 @@
       transform:translateZ(0);
     }
 
-    /* טבעת טקסט */
     .ring{
       position:absolute;
       inset:0;
@@ -86,7 +81,6 @@
       to{transform:rotate(360deg)}
     }
 
-    /* כרטיסים */
     .slot{
       position:absolute;
       width:var(--cardW);
@@ -105,7 +99,6 @@
       display:block;
     }
 
-    /* כתוביות */
     .caption{
       position:absolute;
       left:10px;
@@ -134,7 +127,6 @@
       text-overflow:ellipsis;
     }
 
-    /* מרכז דיסק */
     .hub{
       position:absolute;
       left:50%;
@@ -203,7 +195,7 @@
   <div class="stage">
     <div class="disc" id="disc">
 
-      <!-- ✅ טקסט מעגלי מתוקן (בלי textLength / lengthAdjust) -->
+      <!-- ✅ טקסט מעגלי בלי כפילות -->
       <div class="ring" aria-hidden="true">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
           <defs>
@@ -216,12 +208,11 @@
               fill="var(--ringText)"
               font-size="var(--ringFont)"
               font-weight="900"
-              letter-spacing=".4"
+              letter-spacing=".5"
               style="paint-order:stroke; stroke: rgba(0,0,0,.45); stroke-width:1px;"
               direction="rtl"
               unicode-bidi="plaintext">
               <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
                 חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
               </textPath>
             </text>
@@ -229,7 +220,6 @@
         </svg>
       </div>
 
-      <!-- מרכז דיסק -->
       <div class="hub">
         <div class="hub-outer">
           <div class="hub-inner">
