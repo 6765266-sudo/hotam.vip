@@ -12,12 +12,12 @@
       /* מהירות סיבוב הטקסט המעגלי (קטן יותר = מהר יותר) */
       --spinDur: 18s;
 
-      /* tiles קטנים יותר (כדי שלא “יחזרו אחורה” וייכנסו למרכז) */
-      --tileW: clamp(130px, 17vw, 220px);
-      --tileH: clamp(78px, 10.5vw, 130px);
+      /* הקטנה נוספת של ה־tiles */
+      --tileW: clamp(110px, 13.5vw, 185px);
+      --tileH: clamp(64px, 8.6vw, 110px);
 
-      /* טבעת הטקסט – יושבת על השחור, לא על הלבן */
-      --ringSize: clamp(260px, 42vmin, 520px);
+      /* טבעת הטקסט */
+      --ringSize: clamp(270px, 44vmin, 540px);
     }
 
     *{ box-sizing:border-box; }
@@ -123,7 +123,7 @@
       text-overflow: ellipsis;
     }
 
-    /* טבעת טקסט מסתובבת – יושבת על השחור (z-index מעל הדיסק, מתחת למרכז) */
+    /* טבעת טקסט מסתובבת */
     .ring{
       position:absolute;
       inset:0;
@@ -158,8 +158,8 @@
       pointer-events:none;
     }
     .hub{
-      width: clamp(180px, 28vmin, 300px); /* קטן יותר כדי לא “לבלוע” את הטבעת */
-      height: clamp(180px, 28vmin, 300px);
+      width: clamp(175px, 27vmin, 290px);
+      height: clamp(175px, 27vmin, 290px);
       border-radius:50%;
       background:
         radial-gradient(circle at 50% 50%,
@@ -220,9 +220,9 @@
     /* מובייל */
     @media (max-width: 640px){
       :root{
-        --tileW: clamp(120px, 36vw, 175px);
-        --tileH: clamp(70px, 19vw, 105px);
-        --ringSize: clamp(240px, 48vmin, 340px);
+        --tileW: clamp(105px, 34vw, 165px);
+        --tileH: clamp(62px, 18vw, 98px);
+        --ringSize: clamp(250px, 50vmin, 360px);
       }
       .cap .t1{ font-size: 12px; }
       .cap .t2{ font-size: 11px; }
@@ -238,11 +238,11 @@
   <main class="stage" id="stage">
     <div class="disc" aria-hidden="true"></div>
 
-    <!-- טבעת טקסט (יושבת על השחור, לא על הלבן) -->
+    <!-- טבעת טקסט (עם ריווח סימטרי סביב כל ההיקף) -->
     <div class="ring" aria-hidden="true">
       <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
-          <!-- רדיוס גדול יותר כדי לצאת מחוץ למרכז הלבן -->
+          <!-- רדיוס גדול כדי שהטקסט יישב על השחור -->
           <path id="circlePath"
                 d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/>
         </defs>
@@ -250,12 +250,16 @@
         <g class="ring-spin">
           <text
             fill="rgba(255,255,255,0.88)"
-            font-size {{
             font-size="16"
             font-weight="900"
             letter-spacing="0.3"
             style="paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;">
-            <textPath href="#circlePath" xlink:href="#circlePath" startOffset="50%" text-anchor="middle">
+            <!-- textLength מחלק רווחים בצורה סימטרית! -->
+            <textPath
+              href="#circlePath" xlink:href="#circlePath"
+              startOffset="50%" text-anchor="middle"
+              lengthAdjust="spacing"
+              textLength="804">
               • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
             </textPath>
           </text>
@@ -339,6 +343,7 @@
       layoutTiles();
     });
 
+    // סימטריה מלאה: אותו רדיוס + 8 נקודות שוות (45°)
     function layoutTiles(){
       const stage = document.getElementById('stage');
       const rect = stage.getBoundingClientRect();
@@ -349,23 +354,23 @@
       const tiles = Array.from(document.querySelectorAll('.tile'));
       if (!tiles.length) return;
 
-      // מדוד tile לדוגמה (רק בשביל רדיוס בטוח)
-      const sampleRect = tiles[0].getBoundingClientRect();
-      const tileW = sampleRect.width;
-      const tileH = sampleRect.height;
+      // מידות tile בפועל
+      const tRect = tiles[0].getBoundingClientRect();
+      const tileW = tRect.width;
+      const tileH = tRect.height;
 
-      // רדיוס "בריא": לא צמוד למרכז, לא בורח החוצה
-      const pad = 18;
-      const maxSafe = discR - Math.max(tileW, tileH)/2 - pad;
+      // מרווח ביטחון מהשפה ומהמרכז
+      const padOuter = 22;
 
-      // התחלה יפה ויציבה סביב הדיסק
-      let r = discR * 0.72;
+      // רדיוס מקסימלי כדי לא לצאת מחוץ לדיסק
+      const maxSafe = discR - Math.max(tileW, tileH)/2 - padOuter;
 
-      // אם יוצא גדול מדי – תן גבול עליון
+      // רדיוס בסיסי יפה (קצת יותר החוצה כדי ליצור "אויר" בין tiles)
+      let r = discR * 0.78;
+
+      // קלמפ בטוח
       r = Math.min(r, maxSafe);
-
-      // אם יוצא קטן מדי (מה שקרה אצלך) – תן גבול תחתון
-      r = Math.max(r, discR * 0.62);
+      r = Math.max(r, discR * 0.68);
 
       tiles.forEach(tile => {
         const angDeg = Number(tile.dataset.angle || 0);
@@ -380,8 +385,6 @@
     }
 
     window.addEventListener('resize', () => requestAnimationFrame(layoutTiles));
-
-    // אם תרצה מהר יותר: document.documentElement.style.setProperty('--spinDur','14s');
   </script>
 </body>
 </html>
