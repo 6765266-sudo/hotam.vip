@@ -4,19 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>hotam.vip</title>
+
   <style>
     :root{
       --bg:#efe7db;
-      --discShadow: 0 28px 60px rgba(0,0,0,.25);
-      --tileShadow: 0 14px 30px rgba(0,0,0,.35);
-      --spinDur: 26s; /* מהיר יותר => מספר קטן יותר. איטי יותר => מספר גדול יותר */
-      --tileW: clamp(138px, 22vw, 250px);
-      --tileH: clamp(78px, 12vw, 140px);
-      --radius: clamp(210px, 34vmin, 360px);
-      --ringSize: clamp(220px, 36vmin, 410px);
+
+      /* מהירות סיבוב הטקסט המעגלי: קטן יותר = מהר יותר */
+      --spinDur: 22s;
+
+      /* גדלי tiles */
+      --tileW: clamp(140px, 22vw, 260px);
+      --tileH: clamp(80px, 12vw, 150px);
+
+      /* הטבעת (SVG) סביב הכפתור */
+      --ringSize: clamp(220px, 36vmin, 420px);
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       min-height:100svh;
@@ -52,11 +56,10 @@
           #0c0c0c 52%,
           #080808 100%
         );
-      box-shadow: var(--discShadow);
-      filter: saturate(1.02) contrast(1.03);
+      box-shadow: 0 28px 60px rgba(0,0,0,.25);
     }
 
-    /* שכבת טבעת הטקסט */
+    /* טבעת טקסט מסתובבת */
     .ring{
       position:absolute;
       inset:0;
@@ -69,7 +72,6 @@
       width: var(--ringSize);
       height: var(--ringSize);
       display:block;
-      overflow:visible;
     }
     .ring-spin{
       transform-origin: 150px 150px;
@@ -81,7 +83,7 @@
       to{ transform: rotate(360deg); }
     }
 
-    /* מרכז (כמו CD/DVD) */
+    /* מרכז דיסק */
     .center{
       position:absolute;
       inset:0;
@@ -124,8 +126,8 @@
         0 10px 26px rgba(0,0,0,.15);
       display:grid;
       place-items:center;
-      position:relative;
     }
+
     .start-btn{
       pointer-events:auto;
       width: 42%;
@@ -143,22 +145,14 @@
         0 10px 22px rgba(0,0,0,.18);
       text-decoration:none;
       color:#222;
-      transform: translateZ(0);
       transition: transform .15s ease, filter .15s ease;
     }
     .start-btn:hover{ filter: brightness(1.06); transform: scale(1.02); }
     .start-btn:active{ transform: scale(.98); filter: brightness(1.03); }
-    .hand{
-      font-size: clamp(18px, 2.2vmin, 24px);
-      line-height: 1;
-    }
-    .start-text{
-      font-weight: 800;
-      font-size: clamp(12px, 1.7vmin, 14px);
-      letter-spacing: .2px;
-    }
+    .hand{ font-size: clamp(18px, 2.2vmin, 24px); line-height: 1; }
+    .start-text{ font-weight: 900; font-size: clamp(12px, 1.7vmin, 14px); }
 
-    /* הכרטיסים סביב הדיסק */
+    /* tiles */
     .tiles{
       position:absolute;
       inset:0;
@@ -171,34 +165,28 @@
       height: var(--tileH);
       border-radius: 16px;
       overflow:hidden;
-      box-shadow: var(--tileShadow);
-      transform:
-        rotate(var(--a))
-        translate(var(--radius))
-        rotate(calc(var(--a) * -1));
-      transform-origin: center;
-      will-change: transform;
-      pointer-events:auto;
+      box-shadow: 0 14px 30px rgba(0,0,0,.35);
       background:#111;
+      pointer-events:auto;
     }
     .tile .media{
       width:100%;
       height:100%;
       object-fit: cover;
       display:block;
-      filter: contrast(1.02) saturate(1.02);
     }
 
-    /* שכבת קריאות לטקסט — שקוף מאוד, לא מסתיר פנים */
+    /* שכבה עדינה לטקסט – לא מכסה פנים */
     .tile::after{
       content:"";
       position:absolute;
       inset:auto 0 0 0;
-      height: 54%;
-      background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0));
+      height: 52%;
+      background: linear-gradient(to top, rgba(0,0,0,.48), rgba(0,0,0,0));
       pointer-events:none;
     }
 
+    /* טקסט: ימין-למטה, 2 שורות מקסימום */
     .cap{
       position:absolute;
       right: 10px;
@@ -207,7 +195,7 @@
       text-align:right;
       color:#fff;
       text-shadow: 0 2px 10px rgba(0,0,0,.75);
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1.08;
       pointer-events:none;
     }
@@ -220,26 +208,24 @@
     .cap .t2{
       margin-top: 4px;
       font-size: clamp(10px, 1.45vmin, 13px);
-      font-weight: 700;
+      font-weight: 800;
       opacity: .95;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* התאמות מובייל */
+    /* מובייל */
     @media (max-width: 640px){
       :root{
-        --tileW: clamp(118px, 36vw, 170px);
-        --tileH: clamp(68px, 20vw, 100px);
-        --radius: clamp(165px, 33vmin, 240px);
-        --ringSize: clamp(190px, 40vmin, 260px);
+        --tileW: clamp(120px, 38vw, 175px);
+        --tileH: clamp(70px, 20vw, 105px);
+        --ringSize: clamp(190px, 40vmin, 270px);
       }
       .cap .t1{ font-size: 12px; }
       .cap .t2{ font-size: 11px; }
     }
 
-    /* נגישות: אם משתמש ביקש להפחית תנועה */
     @media (prefers-reduced-motion: reduce){
       .ring-spin{ animation: none; }
     }
@@ -247,31 +233,23 @@
 </head>
 
 <body>
-  <main class="stage">
+  <main class="stage" id="stage">
     <div class="disc" aria-hidden="true"></div>
 
-    <!-- הטקסט המעגלי (עם תאימות Safari/iPhone: גם href וגם xlink:href) -->
+    <!-- טקסט מעגלי (לא נעלם, תאימות iPhone: גם href וגם xlink:href) -->
     <div class="ring" aria-hidden="true">
       <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
           <path id="circlePath"
-            d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
+                d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
         </defs>
-
         <g class="ring-spin">
-          <text
-            fill="rgba(255,255,255,0.78)"
-            font-size="16"
-            font-weight="900"
-            letter-spacing="0.2"
-            style="paint-order:stroke; stroke: rgba(0,0,0,0.45); stroke-width:1px;"
-          >
-            <textPath
-              href="#circlePath"
-              xlink:href="#circlePath"
-              startOffset="50%"
-              text-anchor="middle"
-            >
+          <text fill="rgba(255,255,255,0.78)"
+                font-size="16"
+                font-weight="900"
+                letter-spacing="0.2"
+                style="paint-order:stroke; stroke: rgba(0,0,0,0.45); stroke-width:1px;">
+            <textPath href="#circlePath" xlink:href="#circlePath" startOffset="50%" text-anchor="middle">
               • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
             </textPath>
           </text>
@@ -279,7 +257,7 @@
       </svg>
     </div>
 
-    <!-- המרכז (כפתור בסגנון דיסק) -->
+    <!-- מרכז דיסק -->
     <div class="center">
       <div class="hub">
         <div class="hub-inner">
@@ -291,97 +269,110 @@
       </div>
     </div>
 
-    <!-- 8 מדיות סביב הדיסק (סימטרי 45°) -->
-    <section class="tiles" aria-label="בחירה">
+    <!-- 8 tiles -->
+    <section class="tiles" id="tiles" aria-label="בחירה">
       <!-- 12 -->
-      <article class="tile" style="--a: 90deg">
+      <article class="tile" data-angle="-90">
         <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div class="cap">
-          <div class="t1">זיכרון אבות</div>
-          <div class="t2">שלא יאבד</div>
-        </div>
+        <div class="cap"><div class="t1">זיכרון אבות</div><div class="t2">שלא יאבד</div></div>
       </article>
 
       <!-- 1:30 -->
-      <article class="tile" style="--a: 45deg">
+      <article class="tile" data-angle="-45">
         <img class="media" src="assets/still1_real.jpg" alt="" loading="lazy" />
-        <div class="cap">
-          <div class="t1">חותם שנשאר לדורות</div>
-          <div class="t2">שהנכדים ידעו</div>
-        </div>
+        <div class="cap"><div class="t1">חותם שנשאר לדורות</div><div class="t2">שהנכדים ידעו</div></div>
       </article>
 
       <!-- 3 -->
-      <article class="tile" style="--a: 0deg">
+      <article class="tile" data-angle="0">
         <video class="media" src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div class="cap">
-          <div class="t1">להעביר מורשת</div>
-          <div class="t2">מדור לדור</div>
-        </div>
+        <div class="cap"><div class="t1">להעביר מורשת</div><div class="t2">מדור לדור</div></div>
       </article>
 
       <!-- 4:30 -->
-      <article class="tile" style="--a: -45deg">
+      <article class="tile" data-angle="45">
         <img class="media" src="assets/still3_real.jpg" alt="" loading="lazy" />
-        <div class="cap">
-          <div class="t1">מתיקות התורה</div>
-          <div class="t2">של סבא</div>
-        </div>
+        <div class="cap"><div class="t1">מתיקות התורה</div><div class="t2">של סבא</div></div>
       </article>
 
       <!-- 6 -->
-      <article class="tile" style="--a: -90deg">
+      <article class="tile" data-angle="90">
         <video class="media" src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div class="cap">
-          <div class="t1">המחשת גבורה</div>
-          <div class="t2">ומסירות נפש</div>
-        </div>
+        <div class="cap"><div class="t1">המחשת גבורה</div><div class="t2">ומסירות נפש</div></div>
       </article>
 
       <!-- 7:30 -->
-      <article class="tile" style="--a: -135deg">
+      <article class="tile" data-angle="135">
         <img class="media" src="assets/still2_real.jpg" alt="" loading="lazy" />
-        <div class="cap">
-          <div class="t1">מורשת</div>
-          <div class="t2">סבא ונכד</div>
-        </div>
+        <div class="cap"><div class="t1">מורשת</div><div class="t2">סבא ונכד</div></div>
       </article>
 
       <!-- 9 -->
-      <article class="tile" style="--a: 180deg">
+      <article class="tile" data-angle="180">
         <video class="media" src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        <div class="cap">
-          <div class="t1">שבת בבית סבא</div>
-          <div class="t2">עונג, שלווה</div>
-        </div>
+        <div class="cap"><div class="t1">שבת בבית סבא</div><div class="t2">עונג, שלווה</div></div>
       </article>
 
       <!-- 10:30 -->
-      <article class="tile" style="--a: 135deg">
+      <article class="tile" data-angle="-135">
         <img class="media" src="assets/still4_real.jpg" alt="" loading="lazy" />
-        <div class="cap">
-          <div class="t1">תפילין</div>
-          <div class="t2">האות שמחבר</div>
-        </div>
+        <div class="cap"><div class="t1">תפילין</div><div class="t2">האות שמחבר</div></div>
       </article>
     </section>
   </main>
 
   <script>
-    // אם באייפון וידאו לא זז עד אינטראקציה – זה דוחף play שוב בעדינות
+    // iOS: לפעמים וידאו לא מתחיל בלי "דחיפה"
     window.addEventListener('load', () => {
       document.querySelectorAll('video.media').forEach(v => {
         v.muted = true;
         v.playsInline = true;
         const p = v.play();
-        if (p && typeof p.catch === 'function') p.catch(() => {});
+        if (p && p.catch) p.catch(()=>{});
       });
+      layoutTiles();
+    });
+
+    // זה הלב: מיקום סימטרי ו"תמיד בתוך הדיסק" לפי גודל אמיתי
+    function layoutTiles(){
+      const stage = document.getElementById('stage');
+      const rect = stage.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const discR = rect.width / 2;
+
+      const tiles = Array.from(document.querySelectorAll('.tile'));
+
+      // קח tile לדוגמה כדי לחשב רדיוס שלא יברח החוצה
+      const sample = tiles[0].getBoundingClientRect();
+      const tileW = sample.width;
+      const tileH = sample.height;
+
+      // רדיוס בטוח: בתוך הדיסק + מרווח
+      const pad = 18;
+      const r = discR - Math.max(tileW, tileH)/2 - pad;
+
+      tiles.forEach(tile => {
+        const angDeg = Number(tile.dataset.angle || 0);
+        const a = angDeg * Math.PI / 180;
+
+        // cos/sin (x ימינה, y למטה)
+        const x = cx + r * Math.cos(a) - tileW/2;
+        const y = cy + r * Math.sin(a) - tileH/2;
+
+        tile.style.left = `${x}px`;
+        tile.style.top  = `${y}px`;
+      });
+    }
+
+    window.addEventListener('resize', () => {
+      // תן לדפדפן לסיים חישוב גדלים ואז מקם מחדש
+      requestAnimationFrame(layoutTiles);
     });
 
     // שינוי מהירות הסיבוב:
-    // מהר יותר => מספר קטן יותר. לדוגמה: 18s
-    // איטי יותר => מספר גדול יותר. לדוגמה: 34s
-    // document.documentElement.style.setProperty('--spinDur', '22s');
+    // מהר יותר => מספר קטן יותר. לדוגמה:
+    // document.documentElement.style.setProperty('--spinDur', '16s');
   </script>
 </body>
 </html>
