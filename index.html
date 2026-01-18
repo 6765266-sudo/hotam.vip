@@ -2,368 +2,386 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>חותם</title>
-
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>hotam.vip</title>
   <style>
     :root{
-      --bg:#efe7dc;
-      --discBase:#0e0f10;
-
-      --cardW:20.5%;
-      --cardRadius:14px;
-      --orbit:67%;
-
-      /* סיבוב טקסט מעגלי – קטן יותר = יותר מהר */
-      --spinSeconds:60s;
-
-      --hubSize:24%;
-      --hubOuter:#d7d7d7;
-      --hubInner:#bdbdbd;
-
-      --shadow:0 22px 55px rgba(0,0,0,.35);
+      --bg:#efe7db;
+      --discShadow: 0 28px 60px rgba(0,0,0,.25);
+      --tileShadow: 0 14px 30px rgba(0,0,0,.35);
+      --spinDur: 26s; /* מהיר יותר => מספר קטן יותר. איטי יותר => מספר גדול יותר */
+      --tileW: clamp(138px, 22vw, 250px);
+      --tileH: clamp(78px, 12vw, 140px);
+      --radius: clamp(210px, 34vmin, 360px);
+      --ringSize: clamp(220px, 36vmin, 410px);
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      min-height:100vh;
+      min-height:100svh;
+      background: radial-gradient(1200px 700px at 50% 35%, #f6f0e7 0%, var(--bg) 55%, #e8dfd1 100%);
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
       display:grid;
       place-items:center;
-      background:radial-gradient(1200px 800px at 50% 30%,#fff6ea 0%,var(--bg) 55%,#e6ddcf 100%);
-      font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+      padding: 18px;
+      overflow:hidden;
     }
 
     .stage{
-      width:min(980px,92vw);
+      width: min(92vmin, 920px);
+      aspect-ratio: 1/1;
       position:relative;
+      display:grid;
+      place-items:center;
     }
-    .stage::before{content:"";display:block;padding-top:100%}
 
+    /* הדיסק */
     .disc{
       position:absolute;
       inset:0;
       border-radius:50%;
       background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 34%, rgba(0,0,0,.0) 35% 100%),
         repeating-radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.045) 0 2px,
-          rgba(255,255,255,0) 2px 8px),
-        radial-gradient(circle at 50% 50%,#121314 0%,var(--discBase) 72%,#070708 100%);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      transform:translateZ(0);
+          rgba(255,255,255,.035) 0 2px,
+          rgba(0,0,0,.0) 2px 7px
+        ),
+        radial-gradient(circle at 50% 50%,
+          #141414 0%,
+          #0c0c0c 52%,
+          #080808 100%
+        );
+      box-shadow: var(--discShadow);
+      filter: saturate(1.02) contrast(1.03);
     }
 
-    /* טקסט מעגלי */
+    /* שכבת טבעת הטקסט */
     .ring{
       position:absolute;
       inset:0;
       display:grid;
       place-items:center;
       pointer-events:none;
-      z-index:3;
+      z-index: 6;
     }
     .ring svg{
-      width:48%;
-      height:48%;
-      aspect-ratio:1/1;
+      width: var(--ringSize);
+      height: var(--ringSize);
       display:block;
+      overflow:visible;
     }
     .ring-spin{
-      transform-origin:50% 50%;
-      animation:spin var(--spinSeconds) linear infinite;
+      transform-origin: 150px 150px;
+      animation: spin var(--spinDur) linear infinite;
+      will-change: transform;
     }
     @keyframes spin{
-      from{transform:rotate(0)}
-      to{transform:rotate(360deg)}
+      from{ transform: rotate(0deg); }
+      to{ transform: rotate(360deg); }
     }
 
-    /* טקסט מרכזי (הוחזר) */
-    .centerCopy{
+    /* מרכז (כמו CD/DVD) */
+    .center{
       position:absolute;
-      left:50%;
-      top:50%;
-      transform:translate(-50%,-50%);
-      width:min(380px,40%);
-      text-align:center;
-      z-index:4;
-      pointer-events:none;
-      color:rgba(255,255,255,.92);
-      text-shadow:0 2px 18px rgba(0,0,0,.55);
-    }
-    .centerCopy .title{
-      font-weight:950;
-      letter-spacing:.2px;
-      font-size:clamp(16px,2.2vw,22px);
-      margin:0 0 6px;
-    }
-    .centerCopy .sub{
-      margin:0;
-      font-weight:800;
-      font-size:clamp(12px,1.5vw,14px);
-      opacity:.92;
-    }
-    .centerCopy .hint{
-      margin:10px 0 0;
-      font-weight:800;
-      font-size:clamp(11px,1.4vw,12px);
-      opacity:.85;
-    }
-
-    /* תמונות/וידאו על הדיסק */
-    .slot{
-      position:absolute;
-      width:var(--cardW);
-      aspect-ratio:16/9;
-      border-radius:var(--cardRadius);
-      overflow:hidden;
-      box-shadow:0 18px 30px rgba(0,0,0,.35);
-      background:rgba(255,255,255,.06);
-      transform:translate(-50%,-50%);
-      z-index:2;
-    }
-    .slot img,.slot video{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    /* כיתוב על התמונות – ימין למטה + רספונסיבי */
-    .caption{
-      position:absolute;
-      right:10px;
-      bottom:10px;
-      left:10px;  /* מאפשר שורות להישבר בלי להיעלם */
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      align-items:flex-end;
-      text-align:right;
-      color:rgba(255,255,255,.97);
-      text-shadow:0 2px 12px rgba(0,0,0,.75);
-      pointer-events:none;
-    }
-
-    /* במקום ... : מאפשר 2 שורות */
-    .cap-title,
-    .cap-sub{
-      max-width:100%;
-      display:-webkit-box;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
-      white-space:normal;
-    }
-    .cap-title{
-      font-weight:950;
-      font-size:clamp(12px,1.25vw,14px);
-      line-height:1.15;
-      -webkit-line-clamp:2;
-    }
-    .cap-sub{
-      font-weight:850;
-      font-size:clamp(10.5px,1.1vw,12px);
-      line-height:1.15;
-      opacity:.96;
-      -webkit-line-clamp:2;
-    }
-
-    /* מרכז דיסק */
-    .hub{
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform:translate(-50%,-50%);
-      width:var(--hubSize);
-      aspect-ratio:1/1;
-      border-radius:50%;
-      z-index:5;
+      inset:0;
       display:grid;
       place-items:center;
+      z-index: 7;
+      pointer-events:none;
     }
-    .hub-outer{
-      width:100%;
-      height:100%;
+    .hub{
+      width: clamp(210px, 34vmin, 360px);
+      height: clamp(210px, 34vmin, 360px);
       border-radius:50%;
-      background:radial-gradient(circle at 50% 50%,#f1f1f1 0 40%,var(--hubOuter) 40% 100%);
-      box-shadow:0 10px 28px rgba(0,0,0,.28);
+      background:
+        radial-gradient(circle at 50% 50%,
+          rgba(255,255,255,.88) 0%,
+          rgba(230,230,230,.92) 35%,
+          rgba(200,200,200,.95) 58%,
+          rgba(245,245,245,.92) 75%,
+          rgba(255,255,255,.85) 100%
+        );
+      box-shadow:
+        inset 0 12px 30px rgba(0,0,0,.22),
+        inset 0 -14px 22px rgba(255,255,255,.55);
       display:grid;
       place-items:center;
     }
     .hub-inner{
-      width:72%;
-      height:72%;
+      width: 62%;
+      height: 62%;
       border-radius:50%;
-      background:radial-gradient(circle at 50% 50%,#d7d7d7 0 35%,var(--hubInner) 35% 100%);
+      background:
+        radial-gradient(circle at 50% 50%,
+          #f5f5f5 0%,
+          #e2e2e2 45%,
+          #cfcfcf 70%,
+          #efefef 100%
+        );
       box-shadow:
-        inset 0 0 0 2px rgba(0,0,0,.10),
-        inset 0 16px 22px rgba(0,0,0,.12);
+        inset 0 10px 22px rgba(0,0,0,.18),
+        0 10px 26px rgba(0,0,0,.15);
       display:grid;
       place-items:center;
+      position:relative;
     }
-    .startBtn{
-      width:44%;
-      height:44%;
-      border-radius:50%;
-      border:none;
-      cursor:pointer;
-      background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.28),rgba(0,0,0,.08));
+    .start-btn{
+      pointer-events:auto;
+      width: 42%;
+      height: 42%;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      display:grid;
+      place-items:center;
+      gap:6px;
+      background: radial-gradient(circle at 50% 40%, #f7f7f7 0%, #e7e7e7 58%, #d6d6d6 100%);
       box-shadow:
-        inset 0 0 0 2px rgba(0,0,0,.12),
-        0 6px 14px rgba(0,0,0,.22);
-      color:rgba(0,0,0,.78);
-      font-weight:950;
-      font-size:13px;
-      letter-spacing:.3px;
-      transition:transform .15s ease, filter .15s ease;
+        inset 0 10px 16px rgba(255,255,255,.9),
+        inset 0 -12px 18px rgba(0,0,0,.14),
+        0 10px 22px rgba(0,0,0,.18);
+      text-decoration:none;
+      color:#222;
+      transform: translateZ(0);
+      transition: transform .15s ease, filter .15s ease;
     }
-    .startBtn:hover{filter:brightness(1.05);transform:translateY(-1px)}
-    .startBtn:active{transform:translateY(0) scale(.98)}
+    .start-btn:hover{ filter: brightness(1.06); transform: scale(1.02); }
+    .start-btn:active{ transform: scale(.98); filter: brightness(1.03); }
+    .hand{
+      font-size: clamp(18px, 2.2vmin, 24px);
+      line-height: 1;
+    }
+    .start-text{
+      font-weight: 800;
+      font-size: clamp(12px, 1.7vmin, 14px);
+      letter-spacing: .2px;
+    }
 
-    /* מובייל */
-    @media(max-width:640px){
+    /* הכרטיסים סביב הדיסק */
+    .tiles{
+      position:absolute;
+      inset:0;
+      z-index: 8;
+      pointer-events:none;
+    }
+    .tile{
+      position:absolute;
+      width: var(--tileW);
+      height: var(--tileH);
+      border-radius: 16px;
+      overflow:hidden;
+      box-shadow: var(--tileShadow);
+      transform:
+        rotate(var(--a))
+        translate(var(--radius))
+        rotate(calc(var(--a) * -1));
+      transform-origin: center;
+      will-change: transform;
+      pointer-events:auto;
+      background:#111;
+    }
+    .tile .media{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      filter: contrast(1.02) saturate(1.02);
+    }
+
+    /* שכבת קריאות לטקסט — שקוף מאוד, לא מסתיר פנים */
+    .tile::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height: 54%;
+      background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0));
+      pointer-events:none;
+    }
+
+    .cap{
+      position:absolute;
+      right: 10px;
+      bottom: 10px;
+      left: 10px;
+      text-align:right;
+      color:#fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,.75);
+      font-weight: 800;
+      line-height: 1.08;
+      pointer-events:none;
+    }
+    .cap .t1{
+      font-size: clamp(12px, 1.7vmin, 15px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cap .t2{
+      margin-top: 4px;
+      font-size: clamp(10px, 1.45vmin, 13px);
+      font-weight: 700;
+      opacity: .95;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* התאמות מובייל */
+    @media (max-width: 640px){
       :root{
-        --cardW:25.5%;
-        --orbit:70%;
-        --spinSeconds:70s; /* טיפה יותר איטי במובייל */
-        --hubSize:36%;
+        --tileW: clamp(118px, 36vw, 170px);
+        --tileH: clamp(68px, 20vw, 100px);
+        --radius: clamp(165px, 33vmin, 240px);
+        --ringSize: clamp(190px, 40vmin, 260px);
       }
-      .ring svg{width:62%;height:62%}
-      .centerCopy{width:min(320px,62%)}
-      .caption{right:8px;bottom:8px;left:8px}
+      .cap .t1{ font-size: 12px; }
+      .cap .t2{ font-size: 11px; }
+    }
+
+    /* נגישות: אם משתמש ביקש להפחית תנועה */
+    @media (prefers-reduced-motion: reduce){
+      .ring-spin{ animation: none; }
     }
   </style>
 </head>
 
 <body>
-  <div class="stage">
-    <div class="disc" id="disc">
+  <main class="stage">
+    <div class="disc" aria-hidden="true"></div>
 
-      <!-- ✅ טקסט מעגלי (בלי CSS vars בתוך SVG כדי שיעבוד באייפון) -->
-      <div class="ring" aria-hidden="true">
-        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <!-- r=108 => היקף ~ 678.58 -->
-            <path id="circlePath"
-              d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
-          </defs>
+    <!-- הטקסט המעגלי (עם תאימות Safari/iPhone: גם href וגם xlink:href) -->
+    <div class="ring" aria-hidden="true">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs>
+          <path id="circlePath"
+            d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
+        </defs>
 
-          <g class="ring-spin">
-            <text
-              fill="rgba(255,255,255,.78)"
-              font-size="15"
-              font-weight="900"
-              letter-spacing=".2"
-              lengthAdjust="spacing"
-              textLength="679"
-              style="paint-order:stroke; stroke: rgba(0,0,0,.45); stroke-width:1px;"
-              direction="rtl"
-              unicode-bidi="plaintext">
-              <textPath href="#circlePath" startOffset="0%">
-                • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
-              </textPath>
-            </text>
-          </g>
-        </svg>
-      </div>
+        <g class="ring-spin">
+          <text
+            fill="rgba(255,255,255,0.78)"
+            font-size="16"
+            font-weight="900"
+            letter-spacing="0.2"
+            style="paint-order:stroke; stroke: rgba(0,0,0,0.45); stroke-width:1px;"
+          >
+            <textPath
+              href="#circlePath"
+              xlink:href="#circlePath"
+              startOffset="50%"
+              text-anchor="middle"
+            >
+              • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
+            </textPath>
+          </text>
+        </g>
+      </svg>
+    </div>
 
-      <!-- ✅ הטקסט במרכז (הוחזר) -->
-      <div class="centerCopy" aria-hidden="true">
-        <p class="title">חותם שנשאר לדורות</p>
-        <p class="sub">סיפורי משפחה ומורשת • רגעים של רגש</p>
-        <p class="hint">לחצו על “התחל” כדי להמשיך</p>
-      </div>
-
+    <!-- המרכז (כפתור בסגנון דיסק) -->
+    <div class="center">
       <div class="hub">
-        <div class="hub-outer">
-          <div class="hub-inner">
-            <button class="startBtn" id="startBtn" type="button" title="התחל">התחל</button>
-          </div>
+        <div class="hub-inner">
+          <a class="start-btn" href="form.html" aria-label="התחל">
+            <div class="hand">👆</div>
+            <div class="start-text">התחל</div>
+          </a>
         </div>
       </div>
-
     </div>
-  </div>
+
+    <!-- 8 מדיות סביב הדיסק (סימטרי 45°) -->
+    <section class="tiles" aria-label="בחירה">
+      <!-- 12 -->
+      <article class="tile" style="--a: 90deg">
+        <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="cap">
+          <div class="t1">זיכרון אבות</div>
+          <div class="t2">שלא יאבד</div>
+        </div>
+      </article>
+
+      <!-- 1:30 -->
+      <article class="tile" style="--a: 45deg">
+        <img class="media" src="assets/still1_real.jpg" alt="" loading="lazy" />
+        <div class="cap">
+          <div class="t1">חותם שנשאר לדורות</div>
+          <div class="t2">שהנכדים ידעו</div>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="tile" style="--a: 0deg">
+        <video class="media" src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="cap">
+          <div class="t1">להעביר מורשת</div>
+          <div class="t2">מדור לדור</div>
+        </div>
+      </article>
+
+      <!-- 4:30 -->
+      <article class="tile" style="--a: -45deg">
+        <img class="media" src="assets/still3_real.jpg" alt="" loading="lazy" />
+        <div class="cap">
+          <div class="t1">מתיקות התורה</div>
+          <div class="t2">של סבא</div>
+        </div>
+      </article>
+
+      <!-- 6 -->
+      <article class="tile" style="--a: -90deg">
+        <video class="media" src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="cap">
+          <div class="t1">המחשת גבורה</div>
+          <div class="t2">ומסירות נפש</div>
+        </div>
+      </article>
+
+      <!-- 7:30 -->
+      <article class="tile" style="--a: -135deg">
+        <img class="media" src="assets/still2_real.jpg" alt="" loading="lazy" />
+        <div class="cap">
+          <div class="t1">מורשת</div>
+          <div class="t2">סבא ונכד</div>
+        </div>
+      </article>
+
+      <!-- 9 -->
+      <article class="tile" style="--a: 180deg">
+        <video class="media" src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="cap">
+          <div class="t1">שבת בבית סבא</div>
+          <div class="t2">עונג, שלווה</div>
+        </div>
+      </article>
+
+      <!-- 10:30 -->
+      <article class="tile" style="--a: 135deg">
+        <img class="media" src="assets/still4_real.jpg" alt="" loading="lazy" />
+        <div class="cap">
+          <div class="t1">תפילין</div>
+          <div class="t2">האות שמחבר</div>
+        </div>
+      </article>
+    </section>
+  </main>
 
   <script>
-    // 8 נקודות בשעון
-    const anglesDeg = Array.from({length:8}, (_,i)=>-90 + i*45);
-
-    // שמות קבצים לפי מה שיש אצלך בגיטהאב
-    const items = [
-      {type:"video",src:"assets/faith1.mp4",title:"זיכרון אבות",sub:"שלא יאבד"},
-      {type:"img",  src:"assets/still2_real.jpg",title:"חותם שנשאר לדורות",sub:"שהנכדים ידעו"},
-      {type:"video",src:"assets/faith2.mp4",title:"מתיקות התורה",sub:"של סבא"},
-      {type:"img",  src:"assets/still3_real.jpg",title:"להעביר מורשת",sub:"מדור לדור"},
-      {type:"img",  src:"assets/still4_real.jpg",title:"תפילין",sub:"האות שמחבר"},
-      {type:"img",  src:"assets/still1_real.jpg",title:"מורשת",sub:"סבא ונכד"},
-      {type:"video",src:"assets/faith4.mp4",title:"שבת בבית סבא",sub:"עונג, שלווה"},
-      {type:"video",src:"assets/faith3.mp4",title:"מסירות נפש",sub:"רגע שמתחבר"},
-    ];
-
-    const disc = document.getElementById("disc");
-
-    function createSlot(it){
-      const s = document.createElement("div");
-      s.className = "slot";
-
-      if(it.type==="video"){
-        const v=document.createElement("video");
-        v.src=it.src;
-        v.autoplay=true; v.muted=true; v.loop=true; v.playsInline=true;
-        v.setAttribute("playsinline","");
-        v.preload="metadata";
-        s.appendChild(v);
-      } else {
-        const i=document.createElement("img");
-        i.src=it.src;
-        i.alt="";
-        s.appendChild(i);
-      }
-
-      const c=document.createElement("div");
-      c.className="caption";
-
-      const t=document.createElement("div");
-      t.className="cap-title";
-      t.textContent=it.title;
-      c.appendChild(t);
-
-      if(it.sub && it.sub.trim()){
-        const sb=document.createElement("div");
-        sb.className="cap-sub";
-        sb.textContent=it.sub;
-        c.appendChild(sb);
-      }
-
-      s.appendChild(c);
-      return s;
-    }
-
-    function layout(){
-      const size = disc.clientWidth;
-      const orbit = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--orbit"))/100;
-      const R = (size/2) * orbit;
-      const cx=size/2, cy=size/2;
-
-      disc.querySelectorAll(".slot").forEach((s,i)=>{
-        const a = anglesDeg[i]*Math.PI/180;
-        s.style.left = (cx + R*Math.cos(a)) + "px";
-        s.style.top  = (cy + R*Math.sin(a)) + "px";
+    // אם באייפון וידאו לא זז עד אינטראקציה – זה דוחף play שוב בעדינות
+    window.addEventListener('load', () => {
+      document.querySelectorAll('video.media').forEach(v => {
+        v.muted = true;
+        v.playsInline = true;
+        const p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
       });
-    }
+    });
 
-    // נקה סלוטים קודמים אם רעננת/הדבקת שוב
-    disc.querySelectorAll(".slot").forEach(x=>x.remove());
-    items.forEach(it=>disc.appendChild(createSlot(it)));
-
-    layout();
-    window.addEventListener("resize", layout);
-
-    document.getElementById("startBtn").onclick = () => {
-      // שנה ל-form.html אם זה שם הקובץ שלך בפועל
-      location.href = "form.html";
-    };
+    // שינוי מהירות הסיבוב:
+    // מהר יותר => מספר קטן יותר. לדוגמה: 18s
+    // איטי יותר => מספר גדול יותר. לדוגמה: 34s
+    // document.documentElement.style.setProperty('--spinDur', '22s');
   </script>
 </body>
 </html>
