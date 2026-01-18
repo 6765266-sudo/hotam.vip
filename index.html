@@ -190,7 +190,7 @@
       :root{
         --cardW:25.5%;
         --orbit:70%;
-        --spinSeconds:75s;   /* ✅ במובייל קצת יותר איטי כדי שלא יהיה “מעייף” */
+        --spinSeconds:75s;
         --ringFont:12.5px;
         --hubSize:36%;
       }
@@ -203,25 +203,26 @@
   <div class="stage">
     <div class="disc" id="disc">
 
-      <!-- טקסט מעגלי -->
+      <!-- ✅ טקסט מעגלי מתוקן (בלי textLength / lengthAdjust) -->
       <div class="ring" aria-hidden="true">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
           <defs>
             <path id="circlePath"
               d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
           </defs>
+
           <g class="ring-spin">
             <text
               fill="var(--ringText)"
               font-size="var(--ringFont)"
               font-weight="900"
-              letter-spacing=".6"
+              letter-spacing=".4"
+              style="paint-order:stroke; stroke: rgba(0,0,0,.45); stroke-width:1px;"
               direction="rtl"
-              unicode-bidi="plaintext"
-              textLength="740"
-              lengthAdjust="spacingAndGlyphs">
+              unicode-bidi="plaintext">
               <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                חותם שנשאר לדורות•מי היו סבא וסבתא•סיפורי משפחה ומורשת•המחשת גבורה ומסירות נפש•חותם שנשאר לדורות•
+                חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
+                חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
               </textPath>
             </text>
           </g>
@@ -243,7 +244,6 @@
   <script>
     const anglesDeg = Array.from({length:8}, (_,i)=>-90 + i*45);
 
-    // שים לב: אם תרצה להחליף שוב מיקום של תמונה/וידאו – עושים את זה רק כאן.
     const items = [
       {type:"video",src:"assets/faith1.mp4",title:"זיכרון אבות",sub:"שלא יאבד"},
       {type:"img",  src:"assets/still2_real.jpg",title:"חותם שנשאר לדורות",sub:"שהנכדים ידעו"},
