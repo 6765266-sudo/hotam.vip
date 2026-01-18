@@ -18,7 +18,7 @@
       --ringText:rgba(255,255,255,.74);
       --ringFont:15px;
 
-      /* מהירות סיבוב: קטן יותר = יותר מהר */
+      /* קטן יותר = יותר מהר */
       --spinSeconds:65s;
 
       --hubSize:24%;
@@ -195,10 +195,11 @@
   <div class="stage">
     <div class="disc" id="disc">
 
-      <!-- ✅ טקסט מעגלי בלי כפילות -->
+      <!-- ✅ טקסט מעגלי עם רווחים סימטריים -->
       <div class="ring" aria-hidden="true">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
           <defs>
+            <!-- r=108 => היקף ~ 678.58 -->
             <path id="circlePath"
               d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
           </defs>
@@ -208,12 +209,14 @@
               fill="var(--ringText)"
               font-size="var(--ringFont)"
               font-weight="900"
-              letter-spacing=".5"
+              letter-spacing=".2"
+              lengthAdjust="spacing"
+              textLength="679"
               style="paint-order:stroke; stroke: rgba(0,0,0,.45); stroke-width:1px;"
               direction="rtl"
               unicode-bidi="plaintext">
-              <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
-                חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
+              <textPath href="#circlePath" startOffset="0%">
+                • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
               </textPath>
             </text>
           </g>
