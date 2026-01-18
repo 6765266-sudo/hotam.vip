@@ -9,15 +9,15 @@
     :root{
       --bg:#efe7db;
 
-      /* מהירות סיבוב הטקסט המעגלי: קטן יותר = מהר יותר */
-      --spinDur: 22s;
+      /* מהירות סיבוב הטקסט המעגלי (קטן יותר = מהר יותר) */
+      --spinDur: 18s;
 
-      /* גדלי tiles */
-      --tileW: clamp(140px, 22vw, 260px);
-      --tileH: clamp(80px, 12vw, 150px);
+      /* tiles קטנים יותר (כדי שלא “יחזרו אחורה” וייכנסו למרכז) */
+      --tileW: clamp(130px, 17vw, 220px);
+      --tileH: clamp(78px, 10.5vw, 130px);
 
-      /* הטבעת (SVG) סביב הכפתור */
-      --ringSize: clamp(220px, 36vmin, 420px);
+      /* טבעת הטקסט – יושבת על השחור, לא על הלבן */
+      --ringSize: clamp(260px, 42vmin, 520px);
     }
 
     *{ box-sizing:border-box; }
@@ -57,106 +57,14 @@
           #080808 100%
         );
       box-shadow: 0 28px 60px rgba(0,0,0,.25);
+      z-index: 1;
     }
-
-    /* טבעת טקסט מסתובבת */
-    .ring{
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      pointer-events:none;
-      z-index: 6;
-    }
-    .ring svg{
-      width: var(--ringSize);
-      height: var(--ringSize);
-      display:block;
-    }
-    .ring-spin{
-      transform-origin: 150px 150px;
-      animation: spin var(--spinDur) linear infinite;
-      will-change: transform;
-    }
-    @keyframes spin{
-      from{ transform: rotate(0deg); }
-      to{ transform: rotate(360deg); }
-    }
-
-    /* מרכז דיסק */
-    .center{
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      z-index: 7;
-      pointer-events:none;
-    }
-    .hub{
-      width: clamp(210px, 34vmin, 360px);
-      height: clamp(210px, 34vmin, 360px);
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.88) 0%,
-          rgba(230,230,230,.92) 35%,
-          rgba(200,200,200,.95) 58%,
-          rgba(245,245,245,.92) 75%,
-          rgba(255,255,255,.85) 100%
-        );
-      box-shadow:
-        inset 0 12px 30px rgba(0,0,0,.22),
-        inset 0 -14px 22px rgba(255,255,255,.55);
-      display:grid;
-      place-items:center;
-    }
-    .hub-inner{
-      width: 62%;
-      height: 62%;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          #f5f5f5 0%,
-          #e2e2e2 45%,
-          #cfcfcf 70%,
-          #efefef 100%
-        );
-      box-shadow:
-        inset 0 10px 22px rgba(0,0,0,.18),
-        0 10px 26px rgba(0,0,0,.15);
-      display:grid;
-      place-items:center;
-    }
-
-    .start-btn{
-      pointer-events:auto;
-      width: 42%;
-      height: 42%;
-      border-radius: 999px;
-      border: 0;
-      cursor: pointer;
-      display:grid;
-      place-items:center;
-      gap:6px;
-      background: radial-gradient(circle at 50% 40%, #f7f7f7 0%, #e7e7e7 58%, #d6d6d6 100%);
-      box-shadow:
-        inset 0 10px 16px rgba(255,255,255,.9),
-        inset 0 -12px 18px rgba(0,0,0,.14),
-        0 10px 22px rgba(0,0,0,.18);
-      text-decoration:none;
-      color:#222;
-      transition: transform .15s ease, filter .15s ease;
-    }
-    .start-btn:hover{ filter: brightness(1.06); transform: scale(1.02); }
-    .start-btn:active{ transform: scale(.98); filter: brightness(1.03); }
-    .hand{ font-size: clamp(18px, 2.2vmin, 24px); line-height: 1; }
-    .start-text{ font-weight: 900; font-size: clamp(12px, 1.7vmin, 14px); }
 
     /* tiles */
     .tiles{
       position:absolute;
       inset:0;
-      z-index: 8;
+      z-index: 3;
       pointer-events:none;
     }
     .tile{
@@ -176,17 +84,17 @@
       display:block;
     }
 
-    /* שכבה עדינה לטקסט – לא מכסה פנים */
+    /* שכבה עדינה לטקסט */
     .tile::after{
       content:"";
       position:absolute;
       inset:auto 0 0 0;
-      height: 52%;
-      background: linear-gradient(to top, rgba(0,0,0,.48), rgba(0,0,0,0));
+      height: 54%;
+      background: linear-gradient(to top, rgba(0,0,0,.52), rgba(0,0,0,0));
       pointer-events:none;
     }
 
-    /* טקסט: ימין-למטה, 2 שורות מקסימום */
+    /* טקסט: ימין-למטה, 2 שורות */
     .cap{
       position:absolute;
       right: 10px;
@@ -215,12 +123,106 @@
       text-overflow: ellipsis;
     }
 
+    /* טבעת טקסט מסתובבת – יושבת על השחור (z-index מעל הדיסק, מתחת למרכז) */
+    .ring{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      pointer-events:none;
+      z-index: 4;
+    }
+    .ring svg{
+      width: var(--ringSize);
+      height: var(--ringSize);
+      display:block;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,.55));
+    }
+    .ring-spin{
+      transform-origin: 150px 150px;
+      animation: spin var(--spinDur) linear infinite;
+      will-change: transform;
+    }
+    @keyframes spin{
+      from{ transform: rotate(0deg); }
+      to{ transform: rotate(360deg); }
+    }
+
+    /* מרכז דיסק */
+    .center{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      z-index: 6;
+      pointer-events:none;
+    }
+    .hub{
+      width: clamp(180px, 28vmin, 300px); /* קטן יותר כדי לא “לבלוע” את הטבעת */
+      height: clamp(180px, 28vmin, 300px);
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 50%,
+          rgba(255,255,255,.88) 0%,
+          rgba(230,230,230,.92) 35%,
+          rgba(200,200,200,.95) 58%,
+          rgba(245,245,245,.92) 75%,
+          rgba(255,255,255,.85) 100%
+        );
+      box-shadow:
+        inset 0 12px 30px rgba(0,0,0,.22),
+        inset 0 -14px 22px rgba(255,255,255,.55);
+      display:grid;
+      place-items:center;
+    }
+    .hub-inner{
+      width: 64%;
+      height: 64%;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 50%,
+          #f5f5f5 0%,
+          #e2e2e2 45%,
+          #cfcfcf 70%,
+          #efefef 100%
+        );
+      box-shadow:
+        inset 0 10px 22px rgba(0,0,0,.18),
+        0 10px 26px rgba(0,0,0,.15);
+      display:grid;
+      place-items:center;
+    }
+
+    .start-btn{
+      pointer-events:auto;
+      width: 44%;
+      height: 44%;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      display:grid;
+      place-items:center;
+      gap:6px;
+      background: radial-gradient(circle at 50% 40%, #f7f7f7 0%, #e7e7e7 58%, #d6d6d6 100%);
+      box-shadow:
+        inset 0 10px 16px rgba(255,255,255,.9),
+        inset 0 -12px 18px rgba(0,0,0,.14),
+        0 10px 22px rgba(0,0,0,.18);
+      text-decoration:none;
+      color:#222;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .start-btn:hover{ filter: brightness(1.06); transform: scale(1.02); }
+    .start-btn:active{ transform: scale(.98); filter: brightness(1.03); }
+    .hand{ font-size: clamp(18px, 2.2vmin, 24px); line-height: 1; }
+    .start-text{ font-weight: 900; font-size: clamp(12px, 1.7vmin, 14px); }
+
     /* מובייל */
     @media (max-width: 640px){
       :root{
-        --tileW: clamp(120px, 38vw, 175px);
-        --tileH: clamp(70px, 20vw, 105px);
-        --ringSize: clamp(190px, 40vmin, 270px);
+        --tileW: clamp(120px, 36vw, 175px);
+        --tileH: clamp(70px, 19vw, 105px);
+        --ringSize: clamp(240px, 48vmin, 340px);
       }
       .cap .t1{ font-size: 12px; }
       .cap .t2{ font-size: 11px; }
@@ -236,19 +238,23 @@
   <main class="stage" id="stage">
     <div class="disc" aria-hidden="true"></div>
 
-    <!-- טקסט מעגלי (לא נעלם, תאימות iPhone: גם href וגם xlink:href) -->
+    <!-- טבעת טקסט (יושבת על השחור, לא על הלבן) -->
     <div class="ring" aria-hidden="true">
       <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
+          <!-- רדיוס גדול יותר כדי לצאת מחוץ למרכז הלבן -->
           <path id="circlePath"
-                d="M150,150 m-108,0 a108,108 0 1,1 216,0 a108,108 0 1,1 -216,0"/>
+                d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/>
         </defs>
+
         <g class="ring-spin">
-          <text fill="rgba(255,255,255,0.78)"
-                font-size="16"
-                font-weight="900"
-                letter-spacing="0.2"
-                style="paint-order:stroke; stroke: rgba(0,0,0,0.45); stroke-width:1px;">
+          <text
+            fill="rgba(255,255,255,0.88)"
+            font-size {{
+            font-size="16"
+            font-weight="900"
+            letter-spacing="0.3"
+            style="paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;">
             <textPath href="#circlePath" xlink:href="#circlePath" startOffset="50%" text-anchor="middle">
               • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
             </textPath>
@@ -322,7 +328,7 @@
   </main>
 
   <script>
-    // iOS: לפעמים וידאו לא מתחיל בלי "דחיפה"
+    // iOS: ודא שהוידאו באמת מתנגן
     window.addEventListener('load', () => {
       document.querySelectorAll('video.media').forEach(v => {
         v.muted = true;
@@ -333,7 +339,6 @@
       layoutTiles();
     });
 
-    // זה הלב: מיקום סימטרי ו"תמיד בתוך הדיסק" לפי גודל אמיתי
     function layoutTiles(){
       const stage = document.getElementById('stage');
       const rect = stage.getBoundingClientRect();
@@ -342,21 +347,30 @@
       const discR = rect.width / 2;
 
       const tiles = Array.from(document.querySelectorAll('.tile'));
+      if (!tiles.length) return;
 
-      // קח tile לדוגמה כדי לחשב רדיוס שלא יברח החוצה
-      const sample = tiles[0].getBoundingClientRect();
-      const tileW = sample.width;
-      const tileH = sample.height;
+      // מדוד tile לדוגמה (רק בשביל רדיוס בטוח)
+      const sampleRect = tiles[0].getBoundingClientRect();
+      const tileW = sampleRect.width;
+      const tileH = sampleRect.height;
 
-      // רדיוס בטוח: בתוך הדיסק + מרווח
+      // רדיוס "בריא": לא צמוד למרכז, לא בורח החוצה
       const pad = 18;
-      const r = discR - Math.max(tileW, tileH)/2 - pad;
+      const maxSafe = discR - Math.max(tileW, tileH)/2 - pad;
+
+      // התחלה יפה ויציבה סביב הדיסק
+      let r = discR * 0.72;
+
+      // אם יוצא גדול מדי – תן גבול עליון
+      r = Math.min(r, maxSafe);
+
+      // אם יוצא קטן מדי (מה שקרה אצלך) – תן גבול תחתון
+      r = Math.max(r, discR * 0.62);
 
       tiles.forEach(tile => {
         const angDeg = Number(tile.dataset.angle || 0);
         const a = angDeg * Math.PI / 180;
 
-        // cos/sin (x ימינה, y למטה)
         const x = cx + r * Math.cos(a) - tileW/2;
         const y = cy + r * Math.sin(a) - tileH/2;
 
@@ -365,14 +379,9 @@
       });
     }
 
-    window.addEventListener('resize', () => {
-      // תן לדפדפן לסיים חישוב גדלים ואז מקם מחדש
-      requestAnimationFrame(layoutTiles);
-    });
+    window.addEventListener('resize', () => requestAnimationFrame(layoutTiles));
 
-    // שינוי מהירות הסיבוב:
-    // מהר יותר => מספר קטן יותר. לדוגמה:
-    // document.documentElement.style.setProperty('--spinDur', '16s');
+    // אם תרצה מהר יותר: document.documentElement.style.setProperty('--spinDur','14s');
   </script>
 </body>
 </html>
