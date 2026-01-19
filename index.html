@@ -231,6 +231,60 @@
     @media (prefers-reduced-motion: reduce){
       .ring-spin{ animation: none; }
     }
+
+    /* ====== דף ביניים (Overlay) ====== */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.38);
+      display:none;
+      place-items:center;
+      padding: 16px;
+      z-index: 999;
+    }
+    .overlay.show{ display:grid; }
+
+    .panel{
+      width:min(900px, 92vw);
+      background: rgba(255,255,255,.92);
+      border-radius: 18px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+      padding: 22px 18px;
+      text-align:right;
+    }
+    .panel h2{
+      margin:0 0 10px;
+      font-size: clamp(22px, 3.2vw, 34px);
+    }
+    .panel p{
+      margin:0 0 16px;
+      color:#222;
+      font-size: clamp(14px, 1.8vw, 18px);
+      line-height:1.65;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-start;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight:900;
+      font-size: 16px;
+    }
+    .btn.primary{
+      background:#111;
+      color:#fff;
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+    }
+    .btn.ghost{
+      background: rgba(0,0,0,0.06);
+      color:#111;
+    }
   </style>
 </head>
 
@@ -238,11 +292,10 @@
   <main class="stage" id="stage">
     <div class="disc" aria-hidden="true"></div>
 
-    <!-- טבעת טקסט (עם ריווח סימטרי סביב כל ההיקף) -->
+    <!-- טבעת טקסט -->
     <div class="ring" aria-hidden="true">
       <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
-          <!-- רדיוס גדול כדי שהטקסט יישב על השחור -->
           <path id="circlePath"
                 d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/>
         </defs>
@@ -254,13 +307,12 @@
             font-weight="900"
             letter-spacing="0.3"
             style="paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;">
-            <!-- textLength מחלק רווחים בצורה סימטרית! -->
             <textPath
               href="#circlePath" xlink:href="#circlePath"
               startOffset="50%" text-anchor="middle"
               lengthAdjust="spacing"
               textLength="804">
-               חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש • 
+              • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
             </textPath>
           </text>
         </g>
@@ -271,10 +323,11 @@
     <div class="center">
       <div class="hub">
         <div class="hub-inner">
-          <a class="start-btn" href="form.html" aria-label="התחל">
+          <!-- במקום link ל-form.html: כפתור שמציג דף ביניים -->
+          <button class="start-btn" id="startBtn" type="button" aria-label="התחל">
             <div class="hand">👆</div>
             <div class="start-text">התחל</div>
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -331,7 +384,25 @@
     </section>
   </main>
 
+  <!-- דף ביניים לפני הטופס -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="לפני שמתחילים">
+    <div class="panel">
+      <h2>רגע לפני שמתחילים</h2>
+      <p>
+        אם חשוב לך להשאיר <b>חותם לדורות</b> — נתחיל בכמה שאלות קצרות.
+        זה יעזור לנו להמחיש את הסיפור, את המורשת, ואת מה שהיית רוצה שהילדים והנכדים יזכרו.
+      </p>
+      <div class="actions">
+        <button class="btn primary" id="goFormBtn" type="button">המשך לטופס</button>
+        <button class="btn ghost" id="closeBtn" type="button">חזרה לדיסק</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // הקישור המדויק לטופס שלך:
+    const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=header";
+
     // iOS: ודא שהוידאו באמת מתנגן
     window.addEventListener('load', () => {
       document.querySelectorAll('video.media').forEach(v => {
@@ -354,21 +425,14 @@
       const tiles = Array.from(document.querySelectorAll('.tile'));
       if (!tiles.length) return;
 
-      // מידות tile בפועל
       const tRect = tiles[0].getBoundingClientRect();
       const tileW = tRect.width;
       const tileH = tRect.height;
 
-      // מרווח ביטחון מהשפה ומהמרכז
       const padOuter = 22;
-
-      // רדיוס מקסימלי כדי לא לצאת מחוץ לדיסק
       const maxSafe = discR - Math.max(tileW, tileH)/2 - padOuter;
 
-      // רדיוס בסיסי יפה (קצת יותר החוצה כדי ליצור "אויר" בין tiles)
       let r = discR * 0.78;
-
-      // קלמפ בטוח
       r = Math.min(r, maxSafe);
       r = Math.max(r, discR * 0.68);
 
@@ -385,11 +449,28 @@
     }
 
     window.addEventListener('resize', () => requestAnimationFrame(layoutTiles));
+
+    // ===== חיבור כפתור "התחל" לדף ביניים ואז לטופס =====
+    const overlay = document.getElementById("overlay");
+    const startBtn = document.getElementById("startBtn");
+    const goFormBtn = document.getElementById("goFormBtn");
+    const closeBtn = document.getElementById("closeBtn");
+
+    startBtn.addEventListener("click", () => {
+      overlay.classList.add("show");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      overlay.classList.remove("show");
+    });
+
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) overlay.classList.remove("show");
+    });
+
+    goFormBtn.addEventListener("click", () => {
+      window.location.href = FORM_URL;
+    });
   </script>
 </body>
 </html>
-
-
-
-
-
