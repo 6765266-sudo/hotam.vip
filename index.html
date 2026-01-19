@@ -1,137 +1,213 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>התחלה | hotam.vip</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>חותם שנשאר לדורות</title>
+
   <style>
-    body{
-      margin:0;
-      min-height:100svh;
-      display:grid;
-      place-items:center;
-      background:#efe7db;
-      font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-      padding:20px;
-    }
-    .card{
-      width:min(860px, 94vw);
-      background:rgba(255,255,255,.8);
-      border:1px solid rgba(0,0,0,.08);
-      border-radius:18px;
-      padding:22px;
-      box-shadow:0 18px 50px rgba(0,0,0,.15);
-      backdrop-filter: blur(8px);
-    }
-    h1{ margin:0 0 8px; font-size:24px; }
-    p{ margin:0 0 18px; color:#333; line-height:1.4; }
-    form{ display:grid; gap:12px; }
-    label{ font-weight:800; font-size:14px; }
-    input, textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:12px;
-      border:1px solid rgba(0,0,0,.18);
-      background:#fff;
-      font-size:16px;
-      outline:none;
-    }
-    textarea{ min-height:120px; resize:vertical; }
-    .row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-    @media (max-width:700px){ .row{ grid-template-columns:1fr; } }
+    * { box-sizing: border-box; }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      justify-content:flex-start;
-      flex-wrap:wrap;
-      margin-top:6px;
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
+      background: #f3ede3;
+      color: #111;
     }
-    .btn{
-      cursor:pointer;
-      border:0;
-      border-radius:999px;
-      padding:12px 18px;
-      font-weight:900;
-      font-size:15px;
-      box-shadow:0 12px 26px rgba(0,0,0,.16);
-      transition:transform .12s ease, filter .12s ease;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
-    .btn:active{ transform: translateY(0px) scale(.98); }
 
-    .primary{ background:#111; color:#fff; }
-    .ghost{ background:rgba(255,255,255,.75); color:#111; border:1px solid rgba(0,0,0,.12); }
-    .note{ font-size:12px; color:#444; opacity:.9; margin-top:10px; }
-    .ok{ margin-top:12px; font-weight:900; color:#0a6a2a; display:none; }
+    .screen {
+      display: none;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* ===== דיסק ===== */
+    .disk {
+      position: relative;
+      width: min(90vw, 600px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background:
+        repeating-radial-gradient(
+          circle,
+          #111 0px,
+          #111 2px,
+          #000 4px
+        );
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .disk-inner {
+      position: absolute;
+      width: 35%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff, #ddd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .start-btn {
+      width: 80%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+    }
+
+    .circle-text {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      animation: spin 70s linear infinite;
+      pointer-events: none;
+    }
+
+    .circle-text span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: 0 260px;
+      font-size: 15px;
+      color: #ddd;
+      white-space: nowrap;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ===== דף ביניים ===== */
+    .card {
+      max-width: 720px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .card h1 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .card p {
+      font-size: 18px;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    .actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: none;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: #111;
+      color: #fff;
+    }
+
+    .btn.ghost {
+      background: #fff;
+      color: #111;
+      border: 1px solid rgba(0,0,0,0.2);
+    }
   </style>
 </head>
+
 <body>
-  <main class="card">
-    <h1>רגע לפני שמתחילים</h1>
-    <p>
-      מעניין איך יזכרו אותך? מה היית רוצה להשאיר לדורות?
-      אם זה חשוב לך—בוא נתחיל בכמה שאלות קצרות.
-    </p>
 
-    <!-- כרגע זה "דמו": לא נשלח לשום מקום עד שנחבר אותו -->
-    <form id="hotamForm">
-      <div class="row">
-        <div>
-          <label>שם מלא</label>
-          <input name="fullName" placeholder="לדוגמה: ישראל ישראלי" required />
-        </div>
-        <div>
-          <label>טלפון / אימייל</label>
-          <input name="contact" placeholder="050-0000000 / name@mail.com" />
-        </div>
+  <!-- ===== מסך 1: דיסק ===== -->
+  <div id="screen-disk" class="screen active">
+    <div class="disk">
+
+      <div class="circle-text" id="circleText"></div>
+
+      <div class="disk-inner">
+        <button class="start-btn" onclick="goIntro()">התחל</button>
       </div>
 
-      <div class="row">
-        <div>
-          <label>מי היו סבא וסבתא?</label>
-          <input name="grandparents" placeholder="שמות / סיפור קצר" />
-        </div>
-        <div>
-          <label>חותם שנשאר לדורות</label>
-          <input name="legacy" placeholder="מה היית רוצה שישאר?" />
-        </div>
-      </div>
+    </div>
+  </div>
 
-      <div>
-        <label>סיפורי משפחה ומורשת</label>
-        <textarea name="familyStory" placeholder="כתוב פה את הסיפור..."></textarea>
-      </div>
-
-      <div>
-        <label>המחשת גבורה ומסירות נפש</label>
-        <textarea name="courageStory" placeholder="סיפור/דוגמה שממחישה..."></textarea>
-      </div>
+  <!-- ===== מסך 2: דף ביניים ===== -->
+  <div id="screen-intro" class="screen">
+    <div class="card">
+      <h1>רגע לפני שמתחילים</h1>
+      <p>
+        חשוב לך איך יזכרו אותך?<br>
+        מה היית רוצה להשאיר לדורות?<br>
+        אם זה נוגע בך – בוא נמשיך.
+      </p>
 
       <div class="actions">
-        <button class="btn primary" type="submit">שליחה</button>
-        <a class="btn ghost" href="index.html">חזרה לדיסק</a>
+        <button class="btn primary" onclick="goForm()">המשך לטופס</button>
+        <button class="btn ghost" onclick="goDisk()">חזרה לדיסק</button>
       </div>
-
-      <div class="note">
-        הערה: כרגע הטופס לא שומר נתונים בשום מקום. בשלב הבא נחבר אותו למייל/Google Form/Sheets או שרת.
-      </div>
-
-      <div class="ok" id="okMsg">נשלח (דמו). בשלב הבא נחבר לשמירה אמיתית ✅</div>
-    </form>
-  </main>
+    </div>
+  </div>
 
   <script>
-    // דמו: מונע רענון ומראה הודעה
-    document.getElementById('hotamForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      document.getElementById('okMsg').style.display = 'block';
-      window.scrollTo({top:0, behavior:'smooth'});
+    const text = "חותם שנשאר לדורות • סיפורי משפחה ומורשת • מי היו סבא וסבתא • גבורה ומסירות נפש • ";
+    const container = document.getElementById("circleText");
+    const radius = 260;
+    const chars = text.split("");
+    const step = 360 / chars.length;
+
+    chars.forEach((char, i) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.transform =
+        `rotate(${i * step}deg) translate(${radius}px) rotate(90deg)`;
+      container.appendChild(span);
     });
+
+    function goIntro() {
+      document.getElementById("screen-disk").classList.remove("active");
+      document.getElementById("screen-intro").classList.add("active");
+      window.scrollTo(0,0);
+    }
+
+    function goDisk() {
+      document.getElementById("screen-intro").classList.remove("active");
+      document.getElementById("screen-disk").classList.add("active");
+      window.scrollTo(0,0);
+    }
+
+    function goForm() {
+      window.location.href =
+        "https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=header";
+    }
   </script>
+
 </body>
 </html>
