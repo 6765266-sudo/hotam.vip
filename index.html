@@ -283,9 +283,7 @@
       box-shadow: none;
     }
 
-    .step{
-      display:none;
-    }
+    .step{ display:none; }
     .step.active{ display:block; }
 
     .mini{
@@ -377,49 +375,41 @@
 
     <!-- 8 tiles -->
     <section class="tiles" id="tiles" aria-label="בחירה">
-      <!-- 12 -->
       <article class="tile" data-angle="-90">
         <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
         <div class="cap"><div class="t1">זיכרון אבות</div><div class="t2">שלא יאבד</div></div>
       </article>
 
-      <!-- 1:30 -->
       <article class="tile" data-angle="-45">
         <img class="media" src="assets/still1_real.jpg" alt="" loading="lazy" />
         <div class="cap"><div class="t1">חותם שנשאר לדורות</div><div class="t2">שהנכדים ידעו</div></div>
       </article>
 
-      <!-- 3 -->
       <article class="tile" data-angle="0">
         <video class="media" src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
         <div class="cap"><div class="t1">להעביר מורשת</div><div class="t2">מדור לדור</div></div>
       </article>
 
-      <!-- 4:30 -->
       <article class="tile" data-angle="45">
         <img class="media" src="assets/still3_real.jpg" alt="" loading="lazy" />
         <div class="cap"><div class="t1">מתיקות התורה</div><div class="t2">של סבא</div></div>
       </article>
 
-      <!-- 6 -->
       <article class="tile" data-angle="90">
         <video class="media" src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
         <div class="cap"><div class="t1">המחשת גבורה</div><div class="t2">ומסירות נפש</div></div>
       </article>
 
-      <!-- 7:30 -->
       <article class="tile" data-angle="135">
         <img class="media" src="assets/still2_real.jpg" alt="" loading="lazy" />
         <div class="cap"><div class="t1">מורשת</div><div class="t2">סבא ונכד</div></div>
       </article>
 
-      <!-- 9 -->
       <article class="tile" data-angle="180">
         <video class="media" src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
         <div class="cap"><div class="t1">שבת בבית סבא</div><div class="t2">עונג, שלווה</div></div>
       </article>
 
-      <!-- 10:30 -->
       <article class="tile" data-angle="-135">
         <img class="media" src="assets/still4_real.jpg" alt="" loading="lazy" />
         <div class="cap"><div class="t1">תפילין</div><div class="t2">האות שמחבר</div></div>
@@ -434,10 +424,10 @@
       <div class="step active" id="step1">
         <h2>רגע לפני שמתחילים</h2>
         <p>
-          אם חשוב לך שיזכרו <b>מי היית</b>, מה היו <b>הערכים</b> שלך, ואילו סיפורים תרצה להשאיר לדורות —
-          זה המקום להתחיל.
+          אם חשוב לך שיזכרו <b>מי היית</b>, מה היו <b>הערכים</b> שלך, אילו סיפורים – ואילו <b>סיפורי אבות</b> –
+          תרצה להשאיר כחותם לדורות, זה המקום להתחיל.
           <br />
-          כמה דקות קצרות, וזה הופך ל<b>חותם</b> שמשפחה יכולה לשמור ולהעביר הלאה.
+          כמה דקות קצרות — וזה הופך ל<b>חותם של משפחה</b>, לחותם שנשאר לדורות.
         </p>
 
         <div class="btnrow">
@@ -447,20 +437,19 @@
         </div>
       </div>
 
-      <!-- שלב 2 (כמה שאלות קצרות) -->
+      <!-- שלב 2 -->
       <div class="step" id="step2">
-        <h2>עוד רגע…</h2>
+        <h2>כמה שאלות קצרות</h2>
         <p>
-          רק כדי לכוון אותך — מה הכי חשוב לך שישאר?
-          (זה לא חובה, אבל זה עוזר לדייק את החותם.)
+          רק כדי לכוון — מה הכי חשוב לך שישאר?
         </p>
 
         <div class="mini">
           <div class="q">
-            <label for="q1">מה היית רוצה שהנכדים יזכרו?</label>
+            <label for="q1">מה היית רוצה שיזכרו?</label>
             <select id="q1">
               <option value="">בחר/י…</option>
-              <option>אהבה למשפחה</option>
+              <option>אהבה ודאגה למשפחה</option>
               <option>ערכים ומידות</option>
               <option>סיפורי חיים ומורשת</option>
               <option>מסירות נפש וגבורה</option>
@@ -468,43 +457,45 @@
           </div>
 
           <div class="q">
-            <label for="q2">מה חשוב שיישמר לדורות?</label>
-            <select id="q2">
-              <option value="">בחר/י…</option>
-              <option>מי היו סבא וסבתא</option>
-              <option>סיפורי משפחה</option>
-              <option>רגעים שמחברים</option>
-              <option>מסר אחד ברור</option>
-            </select>
-          </div>
-
-          <div class="q">
-            <label for="q3">איך תרצה שיזכרו אותך במשפט?</label>
+            <label for="q3">איך תרצה שיזכירו אותך במשפט?</label>
             <select id="q3">
               <option value="">בחר/י…</option>
-              <option>השאיר חותם של טוב</option>
               <option>איש משפחה</option>
               <option>איש מעשה וערכים</option>
               <option>אדם עם לב גדול</option>
+              <option>חותם של אדם טוב</option>
             </select>
           </div>
         </div>
 
         <div class="btnrow">
-          <button class="btn primary" id="goFormBtn" type="button">ממשיך לטופס</button>
-          <button class="btn ghost" id="backBtn2" type="button">חזרה</button>
-          <button class="btn ghost" id="closeBtn" type="button">חזרה לדיסק</button>
+          <button class="btn primary" id="goFormBtn" type="button">המשך למילוי הטופס</button>
+          <button class="btn ghost" id="notNowBtn" type="button">לא מעניין אותי כרגע</button>
+          <button class="btn ghost" id="backBtn2" type="button">חזרה לדיסק</button>
+        </div>
+      </div>
+
+      <!-- שלב 3: ביי ביי -->
+      <div class="step" id="step3">
+        <h2>תודה ולהתראות</h2>
+        <p>
+          הכול בסדר. כשתרצה/י — אפשר תמיד לחזור ולהמשיך.
+          <br />ביי־ביי 🙏
+        </p>
+
+        <div class="btnrow">
+          <button class="btn primary" id="closeBtn" type="button">סגור</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // ====== 1) קישור לטופס (כאן משנים פעם אחת וזהו) ======
+    // ====== קישור לטופס ======
     const GOOGLE_FORM_URL =
       "https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=header";
 
-    // ====== 2) iOS: ודא שהוידאו באמת מתנגן + פריסה ======
+    // iOS: ודא שהוידאו באמת מתנגן + פריסה
     window.addEventListener('load', () => {
       document.querySelectorAll('video.media').forEach(v => {
         v.muted = true;
@@ -515,7 +506,7 @@
       layoutTiles();
     });
 
-    // ====== 3) סימטריה של tiles ======
+    // סימטריה של tiles
     function layoutTiles(){
       const stage = document.getElementById('stage');
       const rect = stage.getBoundingClientRect();
@@ -550,14 +541,16 @@
     }
     window.addEventListener('resize', () => requestAnimationFrame(layoutTiles));
 
-    // ====== 4) Modal flow ======
+    // ====== Modal flow ======
     const overlay = document.getElementById('overlay');
     const step1 = document.getElementById('step1');
     const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
 
     const startBtn = document.getElementById('startBtn');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
+    const notNowBtn = document.getElementById('notNowBtn');
     const backBtn1 = document.getElementById('backBtn1');
     const backBtn2 = document.getElementById('backBtn2');
     const closeBtn = document.getElementById('closeBtn');
@@ -566,7 +559,6 @@
     function openModal(){
       overlay.classList.add('open');
       showStep(1);
-      // מניעת גלילה ברקע (נוח במובייל)
       document.body.style.overflow = 'hidden';
     }
     function closeModal(){
@@ -576,31 +568,34 @@
     function showStep(n){
       step1.classList.toggle('active', n === 1);
       step2.classList.toggle('active', n === 2);
+      step3.classList.toggle('active', n === 3);
     }
 
     startBtn.addEventListener('click', openModal);
 
+    // שלב 1
     yesBtn.addEventListener('click', () => showStep(2));
-    backBtn2.addEventListener('click', () => showStep(1));
+    noBtn.addEventListener('click', () => showStep(3));
+    backBtn1.addEventListener('click', () => closeModal());
 
-    function exitToDisc(){ closeModal(); }
-    noBtn.addEventListener('click', exitToDisc);
-    backBtn1.addEventListener('click', exitToDisc);
-    closeBtn.addEventListener('click', exitToDisc);
+    // שלב 2
+    backBtn2.addEventListener('click', () => closeModal());
+    notNowBtn.addEventListener('click', () => showStep(3));
+    goFormBtn.addEventListener('click', () => {
+      window.location.href = GOOGLE_FORM_URL;
+    });
 
-    // קליק מחוץ לקופסה -> סגירה
+    // שלב 3
+    closeBtn.addEventListener('click', () => closeModal());
+
+    // קליק מחוץ לקופסה -> סגירה רק אם אנחנו לא ב"לא כרגע"
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) closeModal();
     });
+
     // ESC -> סגירה
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
-    });
-
-    // מעבר לטופס
-    goFormBtn.addEventListener('click', () => {
-      // כאן אפשר בעתיד גם לשמור את התשובות אם תרצה (למשל localStorage)
-      window.location.href = GOOGLE_FORM_URL;
     });
   </script>
 </body>
