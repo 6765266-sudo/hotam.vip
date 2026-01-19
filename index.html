@@ -8,18 +8,10 @@
   <style>
     :root{
       --bg:#efe7db;
-
-      /* מהירות סיבוב הטקסט המעגלי (קטן יותר = מהר יותר) */
       --spinDur: 18s;
-
-      /* tiles */
       --tileW: clamp(110px, 13.5vw, 185px);
       --tileH: clamp(64px, 8.6vw, 110px);
-
-      /* טבעת הטקסט */
       --ringSize: clamp(270px, 44vmin, 540px);
-
-      /* Modal */
       --modalMaxW: 980px;
     }
 
@@ -43,7 +35,6 @@
       place-items:center;
     }
 
-    /* הדיסק */
     .disc{
       position:absolute;
       inset:0;
@@ -63,7 +54,6 @@
       z-index: 1;
     }
 
-    /* tiles */
     .tiles{
       position:absolute;
       inset:0;
@@ -87,7 +77,6 @@
       display:block;
     }
 
-    /* שכבה עדינה לטקסט */
     .tile::after{
       content:"";
       position:absolute;
@@ -97,7 +86,6 @@
       pointer-events:none;
     }
 
-    /* טקסט: ימין-למטה, 2 שורות */
     .cap{
       position:absolute;
       right: 10px;
@@ -126,7 +114,6 @@
       text-overflow: ellipsis;
     }
 
-    /* טבעת טקסט מסתובבת */
     .ring{
       position:absolute;
       inset:0;
@@ -151,7 +138,6 @@
       to{ transform: rotate(360deg); }
     }
 
-    /* מרכז דיסק */
     .center{
       position:absolute;
       inset:0;
@@ -273,10 +259,7 @@
       user-select:none;
     }
     .btn:active{ transform: scale(.98); }
-    .btn.primary{
-      background: #111;
-      color: #fff;
-    }
+    .btn.primary{ background: #111; color: #fff; }
     .btn.ghost{
       background: rgba(0,0,0,.06);
       color: #111;
@@ -300,8 +283,33 @@
     .q label{
       display:block;
       font-weight: 900;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
+
+    /* בחירה מרובה (checkboxes) */
+    .checks{
+      display:grid;
+      gap: 8px;
+    }
+    .check{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: #fff;
+    }
+    .check input{
+      width: 18px;
+      height: 18px;
+      accent-color: #111;
+    }
+    .check span{
+      font-weight: 800;
+      color:#111;
+    }
+
     .q select{
       width: 100%;
       border-radius: 12px;
@@ -311,7 +319,6 @@
       background: #fff;
     }
 
-    /* מובייל */
     @media (max-width: 640px){
       :root{
         --tileW: clamp(105px, 34vw, 165px);
@@ -334,7 +341,6 @@
   <main class="stage" id="stage">
     <div class="disc" aria-hidden="true"></div>
 
-    <!-- טבעת טקסט -->
     <div class="ring" aria-hidden="true">
       <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
@@ -361,7 +367,6 @@
       </svg>
     </div>
 
-    <!-- מרכז דיסק -->
     <div class="center">
       <div class="hub">
         <div class="hub-inner">
@@ -373,7 +378,6 @@
       </div>
     </div>
 
-    <!-- 8 tiles -->
     <section class="tiles" id="tiles" aria-label="בחירה">
       <article class="tile" data-angle="-90">
         <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
@@ -433,27 +437,23 @@
         <div class="btnrow">
           <button class="btn primary" id="yesBtn" type="button">כן, אני רוצה להשאיר חותם</button>
           <button class="btn ghost" id="noBtn" type="button">לא, לא כרגע</button>
-          <button class="btn ghost" id="backBtn1" type="button">חזרה לדיסק</button>
         </div>
       </div>
 
       <!-- שלב 2 -->
       <div class="step" id="step2">
         <h2>כמה שאלות קצרות</h2>
-        <p>
-          רק כדי לכוון — מה הכי חשוב לך שישאר?
-        </p>
+        <p>רק כדי לכוון — מה הכי חשוב לך שישאר?</p>
 
         <div class="mini">
           <div class="q">
-            <label for="q1">מה היית רוצה שיזכרו?</label>
-            <select id="q1">
-              <option value="">בחר/י…</option>
-              <option>אהבה ודאגה למשפחה</option>
-              <option>ערכים ומידות</option>
-              <option>סיפורי חיים ומורשת</option>
-              <option>מסירות נפש וגבורה</option>
-            </select>
+            <label>מה היית רוצה שיזכרו? <span style="font-weight:800; opacity:.7;">(אפשר לבחור כמה)</span></label>
+            <div class="checks" id="q1Checks">
+              <label class="check"><input type="checkbox" value="אהבה ודאגה למשפחה"><span>אהבה ודאגה למשפחה</span></label>
+              <label class="check"><input type="checkbox" value="ערכים ומידות"><span>ערכים ומידות</span></label>
+              <label class="check"><input type="checkbox" value="סיפורי חיים ומורשת"><span>סיפורי חיים ומורשת</span></label>
+              <label class="check"><input type="checkbox" value="מסירות נפש וגבורה"><span>מסירות נפש וגבורה</span></label>
+            </div>
           </div>
 
           <div class="q">
@@ -471,7 +471,6 @@
         <div class="btnrow">
           <button class="btn primary" id="goFormBtn" type="button">המשך למילוי הטופס</button>
           <button class="btn ghost" id="notNowBtn" type="button">לא מעניין אותי כרגע</button>
-          <button class="btn ghost" id="backBtn2" type="button">חזרה לדיסק</button>
         </div>
       </div>
 
@@ -482,7 +481,6 @@
           הכול בסדר. כשתרצה/י — אפשר תמיד לחזור ולהמשיך.
           <br />ביי־ביי 🙏
         </p>
-
         <div class="btnrow">
           <button class="btn primary" id="closeBtn" type="button">סגור</button>
         </div>
@@ -491,11 +489,9 @@
   </div>
 
   <script>
-    // ====== קישור לטופס ======
     const GOOGLE_FORM_URL =
       "https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=header";
 
-    // iOS: ודא שהוידאו באמת מתנגן + פריסה
     window.addEventListener('load', () => {
       document.querySelectorAll('video.media').forEach(v => {
         v.muted = true;
@@ -506,7 +502,6 @@
       layoutTiles();
     });
 
-    // סימטריה של tiles
     function layoutTiles(){
       const stage = document.getElementById('stage');
       const rect = stage.getBoundingClientRect();
@@ -541,7 +536,7 @@
     }
     window.addEventListener('resize', () => requestAnimationFrame(layoutTiles));
 
-    // ====== Modal flow ======
+    // ===== Modal flow =====
     const overlay = document.getElementById('overlay');
     const step1 = document.getElementById('step1');
     const step2 = document.getElementById('step2');
@@ -551,8 +546,6 @@
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const notNowBtn = document.getElementById('notNowBtn');
-    const backBtn1 = document.getElementById('backBtn1');
-    const backBtn2 = document.getElementById('backBtn2');
     const closeBtn = document.getElementById('closeBtn');
     const goFormBtn = document.getElementById('goFormBtn');
 
@@ -573,27 +566,27 @@
 
     startBtn.addEventListener('click', openModal);
 
-    // שלב 1
+    // שלב 1:
+    // "לא, לא כרגע" -> חוזר לדיסק (סוגר חלונית)
     yesBtn.addEventListener('click', () => showStep(2));
-    noBtn.addEventListener('click', () => showStep(3));
-    backBtn1.addEventListener('click', () => closeModal());
+    noBtn.addEventListener('click', () => closeModal());
 
-    // שלב 2
-    backBtn2.addEventListener('click', () => closeModal());
+    // שלב 2:
+    // "לא מעניין אותי כרגע" -> ביי ביי (לא חוזר לדיסק)
     notNowBtn.addEventListener('click', () => showStep(3));
+
+    // המשך לטופס (אפשר להוסיף בעתיד העברת תשובות, כרגע פשוט ממשיך)
     goFormBtn.addEventListener('click', () => {
       window.location.href = GOOGLE_FORM_URL;
     });
 
-    // שלב 3
+    // שלב 3:
     closeBtn.addEventListener('click', () => closeModal());
 
-    // קליק מחוץ לקופסה -> סגירה רק אם אנחנו לא ב"לא כרגע"
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) closeModal();
     });
 
-    // ESC -> סגירה
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
     });
