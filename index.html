@@ -1,213 +1,390 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>חותם שנשאר לדורות</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>hotam.vip</title>
 
   <style>
-    * { box-sizing: border-box; }
+    :root{
+      --bg:#efe7db;
 
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
-      background: #f3ede3;
-      color: #111;
+      /* מהירות סיבוב הטקסט המעגלי (קטן יותר = מהר יותר) */
+      --spinDur: 18s;
+
+      /* הקטנה נוספת של ה־tiles */
+      --tileW: clamp(110px, 13.5vw, 185px);
+      --tileH: clamp(64px, 8.6vw, 110px);
+
+      /* טבעת הטקסט */
+      --ringSize: clamp(270px, 44vmin, 540px);
     }
 
-    .screen {
-      display: none;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100svh;
+      background: radial-gradient(1200px 700px at 50% 35%, #f6f0e7 0%, var(--bg) 55%, #e8dfd1 100%);
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      display:grid;
+      place-items:center;
+      padding: 18px;
+      overflow:hidden;
     }
 
-    .screen.active {
-      display: flex;
+    .stage{
+      width: min(92vmin, 920px);
+      aspect-ratio: 1/1;
+      position:relative;
+      display:grid;
+      place-items:center;
     }
 
-    /* ===== דיסק ===== */
-    .disk {
-      position: relative;
-      width: min(90vw, 600px);
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
+    /* הדיסק */
+    .disc{
+      position:absolute;
+      inset:0;
+      border-radius:50%;
       background:
-        repeating-radial-gradient(
-          circle,
-          #111 0px,
-          #111 2px,
-          #000 4px
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 34%, rgba(0,0,0,.0) 35% 100%),
+        repeating-radial-gradient(circle at 50% 50%,
+          rgba(255,255,255,.035) 0 2px,
+          rgba(0,0,0,.0) 2px 7px
+        ),
+        radial-gradient(circle at 50% 50%,
+          #141414 0%,
+          #0c0c0c 52%,
+          #080808 100%
         );
-      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      box-shadow: 0 28px 60px rgba(0,0,0,.25);
+      z-index: 1;
     }
 
-    .disk-inner {
-      position: absolute;
-      width: 35%;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      background: radial-gradient(circle, #fff, #ddd);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
+    /* tiles */
+    .tiles{
+      position:absolute;
+      inset:0;
+      z-index: 3;
+      pointer-events:none;
+    }
+    .tile{
+      position:absolute;
+      width: var(--tileW);
+      height: var(--tileH);
+      border-radius: 16px;
+      overflow:hidden;
+      box-shadow: 0 14px 30px rgba(0,0,0,.35);
+      background:#111;
+      pointer-events:auto;
+    }
+    .tile .media{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
     }
 
-    .start-btn {
-      width: 80%;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      border: none;
-      background: #fff;
-      font-size: 20px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+    /* שכבה עדינה לטקסט */
+    .tile::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height: 54%;
+      background: linear-gradient(to top, rgba(0,0,0,.52), rgba(0,0,0,0));
+      pointer-events:none;
     }
 
-    .circle-text {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      animation: spin 70s linear infinite;
-      pointer-events: none;
+    /* טקסט: ימין-למטה, 2 שורות */
+    .cap{
+      position:absolute;
+      right: 10px;
+      bottom: 10px;
+      left: 10px;
+      text-align:right;
+      color:#fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,.75);
+      font-weight: 900;
+      line-height: 1.08;
+      pointer-events:none;
     }
-
-    .circle-text span {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform-origin: 0 260px;
-      font-size: 15px;
-      color: #ddd;
+    .cap .t1{
+      font-size: clamp(12px, 1.7vmin, 15px);
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-
-    /* ===== דף ביניים ===== */
-    .card {
-      max-width: 720px;
-      background: rgba(255,255,255,0.8);
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-      text-align: center;
-    }
-
-    .card h1 {
-      margin-top: 0;
-      font-size: 28px;
-    }
-
-    .card p {
-      font-size: 18px;
-      line-height: 1.5;
-      opacity: 0.85;
-    }
-
-    .actions {
-      margin-top: 24px;
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 22px;
-      border-radius: 999px;
-      border: none;
-      font-size: 16px;
+    .cap .t2{
+      margin-top: 4px;
+      font-size: clamp(10px, 1.45vmin, 13px);
       font-weight: 800;
+      opacity: .95;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* טבעת טקסט מסתובבת */
+    .ring{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      pointer-events:none;
+      z-index: 4;
+    }
+    .ring svg{
+      width: var(--ringSize);
+      height: var(--ringSize);
+      display:block;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,.55));
+    }
+    .ring-spin{
+      transform-origin: 150px 150px;
+      animation: spin var(--spinDur) linear infinite;
+      will-change: transform;
+    }
+    @keyframes spin{
+      from{ transform: rotate(0deg); }
+      to{ transform: rotate(360deg); }
+    }
+
+    /* מרכז דיסק */
+    .center{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      z-index: 6;
+      pointer-events:none;
+    }
+    .hub{
+      width: clamp(175px, 27vmin, 290px);
+      height: clamp(175px, 27vmin, 290px);
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 50%,
+          rgba(255,255,255,.88) 0%,
+          rgba(230,230,230,.92) 35%,
+          rgba(200,200,200,.95) 58%,
+          rgba(245,245,245,.92) 75%,
+          rgba(255,255,255,.85) 100%
+        );
+      box-shadow:
+        inset 0 12px 30px rgba(0,0,0,.22),
+        inset 0 -14px 22px rgba(255,255,255,.55);
+      display:grid;
+      place-items:center;
+    }
+    .hub-inner{
+      width: 64%;
+      height: 64%;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 50% 50%,
+          #f5f5f5 0%,
+          #e2e2e2 45%,
+          #cfcfcf 70%,
+          #efefef 100%
+        );
+      box-shadow:
+        inset 0 10px 22px rgba(0,0,0,.18),
+        0 10px 26px rgba(0,0,0,.15);
+      display:grid;
+      place-items:center;
+    }
+
+    .start-btn{
+      pointer-events:auto;
+      width: 44%;
+      height: 44%;
+      border-radius: 999px;
+      border: 0;
       cursor: pointer;
+      display:grid;
+      place-items:center;
+      gap:6px;
+      background: radial-gradient(circle at 50% 40%, #f7f7f7 0%, #e7e7e7 58%, #d6d6d6 100%);
+      box-shadow:
+        inset 0 10px 16px rgba(255,255,255,.9),
+        inset 0 -12px 18px rgba(0,0,0,.14),
+        0 10px 22px rgba(0,0,0,.18);
+      text-decoration:none;
+      color:#222;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .start-btn:hover{ filter: brightness(1.06); transform: scale(1.02); }
+    .start-btn:active{ transform: scale(.98); filter: brightness(1.03); }
+    .hand{ font-size: clamp(18px, 2.2vmin, 24px); line-height: 1; }
+    .start-text{ font-weight: 900; font-size: clamp(12px, 1.7vmin, 14px); }
+
+    /* מובייל */
+    @media (max-width: 640px){
+      :root{
+        --tileW: clamp(105px, 34vw, 165px);
+        --tileH: clamp(62px, 18vw, 98px);
+        --ringSize: clamp(250px, 50vmin, 360px);
+      }
+      .cap .t1{ font-size: 12px; }
+      .cap .t2{ font-size: 11px; }
     }
 
-    .btn.primary {
-      background: #111;
-      color: #fff;
-    }
-
-    .btn.ghost {
-      background: #fff;
-      color: #111;
-      border: 1px solid rgba(0,0,0,0.2);
+    @media (prefers-reduced-motion: reduce){
+      .ring-spin{ animation: none; }
     }
   </style>
 </head>
 
 <body>
+  <main class="stage" id="stage">
+    <div class="disc" aria-hidden="true"></div>
 
-  <!-- ===== מסך 1: דיסק ===== -->
-  <div id="screen-disk" class="screen active">
-    <div class="disk">
+    <!-- טבעת טקסט (עם ריווח סימטרי סביב כל ההיקף) -->
+    <div class="ring" aria-hidden="true">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs>
+          <!-- רדיוס גדול כדי שהטקסט יישב על השחור -->
+          <path id="circlePath"
+                d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/>
+        </defs>
 
-      <div class="circle-text" id="circleText"></div>
-
-      <div class="disk-inner">
-        <button class="start-btn" onclick="goIntro()">התחל</button>
-      </div>
-
+        <g class="ring-spin">
+          <text
+            fill="rgba(255,255,255,0.88)"
+            font-size="16"
+            font-weight="900"
+            letter-spacing="0.3"
+            style="paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;">
+            <!-- textLength מחלק רווחים בצורה סימטרית! -->
+            <textPath
+              href="#circlePath" xlink:href="#circlePath"
+              startOffset="50%" text-anchor="middle"
+              lengthAdjust="spacing"
+              textLength="804">
+              • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
+            </textPath>
+          </text>
+        </g>
+      </svg>
     </div>
-  </div>
 
-  <!-- ===== מסך 2: דף ביניים ===== -->
-  <div id="screen-intro" class="screen">
-    <div class="card">
-      <h1>רגע לפני שמתחילים</h1>
-      <p>
-        חשוב לך איך יזכרו אותך?<br>
-        מה היית רוצה להשאיר לדורות?<br>
-        אם זה נוגע בך – בוא נמשיך.
-      </p>
-
-      <div class="actions">
-        <button class="btn primary" onclick="goForm()">המשך לטופס</button>
-        <button class="btn ghost" onclick="goDisk()">חזרה לדיסק</button>
+    <!-- מרכז דיסק -->
+    <div class="center">
+      <div class="hub">
+        <div class="hub-inner">
+          <a class="start-btn" href="form.html" aria-label="התחל">
+            <div class="hand">👆</div>
+            <div class="start-text">התחל</div>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
+
+    <!-- 8 tiles -->
+    <section class="tiles" id="tiles" aria-label="בחירה">
+      <!-- 12 -->
+      <article class="tile" data-angle="-90">
+        <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="cap"><div class="t1">זיכרון אבות</div><div class="t2">שלא יאבד</div></div>
+      </article>
+
+      <!-- 1:30 -->
+      <article class="tile" data-angle="-45">
+        <img class="media" src="assets/still1_real.jpg" alt="" loading="lazy" />
+        <div class="cap"><div class="t1">חותם שנשאר לדורות</div><div class="t2">שהנכדים ידעו</div></div>
+      </article>
+
+      <!-- 3 -->
+      <article class="tile" data-angle="0">
+        <video class="media" src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="cap"><div class="t1">להעביר מורשת</div><div class="t2">מדור לדור</div></div>
+      </article>
+
+      <!-- 4:30 -->
+      <article class="tile" data-angle="45">
+        <img class="media" src="assets/still3_real.jpg" alt="" loading="lazy" />
+        <div class="cap"><div class="t1">מתיקות התורה</div><div class="t2">של סבא</div></div>
+      </article>
+
+      <!-- 6 -->
+      <article class="tile" data-angle="90">
+        <video class="media" src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="cap"><div class="t1">המחשת גבורה</div><div class="t2">ומסירות נפש</div></div>
+      </article>
+
+      <!-- 7:30 -->
+      <article class="tile" data-angle="135">
+        <img class="media" src="assets/still2_real.jpg" alt="" loading="lazy" />
+        <div class="cap"><div class="t1">מורשת</div><div class="t2">סבא ונכד</div></div>
+      </article>
+
+      <!-- 9 -->
+      <article class="tile" data-angle="180">
+        <video class="media" src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="cap"><div class="t1">שבת בבית סבא</div><div class="t2">עונג, שלווה</div></div>
+      </article>
+
+      <!-- 10:30 -->
+      <article class="tile" data-angle="-135">
+        <img class="media" src="assets/still4_real.jpg" alt="" loading="lazy" />
+        <div class="cap"><div class="t1">תפילין</div><div class="t2">האות שמחבר</div></div>
+      </article>
+    </section>
+  </main>
 
   <script>
-    const text = "חותם שנשאר לדורות • סיפורי משפחה ומורשת • מי היו סבא וסבתא • גבורה ומסירות נפש • ";
-    const container = document.getElementById("circleText");
-    const radius = 260;
-    const chars = text.split("");
-    const step = 360 / chars.length;
-
-    chars.forEach((char, i) => {
-      const span = document.createElement("span");
-      span.textContent = char;
-      span.style.transform =
-        `rotate(${i * step}deg) translate(${radius}px) rotate(90deg)`;
-      container.appendChild(span);
+    // iOS: ודא שהוידאו באמת מתנגן
+    window.addEventListener('load', () => {
+      document.querySelectorAll('video.media').forEach(v => {
+        v.muted = true;
+        v.playsInline = true;
+        const p = v.play();
+        if (p && p.catch) p.catch(()=>{});
+      });
+      layoutTiles();
     });
 
-    function goIntro() {
-      document.getElementById("screen-disk").classList.remove("active");
-      document.getElementById("screen-intro").classList.add("active");
-      window.scrollTo(0,0);
+    // סימטריה מלאה: אותו רדיוס + 8 נקודות שוות (45°)
+    function layoutTiles(){
+      const stage = document.getElementById('stage');
+      const rect = stage.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const discR = rect.width / 2;
+
+      const tiles = Array.from(document.querySelectorAll('.tile'));
+      if (!tiles.length) return;
+
+      // מידות tile בפועל
+      const tRect = tiles[0].getBoundingClientRect();
+      const tileW = tRect.width;
+      const tileH = tRect.height;
+
+      // מרווח ביטחון מהשפה ומהמרכז
+      const padOuter = 22;
+
+      // רדיוס מקסימלי כדי לא לצאת מחוץ לדיסק
+      const maxSafe = discR - Math.max(tileW, tileH)/2 - padOuter;
+
+      // רדיוס בסיסי יפה (קצת יותר החוצה כדי ליצור "אויר" בין tiles)
+      let r = discR * 0.78;
+
+      // קלמפ בטוח
+      r = Math.min(r, maxSafe);
+      r = Math.max(r, discR * 0.68);
+
+      tiles.forEach(tile => {
+        const angDeg = Number(tile.dataset.angle || 0);
+        const a = angDeg * Math.PI / 180;
+
+        const x = cx + r * Math.cos(a) - tileW/2;
+        const y = cy + r * Math.sin(a) - tileH/2;
+
+        tile.style.left = `${x}px`;
+        tile.style.top  = `${y}px`;
+      });
     }
 
-    function goDisk() {
-      document.getElementById("screen-intro").classList.remove("active");
-      document.getElementById("screen-disk").classList.add("active");
-      window.scrollTo(0,0);
-    }
-
-    function goForm() {
-      window.location.href =
-        "https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=header";
-    }
+    window.addEventListener('resize', () => requestAnimationFrame(layoutTiles));
   </script>
-
 </body>
 </html>
