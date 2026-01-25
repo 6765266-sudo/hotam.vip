@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>hotam.vip</title>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap');
+  <!-- Hebrew font (clean + iOS friendly) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
 
+  <style>
     :root{
       --bg:#efe7db;
 
@@ -20,99 +23,82 @@
 
       /* טבעת הטקסט */
       --ringSize: clamp(270px, 44vmin, 540px);
-
-      /* טקסטים חיצוניים */
-      --sideTextColor: #444;
-      --sideTitleSize: clamp(18px, 2.2vw, 28px);
-      --sideSubSize: clamp(14px, 1.5vw, 18px);
     }
 
     *{ box-sizing:border-box; }
 
     body{
       margin:0;
+      min-height:100svh;
       background: radial-gradient(1200px 700px at 50% 35%, #f6f0e7 0%, var(--bg) 55%, #e8dfd1 100%);
       font-family: "Heebo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      overflow:hidden;
+      overflow-x:hidden; /* לא לחתוך טקסט בדסקטופ */
     }
 
-    /* גובה מסך יציב גם בדפדפנים שונים */
+    /* ===== Layout wrapper (DESKTOP: side texts, MOBILE: stacked) ===== */
     .page{
-      min-height: 100vh;
+      min-height:100svh;
       display:flex;
       align-items:center;
       justify-content:center;
       padding: 18px;
-    }
-    @supports (height: 100svh){
-      .page{ min-height: 100svh; }
+      gap: 28px;
     }
 
-    /* ===== LAYOUT חיצוני (לא נוגע בדיסק) ===== */
-    .layout{
-      width: 100%;
-      max-width: 1400px;
-      display:flex;
-      align-items:center;      /* מרכז אנכי = גובה מרכז הדיסק */
-      justify-content:center;
-      gap: clamp(16px, 3vw, 48px);
-    }
-
-    .side{
-      flex: 0 0 auto;
-      max-width: 320px;
-      color: var(--sideTextColor);
-      direction: rtl;
-      line-height: 1.25;
+    .side-copy{
+      max-width: min(36vw, 420px);
+      color:#444;
+      line-height:1.25;
+      font-family: "Heebo","Assistant","Rubik",Arial,sans-serif;
       user-select:none;
-      text-align:center; /* ברירת מחדל למובייל */
     }
 
-    /* “עליונה” = מימין לדיסק בדסקטופ */
-    .side--right .title{
-      font-weight: 600; /* Semi-Bold */
-      font-size: var(--sideTitleSize);
+    .side-copy.right{
+      text-align:right;
+      direction: rtl;
+      font-weight:600;          /* Semi-Bold */
+      font-size: clamp(20px, 2.2vw, 34px);
     }
 
-    /* “תחתונה” = משמאל לדיסק בדסקטופ */
-    .side--left .subtitle{
-      font-weight: 400; /* Regular */
-      font-size: var(--sideSubSize);
+    .side-copy.left{
+      text-align:right;
+      direction: rtl;
+      font-weight:400;          /* Regular */
+      font-size: clamp(16px, 1.6vw, 22px);
+      color:#444;
     }
 
-    /* במובייל/מסכים צרים: חוזרים למצב של “מעל הדיסק / מתחת לדיסק” */
-    @media (max-width: 900px){
-      body{ overflow:auto; }         /* במובייל מותר גלילה אם צריך */
-      .page{ overflow:auto; }
-      .layout{
-        flex-direction: column;
-        gap: 10px;
-      }
-      .side{
-        max-width: 92vw;
-      }
-      .side--right .title{
-        font-size: 22px;
-        font-weight: 800; /* קצת מודגש במובייל כמו שהיה לך */
-        color:#111;
-      }
-      .side--left .subtitle{
-        font-size: 16px;
-        font-weight: 400;
-        color:#111;
-        opacity:.92;
-      }
+    /* MOBILE copies (top/bottom) */
+    .mobile-copy{
+      display:none;
+      text-align:center;
+      direction: rtl;
+      color:#444;
+      font-family: "Heebo","Assistant","Rubik",Arial,sans-serif;
+      user-select:none;
+    }
+    .mobile-copy.top{
+      font-weight:800; /* Bold */
+      color:#111;
+      font-size: 22px;
+      margin: 2px 0 10px;
+    }
+    .mobile-copy.bottom{
+      font-weight:400;
+      color:#333;
+      opacity:.95;
+      font-size: 16px;
+      margin: 10px 0 2px;
     }
 
-    /* ===== הדיסק (נשאר כמו אצלך) ===== */
-
+    /* ===== Existing stage/disc (UNCHANGED markup) ===== */
     .stage{
       width: min(92vmin, 920px);
       aspect-ratio: 1/1;
       position:relative;
       display:grid;
       place-items:center;
-      flex: 0 1 auto;
+      flex: 0 0 auto;
     }
 
     /* הדיסק */
@@ -205,7 +191,7 @@
       display:grid;
       place-items:center;
       pointer-events:none;
-      z-index: 4;
+      z-index: 2; /* ✅ מתחת ל-tiles כדי לא לעלות על התמונות */
     }
     .ring svg{
       width: var(--ringSize);
@@ -292,13 +278,33 @@
     .hand{ font-size: clamp(18px, 2.2vmin, 24px); line-height: 1; }
     .start-text{ font-weight: 900; font-size: clamp(12px, 1.7vmin, 14px); }
 
-    /* מובייל */
-    @media (max-width: 640px){
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px){
+      .page{
+        flex-direction:column;
+        gap: 0;
+      }
+
+      .side-copy{
+        display:none;
+      }
+
+      .mobile-copy{
+        display:block;
+      }
+
       :root{
         --tileW: clamp(105px, 34vw, 165px);
         --tileH: clamp(62px, 18vw, 98px);
         --ringSize: clamp(250px, 50vmin, 360px);
       }
+
+      /* מובייל: למנוע “בליטות” — קליפ עגול עדין רק ל-tiles */
+      .tiles{
+        clip-path: circle(49% at 50% 50%);
+        -webkit-clip-path: circle(49% at 50% 50%);
+      }
+
       .cap .t1{ font-size: 12px; }
       .cap .t2{ font-size: 11px; }
     }
@@ -306,119 +312,134 @@
     @media (prefers-reduced-motion: reduce){
       .ring-spin{ animation: none; }
     }
+
+    /* ===== iPhone / iOS Safari: RTL + font + (fallback) disable rotation if needed ===== */
+    .ring text{
+      direction: rtl;
+      unicode-bidi: plaintext;
+      font-family: "Heebo","Assistant","Rubik",Arial,sans-serif;
+    }
+
+    /* iOS detection via CSS feature: if still gibberish, better static than broken */
+    @supports (-webkit-touch-callout: none) {
+      .ring-spin{
+        animation: none !important; /* fallback: סטטי באייפון */
+        transform: rotate(0deg) !important;
+      }
+    }
   </style>
 </head>
 
 <body>
   <div class="page">
-    <div class="layout">
-      <!-- בדסקטופ: זה יהיה משמאל לדיסק | במובייל: זה ירד מתחת לדיסק -->
-      <div class="side side--left" aria-hidden="false">
-        <div class="subtitle">הפעם זה חותם שנשאר לדורות.</div>
+    <!-- DESKTOP right side -->
+    <div class="side-copy right">הפעם זה לא עוד אלבום תמונות.</div>
+
+    <!-- MOBILE top -->
+    <div class="mobile-copy top">הפעם זה לא עוד אלבום תמונות.</div>
+
+    <main class="stage" id="stage">
+      <div class="disc" aria-hidden="true"></div>
+
+      <!-- טבעת טקסט (עם ריווח סימטרי סביב כל ההיקף) -->
+      <div class="ring" aria-hidden="true">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <defs>
+            <!-- רדיוס גדול כדי שהטקסט יישב על השחור -->
+            <path id="circlePath"
+                  d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/>
+          </defs>
+
+          <g class="ring-spin">
+            <text
+              fill="rgba(255,255,255,0.88)"
+              font-size="16"
+              font-weight="900"
+              letter-spacing="0.3"
+              style="paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;">
+              <!-- textLength מחלק רווחים בצורה סימטרית! -->
+              <textPath
+                href="#circlePath" xlink:href="#circlePath"
+                startOffset="50%" text-anchor="middle"
+                lengthAdjust="spacing"
+                textLength="804">
+                • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
+              </textPath>
+            </text>
+          </g>
+        </svg>
       </div>
 
-      <!-- הדיסק (לא נוגעים בפנים) -->
-      <main class="stage" id="stage">
-        <div class="disc" aria-hidden="true"></div>
-
-        <!-- טבעת טקסט (עם ריווח סימטרי סביב כל ההיקף) -->
-        <div class="ring" aria-hidden="true">
-          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs>
-              <!-- רדיוס גדול כדי שהטקסט יישב על השחור -->
-              <path id="circlePath"
-                    d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/>
-            </defs>
-
-            <g class="ring-spin">
-              <text
-                fill="rgba(255,255,255,0.88)"
-                font-size="16"
-                font-weight="900"
-                letter-spacing="0.3"
-                style="paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;">
-                <!-- textLength מחלק רווחים בצורה סימטרית! -->
-                <textPath
-                  href="#circlePath" xlink:href="#circlePath"
-                  startOffset="50%" text-anchor="middle"
-                  lengthAdjust="spacing"
-                  textLength="804">
-                  • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
-                </textPath>
-              </text>
-            </g>
-          </svg>
-        </div>
-
-        <!-- מרכז דיסק -->
-        <div class="center">
-          <div class="hub">
-            <div class="hub-inner">
-              <a class="start-btn" href="form.html" aria-label="התחל">
-                <div class="hand">👆</div>
-                <div class="start-text">התחל</div>
-              </a>
-            </div>
+      <!-- מרכז דיסק -->
+      <div class="center">
+        <div class="hub">
+          <div class="hub-inner">
+            <!-- לא נוגע בקישור/לוגיקה כאן לפי בקשתך -->
+            <a class="start-btn" href="form.html" aria-label="החי פלוס התחלה">
+              <div class="hand">👆</div>
+              <div class="start-text">התחל</div>
+            </a>
           </div>
         </div>
-
-        <!-- 8 tiles -->
-        <section class="tiles" id="tiles" aria-label="בחירה">
-          <!-- 12 -->
-          <article class="tile" data-angle="-90">
-            <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            <div class="cap"><div class="t1">זיכרון אבות</div><div class="t2">שלא יאבד</div></div>
-          </article>
-
-          <!-- 1:30 -->
-          <article class="tile" data-angle="-45">
-            <img class="media" src="assets/still1_real.jpg" alt="" loading="lazy" />
-            <div class="cap"><div class="t1">חותם שנשאר לדורות</div><div class="t2">שהנכדים ידעו</div></div>
-          </article>
-
-          <!-- 3 -->
-          <article class="tile" data-angle="0">
-            <video class="media" src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            <div class="cap"><div class="t1">להעביר מורשת</div><div class="t2">מדור לדור</div></div>
-          </article>
-
-          <!-- 4:30 -->
-          <article class="tile" data-angle="45">
-            <img class="media" src="assets/still3_real.jpg" alt="" loading="lazy" />
-            <div class="cap"><div class="t1">מתיקות התורה</div><div class="t2">של סבא</div></div>
-          </article>
-
-          <!-- 6 -->
-          <article class="tile" data-angle="90">
-            <video class="media" src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            <div class="cap"><div class="t1">המחשת גבורה</div><div class="t2">ומסירות נפש</div></div>
-          </article>
-
-          <!-- 7:30 -->
-          <article class="tile" data-angle="135">
-            <img class="media" src="assets/still2_real.jpg" alt="" loading="lazy" />
-            <div class="cap"><div class="t1">מורשת</div><div class="t2">סבא ונכד</div></div>
-          </article>
-
-          <!-- 9 -->
-          <article class="tile" data-angle="180">
-            <video class="media" src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            <div class="cap"><div class="t1">שבת בבית סבא</div><div class="t2">עונג, שלווה</div></div>
-          </article>
-
-          <!-- 10:30 -->
-          <article class="tile" data-angle="-135">
-            <img class="media" src="assets/still4_real.jpg" alt="" loading="lazy" />
-            <div class="cap"><div class="t1">תפילין</div><div class="t2">האות שמחבר</div></div>
-          </article>
-        </section>
-      </main>
-
-      <!-- בדסקטופ: זה יהיה מימין לדיסק | במובייל: זה יעלה מעל הדיסק -->
-      <div class="side side--right" aria-hidden="false">
-        <div class="title">הפעם זה לא עוד אלבום תמונות.</div>
       </div>
-    </div>
+
+      <!-- 8 tiles -->
+      <section class="tiles" id="tiles" aria-label="בחירה">
+        <!-- 12 -->
+        <article class="tile" data-angle="-90">
+          <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <div class="cap"><div class="t1">זיכרון אבות</div><div class="t2">שלא יאבד</div></div>
+        </article>
+
+        <!-- 1:30 -->
+        <article class="tile" data-angle="-45">
+          <img class="media" src="assets/still1_real.jpg" alt="" loading="lazy" />
+          <div class="cap"><div class="t1">חותם שנשאר לדורות</div><div class="t2">שהנכדים ידעו</div></div>
+        </article>
+
+        <!-- 3 -->
+        <article class="tile" data-angle="0">
+          <video class="media" src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <div class="cap"><div class="t1">להעביר מורשת</div><div class="t2">מדור לדור</div></div>
+        </article>
+
+        <!-- 4:30 -->
+        <article class="tile" data-angle="45">
+          <img class="media" src="assets/still3_real.jpg" alt="" loading="lazy" />
+          <div class="cap"><div class="t1">מתיקות התורה</div><div class="t2">של סבא</div></div>
+        </article>
+
+        <!-- 6 -->
+        <article class="tile" data-angle="90">
+          <video class="media" src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <div class="cap"><div class="t1">המחשת גבורה</div><div class="t2">ומסירות נפש</div></div>
+        </article>
+
+        <!-- 7:30 -->
+        <article class="tile" data-angle="135">
+          <img class="media" src="assets/still2_real.jpg" alt="" loading="lazy" />
+          <div class="cap"><div class="t1">מורשת</div><div class="t2">סבא ונכד</div></div>
+        </article>
+
+        <!-- 9 -->
+        <article class="tile" data-angle="180">
+          <video class="media" src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <div class="cap"><div class="t1">שבת בבית סבא</div><div class="t2">עונג, שלווה</div></div>
+        </article>
+
+        <!-- 10:30 -->
+        <article class="tile" data-angle="-135">
+          <img class="media" src="assets/still4_real.jpg" alt="" loading="lazy" />
+          <div class="cap"><div class="t1">תפילין</div><div class="t2">האות שמחבר</div></div>
+        </article>
+      </section>
+    </main>
+
+    <!-- MOBILE bottom -->
+    <div class="mobile-copy bottom">הפעם זה חותם שנשאר לדורות.</div>
+
+    <!-- DESKTOP left side -->
+    <div class="side-copy left">הפעם זה <span style="font-weight:600;color:#333;">חותם</span> שנשאר לדורות.</div>
   </div>
 
   <script>
