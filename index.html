@@ -5,14 +5,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>hotam.vip</title>
 
+  <!-- Fonts (PATCH) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg:#efe7db;
+
+      /* מהירות סיבוב הטקסט המעגלי (קטן יותר = מהר יותר) */
       --spinDur: 18s;
+
+      /* הקטנה נוספת של ה־tiles */
       --tileW: clamp(110px, 13.5vw, 185px);
       --tileH: clamp(64px, 8.6vw, 110px);
+
+      /* טבעת הטקסט */
       --ringSize: clamp(270px, 44vmin, 540px);
-      --modalMaxW: 980px;
     }
 
     *{ box-sizing:border-box; }
@@ -27,6 +37,33 @@
       overflow:hidden;
     }
 
+    /* ========================
+       PATCH: טקסטים מעל/מתחת
+       ======================== */
+    .hotam-copy{
+      text-align:center;
+      margin: 10px 0;
+      direction: rtl;
+      font-family: "Heebo","Assistant","Rubik",Arial,sans-serif;
+      color:#111;
+    }
+    .hotam-title{
+      font-weight:800;
+      font-size:32px;
+      line-height:1.15;
+      margin: 0;
+    }
+    .hotam-subtitle{
+      font-weight:500;
+      font-size:18px;
+      line-height:1.35;
+      margin: 0;
+      opacity:.90;
+    }
+
+    /* ========================
+       הדיסק (לא נוגעים בפנים)
+       ======================== */
     .stage{
       width: min(92vmin, 920px);
       aspect-ratio: 1/1;
@@ -35,6 +72,7 @@
       place-items:center;
     }
 
+    /* הדיסק */
     .disc{
       position:absolute;
       inset:0;
@@ -54,6 +92,7 @@
       z-index: 1;
     }
 
+    /* tiles */
     .tiles{
       position:absolute;
       inset:0;
@@ -77,6 +116,7 @@
       display:block;
     }
 
+    /* שכבה עדינה לטקסט */
     .tile::after{
       content:"";
       position:absolute;
@@ -86,6 +126,7 @@
       pointer-events:none;
     }
 
+    /* טקסט: ימין-למטה, 2 שורות */
     .cap{
       position:absolute;
       right: 10px;
@@ -114,6 +155,7 @@
       text-overflow: ellipsis;
     }
 
+    /* טבעת טקסט מסתובבת */
     .ring{
       position:absolute;
       inset:0;
@@ -138,6 +180,20 @@
       to{ transform: rotate(360deg); }
     }
 
+    /* PATCH: fallback טקסט לאייפון (מוסתר כברירת מחדל) */
+    .ring-fallback{
+      display:none;
+      max-width: 86vw;
+      text-align:center;
+      color: rgba(255,255,255,0.92);
+      font-family: "Heebo","Assistant","Rubik",Arial,sans-serif;
+      font-weight: 800;
+      line-height: 1.35;
+      text-shadow: 0 2px 10px rgba(0,0,0,.75);
+      padding: 0 10px;
+    }
+
+    /* מרכז דיסק */
     .center{
       position:absolute;
       inset:0;
@@ -200,126 +256,17 @@
       text-decoration:none;
       color:#222;
       transition: transform .15s ease, filter .15s ease;
-      user-select:none;
     }
     .start-btn:hover{ filter: brightness(1.06); transform: scale(1.02); }
     .start-btn:active{ transform: scale(.98); filter: brightness(1.03); }
     .hand{ font-size: clamp(18px, 2.2vmin, 24px); line-height: 1; }
     .start-text{ font-weight: 900; font-size: clamp(12px, 1.7vmin, 14px); }
 
-    /* ===== Modal ===== */
-    .overlay{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.34);
-      display:none;
-      place-items:center;
-      z-index: 50;
-      padding: 18px;
-    }
-    .overlay.open{ display:grid; }
+    /* מובייל */
+    @media (max-width: 768px){
+      .hotam-title{ font-size:22px; }
+      .hotam-subtitle{ font-size:16px; }
 
-    .modal{
-      width: min(var(--modalMaxW), 96vw);
-      border-radius: 22px;
-      background: rgba(255,255,255,.88);
-      box-shadow: 0 24px 70px rgba(0,0,0,.25);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: clamp(18px, 3vw, 28px);
-    }
-    .modal h2{
-      margin: 0 0 8px;
-      font-size: clamp(22px, 2.8vw, 32px);
-      letter-spacing: .2px;
-    }
-    .modal p{
-      margin: 0 0 18px;
-      color: rgba(0,0,0,.74);
-      font-weight: 600;
-      line-height: 1.55;
-      font-size: clamp(14px, 1.8vw, 17px);
-    }
-
-    .btnrow{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      justify-content:flex-start;
-      margin-top: 14px;
-    }
-    .btn{
-      border:0;
-      border-radius: 999px;
-      padding: 12px 16px;
-      cursor:pointer;
-      font-weight: 900;
-      box-shadow: 0 10px 22px rgba(0,0,0,.12);
-      transition: transform .12s ease, filter .12s ease;
-      user-select:none;
-    }
-    .btn:active{ transform: scale(.98); }
-    .btn.primary{ background: #111; color: #fff; }
-    .btn.ghost{
-      background: rgba(0,0,0,.06);
-      color: #111;
-      box-shadow: none;
-    }
-
-    .step{ display:none; }
-    .step.active{ display:block; }
-
-    .mini{
-      display:grid;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .q{
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 16px;
-      padding: 12px 12px;
-    }
-    .q label{
-      display:block;
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-
-    /* בחירה מרובה (checkboxes) */
-    .checks{
-      display:grid;
-      gap: 8px;
-    }
-    .check{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,.10);
-      background: #fff;
-    }
-    .check input{
-      width: 18px;
-      height: 18px;
-      accent-color: #111;
-    }
-    .check span{
-      font-weight: 800;
-      color:#111;
-    }
-
-    .q select{
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,.12);
-      padding: 10px 10px;
-      font-weight: 700;
-      background: #fff;
-    }
-
-    @media (max-width: 640px){
       :root{
         --tileW: clamp(105px, 34vw, 165px);
         --tileH: clamp(62px, 18vw, 98px);
@@ -327,8 +274,37 @@
       }
       .cap .t1{ font-size: 12px; }
       .cap .t2{ font-size: 11px; }
-      .btnrow{ justify-content: stretch; }
-      .btn{ flex: 1 1 auto; }
+
+      /* ========================
+         PATCH: למנוע "בליטות" במובייל
+         בלי להזיז דסקטופ:
+         - scale קל לדיסק כולו
+         - clipping לעיגול ע"י stage
+         ======================== */
+      .stage{
+        transform: scale(0.92);
+        transform-origin: center center;
+
+        /* clipping כדי שכל האבסולוט יישאר בתוך עיגול */
+        overflow: hidden;
+        border-radius: 50%;
+      }
+    }
+
+    /* אייפון: פיקס לפונט/RTL + fallback סטטי אם עדיין בעייתי */
+    /* הערה: זה לא נוגע בדסקטופ/אנדרואיד */
+    @supports (-webkit-touch-callout: none) {
+      /* קודם כל מכריח פונט עברי */
+      .ring svg text,
+      .ring svg textPath{
+        font-family: "Heebo","Assistant","Rubik",Arial,sans-serif !important;
+        direction: rtl;
+        unicode-bidi: plaintext;
+      }
+
+      /* אם עדיין יש ג׳יבריש ב-Safari: מסתירים את ה-SVG ומראים טקסט סטטי תקין */
+      .ring svg{ display:none !important; }
+      .ring-fallback{ display:block !important; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -338,9 +314,16 @@
 </head>
 
 <body>
+
+  <!-- PATCH: טקסט עליון (מחוץ לדיסק) -->
+  <div class="hotam-copy">
+    <div class="hotam-title">הפעם זה לא עוד אלבום תמונות.</div>
+  </div>
+
   <main class="stage" id="stage">
     <div class="disc" aria-hidden="true"></div>
 
+    <!-- טבעת טקסט -->
     <div class="ring" aria-hidden="true">
       <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
@@ -354,30 +337,41 @@
             font-size="16"
             font-weight="900"
             letter-spacing="0.3"
-            style="paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;">
+            style="paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;"
+            direction="rtl">
             <textPath
               href="#circlePath" xlink:href="#circlePath"
               startOffset="50%" text-anchor="middle"
               lengthAdjust="spacing"
               textLength="804">
-                •  חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת •      המחשת גבורה ומסירות נפש      
+              • חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש •
             </textPath>
           </text>
         </g>
       </svg>
+
+      <!-- PATCH: fallback סטטי לאייפון -->
+      <div class="ring-fallback">
+        חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש
+      </div>
     </div>
 
+    <!-- מרכז דיסק -->
     <div class="center">
       <div class="hub">
         <div class="hub-inner">
-          <button class="start-btn" id="startBtn" type="button" aria-label="התחל">
+          <!-- אין טופס ביניים: ישר לטופס -->
+          <a class="start-btn"
+             href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=header"
+             aria-label="התחל">
             <div class="hand">👆</div>
             <div class="start-text">התחל</div>
-          </button>
+          </a>
         </div>
       </div>
     </div>
 
+    <!-- 8 tiles (לא נוגעים) -->
     <section class="tiles" id="tiles" aria-label="בחירה">
       <article class="tile" data-angle="-90">
         <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
@@ -421,77 +415,13 @@
     </section>
   </main>
 
-  <!-- חלונית ביניים -->
-  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="לפני שמתחילים">
-    <div class="modal">
-      <!-- שלב 1 -->
-      <div class="step active" id="step1">
-        <h2>רגע לפני שמתחילים</h2>
-        <p>
-          אם חשוב לך שיזכרו <b>מי היית</b>, מה היו <b>הערכים</b> שלך, אילו סיפורים – ואילו <b>סיפורי אבות</b> –
-          תרצה להשאיר כחותם לדורות, זה המקום להתחיל.
-          <br />
-          כמה דקות קצרות — וזה הופך ל<b>חותם של משפחה</b>, לחותם שנשאר לדורות.
-        </p>
-
-        <div class="btnrow">
-          <button class="btn primary" id="yesBtn" type="button">כן, אני רוצה להשאיר חותם</button>
-          <button class="btn ghost" id="noBtn" type="button">לא, לא כרגע</button>
-        </div>
-      </div>
-
-      <!-- שלב 2 -->
-      <div class="step" id="step2">
-        <h2>כמה שאלות קצרות</h2>
-        <p>רק כדי לכוון — מה הכי חשוב לך שישאר?</p>
-
-        <div class="mini">
-          <div class="q">
-            <label>מה היית רוצה שיזכרו? <span style="font-weight:800; opacity:.7;">(אפשר לבחור כמה)</span></label>
-            <div class="checks" id="q1Checks">
-              <label class="check"><input type="checkbox" value="אהבה ודאגה למשפחה"><span>אהבה ודאגה למשפחה</span></label>
-              <label class="check"><input type="checkbox" value="ערכים ומידות"><span>ערכים ומידות</span></label>
-              <label class="check"><input type="checkbox" value="סיפורי חיים ומורשת"><span>סיפורי חיים ומורשת</span></label>
-              <label class="check"><input type="checkbox" value="מסירות נפש וגבורה"><span>מסירות נפש וגבורה</span></label>
-            </div>
-          </div>
-
-          <div class="q">
-            <label for="q3">איך תרצה שיזכירו אותך במשפט?</label>
-            <select id="q3">
-              <option value="">בחר/י…</option>
-              <option>איש משפחה</option>
-              <option>איש מעשה וערכים</option>
-              <option>אדם עם לב גדול</option>
-              <option>חותם של אדם טוב</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="btnrow">
-          <button class="btn primary" id="goFormBtn" type="button">המשך למילוי הטופס</button>
-          <button class="btn ghost" id="notNowBtn" type="button">לא מעניין אותי כרגע</button>
-        </div>
-      </div>
-
-      <!-- שלב 3: ביי ביי -->
-      <div class="step" id="step3">
-        <h2>תודה ולהתראות</h2>
-        <p>
-          הכול בסדר. כשתרצה/י — אפשר תמיד לחזור ולהמשיך.
-          <br />ביי־ביי 🙏
-        </p>
-        <div class="btnrow">
-          <button class="btn primary" id="closeBtn" type="button">סגור</button>
-        </div>
-      </div>
-    </div>
+  <!-- PATCH: טקסט תחתון (מחוץ לדיסק) -->
+  <div class="hotam-copy">
+    <div class="hotam-subtitle">זה סיפור. זה מסר. זה חותם שנשאר לדורות.</div>
   </div>
 
   <script>
-    const GOOGLE_FORM_URL =
-      "https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=header";
-
+    // iOS: ודא שהוידאו באמת מתנגן (לא משנים לוגיקה)
     window.addEventListener('load', () => {
       document.querySelectorAll('video.media').forEach(v => {
         v.muted = true;
@@ -502,6 +432,7 @@
       layoutTiles();
     });
 
+    // סימטריה מלאה: אותו רדיוס + 8 נקודות שוות (45°) (לא משנים)
     function layoutTiles(){
       const stage = document.getElementById('stage');
       const rect = stage.getBoundingClientRect();
@@ -534,68 +465,8 @@
         tile.style.top  = `${y}px`;
       });
     }
+
     window.addEventListener('resize', () => requestAnimationFrame(layoutTiles));
-
-    // ===== Modal flow =====
-    const overlay = document.getElementById('overlay');
-    const step1 = document.getElementById('step1');
-    const step2 = document.getElementById('step2');
-    const step3 = document.getElementById('step3');
-
-    const startBtn = document.getElementById('startBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
-    const notNowBtn = document.getElementById('notNowBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const goFormBtn = document.getElementById('goFormBtn');
-
-    function openModal(){
-      overlay.classList.add('open');
-      showStep(1);
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal(){
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    function showStep(n){
-      step1.classList.toggle('active', n === 1);
-      step2.classList.toggle('active', n === 2);
-      step3.classList.toggle('active', n === 3);
-    }
-
-    startBtn.addEventListener('click', openModal);
-
-    // שלב 1:
-    // "לא, לא כרגע" -> חוזר לדיסק (סוגר חלונית)
-    yesBtn.addEventListener('click', () => showStep(2));
-    noBtn.addEventListener('click', () => closeModal());
-
-    // שלב 2:
-    // "לא מעניין אותי כרגע" -> ביי ביי (לא חוזר לדיסק)
-    notNowBtn.addEventListener('click', () => showStep(3));
-
-    // המשך לטופס (אפשר להוסיף בעתיד העברת תשובות, כרגע פשוט ממשיך)
-    goFormBtn.addEventListener('click', () => {
-      window.location.href = GOOGLE_FORM_URL;
-    });
-
-    // שלב 3:
-    closeBtn.addEventListener('click', () => closeModal());
-
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeModal();
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
-    });
   </script>
 </body>
 </html>
-
-
-
-
-
-
