@@ -5,536 +5,236 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>hotam.vip</title>
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap');
-
-    :root{
-      --bg:#efe7db;
-
-      /* מהירות סיבוב הטקסט המעגלי (קטן יותר = מהר יותר) */
-      --spinDur: 18s;
-
-      /* tiles */
-      --tileW: clamp(110px, 13.5vw, 185px);
-      --tileH: clamp(64px, 8.6vw, 110px);
-
-      /* טבעת הטקסט */
-      --ringSize: clamp(270px, 44vmin, 540px);
-
-      --uiFont: "Heebo","Assistant","Rubik",Arial,sans-serif;
-      --sideColor: #444;
-    }
-
     *{ box-sizing:border-box; }
 
     body{
       margin:0;
-      min-height:100svh;
-      background: radial-gradient(1200px 700px at 50% 35%, #f6f0e7 0%, var(--bg) 55%, #e8dfd1 100%);
-      font-family: var(--uiFont);
+      min-height:100vh;
+      background:#efe7db;
+      font-family:"Heebo", Arial, sans-serif;
       overflow:hidden;
     }
 
+    /* ===== LAYOUT ===== */
     .page{
-      min-height:100svh;
-      display:grid;
-      place-items:center;
-      padding: 18px;
-    }
-
-    /* ====== DESKTOP LAYOUT ====== */
-    .frame{
-      width: min(98vw, 1400px);
-      display:grid;
-      grid-template-columns: auto 1fr; /* דיסק + טקסט מימין */
-      align-items:center;
-      column-gap: clamp(14px, 3vw, 70px);
-    }
-
-    /* בלוק טקסט יחיד מימין (דסקטופ בלבד) */
-    .rightBlock{
-      display:none;
-      color: var(--sideColor);
-      direction: rtl;
-      text-align: right;
-      align-self:center;
-      max-width: 28vw;
-      font-size: clamp(16px, 2.1vw, 28px);
-      line-height: 1.15;
-      user-select:none;
-    }
-    .rightBlock .l1,
-    .rightBlock .l2{
-      white-space: nowrap;         /* בדיוק שורה אחת לכל שורה */
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display:block;
-    }
-    .rightBlock .l1{ font-weight: 700; }
-    .rightBlock .l2{ font-weight: 400; }
-
-    .stampWord{
-      font-weight: 900;
-      font-style: italic;
-      display:inline-block;
-      transform: rotate(5deg);
-      transform-origin: center;
-    }
-
-    /* ====== MOBILE COPY (למעלה/למטה כמו שעובד עכשיו) ====== */
-    .mobile-top,
-    .mobile-bottom{
-      display:none;
-      text-align:center;
-      color: var(--sideColor);
-      font-family: var(--uiFont);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      user-select:none;
-      font-size: clamp(16px, 4.8vw, 22px); /* אותו גודל לשניהם */
-      line-height: 1.2;
-    }
-    .mobile-top{ font-weight: 700; }
-    .mobile-bottom{ font-weight: 400; }
-
-    /* ====== STAGE (כמו שהיה) ====== */
-    .stage{
-      width: min(92vmin, 920px);
-      aspect-ratio: 1/1;
       position:relative;
-      display:grid;
-      place-items:center;
+      width:100%;
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    /* הדיסק */
+    /* ===== SIDE TEXT (DESKTOP) ===== */
+    .side-text{
+      position:absolute;
+      max-width:28vw;
+      color:#444;
+      font-size:clamp(18px,1.8vw,26px);
+      line-height:1.3;
+      white-space:nowrap;
+    }
+
+    .side-right{
+      right:4vw;
+      text-align:right;
+      top:50%;
+      transform:translateY(-50%);
+      font-weight:600;
+    }
+
+    .side-left{
+      display:none; /* בוטל לפי הדרישה */
+    }
+
+    .hotam-word{
+      font-weight:800;
+      font-style:italic;
+      display:inline-block;
+      transform:rotate(-5deg);
+    }
+
+    /* ===== DISC WRAPPER ===== */
+    .stage{
+      width:min(90vmin,720px);
+      aspect-ratio:1/1;
+      position:relative;
+    }
+
+    /* ===== DISC (לא נוגעים) ===== */
     .disc{
       position:absolute;
       inset:0;
       border-radius:50%;
       background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 34%, rgba(0,0,0,.0) 35% 100%),
         repeating-radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.035) 0 2px,
-          rgba(0,0,0,.0) 2px 7px
-        ),
+          rgba(255,255,255,.04) 0 2px,
+          rgba(0,0,0,0) 2px 7px),
         radial-gradient(circle at 50% 50%,
           #141414 0%,
-          #0c0c0c 52%,
-          #080808 100%
-        );
-      box-shadow: 0 28px 60px rgba(0,0,0,.25);
-      z-index: 1;
+          #0c0c0c 55%,
+          #080808 100%);
     }
 
-    /* tiles */
-    .tiles{
-      position:absolute;
-      inset:0;
-      z-index: 4; /* tiles מעל הטקסט העגול בדסקטופ */
-      pointer-events:none;
-    }
-    .tile{
-      position:absolute;
-      width: var(--tileW);
-      height: var(--tileH);
-      border-radius: 16px;
-      overflow:hidden;
-      box-shadow: 0 14px 30px rgba(0,0,0,.35);
-      background:#111;
-      pointer-events:auto;
-    }
-    .tile .media{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-    }
-
-    .tile::after{
-      content:"";
-      position:absolute;
-      inset:auto 0 0 0;
-      height: 54%;
-      background: linear-gradient(to top, rgba(0,0,0,.52), rgba(0,0,0,0));
-      pointer-events:none;
-    }
-
-    /* טקסט: ימין-למטה, 2 שורות */
-    .cap{
-      position:absolute;
-      right: 10px;
-      bottom: 10px;
-      left: 10px;
-      text-align:right;
-      color:#fff;
-      text-shadow: 0 2px 10px rgba(0,0,0,.75);
-      font-weight: 900;
-      line-height: 1.08;
-      pointer-events:none;
-      direction: rtl;
-      unicode-bidi: plaintext;
-      font-family: var(--uiFont);
-    }
-    .cap .t1{
-      font-size: clamp(12px, 1.7vmin, 15px);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .cap .t2{
-      margin-top: 4px;
-      font-size: clamp(10px, 1.45vmin, 13px);
-      font-weight: 800;
-      opacity: .95;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* ====== טבעת טקסט מסתובבת ====== */
+    /* ===== ROTATING TEXT ===== */
     .ring{
       position:absolute;
       inset:0;
       display:grid;
       place-items:center;
       pointer-events:none;
-      z-index: 3; /* בדסקטופ: מתחת ל-tiles כדי לא לעלות על התמונות */
-    }
-    .ring svg{
-      width: var(--ringSize);
-      height: var(--ringSize);
-      display:block;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,.55));
-    }
-    .ring-spin{
-      transform-origin: 150px 150px;
-      animation: spin var(--spinDur) linear infinite;
-      will-change: transform;
-    }
-    @keyframes spin{
-      from{ transform: rotate(0deg); }
-      to{ transform: rotate(360deg); }
+      z-index:5;
     }
 
-    /* מרכז דיסק */
+    .ring svg{
+      width:82%;
+      height:82%;
+    }
+
+    .ring-spin{
+      animation:spin 18s linear infinite;
+      transform-origin:50% 50%;
+    }
+
+    @keyframes spin{
+      from{transform:rotate(0deg);}
+      to{transform:rotate(360deg);}
+    }
+
+    /* ===== CENTER ===== */
     .center{
       position:absolute;
       inset:0;
       display:grid;
       place-items:center;
-      z-index: 6;
-      pointer-events:none;
+      z-index:6;
     }
+
     .hub{
-      width: clamp(175px, 27vmin, 290px);
-      height: clamp(175px, 27vmin, 290px);
+      width:42%;
+      height:42%;
       border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.88) 0%,
-          rgba(230,230,230,.92) 35%,
-          rgba(200,200,200,.95) 58%,
-          rgba(245,245,245,.92) 75%,
-          rgba(255,255,255,.85) 100%
-        );
-      box-shadow:
-        inset 0 12px 30px rgba(0,0,0,.22),
-        inset 0 -14px 22px rgba(255,255,255,.55);
-      display:grid;
-      place-items:center;
-    }
-    .hub-inner{
-      width: 64%;
-      height: 64%;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 50%,
-          #f5f5f5 0%,
-          #e2e2e2 45%,
-          #cfcfcf 70%,
-          #efefef 100%
-        );
-      box-shadow:
-        inset 0 10px 22px rgba(0,0,0,.18),
-        0 10px 26px rgba(0,0,0,.15);
+      background:#eee;
       display:grid;
       place-items:center;
     }
 
     .start-btn{
-      pointer-events:auto;
-      width: 44%;
-      height: 44%;
-      border-radius: 999px;
-      border: 0;
-      cursor: pointer;
-      display:grid;
-      place-items:center;
-      gap:6px;
-      background: radial-gradient(circle at 50% 40%, #f7f7f7 0%, #e7e7e7 58%, #d6d6d6 100%);
-      box-shadow:
-        inset 0 10px 16px rgba(255,255,255,.9),
-        inset 0 -12px 18px rgba(0,0,0,.14),
-        0 10px 22px rgba(0,0,0,.18);
-      text-decoration:none;
-      color:#222;
-      transition: transform .15s ease, filter .15s ease;
-      font-family: var(--uiFont);
-    }
-    .start-btn:hover{ filter: brightness(1.06); transform: scale(1.02); }
-    .start-btn:active{ transform: scale(.98); filter: brightness(1.03); }
-    .hand{ font-size: clamp(18px, 2.2vmin, 24px); line-height: 1; }
-    .start-text{ font-weight: 900; font-size: clamp(12px, 1.7vmin, 14px); }
-
-    /* ====== SHOW RIGHT BLOCK (Desktop only) ====== */
-    @media (min-width: 900px){
-      .rightBlock{ display:block; }
-      .mobile-top, .mobile-bottom{ display:none !important; }
+      border:none;
+      background:#fff;
+      border-radius:999px;
+      padding:14px 26px;
+      font-weight:700;
+      cursor:pointer;
     }
 
-    /* =========================================================
-       MOBILE PATCH ONLY (max-width: 768px)
-       - לא נוגעים בדסקטופ
-       - לא משנים HTML/מבנה
-       ========================================================= */
-    @media (max-width: 768px){
+    /* ===================================================
+       MOBILE ONLY – FIX
+       =================================================== */
+    @media (max-width:768px){
 
-      /* 1) להקטין את הדיסק (container) ~ 88vw, ממורכז */
-      .frame{
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        row-gap: 10px;
-        justify-items:center;
-        width: min(96vw, 920px);
+      body{ overflow:auto; }
+
+      .page{
+        flex-direction:column;
+        justify-content:flex-start;
+        padding-top:24px;
       }
-      .rightBlock{ display:none !important; }
-      .mobile-top, .mobile-bottom{ display:block; }
+
+      /* טקסטים חוזרים ונראים */
+      .side-text{
+        position:static;
+        transform:none;
+        max-width:100%;
+        white-space:normal;
+        text-align:center;
+        font-size:20px;
+        margin:12px 16px;
+        display:block;
+      }
+
+      .side-right{
+        order:1;
+      }
 
       .stage{
-        width: 88vw;        /* ← הדיסק יושב בתוך המסך */
-        max-width: 88vw;
-        aspect-ratio: 1/1;
+        order:2;
+        width:88vw;
+        margin:10px auto;
       }
 
-      /* 2) להקטין tiles 15%–25% בלי לשנות מיקומים יחסיים (ה-JS ישמור יחסי) */
-      :root{
-        --tileW: clamp(90px, 26vw, 135px); /* ~20% קטן */
-        --tileH: clamp(54px, 15vw, 80px);  /* ~18%-25% קטן */
-        --ringSize: clamp(210px, 54vw, 310px); /* 3) טבעת קטנה יותר */
+      .side-left{
+        display:block;
+        order:3;
+        font-size:20px;
       }
 
-      /* טקסט על tiles קטן יותר כדי שלא יגלוש */
-      .cap .t1{ font-size: 11px; }
-      .cap .t2{ font-size: 10px; margin-top: 3px; }
+      /* טקסט עגול – קטן וקריא */
+      .ring{
+        z-index:8;
+      }
 
-      /* 3) הטקסט העגול: קטן יותר + לא “נבלע” */
-      .ring{ z-index: 8; }   /* מעל התמונות במובייל כדי להישאר קריא */
-      .tiles{ z-index: 7; }  /* מתחת לטבעת במובייל */
-
-      .ring text{ font-size: 12px !important; } /* מקטין font-size גם אם יש attribute */
       .ring svg{
-        filter: drop-shadow(0 2px 8px rgba(0,0,0,.55));
+        width:78%;
+        height:78%;
       }
 
-      /* אם עדיין מרגיש קרוב לתמונות – הקטנה עדינה נוספת של הטבעת בלבד */
-      .ring{ transform: scale(0.96); transform-origin: center; }
-
-      /* 4) מפריד אחד קבוע: כבר ב-HTML מחרוזת עם " • " בלבד (אין כפול) */
-
-      /* 5) UTF-8 כבר מוגדר + הגדרות RTL לטקסט (ליתר ביטחון) */
       .ring text{
-        direction: rtl !important;
-        unicode-bidi: plaintext !important;
-        font-family: var(--uiFont) !important;
+        font-size:12px;
       }
-
-      /* מובייל: לא חובה אבל עוזר שלא ייחתך משהו */
-      body{ overflow:auto; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .ring-spin{ animation: none; }
-    }
-
-    /* iOS Safari: אם יש ג׳יבריש — fallback סטטי (עדיף סטטי תקין) */
-    @supports (-webkit-touch-callout: none) {
-      .ring-spin{ animation: none !important; }
     }
   </style>
 </head>
 
 <body>
   <div class="page">
-    <div class="frame">
 
-      <main class="stage" id="stage">
-        <div class="disc" aria-hidden="true"></div>
-
-        <!-- מובייל: כותרת עליונה -->
-        <div class="mobile-top">הפעם זה לא עוד אלבום תמונות.</div>
-
-        <!-- טבעת טקסט: מפריד אחד קבוע (" • ") בין כל ביטוי -->
-        <div class="ring" aria-hidden="true">
-          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs>
-              <!-- פנימה כדי שלא יעלה על התמונות בדסקטופ -->
-              <path id="circlePath"
-                    d="M150,150 m-110,0 a110,110 0 1,1 220,0 a110,110 0 1,1 -220,0"/>
-            </defs>
-
-            <g class="ring-spin">
-              <text
-                fill="rgba(255,255,255,0.88)"
-                font-size="16"
-                font-weight="900"
-                letter-spacing="0.3"
-                direction="rtl"
-                style="unicode-bidi:plaintext; font-family: var(--uiFont); paint-order:stroke; stroke: rgba(0,0,0,0.70); stroke-width:2px;">
-                <textPath
-                  href="#circlePath" xlink:href="#circlePath"
-                  startOffset="50%" text-anchor="middle"
-                  lengthAdjust="spacing"
-                  textLength="700">
-                  חותם שנשאר לדורות • מי היו סבא וסבתא • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש • חותם שנשאר לדורות
-                </textPath>
-              </text>
-            </g>
-          </svg>
-        </div>
-
-        <!-- מרכז דיסק -->
-        <div class="center">
-          <div class="hub">
-            <div class="hub-inner">
-              <a class="start-btn" href="form.html" aria-label="התחל">
-                <div class="hand">👆</div>
-                <div class="start-text">התחל</div>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 8 tiles -->
-        <section class="tiles" id="tiles" aria-label="בחירה">
-          <!-- 12 -->
-          <article class="tile" data-angle="-90">
-            <video class="media" src="assets/faith1.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            <div class="cap"><div class="t1">זיכרון אבות</div><div class="t2">שלא יאבד</div></div>
-          </article>
-
-          <!-- 1:30 -->
-          <article class="tile" data-angle="-45">
-            <img class="media" src="assets/still1_real.jpg" alt="" loading="lazy" />
-            <div class="cap"><div class="t1">חותם שנשאר לדורות</div><div class="t2">שהנכדים ידעו</div></div>
-          </article>
-
-          <!-- 3 -->
-          <article class="tile" data-angle="0">
-            <video class="media" src="assets/faith2.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            <div class="cap"><div class="t1">להעביר מורשת</div><div class="t2">מדור לדור</div></div>
-          </article>
-
-          <!-- 4:30 -->
-          <article class="tile" data-angle="45">
-            <img class="media" src="assets/still3_real.jpg" alt="" loading="lazy" />
-            <div class="cap"><div class="t1">מתיקות התורה</div><div class="t2">של סבא</div></div>
-          </article>
-
-          <!-- 6 -->
-          <article class="tile" data-angle="90">
-            <video class="media" src="assets/faith3.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            <div class="cap"><div class="t1">המחשת גבורה</div><div class="t2">ומסירות נפש</div></div>
-          </article>
-
-          <!-- 7:30 -->
-          <article class="tile" data-angle="135">
-            <img class="media" src="assets/still2_real.jpg" alt="" loading="lazy" />
-            <div class="cap"><div class="t1">מורשת</div><div class="t2">סבא ונכד</div></div>
-          </article>
-
-          <!-- 9 -->
-          <article class="tile" data-angle="180">
-            <video class="media" src="assets/faith4.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            <div class="cap"><div class="t1">שבת בבית סבא</div><div class="t2">עונג, שלווה</div></div>
-          </article>
-
-          <!-- 10:30 -->
-          <article class="tile" data-angle="-135">
-            <img class="media" src="assets/still4_real.jpg" alt="" loading="lazy" />
-            <div class="cap"><div class="t1">תפילין</div><div class="t2">האות שמחבר</div></div>
-          </article>
-        </section>
-
-        <!-- מובייל: כותרת תחתונה -->
-        <div class="mobile-bottom">
-          הפעם זה <span class="stampWord">חותם</span> שנשאר לדורות.
-        </div>
-      </main>
-
-      <!-- דסקטופ: בלוק אחד בצד ימין בלבד (2 שורות בדיוק) -->
-      <aside class="rightBlock" aria-hidden="true">
-        <span class="l1">הפעם זה לא עוד אלבום תמונות.</span>
-        <span class="l2">הפעם זה <span class="stampWord">חותם</span> שנשאר לדורות.</span>
-      </aside>
-
+    <!-- TEXT RIGHT (DESKTOP) -->
+    <div class="side-text side-right">
+      הפעם זה לא עוד אלבום תמונות.<br>
+      הפעם זה <span class="hotam-word">חותם</span> שנשאר לדורות.
     </div>
+
+    <!-- DISC -->
+    <main class="stage">
+
+      <div class="disc"></div>
+
+      <!-- ROTATING TEXT -->
+      <div class="ring">
+        <svg viewBox="0 0 300 300">
+          <defs>
+            <path id="circlePath"
+              d="M150,150 m-120,0 a120,120 0 1,1 240,0 a120,120 0 1,1 -240,0"/>
+          </defs>
+          <g class="ring-spin">
+            <text fill="#fff" font-weight="700" letter-spacing="1">
+              <textPath href="#circlePath" startOffset="50%" text-anchor="middle">
+                זיכרון אבות • סיפורי משפחה • מסירות נפש • חותם שנשאר לדורות • מורשת
+              </textPath>
+            </text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- CENTER -->
+      <div class="center">
+        <div class="hub">
+          <button class="start-btn">התחל</button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- TEXT BOTTOM (MOBILE) -->
+    <div class="side-text side-left">
+      הפעם זה <span class="hotam-word">חותם</span> שנשאר לדורות.
+    </div>
+
   </div>
-
-  <script>
-    // iOS: ודא שהוידאו באמת מתנגן
-    window.addEventListener('load', () => {
-      document.querySelectorAll('video.media').forEach(v => {
-        v.muted = true;
-        v.playsInline = true;
-        const p = v.play();
-        if (p && p.catch) p.catch(()=>{});
-      });
-      layoutTiles();
-    });
-
-    // סימטריה מלאה: אותו רדיוס + 8 נקודות שוות (45°)
-    function layoutTiles(){
-      const stage = document.getElementById('stage');
-      const rect = stage.getBoundingClientRect();
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-      const discR = rect.width / 2;
-
-      const tiles = Array.from(document.querySelectorAll('.tile'));
-      if (!tiles.length) return;
-
-      // מידות tile בפועל
-      const tRect = tiles[0].getBoundingClientRect();
-      const tileW = tRect.width;
-      const tileH = tRect.height;
-
-      // מרווח ביטחון מהשפה ומהמרכז
-      const padOuter = 22;
-
-      // רדיוס מקסימלי כדי לא לצאת מחוץ לדיסק
-      const maxSafe = discR - Math.max(tileW, tileH)/2 - padOuter;
-
-      // רדיוס בסיסי (כמו שהיה)
-      let r = discR * 0.78;
-
-      // קלמפ בטוח
-      r = Math.min(r, maxSafe);
-      r = Math.max(r, discR * 0.68);
-
-      tiles.forEach(tile => {
-        const angDeg = Number(tile.dataset.angle || 0);
-        const a = angDeg * Math.PI / 180;
-
-        const x = cx + r * Math.cos(a) - tileW/2;
-        const y = cy + r * Math.sin(a) - tileH/2;
-
-        tile.style.left = `${x}px`;
-        tile.style.top  = `${y}px`;
-      });
-    }
-
-    window.addEventListener('resize', () => requestAnimationFrame(layoutTiles));
-  </script>
 </body>
 </html>
