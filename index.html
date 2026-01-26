@@ -293,9 +293,14 @@
       .mobile-top, .mobile-bottom{ display:none !important; }
     }
 
-    /* ====== MOBILE ====== */
-    @media (max-width: 899px){
-      body{ overflow:auto; }
+    /* =========================================================
+       MOBILE PATCH ONLY (max-width: 768px)
+       - לא נוגעים בדסקטופ
+       - לא משנים HTML/מבנה
+       ========================================================= */
+    @media (max-width: 768px){
+
+      /* 1) להקטין את הדיסק (container) ~ 88vw, ממורכז */
       .frame{
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
@@ -303,25 +308,49 @@
         justify-items:center;
         width: min(96vw, 920px);
       }
-
       .rightBlock{ display:none !important; }
       .mobile-top, .mobile-bottom{ display:block; }
 
-      :root{
-        --tileW: clamp(105px, 34vw, 165px);
-        --tileH: clamp(62px, 18vw, 98px);
-        --ringSize: clamp(250px, 50vmin, 360px);
-      }
-
-      /* מובייל: עיגול נקי בלי "בליטות" */
       .stage{
-        transform: scale(0.94);
-        transform-origin: center center;
+        width: 88vw;        /* ← הדיסק יושב בתוך המסך */
+        max-width: 88vw;
+        aspect-ratio: 1/1;
       }
 
-      /* מובייל: הטקסט העגול חייב להיות קריא – מעל התמונות אם צריך */
-      .ring{ z-index: 8; }
-      .tiles{ z-index: 7; }
+      /* 2) להקטין tiles 15%–25% בלי לשנות מיקומים יחסיים (ה-JS ישמור יחסי) */
+      :root{
+        --tileW: clamp(90px, 26vw, 135px); /* ~20% קטן */
+        --tileH: clamp(54px, 15vw, 80px);  /* ~18%-25% קטן */
+        --ringSize: clamp(210px, 54vw, 310px); /* 3) טבעת קטנה יותר */
+      }
+
+      /* טקסט על tiles קטן יותר כדי שלא יגלוש */
+      .cap .t1{ font-size: 11px; }
+      .cap .t2{ font-size: 10px; margin-top: 3px; }
+
+      /* 3) הטקסט העגול: קטן יותר + לא “נבלע” */
+      .ring{ z-index: 8; }   /* מעל התמונות במובייל כדי להישאר קריא */
+      .tiles{ z-index: 7; }  /* מתחת לטבעת במובייל */
+
+      .ring text{ font-size: 12px !important; } /* מקטין font-size גם אם יש attribute */
+      .ring svg{
+        filter: drop-shadow(0 2px 8px rgba(0,0,0,.55));
+      }
+
+      /* אם עדיין מרגיש קרוב לתמונות – הקטנה עדינה נוספת של הטבעת בלבד */
+      .ring{ transform: scale(0.96); transform-origin: center; }
+
+      /* 4) מפריד אחד קבוע: כבר ב-HTML מחרוזת עם " • " בלבד (אין כפול) */
+
+      /* 5) UTF-8 כבר מוגדר + הגדרות RTL לטקסט (ליתר ביטחון) */
+      .ring text{
+        direction: rtl !important;
+        unicode-bidi: plaintext !important;
+        font-family: var(--uiFont) !important;
+      }
+
+      /* מובייל: לא חובה אבל עוזר שלא ייחתך משהו */
+      body{ overflow:auto; }
     }
 
     @media (prefers-reduced-motion: reduce){
