@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <title>hotam.vip | חותם - זיכרון דיגיטלי</title>
+    <title>hotam.vip | חותם - מורשת נצחית</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #efe7db; --accent: #7a5a2b; --gold: #c5a059; }
@@ -22,93 +22,104 @@
             flex-direction: row-reverse;
         }
 
-        .side-text { flex: 0 0 350px; text-align: right; z-index: 10; }
-        .side-text h1 { font-size: 2.5rem; font-weight: 800; margin: 0; color: #1a1a1a; line-height: 1.1; }
-        .side-text p { font-size: 1.5rem; color: #444; margin-top: 10px; }
-        .highlight { color: var(--accent); font-weight: 800; border-bottom: 2px solid var(--gold); }
+        .side-text { flex: 0 0 350px; text-align: right; z-index: 50; }
+        .side-text h1 { font-size: 2.8rem; font-weight: 800; margin: 0; color: #1a1a1a; line-height: 1.1; }
+        .side-text p { font-size: 1.6rem; color: #444; margin-top: 15px; }
+        .highlight { color: var(--accent); font-weight: 800; border-bottom: 3px solid var(--gold); }
 
+        /* אזור הדיסק */
         .stage {
             position: relative;
-            width: min(85vmin, 650px);
+            width: min(88vmin, 680px);
             aspect-ratio: 1/1;
             display: flex; justify-content: center; align-items: center;
+            animation: fadeIn 1.5s ease-out;
         }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
         .disc-body {
             position: absolute; inset: 0;
             background: radial-gradient(circle, #222 0%, #000 100%);
             border-radius: 50%;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
             background-image: repeating-radial-gradient(circle, transparent 0, transparent 2px, rgba(255,255,255,0.03) 3px);
             border: 2px solid #111;
         }
 
+        /* גלריית התמונות בתוך הדיסק */
         .photo-gallery { position: absolute; inset: 0; z-index: 5; }
 
         .memory-card {
-            position: absolute; width: 24%; height: 18%;
+            position: absolute;
+            width: 20%; height: 15%;
             background-size: cover; background-position: center;
-            border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255,255,255,0.2);
-            display: flex; align-items: flex-end; overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 2px solid rgba(255,255,255,0.2);
+            overflow: hidden;
+            transition: transform 0.4s ease;
         }
+        
+        .memory-card:hover { transform: scale(1.15); z-index: 60; border-color: var(--gold); }
 
         .memory-card .caption {
-            color: white; font-size: 0.65rem; font-weight: bold; 
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            width: 100%; text-align: right; padding: 8px 5px 3px 5px; line-height: 1.2;
+            position: absolute; bottom: 0; width: 100%;
+            color: white; font-size: 0.6rem; font-weight: bold; 
+            background: rgba(0,0,0,0.7); text-align: center; padding: 4px 0;
         }
 
-        /* מיקומים מדויקים לפי התמונה האותנטית */
-        .pos-1 { top: 6%; left: 50%; transform: translateX(-50%); } 
-        .pos-2 { top: 18%; right: 8%; } 
-        .pos-3 { top: 50%; right: 2%; transform: translateY(-50%); } 
-        .pos-4 { bottom: 18%; right: 8%; } 
-        .pos-5 { bottom: 6%; left: 50%; transform: translateX(-50%); } 
-        .pos-6 { bottom: 18%; left: 8%; } 
-        .pos-7 { top: 50%; left: 2%; transform: translateY(-50%); } 
-        .pos-8 { top: 18%; left: 8%; } 
+        /* מיקומים מעגליים צמודים יותר למראה דיסק מלא */
+        .pos-1 { top: 12%; left: 50%; transform: translateX(-50%); } 
+        .pos-2 { top: 25%; right: 15%; } 
+        .pos-3 { top: 50%; right: 8%; transform: translateY(-50%); } 
+        .pos-4 { bottom: 25%; right: 15%; } 
+        .pos-5 { bottom: 12%; left: 50%; transform: translateX(-50%); } 
+        .pos-6 { bottom: 25%; left: 15%; } 
+        .pos-7 { top: 50%; left: 8%; transform: translateY(-50%); } 
+        .pos-8 { top: 25%; left: 15%; } 
 
+        /* טבעת טקסט מסתובבת */
         .text-ring {
-            position: absolute; width: 44%; height: 44%;
-            z-index: 10; animation: rotateRing 40s linear infinite;
+            position: absolute; width: 40%; height: 40%;
+            z-index: 10; animation: rotateRing 35s linear infinite;
         }
         @keyframes rotateRing { to { transform: rotate(360deg); } }
 
-        /* כפתור ההתחל */
+        /* ליבת הדיסק - כפתור "התחל" */
         .center-hub {
             position: absolute; z-index: 20;
-            width: 26%; height: 26%;
-            background: radial-gradient(circle, #ffffff 50%, #e0e0e0 100%);
+            width: 24%; height: 24%;
+            background: radial-gradient(circle, #ffffff 40%, #dcdcdc 100%);
             border-radius: 50%;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            border: 4px solid #f0f0f0;
-            cursor: pointer; transition: transform 0.3s;
+            text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 5px solid #fff; cursor: pointer; transition: 0.3s;
         }
-        .center-hub:hover { transform: scale(1.1); }
-        .center-hub b { color: #000; font-size: 1.2rem; font-weight: 900; }
+        .center-hub:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+        .center-hub b { color: #000; font-size: 1.3rem; font-weight: 900; }
 
         svg { width: 100%; height: 100%; overflow: visible; }
-        text { fill: rgba(255,255,255,0.95); font-size: 13px; font-weight: 700; }
+        text { fill: rgba(255,255,255,0.95); font-size: 14px; font-weight: 700; }
 
-        /* חלונית המלל הנוסף (Modal) */
+        /* מודאל (חלונית) */
         .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-            display: none; place-items: center; z-index: 100; padding: 20px;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            display: none; place-items: center; z-index: 200; padding: 20px;
         }
         .modal-content {
             background: var(--bg); background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
-            padding: 40px; border-radius: 15px; max-width: 500px; text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 2px solid var(--gold);
+            padding: 40px; border-radius: 20px; max-width: 550px; text-align: center;
+            border: 3px solid var(--gold); box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
-        .modal-content h2 { color: var(--accent); margin-top: 0; }
-        .btn-forum {
-            display: inline-block; margin-top: 20px; padding: 12px 30px;
+        .modal-content h2 { color: var(--accent); font-size: 2rem; margin-top: 0; }
+        .modal-content p { font-size: 1.2rem; line-height: 1.6; color: #333; }
+        .btn-action {
+            display: inline-block; margin-top: 25px; padding: 15px 40px;
             background: var(--accent); color: white; text-decoration: none;
-            border-radius: 5px; font-weight: bold; transition: background 0.3s;
+            border-radius: 8px; font-weight: 800; font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(122, 90, 43, 0.4);
         }
-        .btn-forum:hover { background: #5a4220; }
 
         @media (max-width: 900px) {
             .container { flex-direction: column; text-align: center; gap: 40px; }
@@ -130,26 +141,26 @@
             <div class="disc-body"></div>
             
             <div class="photo-gallery">
-                <div class="memory-card pos-1" style="background-image: url('https://picsum.photos/id/1062/200/150');"><div class="caption">זיכרון אבות<br>שלא יאבד</div></div>
-                <div class="memory-card pos-2" style="background-image: url('https://picsum.photos/id/1011/200/150');"><div class="caption">חותם שנשאר לדורות<br>שהנכדים ידעו</div></div>
-                <div class="memory-card pos-3" style="background-image: url('https://picsum.photos/id/65/200/150');"><div class="caption">להעביר מורשת<br>מדוד לדור</div></div>
-                <div class="memory-card pos-4" style="background-image: url('https://picsum.photos/id/1073/200/150');"><div class="caption">מתיקות התורה<br>של סבא</div></div>
-                <div class="memory-card pos-5" style="background-image: url('https://picsum.photos/id/433/200/150');"><div class="caption">המחשבת גבורה<br>ומסירות נפש</div></div>
-                <div class="memory-card pos-6" style="background-image: url('https://picsum.photos/id/829/200/150');"><div class="caption">מורשת<br>סבא ונכד</div></div>
-                <div class="memory-card pos-7" style="background-image: url('https://picsum.photos/id/352/200/150');"><div class="caption">שבת בבית סבא<br>עונג שלווה</div></div>
-                <div class="memory-card pos-8" style="background-image: url('https://picsum.photos/id/1059/200/150');"><div class="caption">תפילין<br>האות שמתחבר</div></div>
+                <div class="memory-card pos-1" style="background-image: url('https://images.unsplash.com/photo-1563390214-729965839206?auto=format&fit=crop&w=400');"><div class="caption">זיכרון אבות</div></div>
+                <div class="memory-card pos-2" style="background-image: url('https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&w=400');"><div class="caption">חותם לדורות</div></div>
+                <div class="memory-card pos-3" style="background-image: url('https://images.unsplash.com/photo-1519074063912-ad2a602159d7?auto=format&fit=crop&w=400');"><div class="caption">להעביר מורשת</div></div>
+                <div class="memory-card pos-4" style="background-image: url('https://images.unsplash.com/photo-1544427920-c49ccfb85572?auto=format&fit=crop&w=400');"><div class="caption">מתיקות התורה</div></div>
+                <div class="memory-card pos-5" style="background-image: url('https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=400');"><div class="caption">מסירות נפש</div></div>
+                <div class="memory-card pos-6" style="background-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=400');"><div class="caption">מורשת סבא</div></div>
+                <div class="memory-card pos-7" style="background-image: url('https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=400');"><div class="caption">שבת בבית</div></div>
+                <div class="memory-card pos-8" style="background-image: url('https://images.unsplash.com/photo-1565463650053-066870c4f828?auto=format&fit=crop&w=400');"><div class="caption">תפילין ואור</div></div>
             </div>
 
             <div class="text-ring">
                 <svg viewBox="0 0 200 200">
-                    <path id="ringPath" d="M 100, 100 m -78, 0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" fill="none"/>
-                    <text><textPath href="#ringPath">• סיפורי משפחה ומורשת • המחשבת גבורה ומסירות נפש • חותם שנשאר לדורות •</textPath></text>
+                    <path id="ringPath" d="M 100, 100 m -76, 0 a 76,76 0 1,1 152,0 a 76,76 0 1,1 -152,0" fill="none"/>
+                    <text><textPath href="#ringPath">• סיפורי משפחה • מסירות נפש • חותם נצחי • מורשת אבות •</textPath></text>
                 </svg>
             </div>
 
             <div class="center-hub" onclick="openModal()">
                 <b>התחל</b>
-                <span style="font-size: 1.5rem;">👆</span>
+                <span style="font-size: 1.8rem;">📜</span>
             </div>
         </div>
     </div>
@@ -157,11 +168,11 @@
     <div class="modal" id="infoModal">
         <div class="modal-content">
             <h2>ברוכים הבאים ל"חותם"</h2>
-            <p>כאן אנחנו יוצרים זיכרון שלא דוהה לעולם. סיפורי המשפחה, הערכים והמורשת שלכם מקבלים מקום של כבוד לדורות הבאים.</p>
-            <p>לחצו למטה כדי לעבור לפורום ולהתחיל את המסע שלכם.</p>
-            <a href="https://hotam.vip/forum" class="btn-forum">מעבר לפורום והרשמה 📜</a>
+            <p>אנחנו מזמינים אתכם ליצור את ה"חותם" שלכם. דף נחיתה יוקרתי שמנציח את הסיפורים, הערכים והתמונות שחשוב שיעברו הלאה.</p>
+            <p>לחצו כאן כדי לעבור לפורום ולהתחיל את התיעוד שלכם.</p>
+            <a href="https://hotam.vip/forum" class="btn-action">מעבר לפורום והרשמה 📜</a>
             <br><br>
-            <button onclick="closeModal()" style="background:none; border:none; color:gray; cursor:pointer;">סגור</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:#777; cursor:pointer; font-weight:bold;">סגור</button>
         </div>
     </div>
 
