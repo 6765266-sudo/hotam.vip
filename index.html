@@ -1,244 +1,173 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>חותם - למען הדורות</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>hotam.vip | חותם נצחי</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;700;800&family=Platypi:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #efe7db; --accent: #7a5a2b; --gold: #c5a059; }
+        
+        body { 
+            margin: 0; 
+            background: var(--bg); 
+            background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+            font-family: 'Assistant', sans-serif; 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Frank+Ruhl+Libre:wght@700;900&display=swap" rel="stylesheet">
+        /* מבנה המחלק את המסך ל-2 */
+        .wrapper {
+            display: flex;
+            width: 95%;
+            max-width: 1100px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
 
-  <style>
-    :root {
-      --bg-color: #f4eee1; /* צבע נייר ישן */
-      --accent-color: #7a5a2b; /* זהב/חום עתיק */
-      --spinDur: 20s;
-      --ringSize: clamp(280px, 46vmin, 560px);
-    }
+        /* קופי שיווקי */
+        .content {
+            flex: 1;
+            text-align: right;
+            z-index: 10;
+        }
 
-    * { box-sizing: border-box; }
+        .content h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin: 0;
+            line-height: 1.2;
+            font-weight: 800;
+        }
 
-    body {
-      margin: 0;
-      min-height: 100svh;
-      /* רקע במרקם נייר ישן */
-      background-color: var(--bg-color);
-      background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
-      font-family: "Heebo", sans-serif;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      overflow: hidden;
-      position: relative;
-    }
+        .content p {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-top: 10px;
+        }
 
-    /* אפקט הארה עדין במרכז */
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.4) 0%, transparent 70%);
-      pointer-events: none;
-    }
+        /* אזור הדיסק - מוגבל בגודל כדי שלא ישתלט */
+        .visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    /* =======================
-       טקסט צדדי (דסקטופ)
-       ======================= */
-    .copy-section {
-      position: absolute;
-      right: clamp(20px, 5vw, 80px);
-      top: 50%;
-      transform: translateY(-50%);
-      max-width: 320px;
-      text-align: right;
-      z-index: 20;
-      animation: fadeInRight 1.5s ease-out;
-    }
+        .stage { 
+            width: min(65vmin, 480px); 
+            height: min(65vmin, 480px);
+            position: relative; 
+        }
 
-    @keyframes fadeInRight {
-      from { opacity: 0; transform: translateY(-50%) translateX(30px); }
-      to { opacity: 1; transform: translateY(-50%) translateX(0); }
-    }
+        .disc { 
+            position: absolute; 
+            inset: 0; 
+            border-radius: 50%; 
+            background: radial-gradient(circle, #222 0%, #000 100%); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 2px solid #111;
+        }
 
-    .line1 {
-      font-size: clamp(22px, 2.5vw, 32px);
-      font-weight: 700;
-      color: #333;
-      line-height: 1.2;
-      margin-bottom: 15px;
-    }
+        /* חריצי תקליט */
+        .disc::before {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            border-radius: 50%;
+            background: repeating-radial-gradient(circle, transparent 0, transparent 3px, rgba(255,255,255,0.02) 4px);
+        }
 
-    .line2 {
-      font-size: clamp(18px, 1.8vw, 24px);
-      color: #555;
-    }
+        .ring { 
+            position: absolute; 
+            inset: 0; 
+            display: grid; 
+            place-items: center; 
+        }
 
-    .hotam {
-      font-family: "Frank Ruhl Libre", serif;
-      font-weight: 900;
-      color: var(--accent-color);
-      font-style: italic;
-      font-size: 1.3em;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-      display: inline-block;
-      transform: rotate(-3deg);
-    }
+        /* אנימציית סיבוב */
+        .ring-spin { 
+            animation: rotateDisk 20s linear infinite; 
+            transform-origin: center;
+            width: 100%;
+            height: 100%;
+        }
 
-    /* =======================
-       הדיסק והבמה
-       ======================= */
-    .stage {
-      width: min(90vmin, 850px);
-      aspect-ratio: 1/1;
-      position: relative;
-      display: grid;
-      place-items: center;
-      animation: scaleIn 1.2s ease-out;
-    }
+        @keyframes rotateDisk { to { transform: rotate(360deg); } }
 
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
+        /* מרכז הדיסק - כפתור "התחל" */
+        .center-hub { 
+            position: absolute; 
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30%; 
+            height: 30%; 
+            background: radial-gradient(circle, #fff 0%, #e0e0e0 100%); 
+            border-radius: 50%; 
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+        }
 
-    .disc {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle at 50% 50%, #222 0%, #000 70%);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 0 100px rgba(255,255,255,0.05);
-      border: 4px solid #1a1a1a;
-    }
+        .center-hub:hover { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 6px 15px rgba(0,0,0,0.4); }
+        .center-hub span { color: #000; font-weight: 800; font-size: 1.1rem; }
 
-    /* טבעת זהב דקורטיבית */
-    .disc::after {
-      content: '';
-      position: absolute;
-      inset: 15%;
-      border-radius: 50%;
-      border: 1px solid rgba(122, 90, 43, 0.3);
-      pointer-events: none;
-    }
+        /* הגדרות SVG לטקסט המעגלי */
+        svg { width: 100%; height: 100%; overflow: visible; }
+        text { fill: rgba(255,255,255,0.8); font-size: 13px; font-weight: 300; letter-spacing: 1px; }
 
-    /* =======================
-       טבעת טקסט מסתובבת
-       ======================= */
-    .ring {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      z-index: 4;
-      pointer-events: none;
-    }
-
-    .ring svg {
-      width: var(--ringSize);
-      height: var(--ringSize);
-    }
-
-    .ring-spin {
-      animation: spin var(--spinDur) linear infinite;
-      transform-origin: 50% 50%;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* =======================
-       מרכז הדיסק (הכפתור)
-       ======================= */
-    .center-hub {
-      position: absolute;
-      z-index: 10;
-      width: clamp(160px, 25vmin, 260px);
-      height: clamp(160px, 25vmin, 260px);
-      background: #e0e0e0;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      border: 8px solid #f0f0f0;
-    }
-
-    .start-btn {
-      width: 75%;
-      height: 75%;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      color: #222;
-      font-weight: 900;
-      font-size: 20px;
-      transition: all 0.3s ease;
-      border: 2px solid #ddd;
-    }
-
-    .start-btn:hover {
-      transform: scale(1.05);
-      background: var(--accent-color);
-      color: white;
-      border-color: var(--accent-color);
-    }
-
-    /* מובייל */
-    @media (max-width: 768px) {
-      .copy-section {
-        position: relative;
-        right: auto;
-        top: auto;
-        transform: none;
-        max-width: 100%;
-        margin-bottom: 30px;
-        text-align: center;
-        animation: fadeInDown 1s ease-out;
-      }
-      @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      body { overflow-y: auto; display: block; padding-top: 40px; }
-      .stage { margin: 0 auto; width: 95vw; }
-    }
-  </style>
+        /* רספונסיביות לנייד */
+        @media (max-width: 768px) {
+            .wrapper { flex-direction: column-reverse; text-align: center; gap: 30px; }
+            .content { text-align: center; }
+            .stage { width: 80vw; height: 80vw; }
+            body { overflow-y: auto; padding: 40px 0; }
+        }
+    </style>
 </head>
-
 <body>
 
-  <div class="copy-section">
-    <div class="line1">הפעם זה לא עוד אלבום תמונות.</div>
-    <div class="line2">הפעם זה <span class="hotam">חותם</span> שנשאר לדורות.</div>
-  </div>
+    <div class="wrapper">
+        <div class="content">
+            <h1>הפעם זה לא עוד<br>אלבום תמונות.</h1>
+            <p>הפעם זה <span style="color:var(--accent); font-weight:800; border-bottom: 2px solid var(--gold);">חותם</span> שנשאר לדורות.</p>
+        </div>
 
-  <main class="stage">
-    <div class="disc"></div>
+        <div class="visual">
+            <main class="stage">
+                <div class="disc"></div>
+                
+                <div class="ring">
+                    <svg viewBox="0 0 300 300">
+                        <defs>
+                            <path id="circlePath" d="M 150, 150 m -125, 0 a 125,125 0 1,1 250,0 a 125,125 0 1,1 -250,0"/>
+                        </defs>
+                        <g class="ring-spin">
+                            <text>
+                                <textPath href="#circlePath">
+                                    • חותם שנשאר לדורות • סיפורי משפחה ומורשת • מי היו סבא וסבתא • זיכרון דיגיטלי נצחי •
+                                </textPath>
+                            </text>
+                        </g>
+                    </svg>
+                </div>
 
-    <div class="ring">
-      <svg viewBox="0 0 300 300">
-        <defs>
-          <path id="circlePath" d="M150,150 m-130,0 a130,130 0 1,1 260,0 a130,130 0 1,1 -260,0"/>
-        </defs>
-        <g class="ring-spin">
-          <text fill="rgba(255,255,255,0.9)" font-size="14" font-weight="700" letter-spacing="1">
-            <textPath href="#circlePath" startOffset="0%">
-              • סיפורי משפחה ומורשת • המחשת גבורה ומסירות נפש • מי היו סבא וסבתא • חותם שנשאר לדורות
-            </textPath>
-          </g>
-        </g>
-      </svg>
+                <a href="#" class="center-hub">
+                    <span>התחל</span>
+                    <span style="font-size: 1.5rem;">📜</span>
+                </a>
+            </main>
+        </div>
     </div>
-
-    <div class="center-hub">
-      <a class="start-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform">
-        <span>התחל</span>
-        <span style="font-size: 24px;">📜</span>
-      </a>
-    </div>
-  </main>
 
 </body>
 </html>
