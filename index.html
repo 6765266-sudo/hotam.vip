@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <title>hotam.vip | חותם נצחי</title>
+    <title>hotam.vip | חותם - זיכרון דיגיטלי</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #efe7db; --accent: #7a5a2b; --gold: #c5a059; }
@@ -17,87 +17,97 @@
         }
 
         .container {
-            display: flex; width: 100%; max-width: 1300px;
+            display: flex; width: 100%; max-width: 1400px;
             align-items: center; justify-content: space-around; padding: 20px;
+            flex-direction: row-reverse; /* טקסט בימין, דיסק בשמאל בדסקטופ */
         }
 
-        /* טקסט שמאלי (כמו בתמונה הישנה) */
+        /* קופי שיווקי */
         .side-text {
-            flex: 0 0 300px; text-align: right;
+            flex: 0 0 350px; text-align: right; z-index: 50;
         }
+        .side-text h1 { font-size: 2.5rem; font-weight: 800; margin: 0; color: #1a1a1a; line-height: 1.1; }
+        .side-text p { font-size: 1.5rem; color: #444; margin-top: 10px; }
+        .highlight { color: var(--accent); font-weight: 800; border-bottom: 2px solid var(--gold); }
 
-        .side-text h1 { font-size: 1.8rem; font-weight: 800; margin: 0; color: #333; }
-        .side-text p { font-size: 1.2rem; color: #555; margin-top: 5px; }
-
-        /* אזור הדיסק הגדול */
+        /* אזור הדיסק המרכזי */
         .stage {
             position: relative;
-            width: min(85vmin, 700px);
+            width: min(85vmin, 650px);
             aspect-ratio: 1/1;
-            display: grid; place-items: center;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        /* בסיס הדיסק עם חריצים */
-        .disc-base {
+        /* הדיסק עם חריצי התקליט */
+        .disc-body {
             position: absolute; inset: 0;
             background: radial-gradient(circle, #222 0%, #000 100%);
             border-radius: 50%;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
             background-image: repeating-radial-gradient(circle, transparent 0, transparent 2px, rgba(255,255,255,0.03) 3px);
+            border: 2px solid #111;
         }
 
-        /* גלריית התמונות על הדיסק */
+        /* גלריית תמונות בתוך הדיסק */
         .photo-gallery {
             position: absolute; inset: 0;
             z-index: 5;
         }
 
-        .photo {
+        .memory-card {
             position: absolute;
-            width: 18%; height: 12%;
+            width: 22%; height: 16%;
             background-size: cover; background-position: center;
-            border-radius: 8px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: flex-end; padding: 5px;
+            overflow: hidden;
         }
 
-        /* מיקום התמונות במעגל (כמו בצילום המסך הישן) */
-        .p1 { top: 10%; left: 50%; transform: translateX(-50%); }
-        .p2 { top: 25%; right: 10%; }
-        .p3 { bottom: 45%; right: 5%; }
-        .p4 { bottom: 20%; right: 15%; }
-        .p5 { bottom: 10%; left: 50%; transform: translateX(-50%); }
-        .p6 { bottom: 20%; left: 15%; }
-        .p7 { bottom: 45%; left: 5%; }
-        .p8 { top: 25%; left: 10%; }
-
-        /* טקסט מעגלי */
-        .rotating-meta {
-            position: absolute; width: 45%; height: 45%;
-            z-index: 10; animation: spin 30s linear infinite;
+        .memory-card span {
+            color: white; font-size: 0.6rem; font-weight: bold; background: rgba(0,0,0,0.5);
+            width: 100%; text-align: center; padding: 2px 0;
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        /* מיקום תמונות במעגל מושלם */
+        .pos-1 { top: 8%; left: 50%; transform: translateX(-50%); }
+        .pos-2 { top: 22%; right: 10%; }
+        .pos-3 { top: 50%; right: 4%; transform: translateY(-50%); }
+        .pos-4 { bottom: 22%; right: 10%; }
+        .pos-5 { bottom: 8%; left: 50%; transform: translateX(-50%); }
+        .pos-6 { bottom: 22%; left: 10%; }
+        .pos-7 { top: 50%; left: 4%; transform: translateY(-50%); }
+        .pos-8 { top: 22%; left: 10%; }
 
-        /* כפתור מרכז */
-        .center-btn {
+        /* הטבעת המסתובבת של הטקסט */
+        .text-ring {
+            position: absolute; width: 42%; height: 42%;
+            z-index: 10; animation: rotateRing 30s linear infinite;
+        }
+
+        @keyframes rotateRing { to { transform: rotate(360deg); } }
+
+        /* ליבת הדיסק - כפתור התחל */
+        .center-hub {
             position: absolute; z-index: 20;
-            width: 22%; height: 22%;
-            background: radial-gradient(circle, #fff 0%, #d1d1d1 100%);
+            width: 28%; height: 28%;
+            background: radial-gradient(circle, #ffffff 50%, #e0e0e0 100%);
             border-radius: 50%;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            transition: 0.3s;
+            text-decoration: none; box-shadow: inset 0 0 15px rgba(0,0,0,0.1), 0 5px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .center-btn:hover { transform: scale(1.1); }
-        .center-btn span { color: #000; font-weight: 800; font-size: 1rem; }
+        .center-hub:hover { transform: scale(1.1); }
+        .center-hub b { color: #000; font-size: 1.2rem; font-weight: 900; }
+        .center-hub .emoji { font-size: 1.8rem; margin-top: 5px; }
 
         svg { width: 100%; height: 100%; overflow: visible; }
-        text { fill: #fff; font-size: 14px; font-weight: bold; letter-spacing: 1px; }
+        text { fill: rgba(255,255,255,0.9); font-size: 14px; font-weight: 700; letter-spacing: 1.2px; }
 
-        @media (max-width: 800px) {
-            .container { flex-direction: column-reverse; }
-            .side-text { text-align: center; flex: none; margin-top: 20px; }
+        @media (max-width: 900px) {
+            .container { flex-direction: column; text-align: center; gap: 40px; }
+            .side-text { text-align: center; flex: none; }
             .stage { width: 90vw; }
         }
     </style>
@@ -106,38 +116,38 @@
 
     <div class="container">
         <div class="side-text">
-            <h1>הפעם זה לא עוד אלבום תמונות.</h1>
-            <p>הפעם זה <span style="color:var(--accent); font-weight:bold;">חותם</span> שנשאר לדורות.</p>
+            <h1>הפעם זה לא עוד<br>אלבום תמונות.</h1>
+            <p>הפעם זה <span class="highlight">חותם</span> שנשאר לדורות.</p>
         </div>
 
         <div class="stage">
-            <div class="disc-base"></div>
+            <div class="disc-body"></div>
             
             <div class="photo-gallery">
-                <div class="photo p1" style="background-image: url('https://picsum.photos/200/150?1');"></div>
-                <div class="photo p2" style="background-image: url('https://picsum.photos/200/150?2');"></div>
-                <div class="photo p3" style="background-image: url('https://picsum.photos/200/150?3');"></div>
-                <div class="photo p4" style="background-image: url('https://picsum.photos/200/150?4');"></div>
-                <div class="photo p5" style="background-image: url('https://picsum.photos/200/150?5');"></div>
-                <div class="photo p6" style="background-image: url('https://picsum.photos/200/150?6');"></div>
-                <div class="photo p7" style="background-image: url('https://picsum.photos/200/150?7');"></div>
-                <div class="photo p8" style="background-image: url('https://picsum.photos/200/150?8');"></div>
+                <div class="memory-card pos-1" style="background-image: url('https://picsum.photos/id/10/200/150');"><span>זיכרון אבות</span></div>
+                <div class="memory-card pos-2" style="background-image: url('https://picsum.photos/id/20/200/150');"><span>חותם לדורות</span></div>
+                <div class="memory-card pos-3" style="background-image: url('https://picsum.photos/id/30/200/150');"><span>להעביר מורשת</span></div>
+                <div class="memory-card pos-4" style="background-image: url('https://picsum.photos/id/40/200/150');"><span>מתיקות התורה</span></div>
+                <div class="memory-card pos-5" style="background-image: url('https://picsum.photos/id/50/200/150');"><span>גבורה ומסירות</span></div>
+                <div class="memory-card pos-6" style="background-image: url('https://picsum.photos/id/60/200/150');"><span>מורשת סבא</span></div>
+                <div class="memory-card pos-7" style="background-image: url('https://picsum.photos/id/70/200/150');"><span>שבת בבית</span></div>
+                <div class="memory-card pos-8" style="background-image: url('https://picsum.photos/id/80/200/150');"><span>תפילין ואור</span></div>
             </div>
 
-            <div class="rotating-meta">
+            <div class="text-ring">
                 <svg viewBox="0 0 200 200">
-                    <path id="innerPath" d="M 100, 100 m -70, 0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0" fill="none"/>
+                    <path id="ringPath" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" fill="none"/>
                     <text>
-                        <textPath href="#innerPath">
-                             • מורשת משפחתית • סיפור חיים • חותם שנשאר לדורות •
+                        <textPath href="#ringPath">
+                             • סיפורי משפחה • מורשת נצחית • זיכרונות אבות •
                         </textPath>
                     </text>
                 </svg>
             </div>
 
-            <a href="#" class="center-btn">
-                <span>התחל</span>
-                <span style="font-size: 1.5rem;">👇</span>
+            <a href="https://hotam.vip/start" class="center-hub">
+                <b>התחל</b>
+                <span class="emoji">📜</span>
             </a>
         </div>
     </div>
