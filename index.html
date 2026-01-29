@@ -2,136 +2,88 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>hotam.vip | חותם</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #efe7db; --accent: #7a5a2b; }
         body { 
-            margin: 0; background: var(--bg); 
+            margin: 0; background: #efe7db; 
             background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
             font-family: 'Assistant', sans-serif; 
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; overflow: hidden;
         }
-
-        .master-holder {
-            position: relative;
-            width: 600px;
-            height: 650px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .header-svg {
-            width: 100%;
-            height: 120px;
-            margin-bottom: -45px;
-            z-index: 10;
-        }
-
-        .disc-wrap {
-            position: relative;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, #222 0%, #000 100%);
-            border-radius: 50%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            border: 4px solid #111;
-        }
-
-        .disc-wrap::after {
-            content: ""; position: absolute; inset: 0; border-radius: 50%;
-            background: repeating-radial-gradient(circle, transparent 0, transparent 2px, rgba(255,255,255,0.02) 3px);
-            pointer-events: none;
-        }
-
-        /* עיצוב אחיד ל-6 התמונות/סרטונים */
-        .memory-item {
-            position: absolute;
-            width: 115px; height: 85px;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1.5px solid rgba(255,255,255,0.2);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.8);
-            background: #000; /* רקע שחור אם הוידאו לא נטען */
-            z-index: 5;
-        }
-        .memory-item video, .memory-item img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* סידור 6 פריטים במעגל פנימי (כדי שלא יברחו) */
-        .pos-1 { top: 45px; left: 192px; } 
-        .pos-2 { top: 130px; right: 40px; } 
-        .pos-3 { bottom: 130px; right: 40px; } 
-        .pos-4 { bottom: 45px; left: 192px; } 
-        .pos-5 { bottom: 130px; left: 40px; } 
-        .pos-6 { top: 130px; left: 40px; } 
-
-        .spin-layer {
-            position: absolute; top: 130px; left: 130px;
-            width: 240px; height: 240px;
-            z-index: 8; animation: spinText 35s linear infinite;
-        }
-        @keyframes spinText { to { transform: rotate(360deg); } }
-
-        .start-btn {
-            position: absolute; top: 185px; left: 185px;
-            z-index: 20; width: 130px; height: 130px;
-            background: #fff; border-radius: 50%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; color: #000; font-weight: 900;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4); border: 4px solid #fff;
-        }
-
+        .container { width: min(95vw, 650px); aspect-ratio: 1 / 1.1; position: relative; }
         svg { width: 100%; height: 100%; overflow: visible; }
-        .arc-text { font-size: 20px; font-weight: 800; fill: #1a1a1a; }
-        .inner-txt { font-size: 13px; font-weight: 700; fill: rgba(255,255,255,0.85); }
-
-        @media (max-width: 650px) {
-            .master-holder { transform: scale(0.6); }
-        }
+        
+        /* אנימציה למלל המסתובב */
+        .rotating-text { transform-origin: 300px 350px; animation: spin 40s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        /* עיצוב המדיה בתוך הדיסק */
+        .media-box { object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: #000; }
+        .center-btn { cursor: pointer; transition: transform 0.2s; }
+        .center-btn:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
 
-    <div class="master-holder">
-        <div class="header-svg">
-            <svg viewBox="0 0 600 120">
-                <path id="curve" d="M 60,115 A 240,100 0 0,1 540,115" fill="none" />
-                <text class="arc-text">
-                    <textPath href="#curve" startOffset="50%" text-anchor="middle">
-                        הפעם זה לא עוד אלבום תמונות. הפעם זה <tspan fill="#7a5a2b">חותם</tspan> שנשאר לדורות.
-                    </textPath>
-                </text>
-            </svg>
-        </div>
+<div class="container">
+    <svg viewBox="0 0 600 700">
+        <defs>
+            <path id="headerArc" d="M 80,120 A 220,90 0 0,1 520,120" />
+            <path id="innerCircle" d="M 300,350 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
+        </defs>
 
-        <div class="disc-wrap">
-            <div class="memory-item pos-1"><video autoplay muted loop playsinline><source src="faith1.mp4" type="video/mp4"></video></div>
-            <div class="memory-item pos-2"><img src="still1_real.jpg"></div>
-            <div class="memory-item pos-3"><video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video></div>
-            <div class="memory-item pos-4"><img src="still2_real.jpg"></div>
-            <div class="memory-item pos-5"><video autoplay muted loop playsinline><source src="faith3.mp4" type="video/mp4"></video></div>
-            <div class="memory-item pos-6"><img src="still4_real.jpg"></div>
+        <text font-size="22" font-weight="800" fill="#1a1a1a">
+            <textPath href="#headerArc" startOffset="50%" text-anchor="middle">
+                הפעם זה לא עוד אלבום תמונות. הפעם זה <tspan fill="#7a5a2b">חותם</tspan> שנשאר לדורות.
+            </textPath>
+        </text>
 
-            <div class="spin-layer">
-                <svg viewBox="0 0 200 200">
-                    <path id="ring" d="M 100, 100 m -78, 0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" fill="none" />
-                    <text class="inner-txt">
-                        <textPath href="#ring">
-                            • סיפורי משפחה ומורשת • חותם שנשאר לדורות • זיכרון אבות •
-                        </textPath>
-                    </text>
-                </svg>
-            </div>
+        <circle cx="300" cy="350" r="250" fill="radial-gradient(circle, #222 0%, #000 100%)" stroke="#111" stroke-width="5" />
+        
+        <circle cx="300" cy="350" r="248" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2" stroke-dasharray="1,3" />
 
-            <a href="https://hotam.vip/forum" class="start-btn">
-                <span>התחל</span>
-                <span style="font-size: 1.5rem;">📜</span>
-            </a>
-        </div>
-    </div>
+        <foreignObject x="245" y="130" width="110" height="80">
+            <video autoplay muted loop playsinline class="media-box" style="width:100%; height:100%;"><source src="faith1.mp4" type="video/mp4"></video>
+        </foreignObject>
+        
+        <foreignObject x="410" y="200" width="110" height="80">
+            <img src="still1_real.jpg" class="media-box" style="width:100%; height:100%;">
+        </foreignObject>
+
+        <foreignObject x="410" y="420" width="110" height="80">
+            <video autoplay muted loop playsinline class="media-box" style="width:100%; height:100%;"><source src="faith2.mp4" type="video/mp4"></video>
+        </foreignObject>
+
+        <foreignObject x="245" y="490" width="110" height="80">
+            <img src="still2_real.jpg" class="media-box" style="width:100%; height:100%;">
+        </foreignObject>
+
+        <foreignObject x="80" y="420" width="110" height="80">
+            <video autoplay muted loop playsinline class="media-box" style="width:100%; height:100%;"><source src="faith3.mp4" type="video/mp4"></video>
+        </foreignObject>
+
+        <foreignObject x="80" y="200" width="110" height="80">
+            <video autoplay muted loop playsinline class="media-box" style="width:100%; height:100%;"><source src="faith4.mp4" type="video/mp4"></video>
+        </foreignObject>
+
+        <g class="rotating-text">
+            <text fill="rgba(255,255,255,0.8)" font-size="13" font-weight="700">
+                <textPath href="#innerCircle">
+                    • סיפורי משפחה ומורשת • חותם שנשאר לדורות • זיכרון אבות •
+                </textPath>
+            </text>
+        </g>
+
+        <a href="https://hotam.vip/forum" class="center-btn">
+            <circle cx="300" cy="350" r="65" fill="#ffffff" filter="drop-shadow(0 5px 10px rgba(0,0,0,0.4))" />
+            <text x="300" y="345" text-anchor="middle" font-weight="900" font-size="20" fill="#000">התחל</text>
+            <text x="300" y="375" text-anchor="middle" font-size="22">📜</text>
+        </a>
+    </svg>
+</div>
 
 </body>
 </html>
