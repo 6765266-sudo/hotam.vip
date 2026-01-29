@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #efe7db; --accent: #7a5a2b; --gold: #c5a059; }
-        
         body { 
             margin: 0; background: var(--bg); 
             background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
@@ -16,146 +15,69 @@
             overflow: hidden;
         }
 
-        /* עטיפה מרכזית לכל האלמנטים */
-        .main-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 650px;
-        }
-
-        /* כותרת עוטפת צמודה מאוד */
-        .header-arc {
-            width: 100%;
-            height: 100px;
-            margin-bottom: -50px; /* מושך את הכותרת על הדיסק */
-            z-index: 100;
-        }
-
-        .stage {
-            position: relative;
-            width: min(90vmin, 580px);
+        .main-container {
+            width: min(95vw, 700px);
             aspect-ratio: 1/1;
-            display: flex; justify-content: center; align-items: center;
+            position: relative;
         }
 
-        /* גוף הדיסק */
-        .disc-body {
-            position: absolute; inset: 0;
-            background: radial-gradient(circle, #222 0%, #050505 85%, #1a150f 100%);
-            border-radius: 50%;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-            border: 5px solid #111;
-        }
+        svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
-        .disc-body::after {
-            content: ""; position: absolute; inset: 0; border-radius: 50%;
-            background: repeating-radial-gradient(circle, transparent 0, transparent 2px, rgba(255,255,255,0.02) 3px);
-        }
+        /* אנימציית סיבוב לטקסט הפנימי */
+        .rotating { transform-origin: center; animation: spin 40s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .gallery { position: absolute; inset: 0; z-index: 5; }
-
-        .item {
-            position: absolute;
-            width: 22%; height: 16%;
-            border-radius: 6px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-            overflow: hidden;
-            background: #000;
-        }
-
-        .item video, .item img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* מיקומים פנימיים - חישוב מחמיר למניעת יציאה מהמסגרת */
-        .pos-1 { top: 12%; left: 50%; transform: translateX(-50%); } 
-        .pos-2 { top: 24%; right: 15%; } 
-        .pos-3 { top: 50%; right: 12%; transform: translateY(-50%); } 
-        .pos-4 { bottom: 24%; right: 15%; } 
-        .pos-5 { bottom: 12%; left: 50%; transform: translateX(-50%); } 
-        .pos-6 { bottom: 24%; left: 15%; } 
-        .pos-7 { top: 50%; left: 12%; transform: translateY(-50%); } 
-        .pos-8 { top: 24%; left: 15%; } 
-
-        /* מלל מסתובב באמצע */
-        .inner-spin {
-            position: absolute; width: 44%; height: 44%;
-            z-index: 10; animation: rotateRing 40s linear infinite;
-        }
-        @keyframes rotateRing { to { transform: rotate(360deg); } }
-
-        /* כפתור התחל */
-        .hub-btn {
-            position: absolute; z-index: 20;
-            width: 26%; height: 26%;
-            background: radial-gradient(circle, #fff 50%, #eee 100%);
-            border-radius: 50%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            border: 4px solid #fff;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-        .hub-btn:hover { transform: scale(1.05); }
-        .hub-btn b { color: #000; font-size: 1.2rem; font-weight: 900; }
-
-        svg { width: 100%; height: 100%; overflow: visible; }
-        .curved-title { fill: #1a1a1a; font-size: 20px; font-weight: 800; }
-        .accent-txt { fill: var(--accent); }
-        .inner-txt { fill: rgba(255,255,255,0.85); font-size: 13px; font-weight: 700; }
-
-        @media (max-width: 600px) {
-            .header-arc { height: 80px; margin-bottom: -35px; }
-            .curved-title { font-size: 16px; }
-            .stage { width: 95vw; height: 95vw; }
-        }
+        /* כפתור מרכזי */
+        .center-link { cursor: pointer; transition: transform 0.3s; }
+        .center-link:hover { transform: scale(1.05); }
+        
+        /* עיצוב התמונות בתוך ה-SVG */
+        .memory-photo { clip-path: inset(0 round 8px); pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <div class="header-arc">
-            <svg viewBox="0 0 500 100">
-                <path id="curvePath" d="M 40,100 A 210,100 0 0,1 460,100" fill="none" />
-                <text class="curved-title">
-                    <textPath href="#curvePath" startOffset="50%" text-anchor="middle">
-                        הפעם זה לא עוד אלבום תמונות. הפעם זה <tspan class="accent-txt">חותם</tspan> שנשאר לדורות.
+    <div class="main-container">
+        <svg viewBox="0 0 600 650">
+            <defs>
+                <path id="headerCurve" d="M 100,120 A 200,80 0 0,1 500,120" />
+                <path id="innerRingPath" d="M 300, 350 m -80, 0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" />
+            </defs>
+            
+            <text font-size="22" font-weight="800" fill="#1a1a1a">
+                <textPath href="#headerCurve" startOffset="50%" text-anchor="middle">
+                    הפעם זה לא עוד אלבום תמונות. הפעם זה <tspan fill="#7a5a2b">חותם</tspan> שנשאר לדורות.
+                </textPath>
+            </text>
+
+            <circle cx="300" cy="350" r="250" fill="radial-gradient(circle, #222 0%, #000 100%)" stroke="#111" stroke-width="4" />
+            <circle cx="300" cy="350" r="248" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="200" stroke-dasharray="2,4" />
+
+            <g id="gallery">
+                <foreignObject x="240" y="140" width="120" height="90"><video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);"><source src="faith1.mp4" type="video/mp4"></video></foreignObject>
+                <foreignObject x="400" y="200" width="120" height="90"><img src="still1_real.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);"></foreignObject>
+                <foreignObject x="450" y="310" width="120" height="90"><img src="still3_real.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);"></foreignObject>
+                <foreignObject x="400" y="420" width="120" height="90"><video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);"><source src="faith2.mp4" type="video/mp4"></video></foreignObject>
+                <foreignObject x="240" y="480" width="120" height="90"><video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);"><source src="faith3.mp4" type="video/mp4"></video></foreignObject>
+                <foreignObject x="80" y="420" width="120" height="90"><img src="still2_real.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);"></foreignObject>
+                <foreignObject x="30" y="310" width="120" height="90"><video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);"><source src="faith4.mp4" type="video/mp4"></video></foreignObject>
+                <foreignObject x="80" y="200" width="120" height="90"><img src="still4_real.jpg" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.2);"></foreignObject>
+            </g>
+
+            <g class="rotating">
+                <text fill="rgba(255,255,255,0.8)" font-size="12" font-weight="700">
+                    <textPath href="#innerRingPath">
+                        • סיפורי משפחה ומורשת • חותם שנשאר לדורות • זיכרון אבות שלא יאבד •
                     </textPath>
                 </text>
-            </svg>
-        </div>
+            </g>
 
-        <div class="stage">
-            <div class="disc-body"></div>
-            
-            <div class="gallery">
-                <div class="item pos-1"><video autoplay muted loop playsinline><source src="faith1.mp4" type="video/mp4"></video></div>
-                <div class="item pos-2"><img src="still1_real.jpg"></div>
-                <div class="item pos-3"><img src="still3_real.jpg"></div>
-                <div class="item pos-4"><video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video></div>
-                <div class="item pos-5"><video autoplay muted loop playsinline><source src="faith3.mp4" type="video/mp4"></video></div>
-                <div class="item pos-6"><img src="still2_real.jpg"></div>
-                <div class="item pos-7"><video autoplay muted loop playsinline><source src="faith4.mp4" type="video/mp4"></video></div>
-                <div class="item pos-8"><img src="still4_real.jpg"></div>
-            </div>
-
-            <div class="inner-spin">
-                <svg viewBox="0 0 200 200">
-                    <path id="innerCircle" d="M 100, 100 m -78, 0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" fill="none"/>
-                    <text class="inner-txt">
-                        <textPath href="#innerCircle">
-                             • סיפורי משפחה ומורשת • חותם שנשאר לדורות • זיכרון אבות שלא יאבד •
-                        </textPath>
-                    </text>
-                </svg>
-            </div>
-
-            <a href="https://hotam.vip/forum" class="hub-btn">
-                <b>התחל</b>
-                <span style="font-size: 1.2rem;">📜</span>
+            <a href="https://hotam.vip/forum" class="center-link">
+                <circle cx="300" cy="350" r="65" fill="white" filter="drop-shadow(0 5px 10px rgba(0,0,0,0.5))" />
+                <text x="300" y="352" text-anchor="middle" dominant-baseline="middle" fill="black" font-weight="900" font-size="20">התחל</text>
+                <text x="300" y="380" text-anchor="middle" dominant-baseline="middle" font-size="20">📜</text>
             </a>
-        </div>
+        </svg>
     </div>
 
 </body>
