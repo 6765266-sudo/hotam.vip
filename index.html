@@ -2,144 +2,65 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <title>hotam.vip | חותם - מורשת נצחית</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HOTAM VIP | חותם - הפקה ויזואלית נצחית</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #efe7db; --accent: #7a5a2b; --gold: #c5a059; }
+        :root { --gold: #c5a059; --dark: #0a0a0a; --gray: #1a1a1a; }
+        body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; overflow-x: hidden; }
         
-        body { 
-            margin: 0; background: var(--bg); 
-            background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
-            font-family: 'Assistant', sans-serif; 
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
+        /* רקע קולנועי */
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); position: relative; }
+        .hero::before { content: ""; position: absolute; inset: 0; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); opacity: 0.2; }
 
-        /* עטיפה מרכזית שנועלת את הדיסק והכותרת */
-        .hotam-stage {
-            position: relative;
-            width: min(90vmin, 600px);
-            aspect-ratio: 1/1.1;
-            display: flex; flex-direction: column; align-items: center;
-        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); letter-spacing: 5px; margin-bottom: 10px; text-transform: uppercase; }
+        .tagline { font-size: 1.5rem; font-weight: 200; letter-spacing: 2px; color: #ccc; margin-bottom: 40px; }
 
-        /* כותרת עוטפת צמודה */
-        .header-arc {
-            width: 100%; height: 100px;
-            margin-bottom: -40px; z-index: 100;
-        }
+        /* כרטיסי שירותים */
+        .services { display: flex; gap: 20px; padding: 50px; justify-content: center; flex-wrap: wrap; }
+        .card { width: 300px; height: 400px; background: var(--gray); border: 1px solid #333; position: relative; overflow: hidden; transition: 0.5s; cursor: pointer; display: flex; align-items: flex-end; padding: 20px; text-decoration: none; }
+        .card:hover { border-color: var(--gold); transform: translateY(-10px); }
+        .card h3 { font-size: 1.8rem; color: var(--gold); z-index: 2; margin: 0; }
+        .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, #000 0%, transparent 100%); z-index: 1; }
 
-        /* גוף הדיסק */
-        .disc {
-            position: relative;
-            width: 100%; aspect-ratio: 1/1;
-            background: radial-gradient(circle, #2a2a2a 0%, #000 80%, #1a150f 100%);
-            border-radius: 50%;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-            border: 5px solid #111;
-            overflow: hidden; /* מבטיח שכלום לא יצא מהעיגול */
-        }
+        /* הנעה לפעולה */
+        .cta-section { padding: 100px 20px; text-align: center; background: #000; }
+        .cta-section h2 { font-size: 2.5rem; margin-bottom: 20px; font-family: 'Playfair Display', serif; }
+        .btn-vip { display: inline-block; padding: 15px 50px; background: transparent; border: 2px solid var(--gold); color: var(--gold); font-weight: 800; font-size: 1.2rem; text-decoration: none; transition: 0.3s; text-transform: uppercase; }
+        .btn-vip:hover { background: var(--gold); color: #000; }
 
-        /* חריצי תקליט */
-        .disc::after {
-            content: ""; position: absolute; inset: 0; border-radius: 50%;
-            background: repeating-radial-gradient(circle, transparent 0, transparent 2px, rgba(255,255,255,0.02) 3px);
-            pointer-events: none;
-        }
-
-        /* מסגרות המדיה בתוך הדיסק */
-        .slot {
-            position: absolute;
-            width: 20%; height: 15%;
-            background: #000;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 6px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-            overflow: hidden;
-            z-index: 10;
-        }
-        .slot video, .slot img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* מיקומים פנימיים - חישוב מדויק כדי שלא יגעו בשוליים */
-        .p1 { top: 12%; left: 50%; transform: translateX(-50%); } 
-        .p2 { top: 25%; right: 12%; } 
-        .p3 { bottom: 25%; right: 12%; } 
-        .p4 { bottom: 12%; left: 50%; transform: translateX(-50%); } 
-        .p5 { bottom: 25%; left: 12%; } 
-        .p6 { top: 25%; left: 12%; } 
-
-        /* מלל מסתובב סביב הכפתור */
-        .spin-wrap {
-            position: absolute; width: 44%; height: 44%;
-            z-index: 20; animation: rotateRing 35s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes rotateRing { to { transform: rotate(360deg); } }
-
-        /* כפתור התחל מרכזי */
-        .hub {
-            position: absolute; z-index: 50;
-            width: 26%; height: 26%;
-            background: radial-gradient(circle, #ffffff 40%, #e0e0e0 100%);
-            border-radius: 50%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; border: 4px solid #fff;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            transition: transform 0.2s;
-        }
-        .hub:hover { transform: scale(1.05); }
-        .hub b { color: #000; font-size: 1.2rem; font-weight: 900; }
-
-        svg { width: 100%; height: 100%; overflow: visible; }
-        .arc-font { fill: #111; font-size: 20px; font-weight: 800; }
-        .ring-font { fill: rgba(255,255,255,0.85); font-size: 13px; font-weight: 700; }
-
-        @media (max-width: 600px) {
-            .header-arc { height: 80px; margin-bottom: -35px; }
-            .arc-font { font-size: 16px; }
-        }
+        @media (max-width: 768px) { .logo { font-size: 2.5rem; } .services { padding: 20px; } }
     </style>
 </head>
 <body>
 
-    <div class="hotam-stage">
-        <div class="header-arc">
-            <svg viewBox="0 0 500 100">
-                <path id="curve" d="M 50,90 A 200,80 0 0,1 450,90" fill="none" />
-                <text class="arc-font">
-                    <textPath href="#curve" startOffset="50%" text-anchor="middle">
-                        הפעם זה לא עוד אלבום תמונות. הפעם זה <tspan fill="var(--accent)">חותם</tspan> שנשאר לדורות.
-                    </textPath>
-                </text>
-            </svg>
-        </div>
+    <section class="hero">
+        <div class="logo">HOTAM VIP</div>
+        <div class="tagline">הפעם זה לא עוד אלבום. הפעם זה חותם.</div>
+        <a href="#contact" class="btn-vip">האם הסיפור שלך ראוי לחותם?</a>
+    </section>
 
-        <div class="disc">
-            <div class="slot p1"><video autoplay muted loop playsinline><source src="faith1.mp4" type="video/mp4"></video></div>
-            <div class="slot p2"><img src="still1_real.jpg" alt="זיכרון"></div>
-            <div class="slot p3"><video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video></div>
-            <div class="slot p4"><img src="still2_real.jpg" alt="מורשת"></div>
-            <div class="slot p5"><video autoplay muted loop playsinline><source src="faith3.mp4" type="video/mp4"></video></div>
-            <div class="slot p6"><img src="still4_real.jpg" alt="חותם"></div>
+    <section class="services">
+        <a href="#" class="card">
+            <div style="position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400') center; background-size:cover; opacity:0.4;"></div>
+            <h3>סרט בר מצווה<br>הוליוודי</h3>
+        </a>
+        <a href="#" class="card">
+            <div style="position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=400') center; background-size:cover; opacity:0.4;"></div>
+            <h3>תיעוד מורשת<br>חותם נצחי</h3>
+        </a>
+        <a href="#" class="card">
+            <div style="position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=400') center; background-size:cover; opacity:0.4;"></div>
+            <h3>הפקות VIP<br>ויזואליות</h3>
+        </a>
+    </section>
 
-            <div class="spin-wrap">
-                <svg viewBox="0 0 200 200">
-                    <path id="innerPath" d="M 100, 100 m -78, 0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" fill="none" />
-                    <text class="ring-font">
-                        <textPath href="#innerPath">
-                            • סיפורי משפחה ומורשת • חותם שנשאר לדורות • זיכרון אבות •
-                        </textPath>
-                    </text>
-                </svg>
-            </div>
-
-            <a href="https://hotam.vip/forum" class="hub">
-                <b>התחל</b>
-                <span style="font-size: 1.5rem;">📜</span>
-            </a>
-        </div>
-    </div>
+    <section class="cta-section" id="contact">
+        <h2>הסיפור שלך מחכה לבמאי הנכון.</h2>
+        <p>אנחנו לא מקבלים כל פרויקט. אנחנו מחפשים סיפורים עם נשמה.</p>
+        <br>
+        <a href="https://hotam.vip/forum" class="btn-vip">לבדיקת התאמה והשארת פרטים</a>
+    </section>
 
 </body>
 </html>
