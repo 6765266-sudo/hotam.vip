@@ -3,98 +3,86 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>HOTAM VIP | חותם - הפקה ויזואלית למורשת ואירועים</title>
+    <title>HOTAM VIP | חותם - זיקוק רגש ליצירה נצחית</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #c5a059; --dark: #050505; --accent: #7a5a2b; }
         body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; scroll-behavior: smooth; }
         
-        /* שער כניסה */
+        /* שער נקי ויוקרתי */
         .hero { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            text-align: center; background: radial-gradient(circle, #151515 0%, #000 100%);
-            padding: 20px;
+            text-align: center; background: radial-gradient(circle, #151515 0%, #000 100%); padding: 20px;
         }
         .logo { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4rem); color: var(--gold); letter-spacing: 8px; margin-bottom: 5px; }
         .tagline { font-size: 1.2rem; font-weight: 200; color: #aaa; margin-bottom: 40px; border-bottom: 1px solid var(--gold); padding-bottom: 10px; }
 
-        /* חזון ובידול */
-        .section { padding: 100px 10%; text-align: center; border-bottom: 1px solid #111; }
-        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2.5rem; margin-bottom: 30px; }
-        .section p { max-width: 800px; margin: 0 auto 40px; font-size: 1.3rem; color: #ccc; font-weight: 300; line-height: 1.6; }
+        /* חזון - קצר וקולע */
+        .section { padding: 80px 10%; text-align: center; }
+        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2.2rem; margin-bottom: 20px; }
+        .section p { max-width: 650px; margin: 0 auto 30px; font-size: 1.2rem; color: #ccc; font-weight: 300; line-height: 1.5; }
 
-        /* גריד שירותים */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        /* כרטיסי שירותים ממוקדים */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; }
         .service-card { 
-            background: #111; border: 1px solid #222; padding: 40px 20px; transition: 0.4s; 
-            text-decoration: none; color: inherit;
+            background: #111; border: 1px solid #222; padding: 35px 20px; transition: 0.4s; 
+            text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;
         }
         .service-card:hover { border-color: var(--gold); background: #161616; transform: translateY(-5px); }
-        .service-card h3 { color: var(--gold); font-size: 1.8rem; margin-bottom: 15px; }
-        .service-card p { font-size: 1rem; color: #999; }
+        .service-card h3 { color: var(--gold); font-size: 1.6rem; margin-bottom: 12px; }
+        .service-card p { font-size: 0.95rem; color: #bbb; line-height: 1.4; flex-grow: 1; }
 
-        /* גלריית ביצועים (כאן נשתול סרטונים) */
-        .gallery { background: #000; padding: 80px 5%; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        /* גלריית ביצועים */
+        .gallery { background: #000; padding: 60px 5%; border-top: 1px solid #111; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
         .gallery-item { aspect-ratio: 16/9; background: #111; border: 1px solid #333; overflow: hidden; position: relative; }
-        .gallery-item video { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
-        .gallery-item:hover video { opacity: 1; transform: scale(1.05); }
+        .gallery-item video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
 
         /* כפתור זהב */
         .cta-btn { 
-            display: inline-block; margin-top: 40px; padding: 18px 50px; 
+            display: inline-block; margin-top: 30px; padding: 16px 45px; 
             border: 2px solid var(--gold); color: var(--gold); font-weight: 800; 
-            text-decoration: none; transition: 0.4s; font-size: 1.1rem; letter-spacing: 1px;
+            text-decoration: none; transition: 0.4s; font-size: 1rem; letter-spacing: 1px;
         }
-        .cta-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+        .cta-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px var(--gold); }
 
-        footer { padding: 40px; text-align: center; color: #444; font-size: 0.8rem; }
+        footer { padding: 30px; text-align: center; color: #333; font-size: 0.75rem; }
     </style>
 </head>
 <body>
 
     <section class="hero">
         <div class="logo">HOTAM VIP</div>
-        <div class="tagline">הופכים רגש יהודי ליצירה נצחית</div>
-        <a href="#vision" class="cta-btn">צפו בחזון האומנותי</a>
+        <div class="tagline">להפוך רגש יהודי לחותם נצחי</div>
+        <a href="#vision" class="cta-btn">גלו את החזון האומנותי</a>
     </section>
 
     <section class="section" id="vision">
-        <h2>לא עוד מצגת. חוויה של פעם בחיים.</h2>
-        <p>
-            בעולם של היום, תמונות רצות הן כבר לא מספיקות. <br>
-            אנחנו מזקקים את הרגעים המשמעותיים ביותר שלכם - מהכנה לבר המצווה ועד למורשת דורות - 
-            והופכים אותם להפקה ויזואלית עוצמתית שנוגעת בנשמה.
-        </p>
+        <h2>לא עוד מצגת. זיכרון חי.</h2>
+        <p>בעולם של תמונות חולפות, אנחנו יוצרים נכס ויזואלי שנשאר לדורות. הפקה עוצמתית שנוגעת בנשמה ומנציחה את מה שבאמת חשוב.</p>
 
         <div class="services-grid">
-            <a href="#gallery" class="service-card">
-                <h3>בר מצווה עילאית</h3>
-                <p>הילד כגיבור בסיפור הכנה למצוות. הוקרה לאבא והתרגשות שחודרת לבבות.</p>
-            </a>
-            <a href="#gallery" class="service-card">
+            <div class="service-card">
+                <h3>בר מצווה ייחודית</h3>
+                <p>הילד כגיבור בסיפור הכנה למצוות. רגע של הוקרה עמוקה להורים והתרגשות שחודרת לבבות.</p>
+            </div>
+            <div class="service-card">
                 <h3>חותם המורשת</h3>
-                <p>זיקוק שנות עמל וערכים של סבא וסבתא לסרט תיעודי המיועד לדורות הבאים.</p>
-            </a>
-            <a href="#gallery" class="service-card">
+                <p>איך תרצו שיזכרו אתכם? זיקוק ערכי סבא וסבתא לסרט תיעודי המעביר את המנגינה לדורות הבאים.</p>
+            </div>
+            <div class="service-card">
                 <h3>מוסדות וישיבות</h3>
-                <p>הפקות יוקרה לדינרים וגיוס משאבים. ויז'ואל שגורם לתורם להרגיש שותף בבניין.</p>
-            </a>
+                <p>הפקות יוקרה לדינרים וגיוס משאבים. ויז'ואל עוצמתי שגורם לתורם להרגיש שותף אמת בבניין.</p>
+            </div>
         </div>
     </section>
 
     <section class="gallery" id="gallery">
-        <h2 style="text-align: center; color: var(--gold); font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 40px;">הצצה ליצירה</h2>
+        <h2 style="text-align: center; color: var(--gold); font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 30px;">הצצה ליצירה</h2>
         <div class="gallery-grid">
-            <div class="gallery-item">
-                <video autoplay muted loop playsinline><source src="faith1.mp4" type="video/mp4"></video>
-            </div>
-            <div class="gallery-item">
-                <video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video>
-            </div>
-            <div class="gallery-item">
-                <video autoplay muted loop playsinline><source src="faith3.mp4" type="video/mp4"></video>
-            </div>
+            <div class="gallery-item"><video autoplay muted loop playsinline><source src="faith1.mp4" type="video/mp4"></video></div>
+            <div class="gallery-item"><video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video></div>
+            <div class="gallery-item"><video autoplay muted loop playsinline><source src="faith3.mp4" type="video/mp4"></video></div>
         </div>
         <div style="text-align: center;">
             <a href="https://hotam.vip/forum" class="cta-btn">לבדיקת התאמה והזמנת הפקה</a>
