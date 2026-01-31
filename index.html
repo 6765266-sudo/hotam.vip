@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <title>hotam.vip | חותם - זיכרון דיגיטלי</title>
+    <title>hotam.vip | חותם - מורשת נצחית</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #efe7db; --accent: #7a5a2b; --gold: #c5a059; }
@@ -16,144 +16,98 @@
             overflow: hidden;
         }
 
-        /* הקופסה ששומרת שהכל יישאר ביחד */
-        .master-container {
+        .container {
+            width: min(95vw, 650px);
             position: relative;
-            width: 600px;
-            height: 700px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* כותרת עליונה צמודה ומעוגלת */
-        .header-arc {
-            width: 100%;
-            height: 120px;
-            margin-bottom: -50px;
-            z-index: 50;
-        }
+        svg { width: 100%; height: auto; overflow: visible; }
 
-        /* הדיסק השחור - הבסיס להכל */
-        .main-disc {
-            position: relative;
-            width: 520px;
-            height: 520px;
-            background: radial-gradient(circle, #222 0%, #000 100%);
-            border-radius: 50%;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-            border: 4px solid #111;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* חריצי תקליט יוקרתיים */
-        .main-disc::before {
-            content: ""; position: absolute; inset: 0; border-radius: 50%;
-            background: repeating-radial-gradient(circle, transparent 0, transparent 2px, rgba(255,255,255,0.02) 3px);
-            pointer-events: none;
-        }
+        /* אנימציית סיבוב למלל האמצעי */
+        .spin { transform-origin: 300px 350px; animation: rotate 30s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* עיצוב המדיה בתוך הדיסק */
-        .media-slot {
-            position: absolute;
-            width: 110px;
-            height: 85px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-            border: 1.5px solid rgba(255,255,255,0.2);
+        .media-content { 
+            object-fit: cover; 
+            border-radius: 8px; 
+            border: 2px solid rgba(255,255,255,0.15); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             background: #000;
-            z-index: 10;
         }
-        .media-slot video, .media-slot img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* מיקומים מדויקים בתוך הדיסק (מחושב לפי 520px) */
-        .p1 { top: 40px; left: 205px; } 
-        .p2 { top: 110px; right: 50px; } 
-        .p3 { bottom: 110px; right: 50px; } 
-        .p4 { bottom: 40px; left: 205px; } 
-        .p5 { bottom: 110px; left: 50px; } 
-        .p6 { top: 110px; left: 50px; } 
+        .center-btn { cursor: pointer; transition: transform 0.2s ease; }
+        .center-btn:hover { transform: scale(1.05); }
 
-        /* מלל מסתובב באמצע */
-        .rotating-ring {
-            position: absolute;
-            width: 260px;
-            height: 260px;
-            z-index: 5;
-            animation: rotateText 40s linear infinite;
-        }
-        @keyframes rotateText { to { transform: rotate(360deg); } }
-
-        /* כפתור התחל מרכזי */
-        .start-btn {
-            position: absolute;
-            z-index: 100;
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle, #ffffff 40%, #f0f0f0 100%);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 4px solid #fff;
-            transition: transform 0.2s;
-        }
-        .start-btn:hover { transform: scale(1.05); }
-        .start-btn b { color: #000; font-size: 1.3rem; font-weight: 900; }
-
-        svg { width: 100%; height: 100%; overflow: visible; }
-        .arc-text { font-size: 22px; font-weight: 800; fill: #1a1a1a; letter-spacing: -0.5px; }
-        .inner-ring-text { font-size: 13px; font-weight: 700; fill: rgba(255,255,255,0.85); }
-
-        @media (max-width: 650px) {
-            .master-container { transform: scale(0.6); }
-        }
+        /* אפקט כניסה יוקרתי */
+        .fade-in { animation: fadeIn 1.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="master-container">
-        <div class="header-arc">
-            <svg viewBox="0 0 600 120">
-                <path id="curvePath" d="M 60,110 A 240,100 0 0,1 540,110" fill="none" />
-                <text class="arc-text">
-                    <textPath href="#curvePath" startOffset="50%" text-anchor="middle">
-                        הפעם זה לא עוד אלבום תמונות. הפעם זה <tspan fill="#7a5a2b">חותם</tspan> שנשאר לדורות.
+    <div class="container fade-in">
+        <svg viewBox="0 0 600 700">
+            <defs>
+                <path id="headerCurve" d="M 60,110 A 240,90 0 0,1 540,110" />
+                <path id="innerRing" d="M 300, 350 m -85, 0 a 85,85 0 1,1 170,0 a 85,85 0 1,1 -170,0" />
+                <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="20" stdDeviation="15" flood-opacity="0.5"/>
+                </filter>
+            </defs>
+
+            <text font-size="22" font-weight="800" fill="#1a1a1a">
+                <textPath href="#headerCurve" startOffset="50%" text-anchor="middle">
+                    הפעם זה לא עוד אלבום תמונות. הפעם זה <tspan fill="var(--accent)">חותם</tspan> שנשאר לדורות.
+                </textPath>
+            </text>
+
+            <circle cx="300" cy="350" r="255" fill="#0a0a0a" filter="url(#shadow)" stroke="#1a1a1a" stroke-width="2" />
+            <circle cx="300" cy="350" r="255" fill="radial-gradient(circle, #222 0%, #000 100%)" />
+            
+            <circle cx="300" cy="350" r="250" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="200" stroke-dasharray="1,3" />
+
+            <foreignObject x="240" y="135" width="120" height="90">
+                <video autoplay muted loop playsinline class="media-content" style="width:100%; height:100%;"><source src="faith1.mp4" type="video/mp4"></video>
+            </foreignObject>
+
+            <foreignObject x="420" y="210" width="120" height="90">
+                <img src="still1_real.jpg" class="media-content" style="width:100%; height:100%;">
+            </foreignObject>
+
+            <foreignObject x="420" y="410" width="120" height="90">
+                <video autoplay muted loop playsinline class="media-content" style="width:100%; height:100%;"><source src="faith2.mp4" type="video/mp4"></video>
+            </foreignObject>
+
+            <foreignObject x="240" y="485" width="120" height="90">
+                <img src="still2_real.jpg" class="media-content" style="width:100%; height:100%;">
+            </foreignObject>
+
+            <foreignObject x="60" y="410" width="120" height="90">
+                <video autoplay muted loop playsinline class="media-content" style="width:100%; height:100%;"><source src="faith3.mp4" type="video/mp4"></video>
+            </foreignObject>
+
+            <foreignObject x="60" y="210" width="120" height="90">
+                <img src="still4_real.jpg" class="media-content" style="width:100%; height:100%;">
+            </foreignObject>
+
+            <g class="spin">
+                <text fill="rgba(255,255,255,0.85)" font-size="13" font-weight="700">
+                    <textPath href="#innerRing">
+                        • סיפורי משפחה ומורשת • חותם שנשאר לדורות • זיכרון אבות שלא יאבד •
                     </textPath>
                 </text>
-            </svg>
-        </div>
+            </g>
 
-        <div class="main-disc">
-            <div class="media-slot p1"><video autoplay muted loop playsinline><source src="faith1.mp4" type="video/mp4"></video></div>
-            <div class="media-slot p2"><img src="still1_real.jpg"></div>
-            <div class="media-slot p3"><video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video></div>
-            <div class="media-slot p4"><img src="still2_real.jpg"></div>
-            <div class="media-slot p5"><video autoplay muted loop playsinline><source src="faith3.mp4" type="video/mp4"></video></div>
-            <div class="media-slot p6"><img src="still4_real.jpg"></div>
-
-            <div class="rotating-ring">
-                <svg viewBox="0 0 200 200">
-                    <path id="ringPath" d="M 100, 100 m -85, 0 a 85,85 0 1,1 170,0 a 85,85 0 1,1 -170,0" fill="none" />
-                    <text class="inner-ring-text">
-                        <textPath href="#ringPath">
-                            • סיפורי משפחה ומורשת • חותם שנשאר לדורות • זיכרון אבות •
-                        </textPath>
-                    </text>
-                </svg>
-            </div>
-
-            <a href="https://hotam.vip/forum" class="start-btn">
-                <b>התחל</b>
-                <span style="font-size: 1.8rem;">📜</span>
+            <a href="https://hotam.vip/forum" class="center-btn">
+                <circle cx="300" cy="350" r="68" fill="#ffffff" filter="drop-shadow(0 5px 15px rgba(0,0,0,0.4))" />
+                <text x="300" y="342" text-anchor="middle" dominant-baseline="middle" fill="#000" font-weight="900" font-size="20">התחל</text>
+                <text x="300" y="375" text-anchor="middle" dominant-baseline="middle" font-size="22">📜</text>
             </a>
-        </div>
+        </svg>
     </div>
 
 </body>
