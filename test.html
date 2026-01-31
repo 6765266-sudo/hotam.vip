@@ -3,77 +3,107 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>HOTAM VIP | חותם - חזון ויזואלי</title>
+    <title>HOTAM VIP | חותם - הפקה ויזואלית למורשת ואירועים</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --dark: #050505; }
+        :root { --gold: #c5a059; --dark: #050505; --accent: #7a5a2b; }
         body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; scroll-behavior: smooth; }
         
-        /* פתיח יוקרתי */
+        /* שער כניסה */
         .hero { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
             text-align: center; background: radial-gradient(circle, #151515 0%, #000 100%);
+            padding: 20px;
         }
-        .logo { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); letter-spacing: 8px; margin-bottom: 5px; }
-        .tagline { font-size: 1.2rem; font-weight: 200; color: #aaa; margin-bottom: 40px; }
+        .logo { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4rem); color: var(--gold); letter-spacing: 8px; margin-bottom: 5px; }
+        .tagline { font-size: 1.2rem; font-weight: 200; color: #aaa; margin-bottom: 40px; border-bottom: 1px solid var(--gold); padding-bottom: 10px; }
 
-        /* סקציית "החזון הוויזואלי" - במקום תיק עבודות עמוס */
-        .vision { padding: 80px 10%; text-align: center; }
-        .vision h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2.5rem; margin-bottom: 20px; }
-        .vision p { max-width: 700px; margin: 0 auto 50px; font-size: 1.2rem; color: #ccc; font-weight: 300; }
+        /* חזון ובידול */
+        .section { padding: 100px 10%; text-align: center; border-bottom: 1px solid #111; }
+        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2.5rem; margin-bottom: 30px; }
+        .section p { max-width: 800px; margin: 0 auto 40px; font-size: 1.3rem; color: #ccc; font-weight: 300; line-height: 1.6; }
 
-        .vision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        
-        .vision-item { 
-            background: #111; border: 1px solid #222; overflow: hidden; position: relative;
-            transition: 0.4s;
+        /* גריד שירותים */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        .service-card { 
+            background: #111; border: 1px solid #222; padding: 40px 20px; transition: 0.4s; 
+            text-decoration: none; color: inherit;
         }
-        .vision-item:hover { border-color: var(--gold); }
-        .vision-item video { width: 100%; aspect-ratio: 16/9; object-fit: cover; opacity: 0.7; }
-        .vision-item .label { padding: 20px; text-align: right; }
-        .vision-item .label h3 { color: var(--gold); margin: 0 0 10px 0; }
-        .vision-item .label p { font-size: 0.9rem; color: #888; margin: 0; }
+        .service-card:hover { border-color: var(--gold); background: #161616; transform: translateY(-5px); }
+        .service-card h3 { color: var(--gold); font-size: 1.8rem; margin-bottom: 15px; }
+        .service-card p { font-size: 1rem; color: #999; }
 
-        /* כפתור זהב צף */
+        /* גלריית ביצועים (כאן נשתול סרטונים) */
+        .gallery { background: #000; padding: 80px 5%; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .gallery-item { aspect-ratio: 16/9; background: #111; border: 1px solid #333; overflow: hidden; position: relative; }
+        .gallery-item video { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
+        .gallery-item:hover video { opacity: 1; transform: scale(1.05); }
+
+        /* כפתור זהב */
         .cta-btn { 
-            display: inline-block; margin-top: 50px; padding: 15px 45px; 
+            display: inline-block; margin-top: 40px; padding: 18px 50px; 
             border: 2px solid var(--gold); color: var(--gold); font-weight: 800; 
-            text-decoration: none; transition: 0.4s; 
+            text-decoration: none; transition: 0.4s; font-size: 1.1rem; letter-spacing: 1px;
         }
         .cta-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+
+        footer { padding: 40px; text-align: center; color: #444; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <section class="hero">
         <div class="logo">HOTAM VIP</div>
-        <div class="tagline">יצירה. מורשת. חותם.</div>
-        <a href="#vision" class="cta-btn">צפו בחזון הוויזואלי</a>
+        <div class="tagline">הופכים רגש יהודי ליצירה נצחית</div>
+        <a href="#vision" class="cta-btn">צפו בחזון האומנותי</a>
     </section>
 
-    <section class="vision" id="vision">
-        <h2>לא מצגת. חוויה קולנועית.</h2>
-        <p>אנחנו לוקחים את הרגעים הכי משמעותיים שלכם והופכים אותם לסצנות שלא נראו כמותן. תפיסה אמנותית חדשה לבר-מצווה, מורשת ואירועי VIP.</p>
+    <section class="section" id="vision">
+        <h2>לא עוד מצגת. חוויה של פעם בחיים.</h2>
+        <p>
+            בעולם של היום, תמונות רצות הן כבר לא מספיקות. <br>
+            אנחנו מזקקים את הרגעים המשמעותיים ביותר שלכם - מהכנה לבר המצווה ועד למורשת דורות - 
+            והופכים אותם להפקה ויזואלית עוצמתית שנוגעת בנשמה.
+        </p>
 
-        <div class="vision-grid">
-            <div class="vision-item">
+        <div class="services-grid">
+            <a href="#gallery" class="service-card">
+                <h3>בר מצווה עילאית</h3>
+                <p>הילד כגיבור בסיפור הכנה למצוות. הוקרה לאבא והתרגשות שחודרת לבבות.</p>
+            </a>
+            <a href="#gallery" class="service-card">
+                <h3>חותם המורשת</h3>
+                <p>זיקוק שנות עמל וערכים של סבא וסבתא לסרט תיעודי המיועד לדורות הבאים.</p>
+            </a>
+            <a href="#gallery" class="service-card">
+                <h3>מוסדות וישיבות</h3>
+                <p>הפקות יוקרה לדינרים וגיוס משאבים. ויז'ואל שגורם לתורם להרגיש שותף בבניין.</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+        <h2 style="text-align: center; color: var(--gold); font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 40px;">הצצה ליצירה</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
                 <video autoplay muted loop playsinline><source src="faith1.mp4" type="video/mp4"></video>
-                <div class="label">
-                    <h3>השפה הקולנועית</h3>
-                    <p>שילוב של צילום עלילתי ואפקטים שהופכים כל אירוע לסרט הוליוודי.</p>
-                </div>
             </div>
-            <div class="vision-item">
+            <div class="gallery-item">
                 <video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video>
-                <div class="label">
-                    <h3>תיעוד רגש</h3>
-                    <p>אנחנו לא מצלמים תמונות, אנחנו מזקקים דמעות ושמחה לתוך זיכרון נצחי.</p>
-                </div>
+            </div>
+            <div class="gallery-item">
+                <video autoplay muted loop playsinline><source src="faith3.mp4" type="video/mp4"></video>
             </div>
         </div>
-
-        <a href="https://hotam.vip/forum" class="cta-btn">לבדיקת התאמה לפרויקט שלכם</a>
+        <div style="text-align: center;">
+            <a href="https://hotam.vip/forum" class="cta-btn">לבדיקת התאמה והזמנת הפקה</a>
+        </div>
     </section>
+
+    <footer>
+        &copy; 2026 HOTAM VIP | חותם - הפקות ויזואליות בלעדיות
+    </footer>
 
 </body>
 </html>
