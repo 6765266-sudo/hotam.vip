@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-    <section class="hero">
+    <section class="hero" id="top-section">
         <img src="gold-seal.png" class="main-seal" alt="HOTAM VIP" onclick="document.getElementById('services-area').scrollIntoView()">
         <div class="hero-tagline">להמחיש את הרגש. להשאיר חותם.</div>
     </section>
@@ -47,5 +47,15 @@
             <a href="forum.html" class="forum-btn">לבדיקת התאמה והזמנת הפקה</a>
         </div>
     </section>
+
+    <script>
+        // קוד שמכריח את הדפדפן לעלות למעלה בכל רענון
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+    </script>
 </body>
 </html>
