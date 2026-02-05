@@ -18,6 +18,12 @@
         .btn { padding: 22px; border: 1px solid #333; background: #0a0a0a; color: #fff; text-decoration: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s; border-radius: 4px; }
         .btn:hover { border-color: var(--gold); background: #111; color: var(--gold); }
         .final-btn { background: var(--gold); color: #000 !important; font-weight: 800; border: none; padding: 25px 50px; text-decoration: none; display: inline-block; margin-top: 20px; }
+        
+        footer {
+            position: absolute; bottom: 20px; width: 100%; text-align: center; font-size: 0.8rem; color: #444;
+        }
+        footer a { color: #444; text-decoration: none; margin: 0 10px; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -53,6 +59,12 @@
         <a href="test.html" class="btn">חזרה לדף הבית</a>
     </div>
 </div>
+
+<footer>
+    <a href="#" onclick="alert('עסק זה נמצא בתקופת הקמה ופטור מחובת הנגשה מלאה בשלב זה. אנו עושים מאמצים להנגיש את התוכן לכלל האוכלוסייה. לכל שאלה ניתן לפנות אלינו בטלפון שבטופס.')">הצהרת נגישות</a>
+</footer>
+
+<script src="https://cdn.enable.co.il/licenses/enable-v2.min.js"></script>
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
