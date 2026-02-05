@@ -1,161 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>James | יוצר סרטי סושיאל וסיפורי חיים</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HOTAM VIP | להמחיש את הרגש</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0,
-            padding: 0,
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,
-            background-color: #050505,
-            color: #ffffff,
-            scroll-behavior: smooth,
+        :root { --gold: #c5a059; --dark: #050505; }
+        body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; scroll-behavior: smooth; }
+        
+        .hero { 
+            height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            text-align: center; background: radial-gradient(circle, #151515 0%, #000 100%); padding: 20px;
         }
+        .logo-main { cursor: pointer; transition: 0.5s; }
+        .logo-main:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold)); }
+        
+        .section { padding: 80px 10%; text-align: center; }
+        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2.2rem; margin-bottom: 40px; }
 
-        /* מסך הבית - Hero */
-        .hero {
-            height: 100vh,
-            display: flex,
-            flex-direction: column,
-            justify-content: center,
-            align-items: center,
-            text-align: center,
-            background: radial-gradient(circle, #1a1a1a 0%, #050505 100%),
+        /* גריד 6 הקוביות */
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+            max-width: 1200px; 
+            margin: 0 auto;
         }
+        .service-card { 
+            background: #111; border: 1px solid #222; padding: 0; transition: 0.4s; 
+            text-decoration: none; color: inherit; overflow: hidden; position: relative;
+            aspect-ratio: 16/10; display: flex; flex-direction: column; justify-content: flex-end;
+        }
+        .service-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .service-card h3 { 
+            background: rgba(0,0,0,0.7); color: var(--gold); margin: 0; padding: 15px; 
+            font-size: 1.3rem; z-index: 2; border-top: 1px solid var(--gold);
+        }
+        
+        .video-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .video-container video { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
 
-        .gold-seal {
-            width: 250px,
-            height: 250px,
-            cursor: pointer,
-            transition: transform 0.3s ease,
-            filter: drop-shadow(0px 0px 20px rgba(212, 175, 55, 0.5)),
-        }
-
-        .gold-seal:hover {
-            transform: scale(1.05),
-        }
-
-        /* רשת הקוביות */
-        .services-grid {
-            display: grid,
-            grid-template-columns: repeat(3, 1fr),
-            gap: 20px,
-            padding: 50px,
-            max-width: 1200px,
-            margin: 0 auto,
-        }
-
-        .service-card {
-            background: #111,
-            border: 1px solid #333,
-            border-radius: 10px,
-            padding: 15px,
-            text-align: center,
-            transition: border-color 0.3s ease,
-        }
-
-        .service-card:hover {
-            border-color: #d4af37,
-        }
-
-        .service-card h3 {
-            color: #d4af37,
-            margin-bottom: 15px,
-            font-size: 1.2rem,
-        }
-
-        /* מכולת הוידאו */
-        .video-container {
-            width: 100%,
-            border-radius: 5px,
-            overflow: hidden,
-            background: #000,
-            aspect-ratio: 16 / 9,
-        }
-
-        video {
-            width: 100%,
-            height: 100%,
-            object-fit: cover,
-        }
-
-        /* התאמה לנייד */
-        @media (max-width: 768px) {
-            .services-grid {
-                grid-template-columns: repeat(1, 1fr),
-            }
-        }
+        footer { padding: 30px; text-align: center; color: #333; font-size: 0.75rem; }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <a href="#services">
-            <img src="gold-seal.png" alt="James Gold Seal" class="gold-seal">
-        </a>
-        <h1 style="margin-top: 20px, color: #d4af37, letter-spacing: 2px,">JAMES</h1>
-        <p style="font-size: 1.1rem, opacity: 0.8,">יוצר סרטי סושיאל וסיפורי חיים</p>
+        <div class="logo-main" onclick="document.getElementById('services').scrollIntoView()">
+            <img src="favicon.png" alt="HOTAM VIP" style="width: 250px; border: 2px solid var(--gold); border-radius: 15px;">
+        </div>
+        <div style="margin-top: 20px; color: var(--gold); font-size: 1.2rem; font-weight: 200; letter-spacing: 5px;">לחץ לחתימה אישית</div>
     </section>
 
-    <section id="services" class="services-grid">
-        
-        <div class="service-card">
-            <h3>בר מצווה עלילתי</h3>
-            <div class="video-container">
-                <video autoplay muted loop playsinline>
-                    <source src="bar-mitzvah.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
+    <section class="section" id="services">
+        <h2>השירותים שלנו</h2>
+        <div class="services-grid">
+            
+            <a href="#video-1" class="service-card">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="bar-mitzvah-film.mp4" type="video/mp4"></video>
+                </div>
+                <h3>בר מצווה עלילתי</h3>
+            </a>
 
-        <div class="service-card">
-            <h3>מורשת וזיכרון</h3>
-            <div class="video-container">
-                <video autoplay muted loop playsinline>
-                    <source src="heritage.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
+            <a href="#video-2" class="service-card">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="video1.mp4" type="video/mp4"></video>
+                </div>
+                <h3>מורשת וזיכרון</h3>
+            </a>
 
-        <div class="service-card">
-            <h3>בת מצווה מהסרטים</h3>
-            <div class="video-container">
-                <video autoplay muted loop playsinline>
-                    <source src="bat-mitzvah.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
+            <div class="service-card"><h3>בת מצווה מהסרטים</h3></div>
+            <div class="service-card"><h3>עסקים וסושיאל</h3></div>
+            <div class="service-card"><h3>מוסדות ועמותות</h3></div>
+            <div class="service-card"><h3>אירועים מיוחדים</h3></div>
 
-        <div class="service-card">
-            <h3>עסקים וסושיאל</h3>
-            <div class="video-container">
-                <video autoplay muted loop playsinline>
-                    <source src="business.mp4" type="video/mp4">
-                </video>
-            </div>
         </div>
-
-        <div class="service-card">
-            <h3>מוסדות ועמותות</h3>
-            <div class="video-container">
-                <video autoplay muted loop playsinline>
-                    <source src="institutions.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-
-        <div class="service-card">
-            <h3>אירועים מיוחדים</h3>
-            <div class="video-container">
-                <video autoplay muted loop playsinline>
-                    <source src="events.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-
     </section>
+
+    <footer>
+        &copy; 2026 HOTAM VIP | חותם - להמחיש את הרגש
+    </footer>
 
 </body>
 </html>
