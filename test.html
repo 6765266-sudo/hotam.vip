@@ -12,7 +12,7 @@
         :root { --gold: #c5a059; --dark: #050505; }
         body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; scroll-behavior: smooth; }
         
-        /* מסך פתיחה */
+        /* מסך פתיחה יוקרתי */
         .hero { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
             text-align: center; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); padding: 20px;
@@ -23,21 +23,23 @@
             filter: drop-shadow(0 0 15px rgba(197, 160, 89, 0.3));
         }
         .main-seal:hover { transform: scale(1.05); filter: drop-shadow(0 0 30px var(--gold)); }
-        
         .hero-tagline { margin-top: 30px; font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; letter-spacing: 4px; }
 
-        /* גריד 6 הקוביות */
-        .services { padding: 100px 8%; max-width: 1400px; margin: 0 auto; }
+        /* אזור השירותים */
+        .services { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
+        
+        /* סידור של 3 בתוך שורה */
         .grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 30px; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px; 
         }
         
         .card { 
             background: #0a0a0a; border: 1px solid #1a1a1a; position: relative; 
             aspect-ratio: 16/10; overflow: hidden; transition: 0.5s;
             display: flex; align-items: flex-end; border-radius: 4px;
+            text-decoration: none;
         }
         .card:hover { border-color: var(--gold); transform: translateY(-10px); }
         
@@ -46,13 +48,22 @@
         
         .card-label { 
             position: relative; z-index: 2; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.95)); 
-            padding: 25px; color: var(--gold); font-size: 1.5rem; font-weight: 700;
+            padding: 20px; color: var(--gold); font-size: 1.4rem; font-weight: 700; text-align: center;
         }
 
-        @media (max-width: 768px) {
-            .main-seal { width: 220px; }
-            .hero-tagline { font-size: 1.3rem; }
+        /* כפתור לפורום / טופס */
+        .cta-area { text-align: center; margin-top: 60px; }
+        .forum-btn {
+            display: inline-block; padding: 18px 50px; border: 2px solid var(--gold);
+            color: var(--gold); text-decoration: none; font-weight: 800; font-size: 1.2rem;
+            transition: 0.4s; letter-spacing: 2px;
+        }
+        .forum-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+
+        /* התאמה לנייד - שורה אחת */
+        @media (max-width: 900px) {
             .grid { grid-template-columns: 1fr; }
+            .main-seal { width: 220px; }
         }
 
         footer { padding: 50px; text-align: center; color: #222; font-size: 0.8rem; border-top: 1px solid #0f0f0f; }
@@ -68,24 +79,26 @@
     <section id="services-area" class="services">
         <div class="grid">
             
-            <div class="card">
-                <video autoplay muted loop playsinline>
-                    <source src="bar-mitzvah.mp4" type="video/mp4">
-                </video>
+            <a href="https://hotam.vip/forum" class="card">
+                <video autoplay muted loop playsinline><source src="bar-mitzvah.mp4" type="video/mp4"></video>
                 <div class="card-label">בר מצווה עלילתי</div>
-            </div>
+            </a>
 
-            <div class="card"><div class="card-label">מורשת וזיכרון</div></div>
-            <div class="card"><div class="card-label">בת מצווה מהסרטים</div></div>
-            <div class="card"><div class="card-label">עסקים וסושיאל</div></div>
-            <div class="card"><div class="card-label">מוסדות ועמותות</div></div>
-            <div class="card"><div class="card-label">אירועים מיוחדים</div></div>
+            <a href="https://hotam.vip/forum" class="card"><div class="card-label">מורשת וזיכרון</div></a>
+            <a href="https://hotam.vip/forum" class="card"><div class="card-label">בת מצווה מהסרטים</div></a>
+            <a href="https://hotam.vip/forum" class="card"><div class="card-label">עסקים וסושיאל</div></a>
+            <a href="https://hotam.vip/forum" class="card"><div class="card-label">מוסדות ועמותות</div></a>
+            <a href="https://hotam.vip/forum" class="card"><div class="card-label">אירועים מיוחדים</div></a>
 
+        </div>
+
+        <div class="cta-area">
+            <a href="https://hotam.vip/forum" class="forum-btn">לבדיקת התאמה והזמנת הפקה</a>
         </div>
     </section>
 
     <footer>
-        &copy; 2026 HOTAM VIP | מומחים לתוכן ויראלי והפקות יוקרה
+        &copy; 2026 HOTAM VIP | חותם אישי לכל אירוע
     </footer>
 
 </body>
