@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>בדיקת התאמה להפקת VIP | חותם</title>
-    <link rel="icon" type="image/png" href="gold-seal.png">
+    <title>בדיקת התאמה | חותם</title>
+    <link rel="icon" type="image/png" href="gold-seal.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #c5a059; --dark: #050505; }
@@ -15,7 +15,7 @@
         h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin-bottom: 30px; line-height: 1.4; }
         p { color: #aaa; font-size: 1.1rem; margin-bottom: 40px; }
         .btn-group { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 450px; margin: 0 auto; }
-        .btn { padding: 22px; border: 1px solid #333; background: #0a0a0a; color: #fff; text-decoration: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
+        .btn { padding: 22px; border: 1px solid #333; background: #0a0a0a; color: #fff; text-decoration: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s; border-radius: 4px; }
         .btn:hover { border-color: var(--gold); background: #111; color: var(--gold); }
         .final-btn { background: var(--gold); color: #000 !important; font-weight: 800; border: none; padding: 25px 50px; text-decoration: none; display: inline-block; margin-top: 20px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -24,29 +24,44 @@
 <body>
 <div class="container">
     <div class="step active" id="step1">
-        <h2>האם חשוב לך שהדורות הבאים יכירו את המורשת והשורשים של המשפחה שלכם?</h2>
+        <h2>האם חשוב לך להעניק למשפחה נכס של זיכרון והיכרות עם השורשים שלהם?</h2>
         <div class="btn-group">
-            <button class="btn" onclick="nextStep(1, 2)">זה הדבר הכי יקר שאני יכול להשאיר להם</button>
-            <button class="btn" onclick="nextStep(1, 2)">אני רוצה להפוך את המורשת לזיכרון חי</button>
+            <button class="btn" onclick="nextStep(1, 2)">זהו חיבור חשוב שאני רוצה להעניק לדורות הבאים</button>
+            <button class="btn" onclick="nextStep(1, 2)">אני רוצה להפוך את המורשת המשפחתית ליצירה חיה</button>
+            <button class="btn" onclick="showFail()">אני מחפש כרגע משהו פשוט ופחות רגשי</button>
         </div>
     </div>
+
     <div class="step" id="step2">
-        <h2>האם אתה מחפש הפקה קולנועית שתשאיר חותם רגשי, או רק מצגת פשוטה?</h2>
+        <h2>איזו רמת תוצאה היית רוצה לקבל עבור התיעוד שלכם?</h2>
         <div class="btn-group">
-            <button class="btn" onclick="nextStep(2, 3)">אני מחפש רמה קולנועית בלתי מתפשרת</button>
-            <button class="btn" onclick="nextStep(2, 3)">חשוב לי שהתוצאה תהיה עוצמתית ויוקרתית</button>
+            <button class="btn" onclick="nextStep(2, 3)">אני מחפש השקעה קולנועית מרגשת ואיכותית</button>
+            <button class="btn" onclick="nextStep(2, 3)">חשוב לי שהתוצאה תהיה מכובדת ובעלת עומק</button>
+            <button class="btn" onclick="showFail()">אני מחפש פתרון בסיסי ומהיר בלבד</button>
         </div>
     </div>
+
     <div class="step" id="step3">
-        <h2>נראה שאנחנו מדברים באותה שפה.</h2>
-        <p>כדי שנבדוק התאמה אישית לפרויקט שלכם, אנא מלאו את הפרטים בטופס הבא.</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform?usp=header" class="btn final-btn">מעבר למילוי הטופס הרשמי</a>
+        <h2>נראה שאנחנו מחפשים את אותו הדבר.</h2>
+        <p>כדי שנוכל לבדוק זמינות ולהתאים את ההפקה בדיוק עבורכם, נשמח אם תמלאו כמה פרטים נוספים.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform" class="btn final-btn">מעבר למילוי הפרטים</a>
+    </div>
+
+    <div class="step" id="step-fail">
+        <h2>תודה על פנייתך.</h2>
+        <p>נראה שהסגנון הקולנועי והמושקע של 'חותם' פחות מתאים למה שאתה מחפש כרגע. אנו מאחלים לך הצלחה רבה במציאת הפתרון המתאים ביותר עבורך.</p>
+        <a href="test.html" class="btn">חזרה לדף הבית</a>
     </div>
 </div>
+
 <script>
     function nextStep(current, next) {
         document.getElementById('step' + current).classList.remove('active');
         document.getElementById('step' + next).classList.add('active');
+    }
+    function showFail() {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step-fail').classList.add('active');
     }
 </script>
 </body>
