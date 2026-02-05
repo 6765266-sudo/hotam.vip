@@ -3,25 +3,45 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>בדיקת התאמה | חותם</title>
+    <title>בדיקת התאמה להפקת VIP | חותם</title>
+    
     <link rel="icon" type="image/png" href="gold-seal.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
     <style>
         :root { --gold: #c5a059; --dark: #050505; }
         body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; height: 100vh; overflow: hidden; }
-        .container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; box-sizing: border-box; }
+        
+        .container { 
+            height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            text-align: center; padding: 20px; box-sizing: border-box;
+        }
+
         .step { display: none; max-width: 700px; animation: fadeIn 0.8s; }
         .step.active { display: block; }
-        h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin-bottom: 30px; line-height: 1.4; }
+
+        h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 30px; line-height: 1.4; }
         p { color: #aaa; font-size: 1.1rem; margin-bottom: 40px; }
+        
         .btn-group { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 450px; margin: 0 auto; }
-        .btn { padding: 22px; border: 1px solid #333; background: #0a0a0a; color: #fff; text-decoration: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s; border-radius: 4px; }
+        
+        .btn {
+            padding: 22px; border: 1px solid #333; background: #0a0a0a; color: #fff;
+            text-decoration: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+            font-weight: 400; border-radius: 4px;
+        }
         .btn:hover { border-color: var(--gold); background: #111; color: var(--gold); }
-        .final-btn { background: var(--gold); color: #000 !important; font-weight: 800; border: none; padding: 25px 50px; text-decoration: none; display: inline-block; margin-top: 20px; }
+
+        .final-btn {
+            background: var(--gold); color: #000 !important; font-weight: 800; border: none; padding: 25px 50px;
+            text-decoration: none; display: inline-block; margin-top: 20px;
+        }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
+
 <div class="container">
     <div class="step active" id="step1">
         <h2>האם חשוב לך להעניק למשפחה נכס של זיכרון והיכרות עם השורשים שלהם?</h2>
@@ -42,14 +62,14 @@
     </div>
 
     <div class="step" id="step3">
-        <h2>נראה שאנחנו מחפשים את אותו הדבר.</h2>
-        <p>כדי שנוכל לבדוק זמינות ולהתאים את ההפקה בדיוק עבורכם, נשמח אם תמלאו כמה פרטים נוספים.</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5-dHgB40tA5kSOAmLZh6dIbYjM1PRKpRpJyn3c7emd_bekQ/viewform" class="btn final-btn">מעבר למילוי הפרטים</a>
+        <h2>נראה שאנחנו מדברים באותה שפה.</h2>
+        <p>נשמח להכיר את הפרטים לעומק כדי לבנות עבורכם את החותם המושלם.</p>
+        <a href="https://forms.gle/NXJvx1N89Vit1RfW6" class="btn final-btn">מעבר למילוי הפרטים בטופס הרשמי</a>
     </div>
 
     <div class="step" id="step-fail">
         <h2>תודה על פנייתך.</h2>
-        <p>נראה שהסגנון הקולנועי והמושקע של 'חותם' פחות מתאים למה שאתה מחפש כרגע. אנו מאחלים לך הצלחה רבה במציאת הפתרון המתאים ביותר עבורך.</p>
+        <p>נראה שהסגנון הקולנועי והמושקע של 'חותם' פחות מתאים למה שאתה מחפש כרגע. אנו מאחלים לך הצלחה רבה במציאת הפתרון המתאים עבורך.</p>
         <a href="test.html" class="btn">חזרה לדף הבית</a>
     </div>
 </div>
@@ -64,5 +84,6 @@
         document.getElementById('step-fail').classList.add('active');
     }
 </script>
+
 </body>
 </html>
