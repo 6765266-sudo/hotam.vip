@@ -3,202 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>James - סרטוני סושיאל וסיפורי חיים</title>
+    <title>James | יוצר סרטי סושיאל וסיפורי חיים</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            color: #333;
+            margin: 0,
+            padding: 0,
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,
+            background-color: #050505,
+            color: #ffffff,
+            scroll-behavior: smooth,
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
+        /* מסך הבית - Hero */
+        .hero {
+            height: 100vh,
+            display: flex,
+            flex-direction: column,
+            justify-content: center,
+            align-items: center,
+            text-align: center,
+            background: radial-gradient(circle, #1a1a1a 0%, #050505 100%),
         }
 
-        h1 { color: #2c3e50; }
-        p { color: #7f8c8d; margin-bottom: 40px; }
+        .gold-seal {
+            width: 250px,
+            height: 250px,
+            cursor: pointer,
+            transition: transform 0.3s ease,
+            filter: drop-shadow(0px 0px 20px rgba(212, 175, 55, 0.5)),
+        }
 
-        /* תפריט קוביות עליון */
+        .gold-seal:hover {
+            transform: scale(1.05),
+        }
+
+        /* רשת הקוביות */
         .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 60px;
+            display: grid,
+            grid-template-columns: repeat(3, 1fr),
+            gap: 20px,
+            padding: 50px,
+            max-width: 1200px,
+            margin: 0 auto,
         }
 
         .service-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            border: 1px solid #eee;
+            background: #111,
+            border: 1px solid #333,
+            border-radius: 10px,
+            padding: 15px,
+            text-align: center,
+            transition: border-color 0.3s ease,
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            border-color: #3498db;
-        }
-
-        .service-card i {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 10px;
+            border-color: #d4af37,
         }
 
         .service-card h3 {
-            font-size: 16px;
-            margin: 0;
-            color: #2c3e50;
+            color: #d4af37,
+            margin-bottom: 15px,
+            font-size: 1.2rem,
         }
 
-        /* אזור הסרטונים */
-        .video-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
+        /* מכולת הוידאו */
+        .video-container {
+            width: 100%,
+            border-radius: 5px,
+            overflow: hidden,
+            background: #000,
+            aspect-ratio: 16 / 9,
         }
 
-        .video-item {
-            background: #fff;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            scroll-margin-top: 20px; /* מאפשר קפיצה חלקה לקוביה */
+        video {
+            width: 100%,
+            height: 100%,
+            object-fit: cover,
         }
 
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* יחס 16:9 */
-            height: 0;
-            overflow: hidden;
-            border-radius: 10px;
-            background: #000;
-        }
-
-        .video-wrapper iframe, .video-wrapper video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .video-info {
-            padding: 15px 5px;
-            text-align: right;
-        }
-
-        .video-info h4 {
-            margin: 0 0 10px 0;
-            color: #e67e22;
-        }
-
-        .video-info p {
-            font-size: 14px;
-            margin: 0;
-            line-height: 1.4;
-        }
-
-        /* כפתור העתקת קוד עבור James */
-        .copy-btn {
-            background: #34495e;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        /* התאמה לנייד */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(1, 1fr),
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>הסיפור שלכם, הוידאו שלנו</h1>
-    <p>אנחנו לא עושים מצגות - אנחנו בונים עלילה מרגשת</p>
+    <section class="hero">
+        <a href="#services">
+            <img src="gold-seal.png" alt="James Gold Seal" class="gold-seal">
+        </a>
+        <h1 style="margin-top: 20px, color: #d4af37, letter-spacing: 2px,">JAMES</h1>
+        <p style="font-size: 1.1rem, opacity: 0.8,">יוצר סרטי סושיאל וסיפורי חיים</p>
+    </section>
 
-    <div class="services-grid">
-        <div class="service-card" onclick="document.getElementById('bar-mitzvah').scrollIntoView({behavior: 'smooth'})">
-            <h3>🎬 בר מצווה עלילתי</h3>
-        </div>
-        <div class="service-card" onclick="document.getElementById('legacy').scrollIntoView({behavior: 'smooth'})">
-            <h3>📜 מורשת וזיכרון</h3>
-        </div>
-        <div class="service-card" onclick="document.getElementById('bat-mitzvah').scrollIntoView({behavior: 'smooth'})">
-            <h3>⭐ בת מצווה מהסרטים</h3>
-        </div>
-        <div class="service-card" onclick="document.getElementById('business').scrollIntoView({behavior: 'smooth'})">
-            <h3>💼 עסקים וסושיאל</h3>
-        </div>
-        <div class="service-card" onclick="document.getElementById('institution').scrollIntoView({behavior: 'smooth'})">
-            <h3>🏛️ מוסדות ועמותות</h3>
-        </div>
-        <div class="service-card" onclick="document.getElementById('events').scrollIntoView({behavior: 'smooth'})">
-            <h3>🎊 אירועים מיוחדים</h3>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="video-section">
+    <section id="services" class="services-grid">
         
-        <div class="video-item" id="bar-mitzvah">
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h4>בר מצווה - הסרט העלילתי</h4>
-                <p>לא רק תמונות חולפות. אנחנו בונים תסריט, צילום אקשן וסיפור שמרגש את כל האולם.</p>
-            </div>
-        </div>
-
-        <div class="video-item" id="legacy">
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h4>תיעוד מורשת וזיכרון</h4>
-                <p>ראיונות עומק, שילוב מסמכים היסטוריים ויצירת נכס משפחתי לדורות הבאים.</p>
+        <div class="service-card">
+            <h3>בר מצווה עלילתי</h3>
+            <div class="video-container">
+                <video autoplay muted loop playsinline>
+                    <source src="bar-mitzvah.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
 
-        <div class="video-item" id="institution">
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h4>סרטוני תדמית למוסדות</h4>
-                <p>סיפור המוסד דרך העיניים של האנשים. חיבור רגשי שמביא תוצאות ותרומות.</p>
+        <div class="service-card">
+            <h3>מורשת וזיכרון</h3>
+            <div class="video-container">
+                <video autoplay muted loop playsinline>
+                    <source src="heritage.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
 
-    </div>
-</div>
+        <div class="service-card">
+            <h3>בת מצווה מהסרטים</h3>
+            <div class="video-container">
+                <video autoplay muted loop playsinline>
+                    <source src="bat-mitzvah.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
 
-<script>
-    // פונקציה להעתקה מהירה (לבקשתך)
-    function copyCode() {
-        const el = document.createElement('textarea');
-        el.value = document.documentElement.outerHTML;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        alert('הקוד הועתק עבור James!');
-    }
-</script>
+        <div class="service-card">
+            <h3>עסקים וסושיאל</h3>
+            <div class="video-container">
+                <video autoplay muted loop playsinline>
+                    <source src="business.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <h3>מוסדות ועמותות</h3>
+            <div class="video-container">
+                <video autoplay muted loop playsinline>
+                    <source src="institutions.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <h3>אירועים מיוחדים</h3>
+            <div class="video-container">
+                <video autoplay muted loop playsinline>
+                    <source src="events.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+    </section>
 
 </body>
 </html>
