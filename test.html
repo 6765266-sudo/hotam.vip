@@ -74,6 +74,23 @@
 
         .forum-btn:hover { background: var(--gold); color: #000; }
 
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: var(--gold);
+        }
+
         @media (max-width: 850px) { 
             .grid { grid-template-columns: 1fr; } 
             .main-seal { width: 220px; }
@@ -115,6 +132,13 @@
             <a href="forum.html?type=general" class="forum-btn">לבדיקת התאמה והזמנת הפקה</a>
         </div>
     </section>
+
+    <footer>
+        <p>© 2026 HOTAM VIP. כל הזכויות שמורות.</p>
+        <a href="#" onclick="alert('עסק זה נמצא בתקופת הקמה ופטור מחובת הנגשה מלאה בשלב זה. אנו עושים מאמצים להנגיש את התוכן לכלל האוכלוסייה. לכל שאלה ניתן לפנות אלינו בטלפון שבטופס.')">הצהרת נגישות</a>
+    </footer>
+
+    <script src="https://cdn.enable.co.il/licenses/enable-v2.min.js"></script>
 
     <script>
         if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
