@@ -55,7 +55,6 @@
 </div>
 
 <script>
-    // מנגנון לשינוי שאלות לפי בחירה
     const urlParams = new URLSearchParams(window.location.search);
     const type = urlParams.get('type');
 
@@ -71,6 +70,12 @@
         document.getElementById('opt1').innerText = "אני רוצה להפוך את האירוע לסרט עלילתי בלתי נשכח";
         document.getElementById('opt2').innerText = "חשוב לי לתעד את הרגע הזה בצורה אמנותית ומרגשת";
         document.getElementById('dynamic-success-title').innerText = "מזל טוב! אנחנו כבר מתרגשים איתכם.";
+    }
+    else if (type === 'special') {
+        document.getElementById('dynamic-question').innerText = "האם מדובר באירוע בעל משמעות מיוחדת שתרצו לנצור ולהנציח ברמה גבוהה?";
+        document.getElementById('opt1').innerText = "כן, זהו רגע היסטורי עבורנו שחייב תיעוד קולנועי";
+        document.getElementById('opt2').innerText = "אנחנו רוצים מזכרת עוצמתית שתעביר את האווירה והרגש";
+        document.getElementById('dynamic-success-text').innerText = "נשמח לתת לאירוע המיוחד שלכם את הבמה המקצועית ביותר.";
     }
 
     function nextStep(current, next) {
