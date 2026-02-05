@@ -1,67 +1,204 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>HOTAM VIP | להמחיש את הרגש</title>
-    
-    <link rel="icon" type="image/png" href="favicon.png">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James - סרטוני סושיאל וסיפורי חיים</title>
     <style>
-        :root { --gold: #c5a059; --dark: #050505; }
-        body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; scroll-behavior: smooth; }
-        
-        .hero { 
-            height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            text-align: center; background: radial-gradient(circle, #151515 0%, #000 100%); padding: 20px;
-        }
-        .logo { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4rem); color: var(--gold); letter-spacing: 8px; margin-bottom: 5px; }
-        .tagline { font-size: 1.2rem; font-weight: 200; color: #aaa; margin-bottom: 40px; border-bottom: 1px solid var(--gold); padding-bottom: 10px; }
-
-        .section { padding: 80px 10%; text-align: center; }
-        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2.2rem; margin-bottom: 20px; }
-        
-        .gallery { background: #000; padding: 60px 5%; border-top: 1px solid #111; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; justify-content: center; }
-        .gallery-item { aspect-ratio: 16/9; background: #111; border: 1px solid #333; overflow: hidden; position: relative; max-width: 800px; margin: 0 auto; }
-        .gallery-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
-        
-        .video-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.3); z-index: 1; pointer-events: none;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
         }
 
-        .cta-btn { 
-            display: inline-block; margin-top: 30px; padding: 16px 45px; 
-            border: 2px solid var(--gold); color: var(--gold); font-weight: 800; 
-            text-decoration: none; transition: 0.4s;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
         }
-        .cta-btn:hover { background: var(--gold); color: #000; }
+
+        h1 { color: #2c3e50; }
+        p { color: #7f8c8d; margin-bottom: 40px; }
+
+        /* תפריט קוביות עליון */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #3498db;
+        }
+
+        .service-card i {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .service-card h3 {
+            font-size: 16px;
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        /* אזור הסרטונים */
+        .video-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .video-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            scroll-margin-top: 20px; /* מאפשר קפיצה חלקה לקוביה */
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* יחס 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .video-wrapper iframe, .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 15px 5px;
+            text-align: right;
+        }
+
+        .video-info h4 {
+            margin: 0 0 10px 0;
+            color: #e67e22;
+        }
+
+        .video-info p {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* כפתור העתקת קוד עבור James */
+        .copy-btn {
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <div class="logo">HOTAM VIP</div>
-        <div class="tagline">להמחיש את הרגש. להשאיר חותם.</div>
-    </section>
+<div class="container">
+    <h1>הסיפור שלכם, הוידאו שלנו</h1>
+    <p>אנחנו לא עושים מצגות - אנחנו בונים עלילה מרגשת</p>
 
-    <section class="gallery">
-        <h2 style="text-align: center; color: var(--gold); margin-bottom: 30px;">הצצה ליצירה</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <div class="video-overlay"></div>
-                <video autoplay muted loop playsinline>
-                    <source src="video1.mp4" type="video/mp4">
-                    הדפדפן שלך לא תומך בנגן הוידאו.
-                </video>
+    <div class="services-grid">
+        <div class="service-card" onclick="document.getElementById('bar-mitzvah').scrollIntoView({behavior: 'smooth'})">
+            <h3>🎬 בר מצווה עלילתי</h3>
+        </div>
+        <div class="service-card" onclick="document.getElementById('legacy').scrollIntoView({behavior: 'smooth'})">
+            <h3>📜 מורשת וזיכרון</h3>
+        </div>
+        <div class="service-card" onclick="document.getElementById('bat-mitzvah').scrollIntoView({behavior: 'smooth'})">
+            <h3>⭐ בת מצווה מהסרטים</h3>
+        </div>
+        <div class="service-card" onclick="document.getElementById('business').scrollIntoView({behavior: 'smooth'})">
+            <h3>💼 עסקים וסושיאל</h3>
+        </div>
+        <div class="service-card" onclick="document.getElementById('institution').scrollIntoView({behavior: 'smooth'})">
+            <h3>🏛️ מוסדות ועמותות</h3>
+        </div>
+        <div class="service-card" onclick="document.getElementById('events').scrollIntoView({behavior: 'smooth'})">
+            <h3>🎊 אירועים מיוחדים</h3>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="video-section">
+        
+        <div class="video-item" id="bar-mitzvah">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            </div>
+            <div class="video-info">
+                <h4>בר מצווה - הסרט העלילתי</h4>
+                <p>לא רק תמונות חולפות. אנחנו בונים תסריט, צילום אקשן וסיפור שמרגש את כל האולם.</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="https://hotam.vip/forum" class="cta-btn">לבדיקת התאמה והזמנת הפקה</a>
+
+        <div class="video-item" id="legacy">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            </div>
+            <div class="video-info">
+                <h4>תיעוד מורשת וזיכרון</h4>
+                <p>ראיונות עומק, שילוב מסמכים היסטוריים ויצירת נכס משפחתי לדורות הבאים.</p>
+            </div>
         </div>
-    </section>
+
+        <div class="video-item" id="institution">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            </div>
+            <div class="video-info">
+                <h4>סרטוני תדמית למוסדות</h4>
+                <p>סיפור המוסד דרך העיניים של האנשים. חיבור רגשי שמביא תוצאות ותרומות.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // פונקציה להעתקה מהירה (לבקשתך)
+    function copyCode() {
+        const el = document.createElement('textarea');
+        el.value = document.documentElement.outerHTML;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alert('הקוד הועתק עבור James!');
+    }
+</script>
 
 </body>
 </html>
