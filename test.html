@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>HOTAM VIP | חותם - להמחיש את הרגש</title>
+    <title>HOTAM VIP | להמחיש את הרגש</title>
+    
+    <link rel="icon" type="image/png" href="assets/לוגו_לסימניה.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #c5a059; --dark: #050505; --accent: #7a5a2b; }
@@ -23,16 +26,22 @@
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; }
         .service-card { 
             background: #111; border: 1px solid #222; padding: 35px 20px; transition: 0.4s; 
-            text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;
+            text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; position: relative;
+            overflow: hidden;
         }
         .service-card:hover { border-color: var(--gold); background: #161616; transform: translateY(-5px); }
-        .service-card h3 { color: var(--gold); font-size: 1.6rem; margin-bottom: 12px; }
-        .service-card p { font-size: 0.95rem; color: #bbb; line-height: 1.4; flex-grow: 1; }
+        .service-card h3 { color: var(--gold); font-size: 1.6rem; margin-bottom: 12px; z-index: 2; position: relative; }
+        .service-card p { font-size: 0.95rem; color: #bbb; line-height: 1.4; flex-grow: 1; z-index: 2; position: relative; }
 
         .gallery { background: #000; padding: 60px 5%; border-top: 1px solid #111; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
         .gallery-item { aspect-ratio: 16/9; background: #111; border: 1px solid #333; overflow: hidden; position: relative; }
-        .gallery-item video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .gallery-item video { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); z-index: 1;
+        }
 
         .cta-btn { 
             display: inline-block; margin-top: 30px; padding: 16px 45px; 
@@ -59,15 +68,15 @@
         <div class="services-grid">
             <div class="service-card">
                 <h3>בר מצווה ייחודית</h3>
-                <p>לא עוד מצגת סטנדרטית, אלא "שוס" ויזואלי שמשאיר את האורחים פעורי פה. רגע של הוקרה להורים והכנה מרגשת למצוות.</p>
+                <p>לא עוד מצגת סטנדרטית, אלא "שוס" ויזואלי שמשאיר את האורחים פעורי פה.</p>
             </div>
             <div class="service-card">
                 <h3>המחשת המורשת</h3>
-                <p>להפיח חיים במנהגים ובסיפורים של סבא וסבתא. המחשה ויזואלית המנגישה את ערכי העבר לילדים ולנכדים בצורה מרתקת.</p>
+                <p>להפיח חיים במנהגים ובסיפורים של סבא וסבתא.</p>
             </div>
             <div class="service-card">
                 <h3>מוסדות וישיבות</h3>
-                <p>הפקות יוקרה לדינרים. המחשת הצורך האמיתי בבניין וגרימת התורם להרגיש שותף אמת בנצח של המוסד.</p>
+                <p>הפקות יוקרה לדינרים. המחשת הצורך האמיתי בבניין הישיבה.</p>
             </div>
         </div>
     </section>
@@ -76,12 +85,13 @@
         <h2 style="text-align: center; color: var(--gold); font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 30px;">הצצה ליצירה</h2>
         <div class="gallery-grid">
             <div class="gallery-item">
+                <div class="video-overlay"></div>
                 <video autoplay muted loop playsinline>
-                    <source src="bar-mitzvah.mp4" type="video/mp4">
+                    <source src="assets/וידאו_בר_מצווה_מוכן.mp4" type="video/mp4">
                 </video>
             </div>
-            <div class="gallery-item"><video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video></div>
-            <div class="gallery-item"><video autoplay muted loop playsinline><source src="faith4.mp4" type="video/mp4"></video></div>
+            <div class="gallery-item"><div class="video-overlay"></div><video autoplay muted loop playsinline><source src="faith2.mp4" type="video/mp4"></video></div>
+            <div class="gallery-item"><div class="video-overlay"></div><video autoplay muted loop playsinline><source src="faith4.mp4" type="video/mp4"></video></div>
         </div>
         <div style="text-align: center;">
             <a href="https://hotam.vip/forum" class="cta-btn">לבדיקת התאמה והזמנת הפקה</a>
