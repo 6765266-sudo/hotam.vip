@@ -12,78 +12,95 @@
         :root { --gold: #c5a059; --dark: #050505; }
         body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; scroll-behavior: smooth; }
         
+        /* מסך פתיחה - החותם הגדול והיוקרתי */
         .hero { 
             height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            text-align: center; background: radial-gradient(circle, #151515 0%, #000 100%); padding: 20px;
+            text-align: center; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); padding: 20px;
         }
-        .logo-main { cursor: pointer; transition: 0.5s; }
-        .logo-main:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--gold)); }
+        .main-seal {
+            width: clamp(250px, 40vw, 450px);
+            cursor: pointer; transition: 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            filter: drop-shadow(0 0 15px rgba(197, 160, 89, 0.3));
+            border: 3px solid var(--gold); border-radius: 20px;
+        }
+        .main-seal:hover { transform: scale(1.05); filter: drop-shadow(0 0 30px var(--gold)); }
         
-        .section { padding: 80px 10%; text-align: center; }
-        .section h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2.2rem; margin-bottom: 40px; }
+        .hero-title { margin-top: 30px; font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; letter-spacing: 6px; }
 
         /* גריד 6 הקוביות */
-        .services-grid { 
+        .services { padding: 100px 8%; max-width: 1400px; margin: 0 auto; }
+        .grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 20px; 
-            max-width: 1200px; 
-            margin: 0 auto;
-        }
-        .service-card { 
-            background: #111; border: 1px solid #222; padding: 0; transition: 0.4s; 
-            text-decoration: none; color: inherit; overflow: hidden; position: relative;
-            aspect-ratio: 16/10; display: flex; flex-direction: column; justify-content: flex-end;
-        }
-        .service-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .service-card h3 { 
-            background: rgba(0,0,0,0.7); color: var(--gold); margin: 0; padding: 15px; 
-            font-size: 1.3rem; z-index: 2; border-top: 1px solid var(--gold);
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
         }
         
-        .video-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .video-container video { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .card { 
+            background: #0a0a0a; border: 1px solid #1a1a1a; position: relative; 
+            aspect-ratio: 16/10; overflow: hidden; transition: 0.5s;
+            display: flex; align-items: flex-end; border-radius: 4px;
+        }
+        .card:hover { border-color: var(--gold); transform: translateY(-10px); }
+        
+        .card video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; transition: 0.6s; }
+        .card:hover video { opacity: 0.75; transform: scale(1.08); }
+        
+        .card-label { 
+            position: relative; z-index: 2; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.95)); 
+            padding: 25px; color: var(--gold); font-size: 1.5rem; font-weight: 700; border-top: 1px solid rgba(197, 160, 89, 0.2);
+        }
 
-        footer { padding: 30px; text-align: center; color: #333; font-size: 0.75rem; }
+        @media (max-width: 768px) {
+            .main-seal { width: 220px; }
+            .hero-title { font-size: 1.3rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        footer { padding: 50px; text-align: center; color: #222; font-size: 0.8rem; border-top: 1px solid #0f0f0f; }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <div class="logo-main" onclick="document.getElementById('services').scrollIntoView()">
-            <img src="favicon.png" alt="HOTAM VIP" style="width: 250px; border: 2px solid var(--gold); border-radius: 15px;">
-        </div>
-        <div style="margin-top: 20px; color: var(--gold); font-size: 1.2rem; font-weight: 200; letter-spacing: 5px;">לחץ לחתימה אישית</div>
+        <img src="favicon.png" class="main-seal" alt="HOTAM VIP" onclick="document.getElementById('services-area').scrollIntoView()">
+        <div class="hero-title">HOTAM VIP | חותם אישי. המחשה חיה.</div>
     </section>
 
-    <section class="section" id="services">
-        <h2>השירותים שלנו</h2>
-        <div class="services-grid">
+    <section id="services-area" class="services">
+        <div class="grid">
             
-            <a href="#video-1" class="service-card">
-                <div class="video-container">
-                    <video autoplay muted loop playsinline><source src="bar-mitzvah-film.mp4" type="video/mp4"></video>
-                </div>
-                <h3>בר מצווה עלילתי</h3>
-            </a>
+            <div class="card">
+                <video autoplay muted loop playsinline poster="favicon.png">
+                    <source src="bar-mitzvah.mp4" type="video/mp4">
+                </video>
+                <div class="card-label">בר מצווה עלילתי</div>
+            </div>
 
-            <a href="#video-2" class="service-card">
-                <div class="video-container">
-                    <video autoplay muted loop playsinline><source src="video1.mp4" type="video/mp4"></video>
-                </div>
-                <h3>מורשת וזיכרון</h3>
-            </a>
+            <div class="card">
+                <div class="card-label">מורשת וזיכרון</div>
+            </div>
 
-            <div class="service-card"><h3>בת מצווה מהסרטים</h3></div>
-            <div class="service-card"><h3>עסקים וסושיאל</h3></div>
-            <div class="service-card"><h3>מוסדות ועמותות</h3></div>
-            <div class="service-card"><h3>אירועים מיוחדים</h3></div>
+            <div class="card">
+                <div class="card-label">בת מצווה מהסרטים</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">עסקים וסושיאל</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">מוסדות ועמותות</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">אירועים מיוחדים</div>
+            </div>
 
         </div>
     </section>
 
     <footer>
-        &copy; 2026 HOTAM VIP | חותם - להמחיש את הרגש
+        &copy; 2026 HOTAM VIP | להשאיר חותם שמרגש את כולם
     </footer>
 
 </body>
