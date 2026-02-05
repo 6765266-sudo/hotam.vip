@@ -17,7 +17,6 @@
             overflow-x: hidden;
         }
 
-        /* ממרכז את הכל בדיוק באמצע המסך */
         .hero { 
             height: 100vh; 
             width: 100%;
@@ -29,10 +28,9 @@
             position: relative;
         }
 
-        /* נעילת גודל הלוגו שיהיה באמצע ולא יתפרס */
         .main-seal { 
-            width: 280px; /* גודל קבוע ויוקרתי */
-            max-width: 80%; /* מונע ממנו לצאת מהמסך בטלפון */
+            width: 280px;
+            max-width: 80%;
             height: auto;
             cursor: pointer; 
             transition: 0.6s ease-in-out;
@@ -92,19 +90,29 @@
 
     <section id="services-area" class="services">
         <div class="grid">
-            <a href="forum.html" class="card">
+            <a href="forum.html?type=bar-mitzvah" class="card">
                 <video autoplay muted loop playsinline><source src="bar-mitzvah.mp4" type="video/mp4"></video>
                 <div class="card-label">בר מצווה עלילתי</div>
             </a>
-            <a href="forum.html" class="card"><div class="card-label">מורשת וזיכרון</div></a>
-            <a href="forum.html" class="card"><div class="card-label">בת מצווה מהסרטים</div></a>
-            <a href="forum.html" class="card"><div class="card-label">עסקים וסושיאל</div></a>
-            <a href="forum.html" class="card"><div class="card-label">מוסדות ועמותות</div></a>
-            <a href="forum.html" class="card"><div class="card-label">אירועים מיוחדים</div></a>
+            <a href="forum.html?type=legacy" class="card">
+                <div class="card-label">מורשת וזיכרון</div>
+            </a>
+            <a href="forum.html?type=bat-mitzvah" class="card">
+                <div class="card-label">בת מצווה מהסרטים</div>
+            </a>
+            <a href="forum.html?type=business" class="card">
+                <div class="card-label">עסקים וסושיאל</div>
+            </a>
+            <a href="forum.html?type=institutions" class="card">
+                <div class="card-label">מוסדות ועמותות</div>
+            </a>
+            <a href="forum.html?type=special" class="card">
+                <div class="card-label">אירועים מיוחדים</div>
+            </a>
         </div>
 
         <div class="cta-area">
-            <a href="forum.html" class="forum-btn">לבדיקת התאמה והזמנת הפקה</a>
+            <a href="forum.html?type=general" class="forum-btn">לבדיקת התאמה והזמנת הפקה</a>
         </div>
     </section>
 
