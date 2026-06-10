@@ -17,87 +17,84 @@
         .btn-group { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 450px; margin: 0 auto; }
         .btn { padding: 22px; border: 1px solid #333; background: #0a0a0a; color: #fff; text-decoration: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s; border-radius: 4px; }
         .btn:hover { border-color: var(--gold); background: #111; color: var(--gold); }
-        .final-btn { background: var(--gold); color: #000 !important; font-weight: 800; border: none; padding: 25px 50px; text-decoration: none; display: inline-block; margin-top: 20px; }
-        
-        footer {
-            position: absolute; bottom: 20px; width: 100%; text-align: center; font-size: 0.8rem; color: #444;
-        }
+        .contact-form { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 450px; margin: 0 auto; }
+        .contact-form input { padding: 18px; border: 1px solid #333; background: #0a0a0a; color: #fff; font-size: 1.1rem; border-radius: 4px; font-family: 'Assistant', sans-serif; text-align: right; }
+        .contact-form input:focus { outline: none; border-color: var(--gold); }
+        .contact-form input::placeholder { color: #555; }
+        .submit-btn { background: var(--gold); color: #000; font-weight: 800; border: none; padding: 22px; font-size: 1.2rem; cursor: pointer; border-radius: 4px; font-family: 'Assistant', sans-serif; transition: 0.3s; }
+        .submit-btn:hover { opacity: 0.85; }
+        footer { position: absolute; bottom: 20px; width: 100%; text-align: center; font-size: 0.8rem; color: #444; }
         footer a { color: #444; text-decoration: none; margin: 0 10px; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 <div class="container">
+
     <div class="step active" id="step1">
-        <h2 id="dynamic-question">האם חשוב לך להעניק למשפחה נכס של זיכרון והיכרות עם השורשים שלהם?</h2>
+        <h2>האם חשוב לך להעניק למשפחה נכס של זיכרון והיכרות עם השורשים שלהם?</h2>
         <div class="btn-group">
-            <button class="btn" onclick="nextStep(1, 2)" id="opt1">זהו חיבור חשוב שאני רוצה להעניק לדורות הבאים</button>
-            <button class="btn" onclick="nextStep(1, 2)" id="opt2">אני רוצה להפוך את המורשת המשפחתית ליצירה חיה</button>
+            <button class="btn" onclick="nextStep(1,2)">זהו חיבור חשוב שאני רוצה להעניק לדורות הבאים</button>
+            <button class="btn" onclick="nextStep(1,2)">אני רוצה להפוך את המורשת המשפחתית ליצירה חיה</button>
             <button class="btn" onclick="showFail()">אני מחפש כרגע משהו פשוט ופחות רגשי</button>
         </div>
     </div>
 
     <div class="step" id="step2">
-        <h2 id="dynamic-question-2">איזו רמת תוצאה היית רוצה לקבל עבור ההפקה?</h2>
+        <h2>איזו רמת תוצאה היית רוצה לקבל עבור ההפקה?</h2>
         <div class="btn-group">
-            <button class="btn" onclick="nextStep(2, 3)">אני מחפש השקעה קולנועית מרגשת ואיכותית</button>
-            <button class="btn" onclick="nextStep(2, 3)">חשוב לי שהתוצאה תהיה מכובדת ובעלת עומק</button>
+            <button class="btn" onclick="nextStep(2,3)">אני מחפש השקעה קולנועית מרגשת ואיכותית</button>
+            <button class="btn" onclick="nextStep(2,3)">חשוב לי שהתוצאה תהיה מכובדת ובעלת עומק</button>
             <button class="btn" onclick="showFail()">אני מחפש פתרון בסיסי ומהיר בלבד</button>
         </div>
     </div>
 
     <div class="step" id="step3">
-        <h2 id="dynamic-success-title">נראה שאנחנו מדברים באותה שפה.</h2>
-        <p id="dynamic-success-text">נשמח להכיר את הפרטים לעומק כדי לבנות עבורכם את החותם המושלם.</p>
-        <a href="https://forms.gle/NXJvx1N89Vit1RfW6" class="btn final-btn">מעבר למילוי הפרטים בטופס הרשמי</a>
+        <h2>מעולה. נשמח ליצור קשר.</h2>
+        <p>השאירו שם ומספר טלפון ונחזור אליכם בהקדם.</p>
+        <form class="contact-form" onsubmit="submitForm(event)">
+            <input type="text" id="name" placeholder="שם מלא" required />
+            <input type="tel" id="phone" placeholder="מספר טלפון" required />
+            <button type="submit" class="submit-btn">שלחו פרטים ←</button>
+        </form>
+    </div>
+
+    <div class="step" id="step4">
+        <h2>תודה רבה!</h2>
+        <p>קיבלנו את פרטיכם ונחזור אליכם בהקדם האפשרי.</p>
+        <a href="test.html" class="btn">חזרה לדף הבית</a>
     </div>
 
     <div class="step" id="step-fail">
         <h2>תודה על פנייתך.</h2>
-        <p>נראה שהסגנון הקולנועי והמושקע של 'חותם' פחות מתאים למה שאתה מחפש כרגע. אנו מאחלים לך הצלחה רבה.</p>
+        <p>נראה שהסגנון הקולנועי של חותם פחות מתאים כרגע. מאחלים לך הצלחה רבה.</p>
         <a href="test.html" class="btn">חזרה לדף הבית</a>
     </div>
+
 </div>
-
 <footer>
-    <a href="#" onclick="alert('עסק זה נמצא בתקופת הקמה ופטור מחובת הנגשה מלאה בשלב זה. אנו עושים מאמצים להנגיש את התוכן לכלל האוכלוסייה. לכל שאלה ניתן לפנות אלינו בטלפון שבטופס.')">הצהרת נגישות</a>
+    <a href="#" onclick="alert('עסק זה נמצא בתקופת הקמה ופטור מחובת הנגשה מלאה בשלב זה.')">הצהרת נגישות</a>
 </footer>
-
-<script src="https://cdn.enable.co.il/licenses/enable-v2.min.js"></script>
-
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const type = urlParams.get('type');
-
-    if (type === 'business' || type === 'institutions') {
-        document.getElementById('dynamic-question').innerText = "האם חשוב לך לייצר אימפקט עוצמתי שיחבר את הקהל לחזון ולערכים שלכם?";
-        document.getElementById('opt1').innerText = "אני מחפש יצירה שתעורר השראה ותניע לפעולה";
-        document.getElementById('opt2').innerText = "חשוב לי שהמותג יוצג ברמה הגבוהה והיוקרתית ביותר";
-        document.getElementById('dynamic-question-2').innerText = "מהי רמת ההפקה הנדרשת עבור העסק/המוסד שלכם?";
-        document.getElementById('dynamic-success-text').innerText = "נשמח לבנות עבורכם אסטרטגיה ויזואלית שתשאיר חותם על הקהל שלכם.";
-    } 
-    else if (type === 'bar-mitzvah' || type === 'bat-mitzvah') {
-        document.getElementById('dynamic-question').innerText = "האם תרצו להעניק לילד/ה חוויה של פעם בחיים שתישאר כמזכרת נצח?";
-        document.getElementById('opt1').innerText = "אני רוצה להפוך את האירוע לסרט עלילתי בלתי נשכח";
-        document.getElementById('opt2').innerText = "חשוב לי לתעד את הרגע הזה בצורה אמנותית ומרגשת";
-        document.getElementById('dynamic-success-title').innerText = "מזל טוב! אנחנו כבר מתרגשים איתכם.";
-    }
-    else if (type === 'special') {
-        document.getElementById('dynamic-question').innerText = "האם מדובר באירוע בעל משמעות מיוחדת שתרצו לנצור ולהנציח ברמה גבוהה?";
-        document.getElementById('opt1').innerText = "כן, זהו רגע היסטורי עבורנו שחייב תיעוד קולנועי";
-        document.getElementById('opt2').innerText = "אנחנו רוצים מזכרת עוצמתית שתעביר את האווירה והרגש";
-        document.getElementById('dynamic-success-text').innerText = "נשמח לתת לאירוע המיוחד שלכם את הבמה המקצועית ביותר.";
-    }
-
-    function nextStep(current, next) {
-        document.getElementById('step' + current).classList.remove('active');
-        document.getElementById('step' + next).classList.add('active');
-    }
-    function showFail() {
-        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-        document.getElementById('step-fail').classList.add('active');
-    }
+function nextStep(current, next) {
+    document.getElementById('step' + current).classList.remove('active');
+    document.getElementById('step' + next).classList.add('active');
+}
+function showFail() {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-fail').classList.add('active');
+}
+function submitForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    fetch('https://formspree.io/f/xpwzgqkb', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone })
+    });
+    nextStep(3, 4);
+}
 </script>
 </body>
 </html>
