@@ -32,6 +32,20 @@
         .contact-section a { color: var(--gold); font-size: 1.1rem; text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 3px; }
         .contact-section a:hover { opacity: 0.7; }
         @media (max-width: 850px) { .grid { grid-template-columns: 1fr; } .main-seal { width: 220px; } .hero-tagline { font-size: 1.2rem; } }
+        .vanish-line {
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 2px;
+            color: var(--gold);
+            animation: pulse-gold 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse-gold {
+            0%   { opacity: 1;    text-shadow: 0 0 8px rgba(197,160,89,0.6); }
+            50%  { opacity: 0.45; text-shadow: none; }
+            100% { opacity: 1;    text-shadow: 0 0 8px rgba(197,160,89,0.6); }
+        }
     </style>
 </head>
 <body>
@@ -47,7 +61,7 @@
             <div style="max-width:700px; margin:0 auto 80px; text-align:center;">
                 <p style="color:#fff; font-family:'Playfair Display', serif; font-size:2rem; font-weight:700; margin:0 0 25px; letter-spacing:2px;">יש סיפור שרק אתה יודע.</p>
                 <p style="color:#c5a059; font-family:'Assistant', sans-serif; font-size:1.1rem; font-weight:200; margin:0 0 12px; letter-spacing:3px;">מנהג שעובר בשושלת. מעשה גבורה שסבא סיפר פעם אחת.</p>
-                <p style="color:#888; font-family:'Assistant', sans-serif; font-size:1rem; font-weight:200; margin:0; letter-spacing:2px;">רגע שאם לא תעשה משהו — יעלם לעולמים.</p>
+                <p class="vanish-line">רגע שאם לא תעשה משהו — יעלם לעולמים.</p>
             </div>
             <a href="forum.html" class="forum-btn" style="padding:20px 40px;">← רוצים להשאיר חותם?</a>
         </div>
