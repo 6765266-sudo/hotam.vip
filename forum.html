@@ -3,98 +3,68 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>בדיקת התאמה | חותם</title>
+    <title>השאירו פרטים | חותם VIP</title>
     <link rel="icon" type="image/png" href="gold-seal.png">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --dark: #050505; }
-        body, html { margin: 0; padding: 0; background: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; height: 100vh; overflow: hidden; }
-        .container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; box-sizing: border-box; }
-        .step { display: none; max-width: 700px; animation: fadeIn 0.8s; }
-        .step.active { display: block; }
-        h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin-bottom: 30px; line-height: 1.4; }
-        p { color: #aaa; font-size: 1.1rem; margin-bottom: 40px; }
-        .btn-group { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 450px; margin: 0 auto; }
-        .btn { padding: 22px; border: 1px solid #333; background: #0a0a0a; color: #fff; text-decoration: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s; border-radius: 4px; }
-        .btn:hover { border-color: var(--gold); background: #111; color: var(--gold); }
-        .contact-form { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 450px; margin: 0 auto; }
-        .contact-form input { padding: 18px; border: 1px solid #333; background: #0a0a0a; color: #fff; font-size: 1.1rem; border-radius: 4px; font-family: 'Assistant', sans-serif; text-align: right; }
-        .contact-form input:focus { outline: none; border-color: var(--gold); }
-        .contact-form input::placeholder { color: #555; }
-        .submit-btn { background: var(--gold); color: #000; font-weight: 800; border: none; padding: 22px; font-size: 1.2rem; cursor: pointer; border-radius: 4px; font-family: 'Assistant', sans-serif; transition: 0.3s; }
-        .submit-btn:hover { opacity: 0.85; }
-        footer { position: absolute; bottom: 20px; width: 100%; text-align: center; font-size: 0.8rem; color: #444; }
-        footer a { color: #444; text-decoration: none; margin: 0 10px; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        :root { --gold: #c5a059; --dark: #0a0a0a; }
+        * { box-sizing: border-box; }
+        body, html { margin: 0; padding: 0; background-color: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .container { width: 100%; max-width: 480px; padding: 60px 30px; text-align: center; }
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; margin: 0 0 10px; letter-spacing: 2px; }
+        .sub { color: #aaa; font-size: 1rem; font-weight: 200; margin: 0 0 40px; letter-spacing: 1px; }
+        .form-group { margin-bottom: 20px; text-align: right; }
+        label { display: block; color: var(--gold); font-size: 0.9rem; margin-bottom: 6px; letter-spacing: 1px; }
+        input { width: 100%; padding: 16px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Assistant', sans-serif; font-size: 1rem; outline: none; transition: border 0.3s; }
+        input:focus { border-color: var(--gold); }
+        .submit-btn { width: 100%; margin-top: 10px; padding: 18px; background: transparent; border: 2px solid var(--gold); color: var(--gold); font-family: 'Assistant', sans-serif; font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background: var(--gold); color: #000; }
+        .back { display: block; margin-top: 30px; color: #555; text-decoration: none; font-size: 0.9rem; }
+        .back:hover { color: var(--gold); }
+        #success-area { display: none; }
+        #success-area h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin-bottom: 15px; }
+        #success-area p { color: #aaa; font-size: 1rem; margin-bottom: 30px; }
+        #success-area a { display: inline-block; padding: 14px 40px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-weight: 700; }
     </style>
 </head>
 <body>
-<div class="container">
-
-    <div class="step active" id="step1">
-        <h2>האם חשוב לך להעניק למשפחה נכס של זיכרון והיכרות עם השורשים שלהם?</h2>
-        <div class="btn-group">
-            <button class="btn" onclick="nextStep(1,2)">זהו חיבור חשוב שאני רוצה להעניק לדורות הבאים</button>
-            <button class="btn" onclick="nextStep(1,2)">אני רוצה להפוך את המורשת המשפחתית ליצירה חיה</button>
-            <button class="btn" onclick="showFail()">אני מחפש כרגע משהו פשוט ופחות רגשי</button>
+    <div class="container">
+        <div id="form-area">
+            <h1>נשמח לחזור אליך</h1>
+            <p class="sub">השאירו שם ומספר — ונחזור אליכם בהקדם.</p>
+            <form id="contact-form" action="https://formspree.io/f/xpqelbdr" method="POST">
+                <div class="form-group">
+                    <label>שם מלא</label>
+                    <input type="text" name="name" placeholder="ישראל ישראלי" required />
+                </div>
+                <div class="form-group">
+                    <label>טלפון</label>
+                    <input type="tel" name="phone" placeholder="050-0000000" required />
+                </div>
+                <button type="submit" class="submit-btn">👆 שלח פרטים</button>
+            </form>
+            <a href="index.html" class="back">← חזרה לדף הבית</a>
+        </div>
+        <div id="success-area">
+            <h2>תודה על פנייתך.</h2>
+            <p>נחזור אליך בהקדם. 🕯️</p>
+            <a href="index.html">חזרה לדף הבית</a>
         </div>
     </div>
-
-    <div class="step" id="step2">
-        <h2>איזו רמת תוצאה היית רוצה לקבל עבור ההפקה?</h2>
-        <div class="btn-group">
-            <button class="btn" onclick="nextStep(2,3)">אני מחפש השקעה קולנועית מרגשת ואיכותית</button>
-            <button class="btn" onclick="nextStep(2,3)">חשוב לי שהתוצאה תהיה מכובדת ובעלת עומק</button>
-            <button class="btn" onclick="showFail()">אני מחפש פתרון בסיסי ומהיר בלבד</button>
-        </div>
-    </div>
-
-    <div class="step" id="step3">
-        <h2>מעולה. נשמח ליצור קשר.</h2>
-        <p>השאירו שם ומספר טלפון ונחזור אליכם בהקדם.</p>
-        <form class="contact-form" onsubmit="submitForm(event)">
-            <input type="text" id="name" placeholder="שם מלא" required />
-            <input type="tel" id="phone" placeholder="מספר טלפון" required />
-            <button type="submit" class="submit-btn">שלחו פרטים ←</button>
-        </form>
-    </div>
-
-    <div class="step" id="step4">
-        <h2>תודה רבה!</h2>
-        <p>קיבלנו את פרטיכם ונחזור אליכם בהקדם האפשרי.</p>
-        <a href="test.html" class="btn">חזרה לדף הבית</a>
-    </div>
-
-    <div class="step" id="step-fail">
-        <h2>תודה על פנייתך.</h2>
-        <p>נראה שהסגנון הקולנועי של חותם פחות מתאים כרגע. מאחלים לך הצלחה רבה.</p>
-        <a href="test.html" class="btn">חזרה לדף הבית</a>
-    </div>
-
-</div>
-<footer>
-    <a href="#" onclick="alert('עסק זה נמצא בתקופת הקמה ופטור מחובת הנגשה מלאה בשלב זה.')">הצהרת נגישות</a>
-</footer>
-<script>
-function nextStep(current, next) {
-    document.getElementById('step' + current).classList.remove('active');
-    document.getElementById('step' + next).classList.add('active');
-}
-function showFail() {
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step-fail').classList.add('active');
-}
-function submitForm(e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    fetch('https://formspree.io/f/xpwzgqkb', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone })
-    });
-    nextStep(3, 4);
-}
-</script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: { 'Accept': 'application/json' }
+            }).then(function(r) {
+                if (r.ok) {
+                    document.getElementById('form-area').style.display = 'none';
+                    document.getElementById('success-area').style.display = 'block';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
