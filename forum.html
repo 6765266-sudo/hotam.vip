@@ -34,15 +34,15 @@
             <p class="sub">השאירו שם ומספר — ונחזור אליכם בהקדם.</p>
             <form id="contact-form" action="https://formspree.io/f/xpqelbdr" method="POST">
                 <div class="form-group">
-                    <label>שם מלא</label>
-                    <input type="text" name="name" placeholder="ישראל ישראלי" required />
+                    <label for="full-name">שם מלא</label>
+                    <input id="full-name" autocomplete="name" type="text" name="name" placeholder="ישראל ישראלי" required />
                 </div>
                 <div class="form-group">
-                    <label>טלפון</label>
-                    <input type="tel" name="phone" placeholder="050-0000000" required />
+                    <label for="phone">טלפון</label>
+                    <input id="phone" autocomplete="tel" dir="ltr" type="tel" name="phone" placeholder="050-0000000" required />
                 </div>
                 <button type="submit" class="submit-btn">👆 שלח פרטים</button>
-            </form>
+            <p id="form-feedback" role="status" aria-live="polite" style="color:#ddd;line-height:1.6"></p></form>
             <a href="index.html" class="back">← חזרה לדף הבית</a>
         </div>
         <div id="success-area">
@@ -52,18 +52,22 @@
         </div>
     </div>
     <script>
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
-            }).then(function(r) {
-                if (r.ok) {
-                    document.getElementById('form-area').style.display = 'none';
-                    document.getElementById('success-area').style.display = 'block';
-                }
-            });
+            const button = this.querySelector('button');
+            const feedback = document.getElementById('form-feedback');
+            button.disabled = true;
+            feedback.textContent = 'שולחים את הפרטים…';
+            try {
+                const response = await fetch(this.action, {method:'POST', body:new FormData(this), headers:{Accept:'application/json'}});
+                if (!response.ok) throw new Error('Submission failed');
+                document.getElementById('form-area').style.display = 'none';
+                document.getElementById('success-area').style.display = 'block';
+                document.querySelector('#success-area h2').setAttribute('tabindex','-1');
+                document.querySelector('#success-area h2').focus();
+            } catch {
+                feedback.textContent = 'לא התקבל אישור לשליחה. הפרטים נשמרו כאן; אפשר לנסות שוב, או לפנות בטלפון 052-7687171.';
+            } finally { button.disabled = false; }
         });
     </script>
 </body>
