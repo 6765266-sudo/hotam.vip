@@ -39,9 +39,16 @@ Browser inspection covered the rendered desktop layout and a 390px iframe viewpo
 
 Thumbnails failed to load in this browser; the local brand fallback rendered instead of broken images. The hero uses an existing repository illustration and explicitly identifies it as illustrative. Contact submission feedback was repaired in code; no real inquiry was sent, so receipt at Formspree/email is not verified. Existing DNS, CNAME, video inventory and media bytes are untouched.
 
-## Delivery status
+## Delivery status — current
 
-Production is unchanged. Candidate is committed locally as 338e77e before this status addendum. Direct Git push lacked host credentials. The connected GitHub integration rejected create-tree with 403 Resource not accessible by integration. No alternate mutation was attempted after that denial. Installation 154615782 has selected-repository access and lists NEXORA, TRIPLIO-CANONICAL and SARI-LEGAL only; hotam.vip is not selected. The owner must add hotam.vip to that installation before a remote commit/PR/deployment can proceed. No domain/DNS/hosting changes were attempted. Source package is retained in the existing website Drive folder; no user download is required.
+PR #8 is OPEN / DRAFT and its initial remote candidate is 24f78e968e7a08dfee99a6142b3c658a4fc2ee57. Connector reads verified the exact candidate and repository write/admin permissions on 2026-11-01. The GitHub App repository selection was corrected by the Founder; no further repository-selection action is requested.
 
+The earlier create-tree 403 and missing local Git credentials are historical. They do not describe the current access state. The remote draft PR was subsequently created successfully. Production remains unchanged; merge and deployment are not authorized by this review.
 
-Access update: Founder saved the existing GitHub App installation selection. Connector readback now includes 6765266-sudo/hotam.vip alongside the three previously selected repositories. The previous 403 is historical; remote write and PR creation must be verified before claiming persistence. Production remains unchanged until a separate deployment decision.
+## Focused review — 2026-11-01
+
+The five changed source files were compared by Git blob SHA against the exact remote initial candidate before editing. Local Git history has a different intermediate documentation commit; matching file content is not described as matching local HEAD.
+
+Observed defect: when clipboard access failed, the share action offered only a different YouTube URL. The candidate now exposes and selects the actual site film-selection URL in a labelled read-only field for manual copying. Search singular feedback and the collection-load failure message were also corrected (the hero does not contain a direct film).
+
+Review evidence and remaining limits are recorded in docs/HOTAM_REVIEW_20261101.md. Synthetic form checks do not prove Formspree delivery; no real inquiry is sent. No rights-pending articles, unreleased films/music, DNS or analytics configuration changes are included.
