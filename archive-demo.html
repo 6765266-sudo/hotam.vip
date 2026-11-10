@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דמו הארכיון | חותם VIP</title>
+<meta name="description" content="הדגמה של מסלול הקריאה בארכיון חותם. ללא רכישה או הרשמה.">
+<link rel="icon" href="gold-seal.png">
+<link rel="stylesheet" href="hotam.css">
+<style>
+body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); }
+.demo { width: min(760px, 92%); margin: 0 auto; padding: clamp(1.6rem, 5vw, 4rem) 0; }
+.demo nav { margin-bottom: 1.8rem; }
+.demo h1 { font-size: clamp(2.1rem, 7vw, 4rem); margin-bottom: .65rem; }
+.demo h2 { font-size: clamp(1.75rem, 5vw, 2.6rem); }
+.demo .label { color: #f3d98e; font-size: .9rem; }
+.demo .steps { display: flex; flex-wrap: wrap; gap: .45rem 1rem; padding: 0; margin: 1.3rem 0; list-style: none; color: #c3c8c1; font-size: .88rem; }
+.demo .steps [aria-current="step"] { color: #f3d98e; font-weight: bold; }
+.demo .panel { background: #18221b; border: 1px solid #64715d; padding: clamp(1.1rem, 5vw, 2.4rem); border-radius: .7rem; }
+.demo .actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.5rem; }
+.demo .back { background: transparent; border: 1px solid #7d8876; color: #f5f1e8; }
+.demo details { padding: .65rem 0; border-top: 1px solid #64715d; }
+.demo summary { cursor: pointer; font-weight: bold; }
+.demo a:not(.button) { text-decoration: underline; text-underline-offset: .16em; }
+.demo [hidden] { display: none; }
+</style>
+</head>
+<body>
+<main class="demo">
+<nav aria-label="ניווט"><a href="./#archive">חזרה לארכיון חותם</a></nav>
+<p class="eyebrow label">חותם VIP · ארכיון ושורשים</p>
+<h1>דמו הארכיון</h1>
+<p>אפשר לעבור כאן במסלול של הקורא, מהטעימה ועד פתיחת חבילת קריאה. אין חיוב או הרשמה.</p>
+<ol class="steps" aria-label="שלבי ההדגמה">
+<li id="step-preview" aria-current="step">1. טעימה</li>
+<li id="step-payment">2. תשלום בדמה</li>
+<li id="step-reading">3. תצוגת קריאה</li>
+</ol>
+<section class="panel" id="preview" aria-labelledby="preview-title">
+<p class="label">חבילת הדגמה · בודפשט, 1925 ו־1931</p>
+<h2 id="preview-title" tabindex="-1">שני ביקורים של הרבי מקרעטשניף</h2>
+<p>שני דיווחים מעיתונות התקופה מתארים ביקורים בבודפשט, בהפרש של שש שנים. בדמו הזה שני הפריטים מופיעים בחבילה אחת.</p>
+<p><strong>30 ₪</strong> · מחיר להמחשה</p>
+<div class="actions"><button class="button button-gold" type="button" data-next="payment">המשך לתשלום בדמה</button></div>
+<noscript><p>כדי לעבור לשלבי ההדגמה הבאים יש להפעיל JavaScript בדפדפן.</p></noscript>
+</section>
+<section class="panel" id="payment" aria-labelledby="payment-title" hidden>
+<h2 id="payment-title" tabindex="-1">אישור תשלום בדמה</h2>
+<p>בחבילת הדוגמה שני פריטים. הסכום המוצג הוא 30 ₪ להמחשה בלבד. בלחיצה ייפתח מסך הקריאה.</p>
+<div class="actions"><button class="button button-gold" type="button" data-next="reading">אישור בדמה</button><button class="button back" type="button" data-next="preview">חזרה לטעימה</button></div>
+</section>
+<section class="panel" id="reading" aria-labelledby="reading-title" hidden>
+<p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
+<h2 id="reading-title" tabindex="-1">חבילת הקריאה בדמה</h2>
+<p>אפשר לפתוח כל אחד משני פריטי הדוגמה. נוסחי הקריאה המלאים יופיעו בחנות לאחר אישורם לפרסום.</p>
+<details><summary>קרעטשניף בבודפשט · 1925</summary><p>דוגמה לתצוגה של כתבה ראשונה בחבילה, עם כותרת, שנה ומקום.</p></details>
+<details><summary>קרעטשניף בבודפשט · 1931</summary><p>דוגמה לתצוגה של ידיעה נוספת שנכללת באותה חבילה.</p></details>
+<div class="actions"><button class="button back" type="button" data-next="preview">התחל מחדש</button></div>
+</section>
+</main>
+<script>
+const panels = Array.from(document.querySelectorAll('.demo .panel'));
+const steps = Array.from(document.querySelectorAll('.demo .steps li'));
+
+document.querySelectorAll('[data-next]').forEach(button => {
+  button.addEventListener('click', () => {
+    const id = button.dataset.next;
+    panels.forEach(panel => { panel.hidden = panel.id !== id; });
+    steps.forEach(step => {
+      if (step.id === 'step-' + id) step.setAttribute('aria-current', 'step');
+      else step.removeAttribute('aria-current');
+    });
+    document.getElementById(id + '-title').focus();
+  });
+});
+</script>
+</body>
+</html>
