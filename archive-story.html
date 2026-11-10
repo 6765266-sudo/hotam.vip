@@ -26,6 +26,11 @@ body{background:#131a15}.public-reader{width:min(52rem,92%);margin:auto;padding:
 <nav aria-label="ניווט"><a href="./">לאתר חותם</a><a href="archive.html#catalog">למאגר הכתבות</a></nav>
 <p class="eyebrow" id="story-meta"></p><h1 id="story-title"></h1>
 <article class="story-sample"><p id="story-teaser"></p></article>
+<figure id="nadvorna-source" hidden>
+<a href="https://rijha.org/wp-content/uploads/voiceandherald/volumes-1933/12.01.1933.pdf#page=1"><img data-src="assets/hotam-nadvorna-herald-1933-thumb.webp" width="300" alt="שער The Jewish Herald מ־1 בדצמבר 1933" loading="lazy"></a>
+<figcaption>The Jewish Herald, 1 בדצמבר 1933. <span lang="en" dir="ltr">Courtesy of the Beryl and Chaya Segal Archives, Rhode Island Jewish Historical Association.</span></figcaption>
+<p><a href="https://rijha.org/wp-content/uploads/voiceandherald/volumes-1933/12.01.1933.pdf#page=1">לגיליון המקורי בארכיון</a></p>
+</figure>
 <p id="story-price" class="lead"></p>
 <p>הקטלוג פתוח לעיון ולפנייה לצוות חותם. המחירים מוצגים לעיון; רכישה מקוונת אינה זמינה כרגע.</p>
 <footer><a class="button button-gold" href="forum.html">לפנייה לצוות חותם</a><p>בשיחה עם הצוות ציינו את שם הכתבה שמעניינת אתכם.</p><a href="archive.html#catalog">בחזרה למאגר הכתבות</a></footer>
@@ -43,6 +48,12 @@ if(current){
  document.getElementById('story-teaser').textContent=current.teaser;
  document.getElementById('story-price').textContent=current.priceLabel;
  document.title=current.title+' | חותם VIP';
+ if (current.slug === 'nadvorna-wedding') {
+  const figure = document.getElementById('nadvorna-source');
+  const image = figure.querySelector('img');
+  image.src = image.dataset.src;
+  figure.hidden = false;
+ }
 }else{
  document.getElementById('story-title').textContent='הכתבה המבוקשת לא נמצאה';
  document.getElementById('story-teaser').textContent='אפשר לבחור כתבה מתוך מאגר הכתבות.';
