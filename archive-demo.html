@@ -40,15 +40,16 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 </head>
 <body>
 <main class="demo">
-<nav aria-label="ניווט"><a href="archive.html">חזרה לארכיון חותם</a> · <a href="archive.html#catalog">למאגר הכתבות</a></nav>
+<nav aria-label="ניווט"><a href="./">חזרה לאתר חותם</a> · <a href="archive.html#catalog">למאגר הכתבות</a></nav>
 <p class="eyebrow label">חותם VIP · ארכיון ושורשים</p>
 <h1>דמו הארכיון</h1>
 <p>אפשר לעבור כאן במסלול של הקורא, מהטעימה ועד פתיחת חבילת קריאה. אין חיוב או הרשמה.</p>
 <ol class="steps" aria-label="שלבי ההדגמה">
 <li id="step-preview" aria-current="step">1. טעימה</li>
 <li id="step-payment">2. תשלום בדמה</li>
-<li id="step-intro">3. פתיח ואישורים</li>
-<li id="step-reading">4. תצוגת קריאה</li>
+<li id="step-delivery">3. קישור קריאה</li>
+<li id="step-intro">4. פתיח ואישורים</li>
+<li id="step-reading">5. תצוגת קריאה</li>
 </ol>
 <noscript><style>#preview{display:none}</style><p>כדי לפתוח כתבה בדמו, יש להפעיל JavaScript בדפדפן. <a href="archive.html#catalog">חזרה למאגר הכתבות</a></p></noscript>
 <section class="panel" id="missing-story" hidden><h2 id="missing-story-title" tabindex="-1">הדמו הזה לא נמצא</h2><p><a href="archive.html#catalog">לבחירת כתבה ממאגר הכתבות</a></p></section>
@@ -62,8 +63,15 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 </section>
 <section class="panel" id="payment" aria-labelledby="payment-title" hidden>
 <h2 id="payment-title" tabindex="-1">אישור תשלום בדמה</h2>
-<p id="payment-description">בחבילת הדוגמה שני פריטים. הסכום המוצג הוא 30 ₪ להמחשה בלבד. לאחר האישור יוצגו הפתיח ושני אישורי הקריאה.</p>
-<div class="actions"><button class="button button-gold" type="button" data-next="intro">אישור בדמה</button><button class="button back" type="button" data-next="preview">חזרה לטעימה</button></div>
+<p id="payment-description">בחבילת הדוגמה שני פריטים. הסכום המוצג הוא 30 ₪ להמחשה בלבד. אחרי האישור יוצג קישור הקריאה, כפי שיופיע במייל לקונה.</p>
+<div class="actions"><button class="button button-gold" type="button" data-next="delivery">אישור בדמה</button><button class="button back" type="button" data-next="preview">חזרה לטעימה</button></div>
+</section>
+<section class="panel" id="delivery" aria-labelledby="delivery-title" hidden>
+<p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
+<h2 id="delivery-title" tabindex="-1">קישור הקריאה שלך</h2>
+<p>במסלול הרכישה הקונה יקבל קבלה וקישור אישי במייל. לחיצה על הקישור תפתח את מסך הכניסה לקריאה.</p>
+<p>כאן ההודעה מוצגת בתוך הדמו. לא נשלח מייל.</p>
+<div class="actions"><button class="button button-gold" type="button" data-next="intro">פתיחת קישור הקריאה</button><button class="button back" type="button" data-next="payment">חזרה לתשלום בדמה</button></div>
 </section>
 <section class="panel" id="intro" aria-labelledby="intro-title" hidden>
 <p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
@@ -97,13 +105,13 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <label for="confirm-notice"><input id="confirm-notice" type="checkbox" required><span>קראתי והבנתי שהגישה אישית ושיש לפנות מראש לבקשת רשות לפרסום חוזר.</span></label>
 </div>
 <p id="intro-status" role="status">אפשר לסמן את אישור הפתיח אחרי שעוברים על ארבעת המסכים, או לקרוא את חלופת הטקסט.</p>
-<div class="actions"><button class="button button-gold" id="open-reading" type="submit" disabled>פתיחת הכתבות</button><button class="button back" type="button" data-next="payment">חזרה לתשלום בדמה</button></div>
+<div class="actions"><button class="button button-gold" id="open-reading" type="submit" disabled>לקריאת הטעימה בדמו</button><button class="button back" type="button" data-next="payment">חזרה לתשלום בדמה</button></div>
 </form>
 </section>
 <section class="panel" id="reading" aria-labelledby="reading-title" hidden>
 <p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
 <h2 id="reading-title" tabindex="-1">חבילת הקריאה בדמה</h2>
-<p id="reading-description">אפשר לפתוח כל אחד משני פריטי הדוגמה. נוסחי הקריאה המלאים יופיעו בחנות לאחר אישורם לפרסום.</p>
+<p id="reading-description">זהו דמו ציבורי של מסלול הקנייה. שני הפריטים כאן מציגים טעימות. נוסחי הקריאה והסריקות המלאות נשמרים לתצוגה הפרטית.</p>
 <div id="reading-items"><details><summary>קרעטשניף בבודפשט · 1925</summary><p>דוגמה לתצוגה של כתבה ראשונה בחבילה, עם כותרת, שנה ומקום.</p></details>
 <details><summary>קרעטשניף בבודפשט · 1931</summary><p>דוגמה לתצוגה של ידיעה נוספת שנכללת באותה חבילה.</p></details></div>
 <div class="actions"><button class="button back" type="button" data-next="preview">התחל מחדש</button></div>
@@ -148,13 +156,13 @@ function loadStory() {
   document.getElementById('preview-meta').textContent = 'כתבת הדגמה · ' + story.meta;
   document.getElementById('preview-title').textContent = story.title;
   document.getElementById('preview-teaser').textContent = story.teaser;
-  document.getElementById('payment-description').textContent = 'הסכום המוצג הוא 30 ₪ להמחשה בלבד. לאחר האישור יוצגו הפתיח ושני אישורי הקריאה.';
+  document.getElementById('payment-description').textContent = 'הסכום המוצג הוא 30 ₪ להמחשה בלבד. אחרי האישור יוצג קישור הקריאה, כפי שיופיע במייל לקונה.';
   document.getElementById('reading-title').textContent = story.title;
-  document.getElementById('reading-description').textContent = 'טעימת קריאה בדמו. נוסח הכתבה המלא יוצג לאחר שיאושר לפרסום.';
+  document.getElementById('reading-description').textContent = 'טעימת קריאה בדמו הציבורי. נוסח הקריאה המלא והסריקה נשמרים לתצוגה הפרטית.';
   const detail = document.createElement('p');
   detail.textContent = story.excerpt;
   document.getElementById('reading-items').replaceChildren(detail);
-  document.getElementById('open-reading').textContent = 'פתיחת הכתבה בדמו';
+  document.getElementById('open-reading').textContent = 'לקריאת הטעימה בדמו';
 }
 loadStory();
 
