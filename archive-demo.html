@@ -40,7 +40,7 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 </head>
 <body>
 <main class="demo">
-<nav aria-label="ניווט"><a href="archive.html">חזרה לארכיון חותם</a> · <a href="archive.html#catalog">לכל 22 הכותרות</a></nav>
+<nav aria-label="ניווט"><a href="archive.html">חזרה לארכיון חותם</a> · <a href="archive.html#catalog">למאגר הכתבות</a></nav>
 <p class="eyebrow label">חותם VIP · ארכיון ושורשים</p>
 <h1>דמו הארכיון</h1>
 <p>אפשר לעבור כאן במסלול של הקורא, מהטעימה ועד פתיחת חבילת קריאה. אין חיוב או הרשמה.</p>
@@ -50,17 +50,19 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <li id="step-intro">3. פתיח ואישורים</li>
 <li id="step-reading">4. תצוגת קריאה</li>
 </ol>
+<noscript><style>#preview{display:none}</style><p>כדי לפתוח כתבה בדמו, יש להפעיל JavaScript בדפדפן. <a href="archive.html#catalog">חזרה למאגר הכתבות</a></p></noscript>
+<section class="panel" id="missing-story" hidden><h2 id="missing-story-title" tabindex="-1">הדמו הזה לא נמצא</h2><p><a href="archive.html#catalog">לבחירת כתבה ממאגר הכתבות</a></p></section>
 <section class="panel" id="preview" aria-labelledby="preview-title">
-<p class="label">חבילת הדגמה · בודפשט, 1925 ו־1931</p>
+<p class="label" id="preview-meta">חבילת הדגמה · בודפשט, 1925 ו־1931</p>
 <h2 id="preview-title" tabindex="-1">שני ביקורים של הרבי מקרעטשניף</h2>
-<p>שני דיווחים מעיתונות התקופה מתארים ביקורים בבודפשט, בהפרש של שש שנים. בדמו הזה שני הפריטים מופיעים בחבילה אחת.</p>
+<p id="preview-teaser">שני דיווחים מעיתונות התקופה מתארים ביקורים בבודפשט, בהפרש של שש שנים. בדמו הזה שני הפריטים מופיעים בחבילה אחת.</p>
 <p><strong>30 ₪</strong> · מחיר להמחשה</p>
 <div class="actions"><button class="button button-gold" type="button" data-next="payment">המשך לתשלום בדמה</button></div>
-<noscript><p>כדי לעבור לשלבי ההדגמה הבאים יש להפעיל JavaScript בדפדפן.</p></noscript>
+
 </section>
 <section class="panel" id="payment" aria-labelledby="payment-title" hidden>
 <h2 id="payment-title" tabindex="-1">אישור תשלום בדמה</h2>
-<p>בחבילת הדוגמה שני פריטים. הסכום המוצג הוא 30 ₪ להמחשה בלבד. לאחר האישור יוצגו הפתיח ושני אישורי הקריאה.</p>
+<p id="payment-description">בחבילת הדוגמה שני פריטים. הסכום המוצג הוא 30 ₪ להמחשה בלבד. לאחר האישור יוצגו הפתיח ושני אישורי הקריאה.</p>
 <div class="actions"><button class="button button-gold" type="button" data-next="intro">אישור בדמה</button><button class="button back" type="button" data-next="preview">חזרה לטעימה</button></div>
 </section>
 <section class="panel" id="intro" aria-labelledby="intro-title" hidden>
@@ -87,7 +89,7 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <div class="reading-notice" aria-labelledby="reading-notice-title">
 <h3 id="reading-notice-title">בקשה כלפי שמיא</h3>
 <p>הגישה דרך חותם מיועדת לקריאה אישית. אם תרצו לפרסם מחדש חומר שקיבלתם מחותם, גם בחוברת או באתר, פנו מראש לבקשת רשות. אם נוכל לאשר את השימוש, נסכם את התנאים ואת התשלום מראש.</p>
-<p><a href="mailto:contact@hotam.vip?subject=%D7%97%D7%95%D7%AA%D7%9D%20%D7%97%D7%95%D7%91%D7%A8%D7%AA%20%E2%80%94%20%D7%91%D7%A7%D7%A9%D7%AA%20%D7%A8%D7%A9%D7%95%D7%AA%20%D7%9C%D7%A4%D7%A8%D7%A1%D7%95%D7%9D">בקשת רשות לפרסום</a></p>
+<p><a href="publication-request.html">בקשת רשות לפרסום</a></p>
 </div>
 <form id="reading-confirmations">
 <div class="acknowledgments">
@@ -101,12 +103,13 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <section class="panel" id="reading" aria-labelledby="reading-title" hidden>
 <p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
 <h2 id="reading-title" tabindex="-1">חבילת הקריאה בדמה</h2>
-<p>אפשר לפתוח כל אחד משני פריטי הדוגמה. נוסחי הקריאה המלאים יופיעו בחנות לאחר אישורם לפרסום.</p>
-<details><summary>קרעטשניף בבודפשט · 1925</summary><p>דוגמה לתצוגה של כתבה ראשונה בחבילה, עם כותרת, שנה ומקום.</p></details>
-<details><summary>קרעטשניף בבודפשט · 1931</summary><p>דוגמה לתצוגה של ידיעה נוספת שנכללת באותה חבילה.</p></details>
+<p id="reading-description">אפשר לפתוח כל אחד משני פריטי הדוגמה. נוסחי הקריאה המלאים יופיעו בחנות לאחר אישורם לפרסום.</p>
+<div id="reading-items"><details><summary>קרעטשניף בבודפשט · 1925</summary><p>דוגמה לתצוגה של כתבה ראשונה בחבילה, עם כותרת, שנה ומקום.</p></details>
+<details><summary>קרעטשניף בבודפשט · 1931</summary><p>דוגמה לתצוגה של ידיעה נוספת שנכללת באותה חבילה.</p></details></div>
 <div class="actions"><button class="button back" type="button" data-next="preview">התחל מחדש</button></div>
 </section>
 </main>
+<script type="application/json" id="demo-stories">[{"key":"satmar-rabbinate","meta":"סאטמר · 1928","title":"כשרבי יואל טייטלבוים הוצע לרבנות סאטמר","teaser":"איך חיפשה קהילת סאטמר רב חדש?","excerpt":"הדיווח חוזר לדיונים בקהילה לאחר פטירת רבה, כשהועלה שמו של רבי יואל טייטלבוים."},{"key":"satmar-installation","meta":"סאטמר · 1934","title":"יום הכתרת רבי יואל טייטלבוים בסאטמר","teaser":"מה קדם למעמד ההכתרה בסאטמר?","excerpt":"הכתב בחר לפתוח בישיבות שבהן ניסתה הקהילה להגיע להסכמה, ורק אחר כך תיאר את ההכתרה."},{"key":"sighet-wedding","meta":"ויז׳ניץ · 1935","title":"ויז׳ניץ וסאטמר נפגשות בחתונה בסיגט","teaser":"מה משך שתי חצרות חסידיות לחתונה אחת?","excerpt":"דיווח מסיגט מתאר את חתונת משפחות הגר וטייטלבוים ואת המפגש בין החצרות."},{"key":"sanz-trains","meta":"צאנז · 1928","title":"הרכבות ליום השנה של ה״דברי חיים״","teaser":"מדוע הפעילו רכבות מיוחדות לצאנז?","excerpt":"דיווח מיום השנה של בעל ה״דברי חיים״ מתאר כיצד נערכה העיר לקהל שהגיע לציון."},{"key":"liska-shabbat","meta":"ליסקא · 1925","title":"שבת עם רבי הירש מליסקא בבודפשט","teaser":"מה ראה כתב העיתון בשבת אצל רבי הירש מליסקא?","excerpt":"בעת ביקורו של רבי הירש אצל בנו בבודפשט, כתב העיתון הוזמן לשולחן השבת."},{"key":"khust-election","meta":"חוסט · 1933","title":"הבחירות לרבנות חוסט","teaser":"מה נשאר להכריע אחרי ספירת הקולות בחוסט?","excerpt":"הדיווח עוסק במועמדים לרבנות ובשאלה אם תוצאת ההצבעה עומדת בתקנון הקהילה."},{"key":"gur-travel","meta":"גור · 1923","title":"בדרך לגור, מהרכבת אל הסירות","teaser":"מדוע בחרו חסידי גור לעבור מהקרונות לסירות?","excerpt":"הידיעה עוסקת בתלונות נוסעים ובפנייה של הנהלת הרכבת לרבי מגור בעקבותיהן."},{"key":"gur-land-of-israel","meta":"גור · 1932","title":"מסע הרבי מגור לארץ ישראל","teaser":"איך נראה רגע הפרידה בתחנת ורשה?","excerpt":"הדיווח מתאר את המלווים ואת המסלול שתוכנן לרבי מגור בדרכו לארץ ישראל."},{"key":"belz-funeral","meta":"בלז · 1926","title":"מה קרה אחרי הלוויית הרבי מבלז?","teaser":"מה בחר הכתב לתאר אחרי שהמלווים הגיעו לקבורה?","excerpt":"הדיווח עוקב אחר הלוויית רבי ישכר דוב מבלז וממשיך אל השעות שאחריה."},{"key":"chabad-arrest","meta":"חב״ד · 1927","title":"הידיעה שהגיעה אחרי מעצר הרבי מליובאוויטש","teaser":"איזו ידיעה הגיעה לקהילות אחרי מעצר הרבי?","excerpt":"דיווח מחודש תמוז עוקב אחר האירועים שאחרי מעצרו והגלייתו של רבי יוסף יצחק שניאורסון."},{"key":"chabad-wedding","meta":"חב״ד · 1928","title":"חבילה מסתורית בחתונה בוורשה","teaser":"מה היה בחבילה שהובאה לחתונה בוורשה?","excerpt":"סוכנות הידיעות תיארה מתנת חתונה יוצאת דופן, ואת מה שקרה לה במהלך השמחה."},{"key":"munkacs-journey","meta":"מונקאטש · 1930","title":"הרבי ממונקאטש יוצא לארץ ישראל","teaser":"איך דיווח העיתון על יציאת הרבי ממונקאטש לארץ ישראל?","excerpt":"הידיעה מציגה את תוכנית הביקור ונותנת הצצה לעניין שעורר המסע."},{"key":"munkacs-library","meta":"מונקאטש · 1932","title":"דיווח מעיתונות התקופה על ספריית הרבי ממונקאטש","teaser":"כיצד הגיעה ספריית הרבי לידיעה בעיתון?","excerpt":"הדיווח על ספריית הרבי ממונקאטש מביא גם את עמדת הרשויות כפי שנמסרה אז."},{"key":"sadigura-new-york","meta":"סדיגורה · 1924","title":"שתי קהילות ודין תורה אחד בניו יורק","teaser":"מדוע התכנס דין תורה לפני הקבורה?","excerpt":"בדיווח מניו יורק מתוארות בקשה של שתי קהילות והלוויה שמשכה מלווים רבים."},{"key":"chortkov-vienna","meta":"טשורטקוב · 1933","title":"הידיעה מווינה על פטירת הרבי מטשורטקוב","teaser":"מה סיפרה הידיעה מווינה על מקומו של הרבי בשושלת רוז׳ין?","excerpt":"סוכנות הידיעות דיווחה על פטירת רבי ישראל מטשורטקוב והציגה לקוראיה את מקומו בשושלת."},{"key":"alexander-funeral","meta":"אלכסנדר · 1923","title":"הלוויית רבי שמואל צבי מאלכסנדר","teaser":"איך תיארו את הלוויית הרבי לקוראים מעבר לים?","excerpt":"ידיעה קצרה על הלוויית רבי שמואל צבי מאלכסנדר מדגישה את גודל קהל המלווים."},{"key":"alexander-governor","meta":"אלכסנדר · 1927","title":"פגישת הרבי מאלכסנדר עם המושל לפני הבחירות","teaser":"מה ביקש מושל מחוז לודז׳ לברר לפני הבחירות?","excerpt":"הדיווח מתעד שאלה שהעלה המושל בפגישתו עם הרבי מאלכסנדר על הצבעת החסידים."},{"key":"nadvorna-wedding","meta":"נדבורנא · 1933","title":"חתונה חסידית בצ׳רנוביץ עם כלה מברוקלין","teaser":"מה חיבר בין משפחה מברוקלין לחתונה בצ׳רנוביץ?","excerpt":"הכתבה מספרת על החתונה ועל סעודות שנועדו גם לעניי הסביבה."},{"key":"belz-marienbad","meta":"בלז · 1927","title":"סעודה שלישית עם הרבי מבלז במריינבאד","teaser":"מה שמע הכתב בשולחן השבת במריינבאד?","excerpt":"דיווח מ־1927 מתאר את סעודה שלישית אצל הרבי מבלז, את הזמירות ואת ההמתנה לדברי תורה."},{"key":"chabad-riga","meta":"חב״ד · 1927","title":"ריגה בעיתונות התקופה בעקבות מאסר הרבי מליובאוויטש","teaser":"איך הגיע סיפור מאסר הרבי לעיתונות בריגה?","excerpt":"הדיווחים בריגה עסקו במעצר ובשחרור ובהקשר של פעילות הקהילות היהודיות."}]</script>
 <script>
 const panels = Array.from(document.querySelectorAll('.demo .panel'));
 const steps = Array.from(document.querySelectorAll('.demo .steps li'));
@@ -131,6 +134,30 @@ function showPanel(id) {
   document.getElementById(id + '-title').focus();
 }
 
+function loadStory() {
+  const key = new URLSearchParams(location.search).get('story');
+  if (key === null) return;
+  const stories = JSON.parse(document.getElementById('demo-stories').textContent);
+  const story = stories.find(entry => entry.key === key);
+  if (!story) {
+    showPanel('missing-story');
+    return;
+  }
+
+  document.title = story.title + ' | דמו חותם';
+  document.getElementById('preview-meta').textContent = 'כתבת הדגמה · ' + story.meta;
+  document.getElementById('preview-title').textContent = story.title;
+  document.getElementById('preview-teaser').textContent = story.teaser;
+  document.getElementById('payment-description').textContent = 'הסכום המוצג הוא 30 ₪ להמחשה בלבד. לאחר האישור יוצגו הפתיח ושני אישורי הקריאה.';
+  document.getElementById('reading-title').textContent = story.title;
+  document.getElementById('reading-description').textContent = 'טעימת קריאה בדמו. נוסח הכתבה המלא יוצג לאחר שיאושר לפרסום.';
+  const detail = document.createElement('p');
+  detail.textContent = story.excerpt;
+  document.getElementById('reading-items').replaceChildren(detail);
+  document.getElementById('open-reading').textContent = 'פתיחת הכתבה בדמו';
+}
+loadStory();
+
 function updateReadingButton() {
   openReading.disabled = intro.disabled || !intro.checked || !notice.checked;
 }
@@ -139,7 +166,7 @@ function enableIntroConfirmation(label) {
   if (!intro.disabled) return;
   introLabel.textContent = label;
   intro.disabled = false;
-  status.textContent = 'כעת ניתן לסמן את שני האישורים ולפתוח את הכתבות.';
+  status.textContent = 'כעת ניתן לסמן את שני האישורים ולהמשיך לקריאה.';
   updateReadingButton();
 }
 

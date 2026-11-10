@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>בקשת רשות לפרסום | חותם VIP</title>
+    <link rel="icon" type="image/png" href="gold-seal.png">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #c5a059; --dark: #0a0a0a; }
+        * { box-sizing: border-box; }
+        body, html { margin: 0; padding: 0; background-color: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .container { width: 100%; max-width: 480px; padding: 60px 30px; text-align: center; }
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; margin: 0 0 10px; letter-spacing: 2px; }
+        .sub { color: #aaa; font-size: 1rem; font-weight: 200; margin: 0 0 40px; letter-spacing: 1px; }
+        .form-group { margin-bottom: 20px; text-align: right; }
+        label { display: block; color: var(--gold); font-size: 0.9rem; margin-bottom: 6px; letter-spacing: 1px; }
+        input, textarea { width: 100%; padding: 16px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Assistant', sans-serif; font-size: 1rem; outline: none; transition: border 0.3s; }
+        input:focus, textarea:focus { border-color: var(--gold); }
+        .submit-btn { width: 100%; margin-top: 10px; padding: 18px; background: transparent; border: 2px solid var(--gold); color: var(--gold); font-family: 'Assistant', sans-serif; font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background: var(--gold); color: #000; }
+        .back { display: block; margin-top: 30px; color: #555; text-decoration: none; font-size: 0.9rem; }
+        textarea { min-height: 8rem; resize: vertical; }
+        .back { color: #bbb; }
+        .back:hover { color: var(--gold); }
+        #success-area { display: none; }
+        #success-area h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin-bottom: 15px; }
+        #success-area p { color: #aaa; font-size: 1rem; margin-bottom: 30px; }
+        #success-area a { display: inline-block; padding: 14px 40px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="form-area">
+            <h1>בקשת רשות לפרסום</h1>
+            <p class="sub">רוצים להשתמש בכתבה של חותם בחוברת, באתר או בפרסום אחר? כתבו באיזו כתבה מדובר ואיפה תרצו לפרסם. נחזור אליכם לגבי אפשרות השימוש, התנאים והתשלום, לפי העניין.</p>
+            <form id="contact-form" action="https://formspree.io/f/xpqelbdr" method="POST">
+                <div class="form-group">
+                    <label for="full-name">שם מלא</label>
+                    <input id="full-name" autocomplete="name" type="text" name="name" placeholder="ישראל ישראלי" required />
+                </div>
+                <input type="hidden" name="subject" value="חותם חוברת — בקשת רשות לפרסום">
+                <div class="form-group">
+                    <label for="email">אימייל לחזרה</label>
+                    <input id="email" autocomplete="email" dir="ltr" type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="article">שם הכתבה או הקישור אליה</label>
+                    <input id="article" type="text" name="article" maxlength="240" required>
+                </div>
+                <div class="form-group">
+                    <label for="publication">איפה תרצו לפרסם?</label>
+                    <textarea id="publication" name="message" maxlength="3000" placeholder="שם החוברת או האתר, סוג השימוש והיקף ההפצה המשוער" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">שליחת בקשת רשות</button>
+            <p id="form-feedback" role="status" aria-live="polite" style="color:#ddd;line-height:1.6"></p></form>
+            <a href="archive.html#catalog" class="back">← חזרה למאגר הכתבות</a>
+        </div>
+        <div id="success-area">
+            <h2>תודה על פנייתך.</h2>
+            <p>הבקשה התקבלה. נחזור אליכם לכתובת שמילאתם.</p>
+            <a href="archive.html#catalog">חזרה למאגר הכתבות</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const button = this.querySelector('button');
+            const feedback = document.getElementById('form-feedback');
+            button.disabled = true;
+            feedback.textContent = 'שולחים את הפרטים…';
+            try {
+                const response = await fetch(this.action, {method:'POST', body:new FormData(this), headers:{Accept:'application/json'}});
+                if (!response.ok) throw new Error('Submission failed');
+                document.getElementById('form-area').style.display = 'none';
+                document.getElementById('success-area').style.display = 'block';
+                document.querySelector('#success-area h2').setAttribute('tabindex','-1');
+                document.querySelector('#success-area h2').focus();
+            } catch {
+                feedback.textContent = 'לא התקבל אישור לשליחה. הפרטים נשמרו כאן; אפשר לנסות שוב, או לפנות בטלפון 052-7687171.';
+            } finally { button.disabled = false; }
+        });
+    </script>
+</body>
+</html>
