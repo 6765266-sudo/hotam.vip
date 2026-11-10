@@ -23,6 +23,15 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 .demo summary { cursor: pointer; font-weight: bold; }
 .demo a:not(.button) { text-decoration: underline; text-underline-offset: .16em; }
 .demo [hidden] { display: none; }
+.demo .intro-video { display: block; max-width: min(100%, 19rem); width: 100%; max-height: 57vh; margin: 1rem auto; background: #101510; border-radius: .5rem; object-fit: contain; }
+.demo .reading-notice { margin: 1rem 0; border-inline-start: 3px solid #bc9c54; padding: .55rem .8rem; background: #202c22; }
+.demo .reading-notice h3 { margin: 0 0 .35rem; font-size: 1.05rem; color: #f3d98e; }
+.demo .reading-notice p { margin: 0; }
+.demo .acknowledgments { display: grid; gap: .45rem; margin-top: 1rem; }
+.demo .acknowledgments label { display: flex; align-items: flex-start; gap: .55rem; padding: .35rem 0; cursor: pointer; }
+.demo .acknowledgments input { inline-size: 1.15rem; block-size: 1.15rem; flex: 0 0 auto; margin: .2rem 0 0; accent-color: #f3d98e; }
+.demo .button:disabled { opacity: .56; cursor: not-allowed; }
+.demo #intro-status { min-height: 1.5em; margin: .6rem 0; color: #e2d6b3; font-size: .92rem; }
 </style>
 </head>
 <body>
@@ -34,7 +43,8 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <ol class="steps" aria-label="שלבי ההדגמה">
 <li id="step-preview" aria-current="step">1. טעימה</li>
 <li id="step-payment">2. תשלום בדמה</li>
-<li id="step-reading">3. תצוגת קריאה</li>
+<li id="step-intro">3. פתיח ואישורים</li>
+<li id="step-reading">4. תצוגת קריאה</li>
 </ol>
 <section class="panel" id="preview" aria-labelledby="preview-title">
 <p class="label">חבילת הדגמה · בודפשט, 1925 ו־1931</p>
@@ -46,8 +56,39 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 </section>
 <section class="panel" id="payment" aria-labelledby="payment-title" hidden>
 <h2 id="payment-title" tabindex="-1">אישור תשלום בדמה</h2>
-<p>בחבילת הדוגמה שני פריטים. הסכום המוצג הוא 30 ₪ להמחשה בלבד. בלחיצה ייפתח מסך הקריאה.</p>
-<div class="actions"><button class="button button-gold" type="button" data-next="reading">אישור בדמה</button><button class="button back" type="button" data-next="preview">חזרה לטעימה</button></div>
+<p>בחבילת הדוגמה שני פריטים. הסכום המוצג הוא 30 ₪ להמחשה בלבד. לאחר האישור יוצגו הפתיח ושני אישורי הקריאה.</p>
+<div class="actions"><button class="button button-gold" type="button" data-next="intro">אישור בדמה</button><button class="button back" type="button" data-next="preview">חזרה לטעימה</button></div>
+</section>
+<section class="panel" id="intro" aria-labelledby="intro-title" hidden>
+<p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
+<h2 id="intro-title" tabindex="-1">לפני שנכנסים לקריאה</h2>
+<p>צפו במצגת הקצרה וקראו את ההודעה שמתחתיה.</p>
+<video class="intro-video" id="intro-video" controls playsinline preload="metadata" poster="assets/archive-gallery-v0.3.jpg" aria-label="מצגת חותם, ארבע תמונות עם בקשה לשתף קישור ולתת קרדיט">
+  <source src="assets/archive-gallery-v0.3.mp4" type="video/mp4">
+  המצגת אינה זמינה בדפדפן הזה. אפשר לקרוא את החלופה שבהמשך.
+</video>
+<details id="intro-transcript">
+<summary>חלופת טקסט נגישה למצגת</summary>
+<ol>
+<li><strong>גיליון אחר גיליון.</strong> עד שמצאתי את הכתבה.</li>
+<li><strong>למצוא זו עבודה.</strong> עוד לפני המילה הראשונה של התרגום.</li>
+<li><strong>בקשה כלפי שמיא.</strong> אם הגעתם למקור דרך חותם, ציינו מי איתר את הכתבה.</li>
+<li><strong>גם בתרגום חדש.</strong> תנו קרדיט לחותם והפנו את הקוראים לחותם.</li>
+</ol>
+<button class="button back" id="intro-use-text" type="button">השתמשתי בחלופת הטקסט</button>
+</details>
+<div class="reading-notice" aria-labelledby="reading-notice-title">
+<h3 id="reading-notice-title">בקשה כלפי שמיא</h3>
+<p>מה שנרכש הוא זכות צפייה אישית בחבילת הקריאה של חותם. אם תרצו לשתף את הסיפור, שלחו את הקישור הציבורי לחותם ושמרו את עותק הקריאה לעצמכם.</p>
+</div>
+<form id="reading-confirmations">
+<div class="acknowledgments">
+<label for="confirm-intro"><input id="confirm-intro" type="checkbox" required disabled><span id="confirm-intro-label">אני מאשר שצפיתי בפתיח.</span></label>
+<label for="confirm-notice"><input id="confirm-notice" type="checkbox" required><span>קראתי והבנתי שהרכישה מקנה זכות צפייה אישית.</span></label>
+</div>
+<p id="intro-status" role="status">אפשר לסמן את אישור הצפייה אחרי סיום המצגת, או להשתמש בחלופת הטקסט.</p>
+<div class="actions"><button class="button button-gold" id="open-reading" type="submit" disabled>פתיחת הכתבות</button><button class="button back" type="button" data-next="payment">חזרה לתשלום בדמה</button></div>
+</form>
 </section>
 <section class="panel" id="reading" aria-labelledby="reading-title" hidden>
 <p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
@@ -61,17 +102,70 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <script>
 const panels = Array.from(document.querySelectorAll('.demo .panel'));
 const steps = Array.from(document.querySelectorAll('.demo .steps li'));
+const video = document.getElementById('intro-video');
+const transcript = document.getElementById('intro-transcript');
+const form = document.getElementById('reading-confirmations');
+const intro = document.getElementById('confirm-intro');
+const notice = document.getElementById('confirm-notice');
+const introLabel = document.getElementById('confirm-intro-label');
+const openReading = document.getElementById('open-reading');
+const status = document.getElementById('intro-status');
+
+function showPanel(id) {
+  panels.forEach(panel => { panel.hidden = panel.id !== id; });
+  steps.forEach(step => {
+    if (step.id === 'step-' + id) step.setAttribute('aria-current', 'step');
+    else step.removeAttribute('aria-current');
+  });
+  document.getElementById(id + '-title').focus();
+}
+
+function updateReadingButton() {
+  openReading.disabled = intro.disabled || !intro.checked || !notice.checked;
+}
+
+function enableIntroConfirmation(label) {
+  if (!intro.disabled) return;
+  introLabel.textContent = label;
+  intro.disabled = false;
+  status.textContent = 'כעת ניתן לסמן את שני האישורים ולפתוח את הכתבות.';
+  updateReadingButton();
+}
+
+function resetConfirmations() {
+  form.reset();
+  intro.disabled = true;
+  introLabel.textContent = 'אני מאשר שצפיתי בפתיח.';
+  transcript.open = false;
+  video.pause();
+  video.currentTime = 0;
+  status.textContent = 'אפשר לסמן את אישור הצפייה אחרי סיום המצגת, או להשתמש בחלופת הטקסט.';
+  updateReadingButton();
+}
 
 document.querySelectorAll('[data-next]').forEach(button => {
   button.addEventListener('click', () => {
     const id = button.dataset.next;
-    panels.forEach(panel => { panel.hidden = panel.id !== id; });
-    steps.forEach(step => {
-      if (step.id === 'step-' + id) step.setAttribute('aria-current', 'step');
-      else step.removeAttribute('aria-current');
-    });
-    document.getElementById(id + '-title').focus();
+    if (id === 'intro') resetConfirmations();
+    if (id === 'payment') video.pause();
+    if (id === 'preview') {
+      document.querySelectorAll('#reading details').forEach(item => { item.open = false; });
+    }
+    showPanel(id);
   });
+});
+
+video.addEventListener('ended', () => enableIntroConfirmation('אני מאשר שצפיתי בפתיח.'));
+document.getElementById('intro-use-text').addEventListener('click', () => {
+  enableIntroConfirmation('אני מאשר שקראתי את חלופת הטקסט לפתיח.');
+});
+form.addEventListener('change', updateReadingButton);
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  updateReadingButton();
+  if (openReading.disabled) return;
+  video.pause();
+  showPanel('reading');
 });
 </script>
 </body>
