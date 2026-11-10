@@ -23,7 +23,11 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 .demo summary { cursor: pointer; font-weight: bold; }
 .demo a:not(.button) { text-decoration: underline; text-underline-offset: .16em; }
 .demo [hidden] { display: none; }
-.demo .intro-video { display: block; max-width: min(100%, 19rem); width: 100%; max-height: 57vh; margin: 1rem auto; background: #101510; border-radius: .5rem; object-fit: contain; }
+.demo .intro-slides { padding: 0; margin: 1.2rem 0 .7rem; list-style: none; }
+.demo .intro-slides li { min-height: 12rem; padding: clamp(1rem, 5vw, 2rem); border: 1px solid #b29661; border-radius: .45rem; color: #251e14; background: radial-gradient(ellipse at top right, #fff5d9, #e3d2a9); }
+.demo .intro-slides h3 { margin: .3rem 0; font-size: clamp(1.45rem, 5vw, 2.3rem); }
+.demo .slide-number { margin: 0; color: #674c23; font-weight: bold; direction: ltr; text-align: right; }
+.demo .slide-actions { margin: 0 0 1.2rem; }
 .demo .reading-notice { margin: 1rem 0; border-inline-start: 3px solid #bc9c54; padding: .55rem .8rem; background: #202c22; }
 .demo .reading-notice h3 { margin: 0 0 .35rem; font-size: 1.05rem; color: #f3d98e; }
 .demo .reading-notice p { margin: 0; }
@@ -36,7 +40,7 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 </head>
 <body>
 <main class="demo">
-<nav aria-label="ניווט"><a href="./#archive">חזרה לארכיון חותם</a></nav>
+<nav aria-label="ניווט"><a href="archive.html">חזרה לארכיון חותם</a></nav>
 <p class="eyebrow label">חותם VIP · ארכיון ושורשים</p>
 <h1>דמו הארכיון</h1>
 <p>אפשר לעבור כאן במסלול של הקורא, מהטעימה ועד פתיחת חבילת קריאה. אין חיוב או הרשמה.</p>
@@ -62,31 +66,35 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <section class="panel" id="intro" aria-labelledby="intro-title" hidden>
 <p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
 <h2 id="intro-title" tabindex="-1">לפני שנכנסים לקריאה</h2>
-<p>צפו במצגת הקצרה וקראו את ההודעה שמתחתיה.</p>
-<video class="intro-video" id="intro-video" controls playsinline preload="metadata" poster="assets/archive-gallery-v0.3.jpg" aria-label="מצגת חותם, ארבע תמונות עם בקשה לשתף קישור ולתת קרדיט">
-  <source src="assets/archive-gallery-v0.3.mp4" type="video/mp4">
-  המצגת אינה זמינה בדפדפן הזה. אפשר לקרוא את החלופה שבהמשך.
-</video>
+<p>עברו על ארבעת מסכי הפתיח וקראו את ההודעה שמתחתיהם.</p>
+<ol class="intro-slides" id="intro-slides" aria-label="מצגת פתיחה של חותם" aria-live="polite">
+<li><p class="slide-number">01 / 04</p><h3>גיליון אחר גיליון</h3><p>כך מצאנו את הכתבות שהגיעו אליכם דרך חותם.</p></li>
+<li hidden><p class="slide-number">02 / 04</p><h3>הקריאה היא אישית</h3><p>אפשר לשתף את הקישור הציבורי לחותם.</p></li>
+<li hidden><p class="slide-number">03 / 04</p><h3>בקשה כלפי שמיא</h3><p>רוצים לפרסם מחדש חומר שקיבלתם מחותם? פנו אלינו מראש ובקשו רשות.</p></li>
+<li hidden><p class="slide-number">04 / 04</p><h3>בחוברת, באתר או בפרסום אחר</h3><p>אם נוכל לאשר את השימוש, נסכם מראש את התנאים ואת התשלום.</p></li>
+</ol>
+<div class="actions slide-actions"><button class="button back" id="previous-slide" type="button" disabled>הקודם</button><button class="button button-gold" id="next-slide" type="button">הבא</button></div>
 <details id="intro-transcript">
 <summary>חלופת טקסט נגישה למצגת</summary>
 <ol>
-<li><strong>גיליון אחר גיליון.</strong> עד שמצאתי את הכתבה.</li>
-<li><strong>למצוא זו עבודה.</strong> עוד לפני המילה הראשונה של התרגום.</li>
-<li><strong>בקשה כלפי שמיא.</strong> אם הגעתם למקור דרך חותם, ציינו מי איתר את הכתבה.</li>
-<li><strong>גם בתרגום חדש.</strong> תנו קרדיט לחותם והפנו את הקוראים לחותם.</li>
+<li><strong>גיליון אחר גיליון.</strong> כך מצאנו את הכתבות שהגיעו אליכם דרך חותם.</li>
+<li><strong>הקריאה היא אישית.</strong> אפשר לשתף את הקישור הציבורי לחותם.</li>
+<li><strong>בקשה כלפי שמיא.</strong> רוצים לפרסם מחדש חומר שקיבלתם מחותם? פנו אלינו מראש ובקשו רשות.</li>
+<li><strong>בחוברת, באתר או בפרסום אחר.</strong> אם נוכל לאשר את השימוש, נסכם מראש את התנאים ואת התשלום.</li>
 </ol>
 <button class="button back" id="intro-use-text" type="button">השתמשתי בחלופת הטקסט</button>
 </details>
 <div class="reading-notice" aria-labelledby="reading-notice-title">
 <h3 id="reading-notice-title">בקשה כלפי שמיא</h3>
-<p>מה שנרכש הוא זכות צפייה אישית בחבילת הקריאה של חותם. אם תרצו לשתף את הסיפור, שלחו את הקישור הציבורי לחותם ושמרו את עותק הקריאה לעצמכם.</p>
+<p>הגישה דרך חותם מיועדת לקריאה אישית. אם תרצו לפרסם מחדש חומר שקיבלתם מחותם, גם בחוברת או באתר, פנו מראש לבקשת רשות. אם נוכל לאשר את השימוש, נסכם את התנאים ואת התשלום מראש.</p>
+<p><a href="mailto:contact@hotam.vip?subject=%D7%97%D7%95%D7%AA%D7%9D%20%D7%97%D7%95%D7%91%D7%A8%D7%AA%20%E2%80%94%20%D7%91%D7%A7%D7%A9%D7%AA%20%D7%A8%D7%A9%D7%95%D7%AA%20%D7%9C%D7%A4%D7%A8%D7%A1%D7%95%D7%9D">בקשת רשות לפרסום</a></p>
 </div>
 <form id="reading-confirmations">
 <div class="acknowledgments">
-<label for="confirm-intro"><input id="confirm-intro" type="checkbox" required disabled><span id="confirm-intro-label">אני מאשר שצפיתי בפתיח.</span></label>
-<label for="confirm-notice"><input id="confirm-notice" type="checkbox" required><span>קראתי והבנתי שהרכישה מקנה זכות צפייה אישית.</span></label>
+<label for="confirm-intro"><input id="confirm-intro" type="checkbox" required disabled><span id="confirm-intro-label">אני מאשר שקראתי את הפתיח.</span></label>
+<label for="confirm-notice"><input id="confirm-notice" type="checkbox" required><span>קראתי והבנתי שהגישה אישית ושיש לפנות מראש לבקשת רשות לפרסום חוזר.</span></label>
 </div>
-<p id="intro-status" role="status">אפשר לסמן את אישור הצפייה אחרי סיום המצגת, או להשתמש בחלופת הטקסט.</p>
+<p id="intro-status" role="status">אפשר לסמן את אישור הפתיח אחרי שעוברים על ארבעת המסכים, או לקרוא את חלופת הטקסט.</p>
 <div class="actions"><button class="button button-gold" id="open-reading" type="submit" disabled>פתיחת הכתבות</button><button class="button back" type="button" data-next="payment">חזרה לתשלום בדמה</button></div>
 </form>
 </section>
@@ -102,7 +110,10 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <script>
 const panels = Array.from(document.querySelectorAll('.demo .panel'));
 const steps = Array.from(document.querySelectorAll('.demo .steps li'));
-const video = document.getElementById('intro-video');
+const slides = Array.from(document.querySelectorAll('#intro-slides li'));
+const previousSlide = document.getElementById('previous-slide');
+const nextSlide = document.getElementById('next-slide');
+let slideIndex = 0;
 const transcript = document.getElementById('intro-transcript');
 const form = document.getElementById('reading-confirmations');
 const intro = document.getElementById('confirm-intro');
@@ -132,14 +143,24 @@ function enableIntroConfirmation(label) {
   updateReadingButton();
 }
 
+function showSlide(index) {
+  slideIndex = index;
+  slides.forEach((slide, position) => { slide.hidden = position !== index; });
+  previousSlide.disabled = index === 0;
+  nextSlide.disabled = index === slides.length - 1;
+  if (nextSlide.disabled) {
+    enableIntroConfirmation('אני מאשר שקראתי את ארבעת מסכי הפתיח.');
+    if (document.activeElement === nextSlide) intro.focus();
+  }
+}
+
 function resetConfirmations() {
   form.reset();
   intro.disabled = true;
-  introLabel.textContent = 'אני מאשר שצפיתי בפתיח.';
+  introLabel.textContent = 'אני מאשר שקראתי את הפתיח.';
   transcript.open = false;
-  video.pause();
-  video.currentTime = 0;
-  status.textContent = 'אפשר לסמן את אישור הצפייה אחרי סיום המצגת, או להשתמש בחלופת הטקסט.';
+  showSlide(0);
+  status.textContent = 'אפשר לסמן את אישור הפתיח אחרי שעוברים על ארבעת המסכים, או לקרוא את חלופת הטקסט.';
   updateReadingButton();
 }
 
@@ -147,7 +168,6 @@ document.querySelectorAll('[data-next]').forEach(button => {
   button.addEventListener('click', () => {
     const id = button.dataset.next;
     if (id === 'intro') resetConfirmations();
-    if (id === 'payment') video.pause();
     if (id === 'preview') {
       document.querySelectorAll('#reading details').forEach(item => { item.open = false; });
     }
@@ -155,7 +175,8 @@ document.querySelectorAll('[data-next]').forEach(button => {
   });
 });
 
-video.addEventListener('ended', () => enableIntroConfirmation('אני מאשר שצפיתי בפתיח.'));
+previousSlide.addEventListener('click', () => showSlide(slideIndex - 1));
+nextSlide.addEventListener('click', () => showSlide(slideIndex + 1));
 document.getElementById('intro-use-text').addEventListener('click', () => {
   enableIntroConfirmation('אני מאשר שקראתי את חלופת הטקסט לפתיח.');
 });
@@ -164,7 +185,6 @@ form.addEventListener('submit', event => {
   event.preventDefault();
   updateReadingButton();
   if (openReading.disabled) return;
-  video.pause();
   showPanel('reading');
 });
 </script>
