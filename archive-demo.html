@@ -63,14 +63,14 @@ body { background: radial-gradient(ellipse at top right, #29352b, #111612 65%); 
 <p class="label" id="preview-meta">חבילת הדגמה · בודפשט, 1925 ו־1931</p>
 <h2 id="preview-title" tabindex="-1">שני ביקורים של הרבי מקרעטשניף</h2>
 <p id="preview-teaser">שני דיווחים מעיתונות התקופה מתארים ביקורים בבודפשט, בהפרש של שש שנים. בדמו הזה שני הפריטים מופיעים בחבילה אחת.</p>
-<p><strong>30 ₪</strong> · מחיר להמחשה</p>
+<p id="demo-price"><strong>30 ₪</strong> · מחיר החבילה בדמו</p>
 <div class="actions"><button class="button button-gold" type="button" data-next="payment">המשך לתשלום בדמה</button></div>
 
 </section>
 <section class="panel" id="payment" aria-labelledby="payment-title" hidden>
 <h2 id="payment-title" tabindex="-1">אישור תשלום בדמה</h2>
 <p id="payment-description">בחבילת הדוגמה שני פריטים. הסכום המוצג הוא 30 ₪ להמחשה בלבד. אחרי האישור יוצג קישור הקריאה, כפי שיופיע במייל לקונה.</p>
-<div class="actions"><button class="button button-gold" type="button" data-next="delivery">אישור בדמה</button><button class="button back" type="button" data-next="preview">חזרה לטעימה</button></div>
+<div class="actions"><button class="button button-gold" type="button" data-next="delivery">אישור בדמה</button><a class="button back" id="back-to-teaser" href="archive-story.html">חזרה לטעימה</a></div>
 </section>
 <section class="panel" id="delivery" aria-labelledby="delivery-title" hidden>
 <p class="label">תשלום בדמה אושר · לא בוצע חיוב</p>
@@ -152,8 +152,13 @@ function showPanel(id) {
 }
 
 function loadStory() {
-  const key = new URLSearchParams(location.search).get('story');
-  if (key === null) return;
+  const params = new URLSearchParams(location.search);
+  const key = params.get('story');
+  const checkout = params.get('stage') === 'checkout';
+  if (key === null) {
+    if (checkout) showPanel('payment');
+    return;
+  }
   const stories = JSON.parse(document.getElementById('demo-stories').textContent);
   const story = stories.find(entry => entry.key === key);
   if (!story) {
@@ -165,7 +170,8 @@ function loadStory() {
   document.getElementById('preview-meta').textContent = 'כתבת הדגמה · ' + story.meta;
   document.getElementById('preview-title').textContent = story.title;
   document.getElementById('preview-teaser').textContent = story.teaser;
-  document.getElementById('payment-description').textContent = 'הסכום המוצג הוא 30 ₪ להמחשה בלבד. אחרי האישור יוצג קישור הקריאה, כפי שיופיע במייל לקונה.';
+  document.getElementById('demo-price').textContent = 'המחיר הסופי טרם נקבע.';
+  document.getElementById('payment-description').textContent = 'המסלול הזה מציג תשלום מדומה. אחרי האישור יוצג קישור הקריאה, כפי שיופיע במייל לקונה.';
   document.getElementById('reading-title').textContent = story.title;
   document.getElementById('reading-description').textContent = 'טעימת קריאה בדמו הציבורי. נוסח הקריאה המלא והסריקה נשמרים לתצוגה הפרטית.';
   const article = document.createElement('article');
@@ -181,6 +187,10 @@ function loadStory() {
   });
   document.getElementById('reading-items').replaceChildren(article);
   document.getElementById('open-reading').textContent = 'לקריאת הטעימה בדמו';
+  const back = new URL('archive-story.html',location.href);
+  back.searchParams.set('story',story.key);
+  document.getElementById('back-to-teaser').href = back.href;
+  if (checkout) showPanel('payment');
 }
 loadStory();
 
