@@ -1,0 +1,36 @@
+name: Hotam payment recovery
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3-58/5 * * * *'
+permissions:
+  id-token: write
+concurrency:
+  group: hotam-payment-recovery
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Reconcile verified payments
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+          endpoint = "https://hotam-payment-notifications.tuvi1973.chatgpt.site/reconcile"
+          oidc = os.environ["ACTIONS_ID_TOKEN_REQUEST_URL"]
+          query = urllib.parse.urlencode({"audience": endpoint})
+          token_request = urllib.request.Request(
+              oidc + ("&" if "?" in oidc else "?") + query,
+              headers={"Authorization": "Bearer " + os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"]},
+          )
+          with urllib.request.urlopen(token_request, timeout=10) as issued:
+              token = json.load(issued)["value"]
+          request = urllib.request.Request(endpoint, method="POST", headers={"Authorization": "Bearer " + token})
+          with urllib.request.urlopen(request, timeout=55) as result:
+              if result.status != 204:
+                  raise RuntimeError("Payment reconciliation did not complete")
+          PY
