@@ -34,7 +34,7 @@ body{background:#131a15}.public-reader{width:min(52rem,92%);margin:auto;padding:
 <section class="story-offer" id="story-offer" aria-labelledby="story-offer-heading" hidden>
 <h2 id="story-offer-heading">לכתבה המלאה</h2>
 <p id="story-price" class="lead"></p>
-<p>הרכישה המקוונת תיפתח בהמשך.</p>
+<p><a class="button" id="buy-article" href="https://hotam-founder-pilot.tuvi1973.chatgpt.site/shop">לרכישה מאובטחת</a></p>
 </section>
 <footer><a href="archive.html#catalog">בחזרה למאגר הכתבות</a></footer>
 <noscript><p>אפשר לעיין בתקצירים גם <a href="archive.html#catalog">במאגר הכתבות</a>.</p></noscript>
@@ -54,6 +54,7 @@ if(current){
  excerpt.hidden = false;
  document.getElementById('story-price').textContent = current.priceLabel;
  document.getElementById('story-offer').hidden = false;
+ document.getElementById('buy-article').href = 'https://hotam-founder-pilot.tuvi1973.chatgpt.site/purchase/' + encodeURIComponent(current.slug);
  document.title=current.title+' | חותם VIP';
  if (current.slug === 'nadvorna-wedding') {
   const figure = document.getElementById('nadvorna-source');
