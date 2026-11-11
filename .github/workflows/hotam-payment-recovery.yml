@@ -15,22 +15,21 @@ jobs:
     steps:
       - name: Reconcile verified payments
         run: |
-          python3 - <<'PY'
-          import json
-          import os
-          import urllib.parse
-          import urllib.request
-          endpoint = "https://hotam-payment-notifications.tuvi1973.chatgpt.site/reconcile"
-          oidc = os.environ["ACTIONS_ID_TOKEN_REQUEST_URL"]
-          query = urllib.parse.urlencode({"audience": endpoint})
-          token_request = urllib.request.Request(
-              oidc + ("&" if "?" in oidc else "?") + query,
-              headers={"Authorization": "Bearer " + os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"]},
-          )
-          with urllib.request.urlopen(token_request, timeout=10) as issued:
-              token = json.load(issued)["value"]
-          request = urllib.request.Request(endpoint, method="POST", headers={"Authorization": "Bearer " + token})
-          with urllib.request.urlopen(request, timeout=55) as result:
-              if result.status != 204:
-                  raise RuntimeError("Payment reconciliation did not complete")
-          PY
+          node --input-type=module <<'JS'
+          const endpoint = 'https://hotam-payment-notifications.tuvi1973.chatgpt.site/reconcile';
+          const oidc = new URL(process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
+          oidc.searchParams.set('audience', endpoint);
+          const issued = await fetch(oidc, {
+            redirect: 'error',
+            headers: {Authorization: 'Bearer ' + process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN},
+            signal: AbortSignal.timeout(10000),
+          });
+          if (!issued.ok) throw new Error('Identity request failed: HTTP ' + issued.status);
+          const {value} = await issued.json();
+          const result = await fetch(endpoint, {
+            method: 'POST', redirect: 'error',
+            headers: {Authorization: 'Bearer ' + value},
+            signal: AbortSignal.timeout(55000),
+          });
+          if (result.status !== 204) throw new Error('Payment reconciliation failed: HTTP ' + result.status);
+          JS
