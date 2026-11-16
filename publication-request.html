@@ -32,8 +32,8 @@
 <body>
     <div class="container">
         <div id="form-area">
-            <h1>בקשת רשות לפרסום</h1>
-            <p class="sub">רוצים להשתמש בכתבה של חותם בחוברת, באתר או בפרסום אחר? כתבו באיזו כתבה מדובר ואיפה תרצו לפרסם. נחזור אליכם לגבי אפשרות השימוש, התנאים והתשלום, לפי העניין.</p>
+            <h1 id="request-title">בקשת רשות לפרסום</h1>
+            <p class="sub" id="request-intro">רוצים להשתמש בכתבה של חותם בחוברת, באתר או בפרסום אחר? כתבו באיזו כתבה מדובר ואיפה תרצו לפרסם. נחזור אליכם לגבי אפשרות השימוש, התנאים והתשלום, לפי העניין.</p>
             <form id="contact-form" action="https://formspree.io/f/xpqelbdr" method="POST">
                 <div class="form-group">
                     <label for="full-name">שם מלא</label>
@@ -49,7 +49,7 @@
                     <input id="article" type="text" name="article" maxlength="240" required>
                 </div>
                 <div class="form-group">
-                    <label for="publication">איפה תרצו לפרסם?</label>
+                    <label for="publication" id="request-message-label">איפה תרצו לפרסם?</label>
                     <textarea id="publication" name="message" maxlength="3000" placeholder="שם החוברת או האתר, סוג השימוש והיקף ההפצה המשוער" required></textarea>
                 </div>
                 <button type="submit" class="submit-btn">שליחת בקשת רשות</button>
@@ -63,7 +63,21 @@
         </div>
     </div>
     <script>
-        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+        const form = document.getElementById('contact-form');
+        const query = new URLSearchParams(location.search);
+        if (query.get('intent') === 'evidence') {
+            document.title = 'בקשת פרטי תיעוד | חותם ארכיון';
+            document.getElementById('request-title').textContent = 'בקשת פרטי תיעוד';
+            document.getElementById('request-intro').textContent = 'השאירו שם ואימייל ובחרו את הכתבה. נבדוק אם אפשר לשתף את התיעוד שביקשתם.';
+            document.getElementById('article').value = (query.get('article') || '').slice(0, 240);
+            document.getElementById('request-message-label').textContent = 'מה תרצו לבקש? (לא חובה)';
+            const message = document.getElementById('publication');
+            message.required = false;
+            message.placeholder = 'למשל, פרטים על ההקלטה או על תצלום שמופיע בכתבה';
+            form.querySelector('[name="subject"]').value = 'חותם ארכיון — בקשת פרטי תיעוד';
+            form.querySelector('button').textContent = 'שליחת בקשה';
+        }
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             const button = this.querySelector('button');
             const feedback = document.getElementById('form-feedback');
