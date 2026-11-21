@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>خاتم | جذور العائلة</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f7f1e7;color:#262d29;font:1.05rem/1.65 system-ui,sans-serif}header{background:#193d32;color:#fff7e7;border-bottom:4px solid #bd9860}header div,main{max-width:880px;margin:auto;padding:clamp(18px,5vw,38px)}header p{margin:0;color:#edcf99}h1{font-size:clamp(2.1rem,7vw,3rem);line-height:1.2;margin:8px 0}main{padding-block:24px 48px}.panel{background:#fffcf6;border:1px solid #ddd0bb;padding:clamp(16px,4vw,29px);border-radius:16px;margin-bottom:20px}h2,h3{line-height:1.35;margin:0 0 10px}p{margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.wide{grid-column:1/-1}label{display:block;font-weight:650}input,select,textarea,button{font:inherit;width:100%}input,select,textarea{color:inherit;padding:9px 11px;border:1px solid #827e70;border-radius:8px;background:white;margin-top:5px}textarea{min-height:75px;resize:vertical}button{width:auto;padding:8px 16px;border:1px solid #193d32;border-radius:8px;background:#193d32;color:#fff;cursor:pointer}.secondary{background:transparent;color:#193d32}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}.hint{color:#4c554e;font-size:.92rem}.tree{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:15px 0 20px}.person{padding:9px 12px;border:1px solid #ddd0bb;border-radius:9px;background:#f7f1e7;overflow-wrap:anywhere}.person small,.person b{display:block}.person small{color:#49534d}.context{overflow-wrap:anywhere}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #88652d;outline-offset:3px}li{margin-bottom:6px}#result h2:focus{outline:none}@media(max-width:560px){.grid,.tree{grid-template-columns:1fr}}@media print{.actions,form{display:none}body{background:white}.panel{border:0;padding:0}header{background:none;color:#252d29}header p{color:#193d32}}
+</style>
+</head>
+<body>
+<header><div><p>خاتم للأبحاث العائلية</p><h1>اكتشف جذور عائلتك</h1>ابدأ باسم تعرفه، وحدّد البلد أو البلدة إن أمكن.</div></header>
+<main>
+<section class="panel" aria-labelledby="form-title">
+<h2 id="form-title">بيانات البحث الأولي</h2>
+<p class="hint">نسخة تجريبية. تبقى المعلومات في هذه الصفحة ولا تُرسل إلى أي جهة.</p>
+<form id="roots">
+<div class="grid">
+<label>اسم الشخص الذي تبحث عنه <input id="person" dir="auto" required maxlength="120" placeholder="مثال: يوسف العلوي"></label>
+<label>صلة القرابة بالأجيال السابقة <select id="branch"><option value="التسلسل العام">التسلسل العام</option><option value="فرع الأب">فرع الأب</option><option value="فرع الأم">فرع الأم</option></select></label>
+<label>اسم أحد الوالدين، إن عُرف <input id="parent" dir="auto" maxlength="120"></label>
+<label>اسم أحد الأجداد، إن عُرف <input id="grandparent" dir="auto" maxlength="120"></label>
+<label>البلد <select id="country"><option value="">اختر البلد أو المنطقة</option><option>المغرب</option><option>الجزائر</option><option>تونس</option><option>ليبيا</option><option>مصر</option><option>السودان</option><option>فلسطين</option><option>الأردن</option><option>لبنان</option><option>سوريا</option><option>العراق</option><option>السعودية</option><option>اليمن</option><option>عُمان</option><option>الإمارات</option><option>قطر</option><option>البحرين</option><option>الكويت</option><option>موريتانيا</option><option>الصومال</option><option>جيبوتي</option><option>جزر القمر</option><option>بلد آخر</option></select></label>
+<label>المدينة أو القرية <input id="town" dir="auto" maxlength="100" placeholder="مثال: فاس"></label>
+<label>سنة الميلاد أو فترة تقريبية <input id="period" dir="auto" maxlength="45" placeholder="مثال: ١٩٢٥ تقريبًا"></label>
+<label class="wide">معلومات إضافية <textarea id="notes" dir="auto" maxlength="700" placeholder="مثال: اسم آخر للعائلة أو مكان هاجرت إليه"></textarea></label>
+</div>
+<div class="actions"><button type="submit">أنشئ ملخص البحث</button><button id="sample" class="secondary" type="button">جرّب مثالًا من المغرب</button></div>
+</form>
+</section>
+<section class="panel" id="result" hidden aria-labelledby="result-title">
+<h2 id="result-title" tabindex="-1">مخطط عائلي أولي</h2>
+<p class="hint">المخطط مبني على المعلومات التي أدخلتها. مسارات البحث أدناه مقترحة، ولم تُفحص السجلات بعد.</p>
+<div id="tree" class="tree"></div>
+<p class="context" id="context"></p>
+<h3>من أين تبدأ؟</h3>
+<ol id="steps"></ol>
+<div class="actions"><button id="download" type="button">نزّل ملخص البحث</button></div>
+</section>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const fields = ['person', 'branch', 'parent', 'grandparent', 'country', 'town', 'period', 'notes'];
+const northAfrica = ['المغرب', 'الجزائر', 'تونس', 'موريتانيا'];
+const gulf = ['السعودية', 'اليمن', 'عُمان', 'الإمارات', 'قطر', 'البحرين', 'الكويت'];
+let report = '';
+function nextSteps(data) {
+  const locality = [data.town, data.country].filter(Boolean).join('، ');
+  const place = locality ? 'في ' + locality : 'في مكان إقامة الأسرة';
+  const date = data.period ? ' قرب الفترة المذكورة (' + data.period + ')' : '';
+  let spelling = 'دوّن أشكال كتابة الاسم واسم العائلة كما تظهر في الوثائق.';
+  if (northAfrica.includes(data.country)) {
+    spelling = 'دوّن الاسم بالعربية، وأضف كتابته بالحروف اللاتينية إن ظهرت في وثيقة قديمة.';
+  }
+  const records = gulf.includes(data.country)
+    ? 'ابدأ بوثائق الأسرة المتاحة، ثم اسأل الجهة المحلية عن السجلات التاريخية وشروط الاطلاع عليها ' + place + '.'
+    : 'استفسر عن سجلات الولادة أو الزواج أو الوفاة المتاحة ' + place + date + '.';
+  return [data.grandparent ? 'قارن اسم الجد وعلاقته بالوالد في وثيقة واحدة قبل إضافة جيل جديد.' : 'اسأل أحد كبار العائلة عن الاسم الكامل للجد وعن البلدة التي عاش فيها.', spelling, records];
+}
+byId('roots').addEventListener('submit', event => {
+  event.preventDefault();
+  const data = Object.fromEntries(fields.map(key => [key, byId(key).value.trim()]));
+  if (!data.person) {
+    byId('person').setCustomValidity('يرجى كتابة اسم الشخص.');
+    byId('person').reportValidity();
+    return;
+  }
+  const people = [['الشخص', data.person], ['أحد الوالدين', data.parent], ['أحد الأجداد', data.grandparent]];
+  byId('tree').replaceChildren(...people.map(([role, name]) => {
+    const card = document.createElement('div');
+    card.className = 'person';
+    const label = document.createElement('small');
+    const value = document.createElement('b');
+    label.textContent = role;
+    value.setAttribute('dir', 'auto');
+    value.textContent = name || 'لم يُذكر';
+    card.append(label, value);
+    return card;
+  }));
+  const details = [[data.country, data.town].filter(Boolean).join('، '), data.period, data.branch, data.notes].filter(Boolean);
+  byId('context').textContent = details.join(' · ');
+  const steps = nextSteps(data);
+  byId('steps').replaceChildren(...steps.map(step => {
+    const li = document.createElement('li');
+    li.textContent = step;
+    return li;
+  }));
+  report = ['خاتم | مخطط عائلي أولي', 'المعلومات المدخلة لم تُتحقق من السجلات.', '', ...people.map(([role, name]) => role + ': ' + (name || 'لم يُذكر')), ...details, '', ...steps].join('\n');
+  byId('result').hidden = false;
+  byId('result-title').focus();
+});
+byId('person').addEventListener('input', () => byId('person').setCustomValidity(''));
+byId('sample').addEventListener('click', () => {
+  const example = {person:'يوسف العلوي', branch:'فرع الأب', parent:'أحمد العلوي', grandparent:'محمد العلوي', country:'المغرب', town:'فاس', period:'١٩٢٥ تقريبًا', notes:'مثال بأسماء افتراضية'};
+  fields.forEach(key => { byId(key).value = example[key]; });
+  byId('person').setCustomValidity('');
+  byId('roots').requestSubmit();
+});
+byId('download').addEventListener('click', () => {
+  if (!report) return;
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(new Blob([report], {type:'text/plain;charset=utf-8'}));
+  link.href = url;
+  link.download = 'Hotam-Family-Roots.txt';
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+</script>
+</body>
+</html>
