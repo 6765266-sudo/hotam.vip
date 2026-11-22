@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>הסיפור שלכם לדורות | חותם VIP</title>
+    <title>פנייה לחותם | סרטים, חרוזים ומורשת</title>
     <link rel="icon" type="image/png" href="gold-seal.png">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
@@ -25,14 +25,34 @@
         #success-area h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin-bottom: 15px; }
         #success-area p { color: #aaa; font-size: 1rem; margin-bottom: 30px; }
         #success-area a { display: inline-block; padding: 14px 40px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-weight: 700; }
+        select,textarea { width:100%; border:1px solid #7e7664; background:#1c211d; color:#f7f2e8; padding:.75rem; font:inherit; border-radius:5px; }
+        :is(select,textarea):focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div id="form-area">
-            <h1>איזה סיפור תרצו<br>להעביר לדורות?</h1>
-            <p class="sub">סיפור מסבא או מסבתא, מנהג שעובר במשפחה, חיים של אמונה ומסירות. נשמח לשמוע מה תרצו להנחיל לילדים ולנכדים.<br>השאירו שם ומספר — ונחזור אליכם בהקדם.</p>
+            <h1>מה תרצו להכין עם חותם?</h1>
+            <p class="sub">בחרו מה אתם מחפשים וספרו לנו בקצרה. נחזור אליכם לברר מה מתאים.</p>
             <form id="contact-form" action="https://formspree.io/f/xpqelbdr" method="POST">
+                <div class="form-group">
+                    <label for="service">מה תרצו להכין?</label>
+                    <select id="service" name="service" required>
+                        <option value="">בחרו אפשרות</option>
+                        <option value="presentation">סרט משפחתי או מצגת</option>
+                        <option value="story">סיפור משפחתי כתוב</option>
+                        <option value="verses-yi">גראַמען ביידיש</option>
+                        <option value="verses-he">חרוזים בעברית</option>
+                        <option value="song">שיר על סיפור משפחתי</option>
+                        <option value="family-tree">אילן יוחסין או חוברת משפחתית</option>
+                        <option value="package">שילוב של כמה מוצרים</option>
+                        <option value="other">משהו אחר</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="details">מה תרצו שנדע? (רשות)</label>
+                    <textarea id="details" name="details" rows="3" maxlength="800"></textarea>
+                </div>
                 <div class="form-group">
                     <label for="full-name">שם מלא</label>
                     <input id="full-name" autocomplete="name" type="text" name="name" placeholder="ישראל ישראלי" required />
@@ -41,17 +61,22 @@
                     <label for="phone">טלפון</label>
                     <input id="phone" autocomplete="tel" dir="ltr" type="tel" name="phone" placeholder="050-0000000" required />
                 </div>
-                <button type="submit" class="submit-btn">בואו נשאיר חותם לדורות</button>
+                <button type="submit" class="submit-btn">שליחת פנייה</button>
             <p id="form-feedback" role="status" aria-live="polite" style="color:#ddd;line-height:1.6"></p></form>
             <a href="index.html" class="back">← חזרה לדף הבית</a>
         </div>
         <div id="success-area">
             <h2>תודה על פנייתך.</h2>
-            <p>נשמח לשמוע את סיפור המשפחה שלכם. נחזור אליכם בהקדם.</p>
+            <p>הפנייה התקבלה. נחזור אליכם לברר את הפרטים.</p>
             <a href="index.html">חזרה לדף הבית</a>
         </div>
     </div>
     <script>
+        const service = document.getElementById('service');
+        const requestedService = new URLSearchParams(location.search).get('service');
+        if (Array.from(service.options).some(option => option.value === requestedService)) {
+            service.value = requestedService;
+        }
         document.getElementById('contact-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const button = this.querySelector('button');
