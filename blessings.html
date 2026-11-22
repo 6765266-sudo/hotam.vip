@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>חותם ברכות | ברכות לשמחות יהודיות</title>
+<style>
+:root{--paper:#fbf5e9;--ink:#1b332b;--gold:#a47740;--line:#dac8a9}*{box-sizing:border-box}body{margin:0;padding:clamp(16px,4vw,44px);background:#efe7d9;color:var(--ink);font:1rem/1.6 Arial,sans-serif}main,header{max-width:1080px;margin:auto}header{margin-bottom:1.4rem;border-bottom:1px solid var(--line);padding-bottom:.9rem}header h1{margin:0;font:700 clamp(2.3rem,5.8vw,4rem)/1.15 Georgia,serif}header p{margin:.5rem 0 0}main{display:grid;grid-template-columns:minmax(245px,1fr) minmax(340px,1.65fr);gap:1.3rem;align-items:start}form,article,.pilot-notes{background:var(--paper);border:1px solid var(--line);padding:clamp(1.1rem,3vw,2.2rem)}form label{display:block;margin:.75rem 0 .2rem;font-weight:bold}input,select,textarea,button{font:inherit}input,select,textarea{display:block;width:100%;padding:.45rem;border:1px solid #9d8b72;border-radius:5px;background:#fffdf8;color:inherit}textarea{resize:vertical;min-height:3.2rem}button{cursor:pointer;background:var(--ink);border:0;border-radius:5px;color:white;padding:.5rem 1rem;margin-top:1rem}button.secondary{background:transparent;color:var(--ink);border:1px solid currentColor}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #95663d;outline-offset:2px}article{min-height:420px;color:var(--ink);text-align:center;position:relative;outline:1px solid var(--gold);outline-offset:-10px;padding:clamp(28px,5vw,54px)}article[data-style="hasidic"]{--ink:#192547;--gold:#866c32;--paper:#faf1dc}article[data-style="litvish"]{--ink:#232f3b;--gold:#8b795b;--paper:#fbf8f0}article[data-style="sephardi"]{--ink:#143e49;--gold:#ad7152;--paper:#fff4df}article[data-style="modern"]{--ink:#205047;--gold:#658b76;--paper:#f2f5ed}.ornament{letter-spacing:.18em;color:var(--gold);font-size:1.4rem}.dear{font-size:1.05rem;margin:.6rem 0 0;overflow-wrap:anywhere}article h2{font:700 clamp(1.9rem,5vw,3.3rem)/1.2 Georgia,serif;margin:.3rem 0 1.5rem}article p{white-space:pre-line;overflow-wrap:anywhere;margin:0 auto 1rem;max-width:520px}article footer{margin-top:1.6rem;color:var(--ink);white-space:pre-line;overflow-wrap:anywhere}.pilot-notes{grid-column:1/-1}details+details{margin-top:.6rem}summary{cursor:pointer;font-weight:bold}small{display:block;margin-top:1.1rem} @media(max-width:720px){main{display:flex;flex-direction:column}main>*{width:100%}} @media print{body{padding:0;background:#fff}body>header,form,.pilot-notes,.next-step{display:none}main{display:block}article{min-height:85vh;display:flex;flex-direction:column;justify-content:center;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+[hidden]{display:none!important}.next-step{grid-column:2;margin:0}.sample{white-space:pre-line}
+.check{display:flex;align-items:center;gap:.6rem}.check input{width:auto}
+#paper-photo-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:.28;z-index:-1}
+#result{isolation:isolate;position:relative}#result[data-print="preprinted"] .ornament{display:none}
+@media print{
+ #result{background:#fff!important;color:#161b19;min-height:0;box-shadow:none;print-color-adjust:economy}
+ #result[data-print="mono"]{border-color:#333;outline-color:#555}
+ #result[data-print="preprinted"]{background:none!important;border:0;outline:0}
+ #paper-photo-preview{display:none!important}
+ #result[data-trim="a5"]{box-sizing:border-box;width:148mm;min-height:210mm;max-width:none;margin:0 auto;border:1px dashed #888;padding:10mm}
+}
+
+.mic span{display:inline-block;margin-inline-end:.3rem}
+#form-feedback{min-height:1.5em;margin:1rem 0 0;font-weight:600}
+#result[data-print="economy"]{background:linear-gradient(160deg,#fff 43%,#f6eee2 100%)}
+#result[data-print="full"]{background:radial-gradient(ellipse at top left,#d7e8d9 0%,transparent 54%),linear-gradient(145deg,#fbebd4,#f3e9f1)}
+#result[data-print="mono"]{color:#151515;background:#fff;border-color:#363636;outline-color:#777}
+#result[data-print="mono"] .ornament,#result[data-print="mono"] footer,#result[data-print="preprinted"] .ornament{display:none}
+#result[data-print="mono"] #signature{display:block;color:#151515}
+.print-sketch{display:none;width:min(250px,75%);height:45px;margin:0 auto 10px}
+#result[data-print="mono"][data-mono="graphic"] .print-sketch{display:block}
+@media print{
+ #result[data-print="economy"],#result[data-print="full"]{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ #result[data-print="economy"]{background:linear-gradient(160deg,#fff 43%,#f6eee2 100%)!important}
+ #result[data-print="full"]{background:radial-gradient(ellipse at top left,#d7e8d9,transparent 54%),linear-gradient(145deg,#fbebd4,#f3e9f1)!important}
+}
+#result[data-print="economy"]{background:#fff!important}article[data-print="economy"] #greeting,article[data-print="economy"] footer{color:#202020}
+</style><style id="print-size">@page{size:A4;margin:13mm}[hidden]{display:none!important}.next-step{grid-column:2;margin:0}.sample{white-space:pre-line}</style></head>
+<body><header><a href="./">חזרה לחותם VIP</a><h1>חותם ברכות</h1><p>ברכות לשמחות יהודיות. בחרו אירוע וסגנון, הכינו ברכה אישית והדפיסו בחינם.</p></header>
+<main>
+<form id="settings"><label for="event">אירוע</label><select id="event"><option value="bar">בר מצווה</option><option value="wedding">חתונה</option><option value="birthday">יום הולדת</option><option value="bat">בת מצווה</option><option value="engagement">אירוסין</option><option value="birth">לידה</option><option value="brit">ברית</option><option value="brita">בריתה / שמחת הבת</option><option value="family">מסיבה משפחתית</option><option value="chanukah">מסיבת חנוכה</option><option value="home">חנוכת הבית</option><option value="hosting">תודה על אירוח שבת וחג</option><option value="other">אירוע אחר</option></select>
+<label for="recipient" id="recipient-label">שם חתן בר המצווה</label><input id="recipient" name="recipient" required maxlength="70" placeholder="למשל נתנאל"><div id="parents-field"><label for="parents">שמות ההורים (רשות)</label><input id="parents" maxlength="100" placeholder="למשל מוטי ודינה"></div>
+<fieldset id="engagement-fields" hidden><legend>למי מוסרים את הברכה?</legend>
+<label for="target">נמען</label><select id="target"><option value="parents">הורי הכלה</option><option value="bride">הכלה</option><option value="couple">בני הזוג</option></select>
+<div id="host-name-field"><label for="host-name">שמות ההורים (רשות)</label><input id="host-name" maxlength="100"></div>
+<label for="groom">שם החתן בכתיב הרצוי (רשות)</label><input id="groom" maxlength="70"></fieldset>
+<div id="verse-field" hidden><label for="composition">צורת הברכה</label><select id="composition"><option value="prose">ברכה רגילה</option><option value="1">חרוזים · בית אחד</option><option value="2">חרוזים · שני בתים</option><option value="3">חרוזים · שלושה בתים</option></select><small>ארבע שורות בכל בית.</small></div>
+<div id="occasion-field" hidden><label for="occasion">לכבוד מה הברכה?</label><input id="occasion" maxlength="70" placeholder="למשל סיום לימודים או חזרה הביתה"></div>
+<div id="age-field" hidden><label for="age">איזה גיל חוגגים? (רשות)</label><input id="age" type="number" min="0" step="1" inputmode="numeric" placeholder="למשל 56"></div>
+<fieldset id="birth-field" hidden><legend>פרטים למשפחה (רשות)</legend>
+<label class="check"><input id="baby-known" type="checkbox"> שם התינוק כבר ידוע</label>
+<div id="baby-name-field" hidden><label for="baby-name">שם התינוק או התינוקת</label><input id="baby-name" maxlength="70"></div>
+<label for="siblings">אחיות ואחים גדולים</label><input id="siblings" maxlength="160" placeholder="למשל תמר הבכורה בכיתה ב׳ וליבי בגן חובה">
+<button type="button" class="mic secondary" data-dictate="siblings" aria-label="מיקרופון להכתבת שמות האחים"><span aria-hidden="true">🎙</span> הכתבה</button>
+</fieldset>
+<label for="sender">ממי הברכה</label><input id="sender" name="sender" maxlength="70" placeholder="שם המברך או המשפחה">
+<label for="relation">קרבה</label><select id="relation"><option value="relative">משפחה</option><option value="parent">הורים</option><option value="grandparent">סבא וסבתא</option><option value="friend">חברים</option><option value="neighbor">שכנים</option></select>
+<label for="style">נוסח ועיצוב</label><select id="style"><option value="modern">יהודי</option><option value="religious">דתי</option><optgroup label="חרדי"><option value="haredi">חרדי כללי</option><option value="hasidic">חסידי</option><option value="litvish">חרדי ליטאי</option><option value="brisk">ליטאי בריסקי · לשון הגמרא</option><option value="chabad" hidden disabled>חב״ד</option><option value="concise" hidden disabled>חסידי תמציתי</option><option value="faith" hidden disabled>תורני · סייעתא דשמיא</option><option value="yiddish" hidden disabled>יידיש</option><option value="sephardi">ספרדי / עדות המזרח</option></optgroup></select>
+<label for="language">שפת הברכה</label><select id="language"><option value="he">עברית</option><option value="en">English · אנגלית</option><option value="fr">Français · צרפתית</option><option value="es">Español · ספרדית</option><option value="ru">Русский · רוסית</option></select><small id="language-help" hidden>הנוסח יופיע בשפה שנבחרה. שמות ופרטים אישיים מופיעים כפי שהקלדתם.</small><label for="length">אורך</label><select id="length"><option value="short">קצר</option><option value="medium">בינוני</option><option value="long">ארוך</option></select>
+<label for="paper">גודל דף</label><select id="paper"><option value="A4">A4, דף רגיל (21 × 29.7 ס״מ)</option><option value="A5">A5 (14.8 × 21 ס״מ)</option><option value="A5-on-A4">A5 על דף A4, עם מסגרת חיתוך</option><option value="A3">A3 (29.7 × 42 ס״מ)</option><option value="B4">B4 (25 × 35.3 ס״מ)</option><option value="custom">מותאם אישית בס״מ</option></select>
+<div id="custom-paper" hidden><label for="paper-width">רוחב בס״מ</label><input id="paper-width" type="number" min="5" max="100" step="0.1" value="21"><label for="paper-height">גובה בס״מ</label><input id="paper-height" type="number" min="5" max="100" step="0.1" value="29.7"></div>
+<label for="appearance">סגנון הדפסה</label><select id="appearance">
+<option value="economy">רקע לבן · כותרת ומסגרת בצבע</option>
+<option value="full">רקע צבעוני · צבע על פני הדף</option>
+<option value="preprinted">נייר מעוצב מהבית · מודפס רק הטקסט</option>
+<option value="mono">שחור־לבן</option></select><small id="print-help" aria-live="polite"></small>
+<div id="mono-field" hidden><label for="mono-art">הדפסה בשחור־לבן</label><select id="mono-art"><option value="text">טקסט בלבד</option><option value="graphic">עם איור בשחור־לבן</option></select></div>
+<div id="paper-photo-field" hidden><label for="paper-photo">תצלום הדף לתצוגה בלבד (רשות)</label><input id="paper-photo" type="file" accept="image/png,image/jpeg,image/webp"></div>
+<label for="detail" id="detail-label">פרטים אישיים לשילוב בברכה (רשות)</label><textarea id="detail" maxlength="260" placeholder="למשל: אוהב לשיר זמירות שבת ומכבד את הוריו"></textarea>
+<button id="dictate" type="button" class="mic secondary" data-dictate="detail" aria-label="מיקרופון להכתבת פרטים"><span aria-hidden="true">🎙</span> הכתבה</button>
+<small id="dictation-status" role="status">הכתבה דורשת דפדפן תומך ועשויה להשתמש בשירות הזיהוי שלו. מומלץ לקרוא ולתקן את התמלול לפני ההדפסה.</small>
+<button type="submit">הכנת ברכה</button>
+<button id="sample-birth" type="button" class="secondary">דוגמה לברכת לידה</button>
+<p id="form-feedback" role="status" aria-live="polite"></p>
+<small>הברכה מותאמת לפי הפרטים שמילאתם ומבחר נוסחים לפי האירוע. הטקסט המוקלד ותצלום הדף מעובדים בתצוגה המקומית.</small></form>
+<article hidden id="result" data-style="hasidic" tabindex="-1" aria-live="polite"><img id="paper-photo-preview" alt="" hidden><div class="ornament" aria-hidden="true">❧</div>
+<svg class="print-sketch" viewBox="0 0 250 45" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 37Q56 4 124 37Q194 4 238 37M38 20q-11 1-17-8 11 0 17 8m16-4q-8-3-11-12 11 5 11 12m158 4q11 1 17-8-11 0-17 8m-16-4q8-3 11-12-11 5-11 12M124 37q-8-14 0-22 8 8 0 22"/></svg><p class="dear" id="dear"></p><h2 id="heading">מזל טוב לבר המצווה</h2><p id="greeting"></p><footer id="signature"></footer></article><div id="next-step" class="next-step" hidden><button id="print" type="button" class="secondary">הדפסה / PDF</button></div>
+
+</main>
+<script>
+const get = id => document.getElementById(id);
+const formulations = {
+  bar:{heading:'מזל טוב לבר המצווה',hasidic:'יהי רצון שתגדל בתורה וביראת שמים, מתוך שמחה וחיות בעבודת ה׳.',litvish:'יהי רצון שתזכה לגדול בתורה וביראת שמים, ושתהא התורה מתוקה בפיך. שתזכה לקיים מצוות בשמחה ולהסב רוב נחת להוריך.',sephardi:'יהי רצון שתגדל לתורה, לחופה ולמעשים טובים, ותזכה לאור תורה, לברכה ולשמחה.',modern:'מזל טוב ליום הגדול שלך! שתמשיך ללכת אחרי הדברים שמשמחים אותך ותיהנה מהדרך, עם משפחה וחברים ששמחים בשמחתך.'},
+  wedding:{heading:'מזל טוב לחתונה',hasidic:'תזכו להקים בית נאמן בישראל, מלא תורה, חסד ושמחה של מצווה.',litvish:'יהי רצון שתשרה שכינה במעונכם, ותבנו בית של תורה, יראה ומידות טובות.',sephardi:'תזכו לבניין עדי עד, לשלום בית, לשפע ברכה ולשמחות רבות.',modern:'שתבנו יחד בית חם, עם שלום, סבלנות ושמחה לימים שעוד יבואו.'},
+  birthday:{heading:'מזל טוב ליום ההולדת',hasidic:'יהי רצון שתהא השנה הבאה עליכם לטובה שנה של ברכה, בריאות ונחת, מתוך שמחה בעבודת ה׳.',litvish:'יהי רצון שתתברכו בבריאות וביישוב הדעת, ותעלו בתורה, במידות ובמעשים טובים.',sephardi:'שתתחדשו בשנה של בריאות, פרנסה טובה, נחת ושמחה בלב ובבית.',modern:'שתהיה לך שנה של בריאות, אנשים טובים ורגעים שתרצה לזכור.'}
+};
+const newEvents={"bat": ["בת מצווה", "שם כלת בת המצווה", "למשל שירה", "מזל טוב לבת המצווה", "שהדרך שתבחרי תהיה מלאה בשמחה, בסקרנות ובחברות טובה.", "שתזכי לקיים מצוות בשמחה ולגלות את הדרך המיוחדת שלך להוסיף טוב.", "שתגדלי לתורה, ליראת שמים ולמעשים טובים, מתוך בריאות ושמחה."], "engagement": ["אירוסין", "שמות בני הזוג", "למשל יצחק יהודה ושרי", "מזל טוב לאירוסין", "שתיהנו מכל רגע בדרך לחתונה ושתבנו יחד בית מלא ברכה ושמחה.", "שתזכו להגיע לחופה בשמחה ולהקים בית של שלום, אמונה וחסד.", "שתזכו להיכנס לחופה בשעה טובה ולהקים בית נאמן בישראל."], "birth": ["לידה", "שמות ההורים", "למשל חיים ורחל", "מזל טוב להולדת התינוק או התינוקת", "שתזכו להכיר עולם חדש של רגעים קטנים ומשמחים עם המשפחה שגדלה.", "שתגדלו את הילד או הילדה בבריאות, בשמחה ובנחת.", "שתזכו לגדל בשמחה ובנחת, לתורה, לחופה ולמעשים טובים."], "brit": ["ברית", "שם התינוק או ההורים", "למשל דוד, בן משה ורחל", "מזל טוב לברית", "שתגדלו את בנכם בבריאות ובשמחה, ותזכו איתו לשנים של שמחה.", "כשם שנכנס לברית, כך ייכנס לתורה, לחופה ולמעשים טובים.", "כשם שנכנס לברית, כן ייכנס לתורה, לחופה ולמעשים טובים, ותגדלוהו בנחת."], "brita": ["בריתה / שמחת הבת", "שם התינוקת או ההורים", "למשל תמר, בת משה ורחל", "מזל טוב לשמחת הבת", "שתגדלו את בתכם בבריאות ובשמחה, ותזכו איתה לשנים של שמחה.", "שתגדל בבריאות, באהבת תורה ובמעשים טובים, ותמלא את ביתכם שמחה.", "שתזכו לגדלה לתורה, לחופה ולמעשים טובים, מתוך נחת ושמחה."], "family": ["מסיבה משפחתית", "שם המשפחה או החוגגים", "למשל משפחת נוימן", "ברכה למפגש המשפחתי", "שתמשיכו למצוא זמן להיפגש, לספר ולהוסיף זיכרונות טובים יחד.", "שתזכו להתכנס בשמחה ובידידות, ולהעביר לדור הבא את מה שקיבלתם בבית.", "שתזכו לרוב נחת מכל יוצאי חלציכם ולהיפגש תמיד מתוך ברכה ושמחה."], "chanukah": ["מסיבת חנוכה", "שם המשפחה או החוגגים", "למשל משפחת נוימן", "חנוכה שמח", "שיתמלא הבית באור, בצחוק ובסיפורים טובים שעוברים בין הדורות.", "שאור נרות החנוכה ילווה אתכם ויוסיף בבית שמחה, אמונה ואחדות.", "שיאירו נרות חנוכה את ביתכם בשפע ברכה, תורה ונחת."]};
+const styleAdditions={"bar": ["שתזכה לשלב תורה ומצוות בחיים ולגדול באחריות, בשמחה ובגמילות חסדים.", "שתזכה לגדול בתורה וביראת שמים, ולקיים מצוות בשמחה ובישוב הדעת."], "wedding": ["שתבנו בעזרת השם בית של שלום, אמונה, רעות וחסד.", "תזכו להקים בית נאמן בישראל, מתוך שלום, תורה ושמחה."], "birthday": ["שתהיה זו שנה של בריאות, שמחה, עשייה טובה וזמן עם מי שיקר לך.", "יהי רצון שתהא השנה הבאה עליך לטובה, לברכה, לבריאות ולנחת."]};
+for(const [key,[religious,haredi]] of Object.entries(styleAdditions)) Object.assign(formulations[key],{religious,haredi});
+for(const [key,[,,,heading,modern,religious,haredi]] of Object.entries(newEvents)) formulations[key]={heading,modern,religious,haredi,hasidic:haredi,litvish:haredi,sephardi:haredi};
+const relationships={relative:'איזו שמחה לחגוג יחד כמשפחה.',parent:'זכות גדולה בשבילנו להיות לצדך ביום המיוחד הזה.',grandparent:'הלב שלנו מתמלא נחת כשאנחנו חוגגים איתך.',friend:'אנחנו שמחים להיות איתך ולחגוג את הרגע הזה.',neighbor:'שמחים להשתתף בשמחתכם ולאחל לכם מכל הלב.'};
+const styleWishes={hasidic:'שתזכו להוסיף טוב וחסד ולראות ברכה בכל מעשה ידיכם.',litvish:'שתזכו להוסיף במעשים טובים וללכת מחיל אל חיל.',sephardi:'שיתקבלו כל משאלות לבכם לטובה, בברכה ובשלום.',modern:'שיהיו לך הרבה הזדמנויות לעשות דברים טובים ולשמוח עם מי שיקר לך.'};
+const translations = {
+ en: {
+  parents: 'To the parents of', to: 'To', with: 'and',
+  congratulations: 'Mazel tov', parentsWish: 'May you have much joy and nachas from your family.',
+  closing: 'May this occasion be followed by many more occasions for joy.',
+  bar: ['Mazel tov on your bar mitzvah', 'May you grow in Torah, fulfil mitzvot with joy and bring much nachas to your family.'],
+  bat: ['Mazel tov on your bat mitzvah', 'May you grow in Torah, perform mitzvot with joy and be a source of pride to your family.'],
+  wedding: ['Mazel tov on your wedding', 'May you build a Jewish home filled with peace, blessing and joy.'],
+  engagement: ['Mazel tov on the engagement', 'May the couple go to the chuppah in a good and blessed hour and build a Jewish home filled with peace and joy.'],
+  birthday: ['Happy birthday', 'May the year ahead bring good health, joy and good news.'],
+  birth: ['Mazel tov on the birth', 'May you raise your child in health and joy, to Torah, the chuppah and good deeds.'],
+  brit: ['Mazel tov on the brit milah', 'Just as he has entered the covenant, may he enter into Torah, the chuppah and good deeds.'],
+  brita: ['Mazel tov on the birth of your daughter', 'May you raise her in health and joy, to Torah, the chuppah and good deeds.'],
+  family: ['Blessings for your family gathering', 'May your family continue to gather on happy occasions, in good health and peace.'],
+  chanukah: ['Happy Chanukah', 'May the lights of Chanukah bring blessing, joy and peace to your home.'],
+  home: ['Mazel tov on your new home', 'May your new home be a place of peace, hospitality and blessing.'],
+  hosting: ['Thank you for your hospitality', 'Thank you for welcoming us so warmly. May we meet again on happy occasions.'],
+  other: ['Warm wishes', 'May this occasion bring blessing, good health and joy.']
+ },
+ fr: {
+  parents: 'Aux parents de', to: 'À', with: 'et',
+  congratulations: 'Mazal tov', parentsWish: 'Que votre famille vous apporte beaucoup de joie et de fierté.',
+  closing: 'Que cette joie soit suivie de nombreuses autres belles occasions.',
+  bar: ['Mazal tov pour ta bar-mitsva', 'Que tu grandisses dans la Torah et la pratique des mitsvot, dans la joie et pour le bonheur de ta famille.'],
+  bat: ['Mazal tov pour ta bat-mitsva', 'Que tu grandisses dans la Torah et la pratique des mitsvot, dans la joie et pour le bonheur de ta famille.'],
+  wedding: ['Mazal tov pour votre mariage', 'Puissiez-vous bâtir ensemble un foyer juif où règnent la paix, la bénédiction et la joie.'],
+  engagement: ['Mazal tov pour les fiançailles', 'Que les fiancés se retrouvent sous la houppa en un moment propice et bâtissent un foyer juif dans la paix et la joie.'],
+  birthday: ['Joyeux anniversaire', 'Que cette nouvelle année vous apporte la santé, la joie et de bonnes nouvelles.'],
+  birth: ['Mazal tov pour cette naissance', 'Puissiez-vous élever votre enfant dans la santé et la joie, vers la Torah, la houppa et les bonnes actions.'],
+  brit: ['Mazal tov pour la brit mila', 'Après son entrée dans l’Alliance, qu’il grandisse pour la Torah, la houppa et les bonnes actions.'],
+  brita: ['Mazal tov pour la naissance de votre fille', 'Puissiez-vous l’élever dans la santé et la joie, vers la Torah, la houppa et les bonnes actions.'],
+  family: ['Nos vœux pour votre réunion familiale', 'Puissiez-vous vous retrouver souvent, en bonne santé et dans la joie.'],
+  chanukah: ['Joyeux Hanoucca', 'Que les lumières de Hanoucca apportent bénédiction, joie et paix à votre foyer.'],
+  home: ['Mazal tov pour votre nouveau foyer', 'Que votre nouveau foyer soit un lieu de paix, d’hospitalité et de bénédiction.'],
+  hosting: ['Merci pour votre accueil', 'Merci de nous avoir reçus si chaleureusement. Puissions-nous nous retrouver dans la joie.'],
+  other: ['Nos meilleurs vœux', 'Que cette occasion vous apporte bénédiction, santé et joie.']
+ },
+ es: {
+  parents: 'A los padres de', to: 'Para', with: 'y',
+  congratulations: 'Mazal tov', parentsWish: 'Que su familia les dé siempre mucha alegría y satisfacción.',
+  closing: 'Que esta celebración sea seguida de muchas más alegrías.',
+  bar: ['Mazal tov por tu bar mitzvá', 'Que crezcas en la Torá, cumplas las mitzvot con alegría y seas motivo de orgullo para tu familia.'],
+  bat: ['Mazal tov por tu bat mitzvá', 'Que crezcas en la Torá, cumplas las mitzvot con alegría y seas motivo de orgullo para tu familia.'],
+  wedding: ['Mazal tov por su boda', 'Que construyan un hogar judío lleno de paz, bendición y alegría.'],
+  engagement: ['Mazal tov por el compromiso', 'Que los novios lleguen a la jupá en buena hora y construyan un hogar judío lleno de paz y alegría.'],
+  birthday: ['Feliz cumpleaños', 'Que el año que comienza traiga salud, alegría y buenas noticias.'],
+  birth: ['Mazal tov por el nacimiento', 'Que críen a su bebé con salud y alegría, en el camino de la Torá, la jupá y las buenas acciones.'],
+  brit: ['Mazal tov por el brit milá', 'Así como ha entrado en el pacto, que crezca para la Torá, la jupá y las buenas acciones.'],
+  brita: ['Mazal tov por el nacimiento de su hija', 'Que crezca con salud y alegría, en el camino de la Torá, la jupá y las buenas acciones.'],
+  family: ['Nuestros mejores deseos para la reunión familiar', 'Que su familia siga reuniéndose en ocasiones felices, con salud y paz.'],
+  chanukah: ['Feliz Janucá', 'Que las luces de Janucá lleven bendición, alegría y paz a su hogar.'],
+  home: ['Mazal tov por su nuevo hogar', 'Que su nuevo hogar sea un lugar de paz, hospitalidad y bendición.'],
+  hosting: ['Gracias por su hospitalidad', 'Gracias por recibirnos con tanta calidez. Que volvamos a reunirnos en ocasiones felices.'],
+  other: ['Nuestros mejores deseos', 'Que esta ocasión les traiga bendición, salud y alegría.']
+ },
+ ru: {
+  parents: 'Родителям невесты', to: 'Для', with: 'и',
+  congratulations: 'Мазл тов', parentsWish: 'Пусть ваша семья приносит вам много радости и гордости.',
+  closing: 'Пусть за этим праздником последует ещё много радостных событий.',
+  bar: ['Мазл тов с бар-мицвой', 'Желаем тебе расти в изучении Торы, с радостью исполнять заповеди и радовать свою семью.'],
+  bat: ['Мазл тов с бат-мицвой', 'Желаем тебе расти в изучении Торы, с радостью исполнять заповеди и радовать свою семью.'],
+  wedding: ['Мазл тов со свадьбой', 'Желаем вам создать еврейский дом, в котором будут мир, благословение и радость.'],
+  engagement: ['Мазл тов с помолвкой', 'Пусть жених и невеста в добрый час встанут под хупу и создадут еврейский дом, полный мира и радости.'],
+  birthday: ['С днём рождения', 'Пусть новый год жизни принесёт здоровье, радость и добрые вести.'],
+  birth: ['Мазл тов с рождением ребёнка', 'Пусть ребёнок растёт в здоровье и радости, на пути к Торе, хупе и добрым делам.'],
+  brit: ['Мазл тов с брит-милой', 'Как он вступил в завет, так пусть вырастет для Торы, хупы и добрых дел.'],
+  brita: ['Мазл тов с рождением дочери', 'Пусть она растёт в здоровье и радости, на пути к Торе, хупе и добрым делам.'],
+  family: ['Добрые пожелания всей семье', 'Пусть ваша семья чаще собирается по радостным поводам, в добром здравии и мире.'],
+  chanukah: ['С радостной Ханукой', 'Пусть огни Хануки принесут вашему дому благословение, радость и мир.'],
+  home: ['Мазл тов с новосельем', 'Пусть новый дом будет местом мира, гостеприимства и благословения.'],
+  hosting: ['Спасибо за гостеприимство', 'Спасибо за тёплый приём. Пусть мы ещё не раз встретимся по радостным поводам.'],
+  other: ['С наилучшими пожеланиями', 'Пусть этот день принесёт вам благословение, здоровье и радость.']
+ }
+};
+
+function briskText(eventId) {
+ const lines = {
+  bar: 'יהא רעוא מן קדם שמיא דתזכה למיסק באורייתא ולקיים מצוות בשמחה.',
+  bat: 'יהא רעוא מן קדם שמיא דתזכי למיסק במעלות התורה והיראה ולמעבד עובדין טבין.',
+  wedding: 'יהא רעוא מן קדם שמיא דתשרי שכינתא בביתכון ותזכו לבניין עדי עד.',
+  home: 'יהא רעוא מן קדם שמיא דתשרי שכינתא במעונכון ויהא ביתכון מלא ברכה ושלום.',
+  brit: 'כשם שנכנס לברית, כן ייכנס לתורה, לחופה ולמעשים טובים. יהא רעוא דלירבו נחת וברכה.'
+ };
+ return lines[eventId] ?? 'יהא רעוא מן קדם שמיא דתזכו לברכה ולהצלחה, למיסק באורייתא ולמעבד עובדין טבין.';
+}
+
+function translatedCard(language, eventId, length, detail) {
+ const words = translations[language];
+ const recipient = get('recipient').value.trim();
+ const groom = get('groom').value.trim();
+ const host = get('host-name').value.trim();
+ const target = get('target').value;
+ let [heading,wish] = words[eventId];
+ let opening = recipient;
+ const lines = [wish];
+ if(eventId==='engagement'){
+  const names = [recipient,groom].filter(Boolean).join(' '+words.with+' ');
+  if (target==='parents') {
+   opening = host || words.parents+' '+recipient;
+   if (host || groom) lines.unshift(words.congratulations+' — '+names+'.');
+   if (length!=='short') lines.push(words.parentsWish);
+  } else {
+   opening = names;
+  }
+ }
+ if (eventId==='birthday' && get('age').value!=='') heading+=' · '+get('age').value;
+ if (eventId==='other' && get('occasion').value.trim()) heading+=' · '+get('occasion').value.trim();
+ const parents=get('parents').value.trim();
+ if (['bar','bat'].includes(eventId) && parents) lines.push(words.to+' '+parents+': '+words.parentsWish);
+ if (isBirthEvent(eventId)) {
+  const names=[get('baby-known').checked?get('baby-name').value.trim():'',get('siblings').value.trim()].filter(Boolean);
+  if(names.length) lines.push(words.to+' '+names.join(', ')+': '+words.congratulations+'!');
+ }
+ if (length==='long') lines.push(words.closing);
+ if(detail) lines.push(detail);
+ return {heading,opening,lines};
+}
+
+function syncLanguageOptions(){
+ const translated=get('language').value!=='he';
+ get('language-help').hidden=!translated;
+ get('style').disabled=translated;
+ get('verse-field').hidden=translated || get('event').value!=='engagement';
+}
+
+function render(){
+ const eventId=get('event').value;
+ const event=formulations[eventId];
+ const familyBirth=isBirthEvent(eventId);
+ const engagement=eventId==='engagement';
+ const style=get('style').value;
+ const length=get('length').value;
+ const detail=get('detail').value.trim();
+ const lines=[style==='brisk'?briskText(eventId):event[style]];
+ if(length!=='short'&&!personalEvents[eventId]&&eventId!=='bar')lines.unshift(relationships[get('relation').value]);
+ if(length==='long'&&!personalEvents[eventId]&&eventId!=='bar')lines.push((styleWishes[style] || styleWishes.hasidic));
+ const parents=get('parents').value.trim();
+ if(['bar','bat'].includes(get('event').value) && parents)lines.push('ולכם, '+parents+', מזל טוב והרבה נחת לרגל השמחה.');
+ if(familyBirth){
+  const baby=get('baby-name').value.trim();
+  if(get('baby-known').checked && baby)lines.push('מזל טוב מכל הלב לכבוד '+baby+'.');
+  const siblings=get('siblings').value.trim();
+  if(siblings)lines.push('מזל טוב גם לאחיות ולאחים הגדולים: '+siblings+'. שתיהנו להכיר את בן המשפחה החדש ותמצאו עוד סיבות לשמוח יחד.');
+ }
+ if(detail && !engagement){
+  const personal=detail.replace(/[.!?]+$/u,'').trim();
+  if(personal)lines.push(familyBirth ? 'מילה אישית למשפחה: '+personal+'.' : personal+'.');
+ }
+ const language=get('language').value;
+ const card=engagement?engagementCard(style,length,detail):null;
+ const localized=language==='he'?null:translatedCard(language,eventId,length,detail);
+ get('result').dataset.event=eventId;
+ get('result').lang=localized?language:engagement && style==='yiddish'?'yi':'he';
+ get('result').dir=localized?'ltr':'rtl';
+ get('result').dataset.style=style;
+ get('dear').textContent=localized?.opening??card?.opening??get('recipient').value.trim();
+ const age=get('age').value;
+ const customHeading=eventId==='other'&&get('occasion').value.trim()?'ברכה לכבוד '+get('occasion').value.trim():null;
+ get('heading').textContent=localized?.heading??(eventId==='birthday' && age!=='' ? 'מזל טוב ליום הולדת '+age : (card?.heading??customHeading??event.heading));
+ get('greeting').textContent=(localized?.lines??card?.lines??lines).join('\n\n');
+ const sender=get('sender').value.trim();
+ get('signature').textContent=sender?sender:'';
+ const paper=get('paper').value;
+ const custom=paper==='custom';
+ const sheet=paper==='A5-on-A4' ? 'A4' : paper==='B4' ? '250mm 353mm' : paper;
+ const page=custom ? Number(get('paper-width').value)+'cm '+Number(get('paper-height').value)+'cm' : sheet;
+ get('result').dataset.trim=paper==='A5-on-A4'?'a5':'';
+ get('result').dataset.print=get('appearance').value;
+ get('result').dataset.mono=get('mono-art').value;
+ get('print-size').textContent='@page{size:'+page+';margin:13mm}';
+ get('paper-photo-preview').hidden=get('appearance').value!=='preprinted' || !previewUrl;
+
+}
+
+const personalEvents={
+ home:['חנוכת הבית','שם המשפחה (רשות)','למשל משפחת לוי','תתחדשו על הבית!','שיהיה לכם בית שכיף לפתוח בו את הדלת, לארח חברים ולצבור רגעים טובים.','שתזכו להכניס לבית אור, שמחה וברכה.','יהי רצון שתשרה שכינה במעונכם, ותזכו ליישוב הדעת, לברכה ולשלום.'],
+ hosting:['תודה על אירוח','שם המארחים (רשות)','למשל רבקה ומשה','תודה על האירוח','תודה על הדלת הפתוחה ועל הזמן היפה אצלכם. היה לנו נעים כמו בבית.','תודה על הלב הפתוח ועל האירוח החם. שניפגש תמיד בשמחות.','יישר כוח על קבלת הפנים במאור פנים. תשרה ברכה בביתכם ותזכו לארח מתוך שמחה.'],
+ other:['אירוע אחר','למי הברכה? (רשות)','למשל משפחת לוי','מכל הלב','איחולים חמים ומכל הלב לרגל הרגע הזה. שיהיה לך הרבה טוב בדרך שלפניך.','ברכה חמה ליום הזה ולהמשך הדרך, בשמחה ובבריאות.','יהי רצון שתשרה ברכה במעשה ידיכם, ותזכו לשמחה, לבריאות ולנחת.'],
+};
+for(const [key,entry] of Object.entries(personalEvents)){
+ newEvents[key]=entry;
+ const [,,,heading,modern,religious,haredi]=entry;
+ formulations[key]={heading,modern,religious,haredi,hasidic:haredi,litvish:haredi,sephardi:haredi};
+}
+const engagementStyles={
+ brisk:['יהא רעוא מן קדם שמיא דיעלה הזיווג יפה ותזכו להוליכם לחופה בשעתא טבא.','יהא ביתם בית נאמן בישראל, ויהון זוכין למיסק באורייתא ולרבות במעשים טובים, ותרוו מהם רוב נחת.'],
+ modern:['כאחים יהודים, אנחנו שמחים איתכם בשמחת המשפחה.','שיזכו לבנות בית של שלום, אחווה ושמחה, ושתרוו מהם רוב נחת.'],
+ religious:['מכל הלב נאחל לשניהם שיגיעו לחופה בשמחה.','שיזכו לבנות בית מלא ברכה ושמחה, אמונה וחסד.'],
+ haredi:['יהי רצון שהזיווג יעלה יפה, ושתזכו להוליכם לחופה בשעה טובה ומוצלחת.','יזכו לבנות בית נאמן בישראל, ותזכו לרוות מהם רוב נחת.'],
+ litvish:['יהי רצון שתזכו להוליכם לחופה בשעה טובה ומוצלחת.','יזכו לבנות בית נאמן בישראל המיוסד על תורה ויראת שמים, ותרוו מהם רוב נחת.'],
+ hasidic:['יהי רצון שהזיווג יעלה יפה, ושתזכו להוליכם לחופה בשמחה של מצווה.','שתזכו לראות מהם רוב נחת דקדושה.'],
+ sephardi:['בסימן טוב ובמזל טוב. יהי רצון שהזיווג יעלה יפה.','שתזכו להוליכם לחופה בשעה טובה ומבורכת ולרוות מהם נחת.'],
+ chabad:['יהי רצון שיהיה בשעה טובה ומוצלחת ולבניין עדי עד על יסודי התורה והמצווה.','שתזכו לרוב נחת חסידותי ולבשורות טובות.'],
+ concise:['יהי רצון שיהיה בשעה טובה ומוצלחת.','לחופה בשמחה ולרוב נחת.'],
+ faith:['הודו לה׳ כי טוב. יהי רצון שיזכו להגיע לחופה בסייעתא דשמיא, ושתשרה שכינה במעונם.','שיזכו לעושר בתורה, ליראת שמים ולשמחה בעבודת ה׳.'],
+ yiddish:['דער אייבערשטער זאל העלפן אז דער שידוך זאל עולה יפה זיין, און איר זאלט זיי פירן אונטער דער חופה בשעה טובה ומוצלחת.','זיי זאלן זוכה זיין צו בויען א בית נאמן בישראל, און איר זאלט האבן פון זיי אסאך נחת.']
+};
+const stanzas={
+ modern:['בשורה טובה הגיעה היום,\nועמה מתחיל פרק של חלום.\nשתשמחו ביחד גם ביום קצת סגריר,\nושתמיד תמצאו סיבה טובה לשיר.','שיהיה לכם בית שנעים לחזור,\nושגם בלילה תדעו להדליק בו אור.\nשיתמלא החדר בחברים ובחיוך,\nובו תמצאו זו בזה כוח.','בשעה טובה לכו אל החופה,\nותלווה את דרככם ברכה צרופה.\nיהיו לכם בשורות טובות ושמחות,\nושנים של שלום, נחת והצלחות.'],
+ traditional:['בשעה טובה הגיעה הבשורה,\nוהלב מתמלא שמחה ואורה.\nשתזכו להגיע לחופה בשמחה,\nולבנות בית של תורה וברכה.','שיהא ביתכם מלא מצוות וחסד,\nומידות טובות יהיו לו ליסוד.\nשתזכו תמיד לברכה ולהצלחה,\nותוסיפו נחת, יום אחר יום עוד.','ומכל הלב אנחנו מברכים,\nשתראו טוב בכל הדרכים.\nשתשרה ברכה בכל מעונכם,\nושמחת היום תלווה אתכם.'],
+ yiddish:['די בשורה ברענגט א שמחה אין שטוב,\nצו די טייערע עלטערן א ווארעמער מזל טוב.\nדער אייבערשטער זאל זיי געבן ברכה און חן,\nאון איר זאלט פון זיי נאר נחת זען.','מיט שמחה זאלן זיי גיין צו דער חופה,\nמיט ברכה און הצלחה יעדע תקופה.\nזייער שטוב זאל זיין פול מיט תורה און חן,\nאון אלע זאלן זיך פרייען ווען זיי קומען אהין.','דער קליינער געשאנק איז פון הארצן,\nפאר א טאג פול מיט שמחה און גלאנצן.\nמיר ווינטשן אייך אלעמען פיל הצלחה,\nאון נאך אסאך שמחות אין דער משפחה.']
+};
+function engagementCard(style, length, detail){
+ const bride=get('recipient').value.trim();
+ const groom=get('groom').value.trim();
+ const names=get('host-name').value.trim();
+ const target=get('target').value;
+ const yi=style==='yiddish';
+ const parents=target==='parents';
+ const couple=target==='couple';
+ const personalOpening=couple?[bride,groom].filter(Boolean).join(yi?' און ':' ו'):(yi?'צו דער טייערער כלה ':'לכלה ')+bride+(yi?'':' היקרה');
+ const parentsOpening=names?(yi?'צו די טייערע '+names:'ל'+names+' היקרים'):yi?'צו אונזערע טייערע פריינט':get('relation').value==='friend'?'לידידינו היקרים':'להורי הכלה היקרים';
+ const announcement=parents?(yi?'מזל טוב צום שידוך פון אייער טאכטער, כלה '+bride+(groom?', מיט החתן '+groom:'')+'.':(style==='chabad'?'לרגל בוא בתכם '+bride+' בקשרי השידוכין':'לרגל אירוסי בתכם '+bride)+(groom?' עם '+(style==='modern'?'':'החתן ')+groom:'')+'.'):yi?'א הארציקן מזל טוב צו '+(couple?'אייער':'דיין')+' שידוך!':couple?'מזל טוב לרגל אירוסיכם!':'מזל טוב לרגל אירוסייך'+(groom?' עם '+groom:'')+'!';
+ const directed=style==='brisk'?'יהא רעוא מן קדם שמיא דיעלה הזיווג יפה, ותזכו לבניין עדי עד בשעתא טבא.':yi?'דער אייבערשטער זאל העלפן אז דער שידוך זאל עולה יפה זיין, מיט פיל ברכה און נחת.':style==='modern'?'שתזכו לבנות יחד בית של שלום, אחווה ושמחה.':couple?'שתזכו לחופה בשעה טובה ולבניין עדי עד.':'שתזכי לחופה בשעה טובה ולבניין עדי עד.';
+ const wishes=parents?engagementStyles[style]??engagementStyles.haredi:[directed];
+ const count=Number(get('composition').value);
+ const verse=stanzas[yi?'yiddish':style==='modern'?'modern':'traditional'];
+ const additions=count?verse.slice(0,count):wishes.slice(0,length==='short'?1:wishes.length);
+ return {opening:parents?parentsOpening:personalOpening, heading:yi?'א הארציקן מזל טוב!':style==='chabad'?'מזל טוב לקשרי השידוכין':'מזל טוב!',lines:[announcement,...additions,...(detail?[detail]:[])]};
+}
+const recipientFields={
+ bar:['שם חתן בר המצווה','למשל נתנאל'],
+ wedding:['שמות החתן והכלה','למשל יצחק יהודה ושרי'],
+ birthday:['שם החוגג או החוגגת','למשל רחל']
+};
+for(const [key,[,label,example]] of Object.entries(newEvents)) recipientFields[key]=[label,example];
+const isBirthEvent = event => ['birth','brit','brita'].includes(event);
+function updateBabyField(){
+ const enabled=isBirthEvent(get('event').value) && get('baby-known').checked;
+ get('baby-name-field').hidden=!enabled;
+ get('baby-name').disabled=!enabled;
+ get('baby-name').required=enabled;
+}
+function updatePaper(){
+ const custom=get('paper').value==='custom';
+ get('custom-paper').hidden=!custom;
+ for(const key of ['paper-width','paper-height']){
+  get(key).disabled=!custom;
+  get(key).required=custom;
+ }
+ get('paper-photo-field').hidden=get('appearance').value!=='preprinted';
+ get('mono-field').hidden=get('appearance').value!=='mono';
+}
+let previewUrl='';
+get('paper-photo').addEventListener('change',()=>{
+ if(previewUrl)URL.revokeObjectURL(previewUrl);
+ const photo=get('paper-photo').files[0];
+ previewUrl=photo ? URL.createObjectURL(photo) : '';
+ get('paper-photo-preview').src=previewUrl;
+});
+function startDictation(button){
+ const field=get(button.dataset.dictate);
+ const Recognition=window.SpeechRecognition || window.webkitSpeechRecognition;
+ if(!Recognition){get('dictation-status').textContent='הדפדפן הזה אינו תומך בהכתבה. אפשר להקליד או להדביק את התמלול.';return;}
+ const recognition=new Recognition();
+ recognition.lang='he-IL';
+ recognition.onstart=()=>{get('dictation-status').textContent='מקשיב…';button.disabled=true;};
+ recognition.onresult=event=>{
+  const current=field.value.trim();
+  field.value=(current+' '+event.results[0][0].transcript).trim().slice(0,field.maxLength);
+  get('dictation-status').textContent='התמלול נוסף. בדקו לפני הדפסה.';
+ };
+ recognition.onerror=()=>{get('dictation-status').textContent='ההכתבה לא הושלמה. אפשר לנסות שוב או להקליד.';};
+ recognition.onend=()=>{button.disabled=false;};
+ try{recognition.start();}catch{get('dictation-status').textContent='ההכתבה אינה זמינה כרגע.';}
+}
+for(const button of document.querySelectorAll('[data-dictate]')) button.addEventListener('click',()=>startDictation(button));
+get('baby-known').addEventListener('change',updateBabyField);
+get('paper').addEventListener('change',updatePaper);
+get('appearance').addEventListener('change',updatePaper);
+function updateEventFields(){
+ const selected=get('event').value;
+ const familyBirth=isBirthEvent(selected);
+ const engagement=selected==='engagement';
+ get('settings').dataset.event=selected;
+ get('engagement-fields').hidden=!engagement;
+ syncLanguageOptions();
+ get('occasion-field').hidden=selected!=='other';
+ get('occasion').required=selected==='other';
+ get('occasion').disabled=selected!=='other';
+ for(const key of ['chabad','concise','faith','yiddish']){
+  const option=get('style').querySelector('[value="'+key+'"]');
+  option.hidden=option.disabled=!engagement;
+  if(!engagement&&get('style').value===key)get('style').value='modern';
+ }
+ const [label,placeholder]=engagement?['שם הכלה בכתיב הרצוי','למשל רחל']:familyBirth?['שמות ההורים','למשל חיים ורחל']:recipientFields[selected];
+ get('birth-field').hidden=!familyBirth;
+ get('recipient').required=!familyBirth&&!personalEvents[selected];
+ get('detail-label').textContent=familyBirth?'מה תרצו לשלב בברכה למשפחה? (רשות)':'פרטים אישיים לשילוב בברכה (רשות)';
+ get('detail').placeholder=familyBirth?'למשל תודה להורים או סיפור קטן על המשפחה':'למשל תחביב או זיכרון משפחתי';
+ updateBabyField();
+ get('recipient-label').textContent=label;
+ get('recipient').placeholder=placeholder;
+ get('parents-field').hidden=!['bar','bat'].includes(selected);
+ get('age-field').hidden=selected!=='birthday';
+ get('age').disabled=selected!=='birthday';
+}
+get('event').addEventListener('change',()=>{
+ updateEventFields();
+ updatePaper();
+});
+get('language').addEventListener('change',syncLanguageOptions);
+get('target').addEventListener('change',()=>{get('host-name-field').hidden=get('target').value!=='parents';});
+const printNotes={
+ economy:'הדף נשאר לבן. הכותרת והמסגרת בצבע, ופסקאות הברכה בשחור.',
+ full:'הרקע כולו מודפס בצבע. האפשרות הזאת צורכת יותר דיו.',
+ preprinted:'מכניסים למדפסת את הנייר המעוצב שקניתם. רק המילים מודפסות.',
+ mono:'הכותרת והטקסט מודפסים בלי דיו צבעוני.'
+};
+function showPrintHelp(){get('print-help').textContent=printNotes[get('appearance').value];}
+get('appearance').addEventListener('change',showPrintHelp);
+get('settings').addEventListener('reset',()=>queueMicrotask(()=>{updateEventFields();showPrintHelp();}));
+showPrintHelp();
+get('settings').addEventListener('invalid',event=>{
+ const label=event.target.labels?.[0]?.textContent?.trim();
+ get('form-feedback').textContent=label ? 'בדקו את השדה: '+label+'.' : 'יש שדה שחסר בו פרט.';
+},true);
+function showBlessing(){
+ render();
+ get('result').hidden=false;
+ get('next-step').hidden=false;
+ get('form-feedback').textContent='הברכה מוכנה ומוצגת בתצוגה המקדימה.';
+ get('result').focus({preventScroll:true});
+ get('result').scrollIntoView({block:'start'});
+}
+get('settings').addEventListener('submit',event=>{
+ event.preventDefault();
+ showBlessing();
+});
+get('sample-birth').addEventListener('click',()=>{
+ const form=get('settings');
+ form.reset();
+ get('event').value='birth';
+ get('siblings').value='תמר הבכורה בכיתה ב׳ וליבי בגן חובה';
+ get('detail').value='שתזכו לגדל את התינוק בשמחה ובנחת, כמו שאתם מגדלים את הבנות.';
+ get('length').value='medium';
+ updateEventFields();
+ updatePaper();
+ showBlessing();
+});
+get('print').addEventListener('click',()=>window.print());
+updateEventFields();
+updatePaper();
+</script></body></html>
