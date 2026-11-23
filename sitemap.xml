@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://hotam.vip/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://hotam.vip/forum.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  <url><loc>https://hotam.vip/</loc></url>
+  <url><loc>https://hotam.vip/forum.html</loc></url>
   <url><loc>https://hotam.vip/archive.html</loc></url>
   <url><loc>https://hotam.vip/breslov-uman.html</loc></url>
   <url><loc>https://hotam.vip/berdichev-violin-1913.html</loc></url>
@@ -18,4 +10,33 @@
   <url><loc>https://hotam.vip/jerusalem-mea-shearim-1930s.html</loc></url>
   <url><loc>https://hotam.vip/jerusalem-karlin-beit-yisrael.html</loc></url>
   <url><loc>https://hotam.vip/kretchnif-airport-1972.html</loc></url>
+  <url><loc>https://hotam.vip/presentations.html</loc></url>
+  <url><loc>https://hotam.vip/blessings.html</loc></url>
+  <url><loc>https://hotam.vip/nasielsk-1938.html</loc></url>
+  <url><loc>https://hotam.vip/ziszi-gestetner.html</loc></url>
+  <url><loc>https://hotam.vip/story-chabad-arrest.html</loc></url>
+  <url><loc>https://hotam.vip/story-chabad-wedding.html</loc></url>
+  <url><loc>https://hotam.vip/story-chabad-riga.html</loc></url>
+  <url><loc>https://hotam.vip/story-gur-travel.html</loc></url>
+  <url><loc>https://hotam.vip/story-gur-land-of-israel.html</loc></url>
+  <url><loc>https://hotam.vip/munkacs-wedding-1933.html</loc></url>
+  <url><loc>https://hotam.vip/story-sighet-wedding.html</loc></url>
+  <url><loc>https://hotam.vip/story-belz-funeral.html</loc></url>
+  <url><loc>https://hotam.vip/story-belz-marienbad.html</loc></url>
+  <url><loc>https://hotam.vip/story-satmar-rabbinate.html</loc></url>
+  <url><loc>https://hotam.vip/story-satmar-installation.html</loc></url>
+  <url><loc>https://hotam.vip/story-kretchnif-1925.html</loc></url>
+  <url><loc>https://hotam.vip/story-sanz-trains.html</loc></url>
+  <url><loc>https://hotam.vip/story-khust-election.html</loc></url>
+  <url><loc>https://hotam.vip/story-munkacs-journey.html</loc></url>
+  <url><loc>https://hotam.vip/story-munkacs-library.html</loc></url>
+  <url><loc>https://hotam.vip/story-sadigura-new-york.html</loc></url>
+  <url><loc>https://hotam.vip/story-chortkov-vienna.html</loc></url>
+  <url><loc>https://hotam.vip/story-alexander-funeral.html</loc></url>
+  <url><loc>https://hotam.vip/story-alexander-governor.html</loc></url>
+  <url><loc>https://hotam.vip/story-nadvorna-wedding.html</loc></url>
+  <url><loc>https://hotam.vip/story-kerestir-1928.html</loc></url>
+  <url><loc>https://hotam.vip/story-lublin-1924.html</loc></url>
+  <url><loc>https://hotam.vip/story-romania-citizenship-1938.html</loc></url>
+  <url><loc>https://hotam.vip/story-liska-shabbat.html</loc></url>
 </urlset>

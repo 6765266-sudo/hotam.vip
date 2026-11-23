@@ -1,0 +1,34 @@
+.hotam-return {
+  display: block;
+  inline-size: 100%;
+  color: #fff9ed;
+  background: #1b3429;
+  font: 600 1rem/1.45 system-ui, sans-serif;
+}
+.hotam-return__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem 1.25rem;
+  max-inline-size: 68rem;
+  margin-inline: auto;
+  padding: .25rem clamp(.9rem, 4vw, 2rem);
+}
+.hotam-return a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  color: #fff9ed;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+.hotam-return a:focus-visible {
+  outline: 2px solid #ead19c;
+  outline-offset: 2px;
+}
+.hotam-return--bottom {
+  margin-block-start: 1rem;
+}
+@media print {
+  .hotam-return { display: none !important; }
+}
