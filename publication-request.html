@@ -3,13 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>בקשת רשות לפרסום | חותם VIP</title>
+    <title>בקשת רשות להשתמש בכתבה | חותם ארכיון</title>
     <link rel="icon" type="image/png" href="gold-seal.png">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #c5a059; --dark: #0a0a0a; }
         * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; background-color: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        body, html { margin: 0; padding: 0; background-color: var(--dark); color: #fff; font-family: 'Assistant', sans-serif; min-height: 100vh; }
+        body { display: flex; flex-direction: column; align-items: center; }
+        .hotam-return--bottom { margin-block-start: auto; }
         .container { width: 100%; max-width: 480px; padding: 60px 30px; text-align: center; }
         h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; margin: 0 0 10px; letter-spacing: 2px; }
         .sub { color: #aaa; font-size: 1rem; font-weight: 200; margin: 0 0 40px; letter-spacing: 1px; }
@@ -28,11 +30,14 @@
         #success-area p { color: #aaa; font-size: 1rem; margin-bottom: 30px; }
         #success-area a { display: inline-block; padding: 14px 40px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-weight: 700; }
     </style>
+<link rel="stylesheet" href="hotam-navigation.css">
 </head>
 <body>
+<nav class="hotam-return hotam-return--top" aria-label="ניווט באתר"><div class="hotam-return__inner"><a href="./">דף הבית</a><a href="archive.html#catalog">לכתבות הארכיון</a></div></nav>
+
     <div class="container">
         <div id="form-area">
-            <h1 id="request-title">בקשת רשות לפרסום</h1>
+            <h1 id="request-title">בקשת רשות להשתמש בכתבה של חותם</h1>
             <p class="sub" id="request-intro">רוצים להשתמש בכתבה של חותם בחוברת, באתר או בפרסום אחר? כתבו באיזו כתבה מדובר ואיפה תרצו לפרסם. נחזור אליכם לגבי אפשרות השימוש, התנאים והתשלום, לפי העניין.</p>
             <form id="contact-form" action="https://formspree.io/f/xpqelbdr" method="POST">
                 <div class="form-group">
@@ -95,5 +100,7 @@
             } finally { button.disabled = false; }
         });
     </script>
+
+<nav class="hotam-return hotam-return--bottom" aria-label="קישורי חזרה"><div class="hotam-return__inner"><a href="./">דף הבית</a><a href="archive.html#catalog">לכתבות הארכיון</a></div></nav>
 </body>
 </html>

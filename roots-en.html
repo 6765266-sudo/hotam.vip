@@ -11,8 +11,11 @@
 
 .languages{display:flex;gap:7px;align-items:center}.languages a{border:1px solid var(--line);padding:5px 9px;text-decoration:none}.languages [aria-current]{background:var(--ink);color:white}.field{display:block;width:100%;margin:5px 0 13px;padding:10px;border:1px solid #798c80;border-radius:4px;font:inherit}.consent{display:flex;gap:8px;align-items:baseline;font-weight:normal;margin:12px 0}.consent input{flex:none}.field:focus{outline:2px solid var(--accent)}button:disabled{opacity:.65;cursor:wait}
 </style>
+<link rel="stylesheet" href="hotam-navigation.css">
 </head>
 <body>
+<nav class="hotam-return hotam-return--top" aria-label="Site navigation"><div class="hotam-return__inner"><a href="./">Home</a><a href="roots.html">Roots in Hebrew</a></div></nav>
+
 <header><strong>Hotam Roots</strong><nav class="languages" aria-label="Language"><a href="roots.html" lang="he">עברית</a><a aria-current="page" href="roots-en.html">English</a></nav></header>
 <main>
 <section class="hero">
@@ -64,5 +67,7 @@ form.addEventListener('submit', async event => {
   }
 });
 </script>
+
+<nav class="hotam-return hotam-return--bottom" aria-label="Return links"><div class="hotam-return__inner"><a href="./">Home</a><a href="roots.html">Roots in Hebrew</a></div></nav>
 </body>
 </html>
