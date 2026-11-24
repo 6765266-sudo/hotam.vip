@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="he" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>חותם ברכות | ברכות לשמחות יהודיות ולהדפסה</title>
-<meta name="description" content="מכינים ברכה אישית ומעוצבת לבר מצווה, חתונה, אירוסין ושבת. בוחרים נוסח ורקע ומדפיסים בחינם.">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>חותם ברכות | ברכות מעוצבות לשמחות, לימי הולדת ולרבנים</title>
+<meta name="description" content="מכינים ברכה אישית לבר מצווה, חתונה, יום הולדת, חתונת הכסף או לרב. בוחרים נוסח ורקע, מדפיסים או שומרים כ־PDF בחינם.">
 <style>
 :root{--paper:#fbf5e9;--ink:#1b332b;--gold:#a47740;--line:#dac8a9}*{box-sizing:border-box}body{margin:0;padding:clamp(16px,4vw,44px);background:#efe7d9;color:var(--ink);font:1rem/1.6 Arial,sans-serif}main,header{max-width:1080px;margin:auto}header{margin-bottom:1.4rem;border-bottom:1px solid var(--line);padding-bottom:.9rem}header h1{margin:0;font:700 clamp(2.3rem,5.8vw,4rem)/1.15 Georgia,serif}header p{margin:.5rem 0 0}main{display:grid;grid-template-columns:minmax(245px,1fr) minmax(340px,1.65fr);gap:1.3rem;align-items:start}form,article,.pilot-notes{background:var(--paper);border:1px solid var(--line);padding:clamp(1.1rem,3vw,2.2rem)}form label{display:block;margin:.75rem 0 .2rem;font-weight:bold}input,select,textarea,button{font:inherit}input,select,textarea{display:block;width:100%;padding:.45rem;border:1px solid #9d8b72;border-radius:5px;background:#fffdf8;color:inherit}textarea{resize:vertical;min-height:3.2rem}button{cursor:pointer;background:var(--ink);border:0;border-radius:5px;color:white;padding:.5rem 1rem;margin-top:1rem}button.secondary{background:transparent;color:var(--ink);border:1px solid currentColor}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #95663d;outline-offset:2px}article{min-height:420px;color:var(--ink);text-align:center;position:relative;outline:1px solid var(--gold);outline-offset:-10px;padding:clamp(28px,5vw,54px)}article[data-style="hasidic"]{--ink:#192547;--gold:#866c32;--paper:#faf1dc}article[data-style="litvish"]{--ink:#232f3b;--gold:#8b795b;--paper:#fbf8f0}article[data-style="sephardi"]{--ink:#143e49;--gold:#ad7152;--paper:#fff4df}article[data-style="modern"]{--ink:#205047;--gold:#658b76;--paper:#f2f5ed}.ornament{letter-spacing:.18em;color:var(--gold);font-size:1.4rem}.dear{font-size:1.05rem;margin:.6rem 0 0;overflow-wrap:anywhere}article h2{font:700 clamp(1.9rem,5vw,3.3rem)/1.2 Georgia,serif;margin:.3rem 0 1.5rem}article p{white-space:pre-line;overflow-wrap:anywhere;margin:0 auto 1rem;max-width:520px}article footer{margin-top:1.6rem;color:var(--ink);white-space:pre-line;overflow-wrap:anywhere}.pilot-notes{grid-column:1/-1}details+details{margin-top:.6rem}summary{cursor:pointer;font-weight:bold}small{display:block;margin-top:1.1rem} @media(max-width:720px){main{display:flex;flex-direction:column}main>*{width:100%}} @media print{body{padding:0;background:#fff}body>header,form,.pilot-notes,.next-step{display:none}main{display:block}article{min-height:85vh;display:flex;flex-direction:column;justify-content:center;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
 [hidden]{display:none!important}.next-step{grid-column:2;margin:0}.sample{white-space:pre-line}
@@ -598,6 +598,42 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #result[data-body-ink]:not([data-print="mono"]) .copy-slot #greeting{color:var(--custom-body-ink)!important}
 </style><style id="print-size">@page{size:A4;margin:13mm}[hidden]{display:none!important}.next-step{grid-column:2;margin:0}.sample{white-space:pre-line}</style><link rel="canonical" href="https://hotam.vip/blessings.html">
 <link rel="stylesheet" href="hotam-navigation.css">
+<meta property="og:type" content="website">
+<meta property="og:title" content="הברכה מוכנה. המתנה שלמה. | חותם ברכות">
+<meta property="og:description" content="מכינים ברכה אישית ומעוצבת לשמחה בחינם">
+<meta property="og:url" content="https://hotam.vip/blessings.html">
+<meta property="og:image" content="https://hotam.vip/assets/hotam-blessings-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="500">
+<style>
+.blessing-occasions{grid-column:1/-1;padding:1.25rem 0;border-top:1px solid var(--line)}
+.blessing-occasions a{display:inline-block;margin:0 .12rem .3rem .65rem;color:var(--ink)}
+.blessing-result-feedback{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;margin-top:.6rem}
+.blessing-result-feedback[hidden]{display:none}
+@media print{.blessing-occasions,.blessing-result-feedback{display:none!important}}
+</style>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){window.dataLayer.push(arguments);}
+const campaignLocation = new URL(location.pathname, location.origin);
+const campaignQuery = new URLSearchParams(location.search);
+for (const key of ['utm_source','utm_medium','utm_campaign']) {
+ const value = campaignQuery.get(key);
+ if(value && /^[a-zA-Z0-9_-]{1,60}$/.test(value)) campaignLocation.searchParams.set(key,value);
+}
+gtag('js',new Date());
+gtag('config','G-0SNKQRBNDT',{
+ page_location:campaignLocation.href,
+ allow_google_signals:false,
+ allow_ad_personalization_signals:false
+});
+if (location.hostname==='hotam.vip') {
+ const analyticsScript=document.createElement('script');
+ analyticsScript.async=true;
+ analyticsScript.src='https://www.googletagmanager.com/gtag/js?id=G-0SNKQRBNDT';
+ document.head.append(analyticsScript);
+}
+</script>
 </head>
 <body>
 <nav class="hotam-return hotam-return--top" aria-label="ניווט באתר"><div class="hotam-return__inner"><a href="./">דף הבית</a><a href="gramen.html">חרוזים וגראַמען</a><a href="blessings-languages.html">ברכות בשלוש שפות</a></div></nav>
@@ -641,8 +677,30 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 <p id="form-feedback" role="status" aria-live="polite"></p>
 <small>הברכה מותאמת לפי הפרטים שמילאתם ומבחר נוסחים לפי האירוע. הטקסט המוקלד ותצלום הדף מעובדים בתצוגה המקומית.</small></form>
 <article hidden id="result" data-style="hasidic" tabindex="-1" aria-live="polite"><img id="card-art" alt="" hidden><img id="paper-photo-preview" alt="" hidden><div class="card-meta" dir="rtl"><span>בס״ד</span><time id="hebrew-date"></time></div><div class="copy-slot"><div class="card-copy"><div class="ornament" aria-hidden="true">❧</div>
-<svg class="print-sketch" viewBox="0 0 250 45" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 37Q56 4 124 37Q194 4 238 37M38 20q-11 1-17-8 11 0 17 8m16-4q-8-3-11-12 11 5 11 12m158 4q11 1 17-8-11 0-17 8m-16-4q8-3 11-12-11 5-11 12M124 37q-8-14 0-22 8 8 0 22"/></svg><p class="dear" id="dear"></p><p id="rabbi-intro" hidden></p><h2 id="heading">מזל טוב לבר המצווה</h2><p id="rabbi-honorific" hidden></p><div id="greeting"></div><footer id="signature"></footer></div></div></article><div id="next-step" class="next-step" hidden><button id="print" type="button" class="secondary">הדפסה / PDF</button></div>
+<svg class="print-sketch" viewBox="0 0 250 45" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 37Q56 4 124 37Q194 4 238 37M38 20q-11 1-17-8 11 0 17 8m16-4q-8-3-11-12 11 5 11 12m158 4q11 1 17-8-11 0-17 8m-16-4q8-3 11-12-11 5-11 12M124 37q-8-14 0-22 8 8 0 22"/></svg><p class="dear" id="dear"></p><p id="rabbi-intro" hidden></p><h2 id="heading">מזל טוב לבר המצווה</h2><p id="rabbi-honorific" hidden></p><div id="greeting"></div><footer id="signature"></footer></div></div></article><div id="next-step" class="next-step" hidden><button id="print" type="button" class="secondary">הדפסה / שמירה כ־PDF</button>
+<small>לשמירת קובץ, בוחרים ״שמירה כ־PDF״ בחלון ההדפסה.</small>
+<div class="blessing-result-feedback" id="blessing-result-feedback" hidden>
+<span>מצאתם נוסח שמתאים?</span>
+<button type="button" class="secondary" id="blessing-fit">כן, מתאים לי</button>
+<button type="button" class="secondary" id="blessing-not-fit">חיפשתי נוסח אחר</button>
+</div>
+<small id="blessing-rating-status" role="status"></small>
+</div>
 
+<section class="blessing-occasions" aria-labelledby="blessing-occasions-title">
+<h2 id="blessing-occasions-title">ברכה אישית לפי האירוע</h2>
+<p>בחרו ברכה מנוסחת, התאימו את הרקע, והכינו קובץ לשמירה או להדפסה.</p>
+<a href="#settings" data-blessing-event="bar">ברכה לבר מצווה</a>
+<a href="#settings" data-blessing-event="wedding">ברכה לחתונה</a>
+<a href="#settings" data-blessing-event="other" data-blessing-occasion="חתונת הכסף">ברכה לחתונת הכסף</a>
+<a href="#settings" data-blessing-event="birthday">ברכה ליום הולדת</a>
+<a href="#settings" data-blessing-event="birthday" data-blessing-age="29">ליום הולדת 29</a>
+<a href="#settings" data-blessing-event="birthday" data-blessing-age="36">ליום הולדת 36</a>
+<a href="#settings" data-blessing-event="birthday" data-blessing-age="50">ליום הולדת 50</a>
+<a href="#settings" data-blessing-event="rosh-yeshiva">ברכה לראש ישיבה</a>
+<a href="#settings" data-blessing-event="rosh-kollel">ברכה לראש כולל</a>
+<a href="#settings" data-blessing-event="rebbe">ברכה לאדמו״ר</a>
+</section>
 </main>
 <section class="feedback-section" aria-label="הצעות לשיפור">
 <details id="feedback-panel">
@@ -1935,6 +1993,9 @@ function showBlessing(){
  sizeCardCopy();
  get('form-feedback').classList.remove('form-error');
  get('form-feedback').textContent='הברכה מוכנה.';
+ get('blessing-result-feedback').hidden=false;
+ get('blessing-rating-status').textContent='';
+ recordBlessingAction('blessing_generated');
  rememberHistory();
  get('result').focus({preventScroll:true});
  requestAnimationFrame(()=>get('result').scrollIntoView({block:'start',behavior:'auto'}));
@@ -1951,7 +2012,39 @@ get('settings').addEventListener('submit',event=>{
   console.error(error);
  }
 });
-get('print').addEventListener('click',()=>window.print());
+function recordBlessingAction(name,extra={}) {
+ try {
+  gtag('event',name,{
+   page_location:campaignLocation.href,
+   blessing_event:get('event').value,
+   ...extra
+  });
+ }catch{}
+}
+get('print').addEventListener('click',()=>{
+ recordBlessingAction('blessing_print_requested');
+ window.print();
+});
+for (const [id,rating] of [['blessing-fit','fit'],['blessing-not-fit','did_not_fit']]) {
+ get(id).addEventListener('click',()=>{
+  recordBlessingAction('blessing_rated',{rating});
+  get('blessing-result-feedback').hidden=true;
+  get('blessing-rating-status').textContent='תודה על המשוב.';
+ });
+}
+for (const link of document.querySelectorAll('[data-blessing-event]')) {
+ link.addEventListener('click', event=>{
+  if(event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;
+  const {blessingEvent,blessingAge,blessingOccasion}=link.dataset;
+  const selector=get('event');
+  selector.value=blessingEvent;
+  selector.dispatchEvent(new Event('change',{bubbles:true}));
+  if(blessingAge)get('age').value=blessingAge;
+  if(blessingOccasion)get('occasion').value=blessingOccasion;
+  queueLivePreview();
+  saveDraft();
+ });
+}
 const draftKey='hotam-blessings-draft';
 const historyKey='hotam-blessings-history';
 const recentFields=['recipient','parents','sender'];
