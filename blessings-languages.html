@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jewish Blessings for Simchas · Hotam</title>
+<style>
+*{box-sizing:border-box}:root{color-scheme:light;--ink:#20362f;--paper:#f4efe4;--rule:#b5a078;--green:#274c3e}body{margin:0;background:var(--paper);color:var(--ink);font:1.05rem/1.6 Georgia,serif}main{max-width:1040px;margin:auto;padding:clamp(1rem,5vw,3.2rem)}header{border-block-end:1px solid var(--rule);padding-block-end:1.2rem;margin-block-end:1.4rem}h1{font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.04;margin:.2em 0}.brand{font:.78rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em}.language{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}form,article{background:#fffaf1;border:1px solid var(--rule);border-radius:12px;padding:clamp(1rem,3vw,1.75rem)}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:1.1rem;align-items:start}form label{display:grid;gap:.25rem;margin-block-end:.85rem}input,textarea,select,button{font:inherit;color:inherit}input,textarea,select{padding:.45rem;background:#fffdf8;border:1px solid #8e8066;border-radius:5px;width:100%}.language select{width:auto}.choices{display:flex;flex-wrap:wrap;gap:.5rem;margin-block:.4rem}button{padding:.49rem .8rem;border:1px solid var(--green);border-radius:6px;background:var(--green);color:white;cursor:pointer;min-height:44px}button.secondary{background:transparent;color:var(--green)}#card{border:1px solid #ceb991;padding:clamp(1rem,3vw,1.6rem);overflow-wrap:anywhere}#card h2{margin:0;font-size:1.8rem}#message{white-space:pre-line}#status{min-height:1.75em;margin:.4rem 0 0}small{display:block;margin-block-start:.6rem}@media(max-width:720px){.layout{grid-template-columns:1fr}}@media print{header,form,.choices,#status,#pilot-note{display:none!important}.layout{display:block}body,article{background:white}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="brand" id="brand"></div><h1 id="title"></h1><p id="subtitle"></p>
+<label class="language"><span id="language-label"></span><select id="locale"><option value="en">English</option><option value="he">עברית</option><option value="yi">ייִדיש</option></select></label>
+<small id="pilot-note"></small></header>
+<div class="layout">
+<form id="builder">
+<label><span id="event-label"></span><select name="occasion" id="occasion"></select></label>
+<label><span id="tone-label"></span><select name="tone" id="tone"></select></label>
+<label><span id="name-label"></span><input name="recipient" dir="auto" maxlength="100"></label>
+<label><span id="detail-label"></span><textarea name="detail" rows="3" dir="auto" maxlength="360"></textarea></label>
+<button id="make" type="submit"></button>
+</form>
+<article aria-labelledby="card-title"><div id="card"><h2 id="card-title"></h2><p id="recipient" dir="auto"></p><p id="message"></p><p id="detail" dir="auto"></p></div>
+<div class="choices"><button id="copy" class="secondary" type="button"></button><button id="print" class="secondary" type="button"></button></div><p id="status" role="status"></p></article>
+</div>
+</main>
+<script>
+const language = {
+ en: {brand:'Hotam',title:'Jewish Blessings for Simchas',subtitle:'A personal message for a simcha, a Torah milestone, or someone you wish to thank.',language:'Language',note:'Private writing preview · English, Hebrew and Yiddish.',event:'Occasion',rabbis:'Blessings for Rabbis',tone:'Tone',name:'Recipient’s name or title',detail:'One personal line to add, as you would say it',make:'Create blessing',copy:'Copy text',print:'Print',copied:'Text copied.',selectText:'Text selected. Use your copy command.',tones:{hasidic:'Chassidish · Warm and heartfelt',yeshivish:'Yeshivish · Torah and learning',emunah:'Torah and emunah · Faith and gratitude'},events:{bar:'Bar Mitzvah',wedding:'Wedding',siyum:'Siyum',host:'Shabbos Hospitality',rosh:'Rosh Yeshiva',kollel:'Rosh Kollel',rebbe:'Rebbe',son:'Son of a Rebbe'}},
+ he: {brand:'חותם',title:'ברכות יהודיות לשמחות',subtitle:'ברכה אישית לשמחה, להישג בלימוד או למי שתרצו להודות לו.',language:'שפה',note:'גרסת כתיבה פרטית · עברית, יידיש ואנגלית.',event:'אירוע',rabbis:'ברכה לרבנים',tone:'נוסח',name:'שם מקבל הברכה או תוארו',detail:'משפט אישי שתרצו להוסיף כלשונו',make:'הכנת ברכה',copy:'העתקת הטקסט',print:'הדפסה',copied:'הטקסט הועתק.',selectText:'הטקסט סומן להעתקה.',tones:{hasidic:'חסידי · חם ולבבי',yeshivish:'ישיבתי · תורה ולימוד',emunah:'תורה ואמונה · אמונה והודיה'},events:{bar:'בר מצווה',wedding:'חתונה',siyum:'סיום',host:'תודה על אירוח בשבת',rosh:'ראש ישיבה',kollel:'ראש כולל',rebbe:'אדמו״ר',son:'בן אדמו״ר'}},
+ yi: {brand:'חותם',title:'ייִדישע ברכות אויף שמחות',subtitle:'אַ פּערזענלעכע ברכה פֿאַר אַ שׂמחה, אַ סיום, אָדער אַ וואַרעמען יישר־כּוח.',language:'שפּראַך',note:'אַ פּריוואַטער מוסטער · ייִדיש, ענגליש און העברעיִש.',event:'געלעגנהייט',rabbis:'ברכות פֿאַר רבנים',tone:'נוסח',name:'נאָמען אָדער טיטל',detail:'אַ פּערזענלעכע שורה, אין אײַערע אייגענע ווערטער',make:'מאַכט אַ ברכה',copy:'קאָפּירן דעם טעקסט',print:'דרוקן',copied:'דער טעקסט איז קאָפּירט.',selectText:'דער טעקסט איז אויסגעקליבן צום קאָפּירן.',tones:{hasidic:'חסידיש · וואַרעם און האַרציק',yeshivish:'ישיבֿיש · תּורה און לערנען',emunah:'תּורה און אמונה · אמונה און הכּרת הטוב'},events:{bar:'בר־מצווה',wedding:'חתונה',siyum:'סיום',host:'יישר־כּוח פֿאַר שבת',rosh:'ראש ישיבֿה',kollel:'ראש כּולל',rebbe:'רבי',son:'דעם רבינס זון'}}
+};
+const blessings = {
+ en: {
+ bar:['Mazel tov on your Bar Mitzvah! May you carry the excitement of this Shabbos into the ordinary days that follow, and find a mitzvah you look forward to doing.'],
+ wedding:['Mazel tov to the chassan and kallah! May you build a bayis ne’eman b’Yisrael, with shalom, a welcoming Shabbos table, and time to listen to each other even on the busiest days.'],
+ siyum:['Mazel tov on your siyum! Every day of learning brought you to this moment. May the satisfaction of finishing give you strength and joy for the next beginning.'],
+ host:['Thank you for making room at your Shabbos table and making us feel at home. May your home be filled with bracha, good health and many more Shabbosim together.'],
+ rosh:['With deep gratitude to the Rosh Yeshiva for teaching us how to learn and for making room for each talmid’s questions. May the Rosh Yeshiva continue to see nachas from talmidim who carry that patience into their own homes and batei midrash.'],
+ kollel:['With hakaras hatov to the Rosh Kollel for the care given to each avreich and to the learning that continues day after day. May the kollel grow in Torah and continue to strengthen the community.'],
+ rebbe:['With deep kavod and hakaras hatov to the Rebbe. May Hashem grant the Rebbe good health and strength, and may the Rebbe see much nachas from the kehilla.'],
+ son:['Warmest wishes to the Rav and his family on this simcha. May Hashem grant you bracha, good health, and nachas from your family and from those you guide.']
+ },
+ he: {
+ bar:['מזל טוב לרגל היכנסך לעול תורה ומצוות. שתיקח משבת זו שמחה שתלווה אותך גם בימות החול, ותמצא מצווה אחת שתחכה בכל יום לקיים.'],
+ wedding:['מזל טוב לחתן ולכלה. יהי רצון שתזכו להקים בית נאמן בישראל, שיש בו מקום לאורח בשולחן השבת וזמן להקשיב זה לזה גם ביום עמוס.'],
+ siyum:['מזל טוב לרגל הסיום. יום ועוד יום של לימוד הביאו אותך לרגע הזה. יהי רצון שהשמחה שבסיום תיתן לך כוח ושמחה גם להתחלה הבאה.'],
+ host:['תודה שפתחתם לנו את הבית בשבת ונתתם לנו להרגיש בני בית. יהי רצון שתזכו לעוד הרבה שבתות של בריאות, נחת ושמחה סביב שולחנכם.'],
+ rosh:['לכבוד ראש הישיבה, ברכה והכרת הטוב על התורה שלימדתם ועל הסבלנות לכל שאלה. יהי רצון שתראו נחת מתלמידים שמעבירים הלאה את אהבת הלימוד שקיבלו מכם.'],
+ kollel:['לכבוד ראש הכולל, בהכרת הטוב על הדאגה לכל אברך ועל קביעות הלימוד שמחזקת את הקהילה. יהי רצון שתזכו להגדיל תורה מתוך בריאות והרחבת הדעת.'],
+ rebbe:['לכבוד כ״ק האדמו״ר, בהוקרה ובהכרת הטוב. יהי רצון שהקב״ה ייתן לכבודו בריאות וכוח, ונחת מכל בני הקהילה.'],
+ son:['לכבוד הרב ומשפחתו, ברכות חמות לרגל השמחה. יהי רצון שתזכו לבריאות, לנחת מן המשפחה ולהצלחה בהדרכת כל הפונים אליכם.']
+ },
+ yi: {
+ bar:['אַ האַרציקן מזל טוב צו דער בר־מצווה! דער אייבערשטער זאָל העלפֿן אַז די שׂמחה פֿון דעם שבת זאָל דיר באַגלייטן אויך אין די וואָכעדיקע טעג.'],
+ wedding:['מזל טוב צום חתן און דער כּלה! איר זאָלט זוכה זײַן צו בויען אַ בית נאמן בישראל, מיט שלום אין שטוב און אַן אָפֿן אָרט פֿאַר אַ גאַסט בײַם שבתדיקן טיש.'],
+ siyum:['מזל טוב צום סיום! טאָג נאָך טאָג האָט איר געלערנט ביז איר זײַט אָנגעקומען אַהער. דער אייבערשטער זאָל געבן כּוח און שׂמחה בײַם קומענדיקן אָנהייב.'],
+ host:['אַ גרויסן יישר־כּוח פֿאַרן שבת. איר האָט אונדז אויפֿגענומען ווי בני בית. דער אייבערשטער זאָל געבן געזונט און נחת בײַ אײַער שבתדיקן טיש.'],
+ rosh:['לכּבֿוד דעם ראש ישיבֿה, אַ יישר־כּוח פֿאַר דער תּורה און פֿאַר דער געדולד צו הערן יעדנס קשיא. דער ראש ישיבֿה זאָל שעפּן נחת פֿון די תּלמידים.'],
+ kollel:['לכּבֿוד דעם ראש כּולל, אַ יישר־כּוח פֿאַר דער זאָרג פֿאַר יעדן אברך. דער כּולל זאָל וואַקסן אין תּורה און ממשיך זײַן צו שטאַרקן די קהילה.'],
+ rebbe:['לכּבֿוד כ״ק דעם רבי׳ן, מיט גרויס הכּרת הטוב. דער אייבערשטער זאָל געבן דעם רבי׳ן געזונט, כּוח און נחת פֿון דער גאַנצער קהילה.'],
+ son:['אַ האַרציקן מזל טוב פֿאַרן רב און די משפּחה צו דער שׂמחה. דער אייבערשטער זאָל געבן געזונט, ברכה און אַ סך נחת.']
+ }
+};
+const endings = {
+ en:{hasidic:'May Hashem fill the days ahead with warmth, simcha and good news.',yeshivish:'May there be hatzlacha in learning Torah b’hasmadah and joy in sharing it with others.',emunah:'May Hashem give strength for the difficult days and open eyes to recognize the good in the ordinary ones.'},
+ he:{hasidic:'שהקב״ה ימלא את הימים הבאים בחיות, בשמחה ובבשורות טובות.',yeshivish:'שתזכו להצלחה בלימוד התורה מתוך התמדה ולשמחה בהעברתה לאחרים.',emunah:'שהקב״ה ייתן כוח בימים הקשים ועיניים להכיר בטוב של יום רגיל.'},
+ yi:{hasidic:'דער אייבערשטער זאָל געבן וואַרעמקייט, שׂמחה און גוטע בשׂורות.',yeshivish:'עס זאָל זײַן הצלחה צו לערנען תּורה בהתמדה און עס ווײַטער איבערגעבן מיט שׂמחה.',emunah:'דער אייבערשטער זאָל געבן כּוח אין שווערע טעג און העלפֿן דערקענען דאָס גוטס אין אַ פשוטן טאָג.'}
+};
+const form=document.querySelector('#builder');
+const locale=document.querySelector('#locale');
+const eventMenu=document.querySelector('#occasion');
+const toneMenu=document.querySelector('#tone');
+const output=document.querySelector('#card');
+const status=document.querySelector('#status');
+function text(id, value){ document.getElementById(id).textContent=value; }
+function blessingText(locale, occasion, tone){ return [...blessings[locale][occasion],endings[locale][tone]].join('\n\n'); }
+function render(){
+ const key=locale.value, copy=language[key], fields=new FormData(form);
+ text('card-title',copy.events[fields.get('occasion')]);
+ text('recipient',fields.get('recipient').trim());
+ text('message',blessingText(key,fields.get('occasion'),fields.get('tone')));
+ text('detail',fields.get('detail').trim());
+ status.textContent='';
+}
+function switchLanguage(){
+ const key=locale.value, copy=language[key], occasion=eventMenu.value || 'bar', tone=toneMenu.value || 'hasidic';
+ document.documentElement.lang=key;
+ document.documentElement.dir=key==='en'?'ltr':'rtl';
+ document.title=copy.title+' · '+copy.brand;
+ for(const [id,label] of Object.entries({brand:'brand',title:'title',subtitle:'subtitle','language-label':'language','pilot-note':'note','event-label':'event','tone-label':'tone','name-label':'name','detail-label':'detail',make:'make',copy:'copy',print:'print'})) text(id,copy[label]);
+ const general=['bar','wedding','siyum','host'], rabbinic=['rosh','kollel','rebbe','son'];
+ const rabbiGroup=document.createElement('optgroup'); rabbiGroup.label=copy.rabbis;
+ rabbiGroup.append(...rabbinic.map(id=>new Option(copy.events[id],id)));
+ eventMenu.replaceChildren(...general.map(id=>new Option(copy.events[id],id)),rabbiGroup);
+ toneMenu.replaceChildren(...Object.entries(copy.tones).map(([id,label])=>new Option(label,id)));
+ eventMenu.value=occasion; toneMenu.value=tone;
+ render();
+}
+locale.addEventListener('change',switchLanguage);
+form.addEventListener('submit',event=>{event.preventDefault();render();});
+document.querySelector('#copy').addEventListener('click',async()=>{
+ const result=[...output.children].map(node=>node.textContent).filter(Boolean).join('\n\n');
+ try {await navigator.clipboard.writeText(result);status.textContent=language[locale.value].copied;}
+ catch {const range=document.createRange();range.selectNodeContents(output);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);status.textContent=language[locale.value].selectText;}
+});
+document.querySelector('#print').addEventListener('click',()=>window.print());
+const requested=new URLSearchParams(location.search).get('lang');
+if (['en','he','yi'].includes(requested)) locale.value=requested;
+switchLanguage();
+</script>
+</body>
+</html>
