@@ -685,6 +685,7 @@ if (location.hostname==='hotam.vip') {
 <button type="button" class="secondary" id="blessing-not-fit">חיפשתי נוסח אחר</button>
 </div>
 <small id="blessing-rating-status" role="status"></small>
+<p><a id="blessing-help-contact" href="mailto:contact@hotam.vip?subject=%D7%A2%D7%96%D7%A8%D7%94%20%D7%91%D7%91%D7%A8%D7%9B%D7%94">צריכים עזרה בברכה? כתבו לחותם</a></p>
 </div>
 
 <section class="blessing-occasions" aria-labelledby="blessing-occasions-title">
@@ -2025,6 +2026,7 @@ get('print').addEventListener('click',()=>{
  recordBlessingAction('blessing_print_requested');
  window.print();
 });
+get('blessing-help-contact').addEventListener('click',()=>recordBlessingAction('blessing_contact_clicked'));
 for (const [id,rating] of [['blessing-fit','fit'],['blessing-not-fit','did_not_fit']]) {
  get(id).addEventListener('click',()=>{
   recordBlessingAction('blessing_rated',{rating});
