@@ -672,7 +672,7 @@ if (location.hostname==='hotam.vip') {
 <div id="detail-subject-field" hidden><label for="detail-subject">על מי הפרט?</label><select id="detail-subject"><option value="bride">על הכלה</option><option value="groom">על החתן</option><option value="couple">על בני הזוג</option></select><small>למשל ״מתנדבת בארגון חיים לילד״. אפשר גם לכתוב משפט שלם לשילוב.</small></div><label for="detail" id="detail-label">פרטים אישיים לשילוב בברכה (רשות)</label><div class="dictation-field"><textarea id="detail" maxlength="260" placeholder="למשל: עוזר לאחיו להתכונן לשבת"></textarea>
 <button id="dictate" type="button" class="mic secondary" data-dictate="detail" aria-label="מיקרופון להכתבת פרטים"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-3 0h6"/></svg></button></div>
 <small id="dictation-status" role="status"></small>
-<details class="date-settings"><summary>תאריך על הברכה</summary><label for="card-date">תאריך האירוע (רשות)</label><input id="card-date" type="date"><small>אם לא בוחרים תאריך, יוצג התאריך העברי של היום.</small></details><button type="button" id="clear-history" class="secondary clear-history" hidden>ניקוי היסטוריית שמות במכשיר הזה</button></details><button type="submit">הכנת ברכה</button> <button type="button" class="secondary" id="refresh-blessing">רענן ברכה</button><span id="field-warning" class="form-error" hidden></span>
+<details class="date-settings"><summary>תאריך על הברכה</summary><fieldset id="hebrew-picker"><legend>תאריך האירוע</legend><label>שנה <select id="event-he-year"></select></label><label>חודש <select id="event-he-month"></select></label><label>יום <select id="event-he-day"></select></label></fieldset><details><summary>בחירה לפי תאריך לועזי</summary><label for="card-date">תאריך לועזי</label><input id="card-date" type="date"></details><small>אם לא בוחרים תאריך, יוצג התאריך העברי של היום.</small></details><button type="button" id="clear-history" class="secondary clear-history" hidden>ניקוי היסטוריית שמות במכשיר הזה</button></details><button type="submit">הכנת ברכה</button> <button type="button" class="secondary" id="refresh-blessing">רענן ברכה</button><span id="field-warning" class="form-error" hidden></span>
 
 <p id="form-feedback" role="status" aria-live="polite"></p>
 <small>הברכה מותאמת לפי הפרטים שמילאתם ומבחר נוסחים לפי האירוע. הטקסט המוקלד ותצלום הדף מעובדים בתצוגה המקומית.</small></form>
@@ -1310,9 +1310,65 @@ function writeHebrewDate(){
  const formatted=Object.fromEntries(hebrewDateFormat.formatToParts(now).map(part=>[part.type,part.value]));
  const month=formatted.month.replace(/^ב(?=אייר|אב|אדר|אלול|טבת|תשרי|חשוון|חשון|כסלו|שבט|ניסן|סיון|סיוון|תמוז)/u,'');
  const time=get('hebrew-date');
- time.textContent=hebrewNumber(Number(formatted.day))+' '+month+' '+hebrewNumber(Number(formatted.year)%1000);
+ const hebrew=hebrewNumber(Number(formatted.day))+' ב'+month+' '+hebrewNumber(Number(formatted.year)%1000);
  time.dateTime=chosen||new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Jerusalem'}).format(now);
+ const [y,m,d]=time.dateTime.split('-');
+ time.textContent=hebrew+' ('+d+'.'+m+'.'+y+')';
+ if(get('card-date').closest('.date-settings').open) syncHebrewPicker();
+
 }
+// The ISO field remains the value saved in existing drafts.
+const pickerCache=new Map();
+function dateParts(date){
+ return Object.fromEntries(hebrewDateFormat.formatToParts(date).map(p=>[p.type,p.value]));
+}
+function daysOfHebrewYear(year){
+ if(pickerCache.has(year)) return pickerCache.get(year);
+ const days=[];
+ for(let stamp=Date.UTC(year-3761,7,15,12);stamp<Date.UTC(year-3760,10,1,12);stamp+=86400000){
+  const date=new Date(stamp);
+  const parts=dateParts(date);
+  if(Number(parts.year)===year) days.push({iso:date.toISOString().slice(0,10),month:parts.month,day:Number(parts.day)});
+ }
+ pickerCache.set(year,days);
+ return days;
+}
+function replaceChoices(select,options,value){
+ const key=JSON.stringify(options);
+ if(select.dataset.choices!==key){
+  select.replaceChildren(...options.map(([id,label])=>new Option(label,id)));
+  select.dataset.choices=key;
+ }
+ select.value=value;
+}
+function syncHebrewPicker(){
+ const iso=get('hebrew-date').dateTime;
+ if(!iso) return;
+ const selected=dateParts(new Date(iso+'T12:00:00Z'));
+ const year=Number(selected.year);
+ const base=Number(dateParts(new Date()).year);
+ const years=Array.from(new Set([...Array.from({length:31},(_,i)=>base-10+i),year])).sort((a,b)=>a-b);
+ replaceChoices(get('event-he-year'),years.map(y=>[y,hebrewNumber(y%1000)]),year);
+ const days=daysOfHebrewYear(year);
+ const months=[...new Set(days.map(d=>d.month))];
+ replaceChoices(get('event-he-month'),months.map(m=>[m,m.replace(/^ב/u,'')]),selected.month);
+ const subset=days.filter(d=>d.month===selected.month);
+ replaceChoices(get('event-he-day'),subset.map(d=>[d.day,hebrewNumber(d.day)]),Number(selected.day));
+}
+get('card-date').closest('.date-settings').addEventListener('toggle',e=>{
+ if(e.currentTarget.open) writeHebrewDate();
+});
+get('hebrew-picker').addEventListener('change',()=>{
+ const days=daysOfHebrewYear(Number(get('event-he-year').value));
+ const selectedMonth=get('event-he-month').value;
+ const monthDays=days.filter(d=>d.month===selectedMonth);
+ const adar=days.filter(d=>d.month.includes('אדר'));
+ const subset=monthDays.length?monthDays:(selectedMonth.includes('אדר')&&adar.length?adar.filter(d=>d.month===adar[0].month):days.filter(d=>d.month===days[0].month));
+ const day=Math.min(Number(get('event-he-day').value)||1,subset.length);
+ get('card-date').value=subset[day-1].iso;
+ get('card-date').dispatchEvent(new Event('change',{bubbles:true}));
+ writeHebrewDate();
+});
 const shabbatVerse={
  he:{
   shabbat:'תודה על שבת סביב אותו שולחן,\nעל בית מאיר ועל מקום שהיה מוכן.\nעל לחם חם ועל שיחה טובה בסוף היום,\nעל מנוחה שהביאה ללב הרבה שלום.',
