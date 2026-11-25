@@ -36,5 +36,29 @@ a{color:#e5ca93}
 </main>
 
 <nav class="hotam-return hotam-return--bottom" aria-label="קישורי חזרה"><div class="hotam-return__inner"><a href="./">דף הבית</a><a href="archive.html#catalog">לכתבות הארכיון</a></div></nav>
+<script>
+if (location.hostname === 'hotam.vip') {
+  const page = new URL(location.pathname, location.origin);
+  const query = new URLSearchParams(location.search);
+  for (const key of ['utm_source', 'utm_medium', 'utm_campaign']) {
+    const value = query.get(key);
+    if (value && /^[a-zA-Z0-9_-]{1,60}$/.test(value)) page.searchParams.set(key, value);
+  }
+  window.dataLayer = window.dataLayer || [];
+  function track() { window.dataLayer.push(arguments); }
+  track('js', new Date());
+  track('config', 'G-0SNKQRBNDT', {
+    page_location: page.href,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false
+  });
+  document.querySelector('video').addEventListener('play', () => track('event', 'bobov_teaser_start'), {once: true});
+  document.querySelector('.purchase').addEventListener('click', () => track('event', 'bobov_full_film_click'));
+  const tag = document.createElement('script');
+  tag.async = true;
+  tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-0SNKQRBNDT';
+  document.head.append(tag);
+}
+</script>
 </body>
 </html>
