@@ -621,6 +621,13 @@ for (const key of ['utm_source','utm_medium','utm_campaign']) {
  const value = campaignQuery.get(key);
  if(value && /^[a-zA-Z0-9_-]{1,60}$/.test(value)) campaignLocation.searchParams.set(key,value);
 }
+// Recognize the link already shared in WhatsApp statuses.
+if (!campaignLocation.searchParams.has('utm_source') &&
+    campaignQuery.get('src') === 'whatsapp-status') {
+  campaignLocation.searchParams.set('utm_source', 'whatsapp');
+  campaignLocation.searchParams.set('utm_medium', 'social');
+  campaignLocation.searchParams.set('utm_campaign', 'blessings_status');
+}
 gtag('js',new Date());
 gtag('config','G-0SNKQRBNDT',{
  page_location:campaignLocation.href,
