@@ -67,6 +67,11 @@ if (location.hostname === 'hotam.vip') {
     allow_google_signals: false,
     allow_ad_personalization_signals: false
   });
+  track('config', 'G-WF5PZYTP8C', {
+    page_location: page.href,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false
+  });
   document.querySelector('video').addEventListener('play', () => track('event', 'bobov_teaser_start'), {once: true});
   document.querySelectorAll('.purchase').forEach(link => link.addEventListener('click', () => track('event', 'bobov_full_film_click')));
   const tag = document.createElement('script');

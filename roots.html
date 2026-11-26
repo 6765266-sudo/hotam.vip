@@ -1,6 +1,28 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
+<script>
+if (location.hostname === 'hotam.vip') {
+  const page = new URL(location.pathname, location.origin);
+  const query = new URLSearchParams(location.search);
+  for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'gclid']) {
+    const value = query.get(key);
+    if (value && /^[a-zA-Z0-9_-]{1,250}$/.test(value)) page.searchParams.set(key, value);
+  }
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-WF5PZYTP8C', {
+    page_location: page.href,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false
+  });
+  const loader = document.createElement('script');
+  loader.async = true;
+  loader.src = 'https://www.googletagmanager.com/gtag/js?id=G-WF5PZYTP8C';
+  document.head.append(loader);
+}
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>חותם שורשים | מחקר שורשים יהודי ואילן יוחסין</title>
