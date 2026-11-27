@@ -640,6 +640,13 @@ gtag('config','G-WF5PZYTP8C',{
  allow_ad_personalization_signals:false
 });
 if (location.hostname==='hotam.vip') {
+ gtag('config','AW-18594762873',{
+  groups:'hotam_ads',
+  page_location:campaignLocation.href,
+  allow_google_signals:false,
+  allow_ad_personalization_signals:false,
+  send_page_view:false
+ });
  const analyticsScript=document.createElement('script');
  analyticsScript.async=true;
  analyticsScript.src='https://www.googletagmanager.com/gtag/js?id=G-0SNKQRBNDT';
@@ -2090,8 +2097,16 @@ function recordBlessingAction(name,extra={}) {
   });
  }catch{}
 }
+let adsPrintRequestRecorded=false;
 get('print').addEventListener('click',()=>{
  recordBlessingAction('blessing_print_requested');
+ if(location.hostname==='hotam.vip' && !adsPrintRequestRecorded){
+  adsPrintRequestRecorded=true;
+  gtag('event','conversion',{
+   send_to:'AW-18594762873/k076CNrpxsAdEPmg1qJF',
+   page_location:campaignLocation.href
+  });
+ }
  window.print();
 });
 get('blessing-help-contact').addEventListener('click',()=>recordBlessingAction('blessing_contact_clicked'));
